@@ -1,0 +1,217 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\spi.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\spi.o
+
+
+Disassembly of section .text.SpiInit:
+
+00000000 <SpiInit>:
+SpiInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:95
+#define SPI_PIN_MOSI                                GPIO_Pin_5
+
+#endif
+
+void SpiInit( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b088      	sub	sp, #32
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:102
+    GPIO_InitTypeDef GPIO_InitStructure;
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+    /* Enable peripheral clocks --------------------------------------------------*/
+    /* Enable SPIy clock and GPIO clock for SPIy */
+    RCC_AHB1PeriphClockCmd( SPI_PIN_MISO_PORT_CLK | SPI_PIN_MOSI_PORT_CLK |
+   6:	f04f 0001 	mov.w	r0, #1
+   a:	f04f 0101 	mov.w	r1, #1
+   e:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:104
+                            SPI_PIN_SCK_PORT_CLK, ENABLE );
+    RCC_APB2PeriphClockCmd( SPI_CLK, ENABLE );
+  12:	f44f 5080 	mov.w	r0, #4096	; 0x1000
+  16:	f04f 0101 	mov.w	r1, #1
+  1a:	f7ff fffe 	bl	0 <RCC_APB2PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:107
+
+    /* GPIO configuration ------------------------------------------------------*/
+    GPIO_PinAFConfig( SPI_PIN_SCK_PORT, SPI_PIN_SCK_AF_SOURCE, SPI_PIN_SCK_AF );
+  1e:	4833      	ldr	r0, [pc, #204]	; (ec <SpiInit+0xec>)
+  20:	f04f 0105 	mov.w	r1, #5
+  24:	f04f 0205 	mov.w	r2, #5
+  28:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:108
+    GPIO_PinAFConfig( SPI_PIN_MOSI_PORT, SPI_PIN_MOSI_AF_SOURCE, SPI_PIN_MISO_AF );
+  2c:	482f      	ldr	r0, [pc, #188]	; (ec <SpiInit+0xec>)
+  2e:	f04f 0107 	mov.w	r1, #7
+  32:	f04f 0205 	mov.w	r2, #5
+  36:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:109
+    GPIO_PinAFConfig( SPI_PIN_MISO_PORT, SPI_PIN_MISO_AF_SOURCE, SPI_PIN_MOSI_AF );
+  3a:	482c      	ldr	r0, [pc, #176]	; (ec <SpiInit+0xec>)
+  3c:	f04f 0106 	mov.w	r1, #6
+  40:	f04f 0205 	mov.w	r2, #5
+  44:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:111
+
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  48:	f04f 0302 	mov.w	r3, #2
+  4c:	723b      	strb	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:112
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  4e:	f04f 0302 	mov.w	r3, #2
+  52:	727b      	strb	r3, [r7, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:113
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  54:	f04f 0300 	mov.w	r3, #0
+  58:	72bb      	strb	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:114
+    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_DOWN;
+  5a:	f04f 0302 	mov.w	r3, #2
+  5e:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:127
+    /* GPIO configuration ------------------------------------------------------*/
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+#endif
+
+    GPIO_InitStructure.GPIO_Pin = SPI_PIN_SCK;
+  60:	f04f 0320 	mov.w	r3, #32
+  64:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:128
+    GPIO_Init( SPI_PIN_SCK_PORT, &GPIO_InitStructure );
+  66:	f107 0304 	add.w	r3, r7, #4
+  6a:	4820      	ldr	r0, [pc, #128]	; (ec <SpiInit+0xec>)
+  6c:	4619      	mov	r1, r3
+  6e:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:130
+
+    GPIO_InitStructure.GPIO_Pin = SPI_PIN_MOSI;
+  72:	f04f 0380 	mov.w	r3, #128	; 0x80
+  76:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:131
+    GPIO_Init( SPI_PIN_MOSI_PORT, &GPIO_InitStructure );
+  78:	f107 0304 	add.w	r3, r7, #4
+  7c:	481b      	ldr	r0, [pc, #108]	; (ec <SpiInit+0xec>)
+  7e:	4619      	mov	r1, r3
+  80:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:137
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+#else
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;  
+#endif
+    GPIO_InitStructure.GPIO_Pin = SPI_PIN_MISO;
+  84:	f04f 0340 	mov.w	r3, #64	; 0x40
+  88:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:138
+    GPIO_Init( SPI_PIN_MISO_PORT, &GPIO_InitStructure );
+  8a:	f107 0304 	add.w	r3, r7, #4
+  8e:	4817      	ldr	r0, [pc, #92]	; (ec <SpiInit+0xec>)
+  90:	4619      	mov	r1, r3
+  92:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:147
+    RCC_APB2PeriphClockCmd( RCC_APB2Periph_AFIO, ENABLE );
+    GPIO_PinRemapConfig( GPIO_Remap_SWJ_JTAGDisable, ENABLE );
+#endif
+
+    /* SPI_INTERFACE Config -------------------------------------------------------------*/
+    SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+  96:	f04f 0300 	mov.w	r3, #0
+  9a:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:148
+    SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
+  9c:	f44f 7382 	mov.w	r3, #260	; 0x104
+  a0:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:149
+    SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
+  a2:	f04f 0300 	mov.w	r3, #0
+  a6:	823b      	strh	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:150
+    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+  a8:	f04f 0300 	mov.w	r3, #0
+  ac:	827b      	strh	r3, [r7, #18]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:151
+    SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
+  ae:	f04f 0300 	mov.w	r3, #0
+  b2:	82bb      	strh	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:152
+    SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
+  b4:	f44f 7300 	mov.w	r3, #512	; 0x200
+  b8:	82fb      	strh	r3, [r7, #22]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:154
+    //SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_16; // 5 MHz
+    SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8; // 10 MHz
+  ba:	f04f 0310 	mov.w	r3, #16
+  be:	833b      	strh	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:155
+    SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
+  c0:	f04f 0300 	mov.w	r3, #0
+  c4:	837b      	strh	r3, [r7, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:156
+    SPI_InitStructure.SPI_CRCPolynomial = 7;
+  c6:	f04f 0307 	mov.w	r3, #7
+  ca:	83bb      	strh	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:157
+    SPI_Init( SPI_INTERFACE, &SPI_InitStructure );
+  cc:	f107 030c 	add.w	r3, r7, #12
+  d0:	4807      	ldr	r0, [pc, #28]	; (f0 <SpiInit+0xf0>)
+  d2:	4619      	mov	r1, r3
+  d4:	f7ff fffe 	bl	0 <SPI_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:158
+    SPI_Cmd( SPI_INTERFACE, ENABLE );
+  d8:	4805      	ldr	r0, [pc, #20]	; (f0 <SpiInit+0xf0>)
+  da:	f04f 0101 	mov.w	r1, #1
+  de:	f7ff fffe 	bl	0 <SPI_Cmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:159
+}
+  e2:	f107 0720 	add.w	r7, r7, #32
+  e6:	46bd      	mov	sp, r7
+  e8:	bd80      	pop	{r7, pc}
+  ea:	bf00      	nop
+  ec:	40020000 	.word	0x40020000
+  f0:	40013000 	.word	0x40013000
+
+Disassembly of section .text.SpiInOut:
+
+00000000 <SpiInOut>:
+SpiInOut():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:162
+
+uint8_t SpiInOut( uint8_t outData )
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:164
+    /* Send SPIy data */
+    SPI_I2S_SendData( SPI_INTERFACE, outData );
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	b29b      	uxth	r3, r3
+   e:	480b      	ldr	r0, [pc, #44]	; (3c <SpiInOut+0x3c>)
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SPI_I2S_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:165
+    while( SPI_I2S_GetFlagStatus( SPI_INTERFACE, SPI_I2S_FLAG_RXNE ) == RESET );
+  16:	bf00      	nop
+  18:	4808      	ldr	r0, [pc, #32]	; (3c <SpiInOut+0x3c>)
+  1a:	f04f 0101 	mov.w	r1, #1
+  1e:	f7ff fffe 	bl	0 <SPI_I2S_GetFlagStatus>
+  22:	4603      	mov	r3, r0
+  24:	2b00      	cmp	r3, #0
+  26:	d0f7      	beq.n	18 <SpiInOut+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:166
+    return SPI_I2S_ReceiveData( SPI_INTERFACE );
+  28:	4804      	ldr	r0, [pc, #16]	; (3c <SpiInOut+0x3c>)
+  2a:	f7ff fffe 	bl	0 <SPI_I2S_ReceiveData>
+  2e:	4603      	mov	r3, r0
+  30:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/spi.c:167
+}
+  32:	4618      	mov	r0, r3
+  34:	f107 0708 	add.w	r7, r7, #8
+  38:	46bd      	mov	sp, r7
+  3a:	bd80      	pop	{r7, pc}
+  3c:	40013000 	.word	0x40013000

@@ -1,0 +1,834 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_pwr.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_pwr.o
+
+
+Disassembly of section .text.PWR_DeInit:
+
+00000000 <PWR_DeInit>:
+PWR_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:135
+  * @brief  Deinitializes the PWR peripheral registers to their default reset values.     
+  * @param  None
+  * @retval None
+  */
+void PWR_DeInit(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:136
+  RCC_APB1PeriphResetCmd(RCC_APB1Periph_PWR, ENABLE);
+   4:	f04f 5080 	mov.w	r0, #268435456	; 0x10000000
+   8:	f04f 0101 	mov.w	r1, #1
+   c:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:137
+  RCC_APB1PeriphResetCmd(RCC_APB1Periph_PWR, DISABLE);
+  10:	f04f 5080 	mov.w	r0, #268435456	; 0x10000000
+  14:	f04f 0100 	mov.w	r1, #0
+  18:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:138
+}
+  1c:	bd80      	pop	{r7, pc}
+  1e:	bf00      	nop
+
+Disassembly of section .text.PWR_BackupAccessCmd:
+
+00000000 <PWR_BackupAccessCmd>:
+PWR_BackupAccessCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:150
+  * @param  NewState: new state of the access to the backup domain.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_BackupAccessCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:154
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CR_DBP_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_BackupAccessCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:155
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e0020 	.word	0x420e0020
+
+Disassembly of section .text.PWR_PVDLevelConfig:
+
+00000000 <PWR_PVDLevelConfig>:
+PWR_PVDLevelConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:198
+  *         more details about the voltage threshold corresponding to each 
+  *         detection level.
+  * @retval None
+  */
+void PWR_PVDLevelConfig(uint32_t PWR_PVDLevel)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:199
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:204
+  
+  /* Check the parameters */
+  assert_param(IS_PWR_PVD_LEVEL(PWR_PVDLevel));
+  
+  tmpreg = PWR->CR;
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <PWR_PVDLevelConfig+0x38>)
+  10:	681b      	ldr	r3, [r3, #0]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:207
+  
+  /* Clear PLS[7:5] bits */
+  tmpreg &= CR_PLS_MASK;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f023 03e0 	bic.w	r3, r3, #224	; 0xe0
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:210
+  
+  /* Set PLS[7:5] bits according to PWR_PVDLevel value */
+  tmpreg |= PWR_PVDLevel;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	ea42 0303 	orr.w	r3, r2, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:213
+  
+  /* Store the new value */
+  PWR->CR = tmpreg;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <PWR_PVDLevelConfig+0x38>)
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:214
+}
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40007000 	.word	0x40007000
+
+Disassembly of section .text.PWR_PVDCmd:
+
+00000000 <PWR_PVDCmd>:
+PWR_PVDCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:223
+  * @param  NewState: new state of the PVD.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_PVDCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:227
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CR_PVDE_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_PVDCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:228
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e0010 	.word	0x420e0010
+
+Disassembly of section .text.PWR_WakeUpPinCmd:
+
+00000000 <PWR_WakeUpPinCmd>:
+PWR_WakeUpPinCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:257
+  * @param  NewState: new state of the WakeUp Pin functionality.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_WakeUpPinCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:261
+  /* Check the parameters */  
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) CSR_EWUP_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_WakeUpPinCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:262
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e00a0 	.word	0x420e00a0
+
+Disassembly of section .text.PWR_BackupRegulatorCmd:
+
+00000000 <PWR_BackupRegulatorCmd>:
+PWR_BackupRegulatorCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:354
+  * @param  NewState: new state of the Backup Regulator.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_BackupRegulatorCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:358
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) CSR_BRE_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_BackupRegulatorCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:359
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e00a4 	.word	0x420e00a4
+
+Disassembly of section .text.PWR_MainRegulatorModeConfig:
+
+00000000 <PWR_MainRegulatorModeConfig>:
+PWR_MainRegulatorModeConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:376
+  *            @arg PWR_Regulator_Voltage_Scale3: Regulator voltage output Scale 3 mode, 
+  *                                                System frequency up to 120 MHz (only for STM32F42xxx/43xxx devices)
+  * @retval None
+  */
+void PWR_MainRegulatorModeConfig(uint32_t PWR_Regulator_Voltage)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:377
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:382
+	
+  /* Check the parameters */
+  assert_param(IS_PWR_REGULATOR_VOLTAGE(PWR_Regulator_Voltage));
+
+  tmpreg = PWR->CR;
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <PWR_MainRegulatorModeConfig+0x38>)
+  10:	681b      	ldr	r3, [r3, #0]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:385
+  
+  /* Clear VOS[15:14] bits */
+  tmpreg &= CR_VOS_MASK;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f423 4340 	bic.w	r3, r3, #49152	; 0xc000
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:388
+  
+  /* Set VOS[15:14] bits according to PWR_Regulator_Voltage value */
+  tmpreg |= PWR_Regulator_Voltage;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	ea42 0303 	orr.w	r3, r2, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:391
+  
+  /* Store the new value */
+  PWR->CR = tmpreg;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <PWR_MainRegulatorModeConfig+0x38>)
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:392
+}
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40007000 	.word	0x40007000
+
+Disassembly of section .text.PWR_OverDriveCmd:
+
+00000000 <PWR_OverDriveCmd>:
+PWR_OverDriveCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:411
+  * @param  NewState: new state of the Over Drive mode.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_OverDriveCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:416
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  /* Set/Reset the ODEN bit to enable/disable the Over Drive mode */
+  *(__IO uint32_t *) CR_ODEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_OverDriveCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:417
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e0040 	.word	0x420e0040
+
+Disassembly of section .text.PWR_OverDriveSWCmd:
+
+00000000 <PWR_OverDriveSWCmd>:
+PWR_OverDriveSWCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:429
+  * @param  NewState: new state of the Over Drive switching mode.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_OverDriveSWCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:434
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  /* Set/Reset the ODSWEN bit to enable/disable the Over Drive switching mode */
+  *(__IO uint32_t *) CR_ODSWEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_OverDriveSWCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:435
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e0044 	.word	0x420e0044
+
+Disassembly of section .text.PWR_UnderDriveCmd:
+
+00000000 <PWR_UnderDriveCmd>:
+PWR_UnderDriveCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:456
+  * @param  NewState: new state of the Under Drive mode.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_UnderDriveCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:460
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <PWR_UnderDriveCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:463
+  {
+    /* Set the UDEN[1:0] bits to enable the Under Drive mode */
+    PWR->CR |= (uint32_t)PWR_CR_UDEN;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <PWR_UnderDriveCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <PWR_UnderDriveCmd+0x34>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f442 2240 	orr.w	r2, r2, #786432	; 0xc0000
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <PWR_UnderDriveCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:468
+  }
+  else
+  {
+    /* Reset the UDEN[1:0] bits to disable the Under Drive mode */
+    PWR->CR &= (uint32_t)(~PWR_CR_UDEN);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <PWR_UnderDriveCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <PWR_UnderDriveCmd+0x34>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f422 2240 	bic.w	r2, r2, #786432	; 0xc0000
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:470
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40007000 	.word	0x40007000
+
+Disassembly of section .text.PWR_FlashPowerDownCmd:
+
+00000000 <PWR_FlashPowerDownCmd>:
+PWR_FlashPowerDownCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:500
+  * @param  NewState: new state of the Flash power mode.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void PWR_FlashPowerDownCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:504
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) CR_FPDS_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <PWR_FlashPowerDownCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:505
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	420e0024 	.word	0x420e0024
+
+Disassembly of section .text.PWR_EnterSTOPMode:
+
+00000000 <PWR_EnterSTOPMode>:
+PWR_EnterSTOPMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:646
+  *            @arg PWR_STOPEntry_WFI: enter STOP mode with WFI instruction
+  *            @arg PWR_STOPEntry_WFE: enter STOP mode with WFE instruction
+  * @retval None
+  */
+void PWR_EnterSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:647
+  uint32_t tmpreg = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:654
+  /* Check the parameters */
+  assert_param(IS_PWR_REGULATOR(PWR_Regulator));
+  assert_param(IS_PWR_STOP_ENTRY(PWR_STOPEntry));
+  
+  /* Select the regulator state in STOP mode ---------------------------------*/
+  tmpreg = PWR->CR;
+  12:	4b14      	ldr	r3, [pc, #80]	; (64 <PWR_EnterSTOPMode+0x64>)
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:656
+  /* Clear PDDS and LPDS bits */
+  tmpreg &= CR_DS_MASK;
+  18:	68fb      	ldr	r3, [r7, #12]
+  1a:	f423 6340 	bic.w	r3, r3, #3072	; 0xc00
+  1e:	f023 0303 	bic.w	r3, r3, #3
+  22:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:659
+  
+  /* Set LPDS, MRLVDS and LPLVDS bits according to PWR_Regulator value */
+  tmpreg |= PWR_Regulator;
+  24:	68fa      	ldr	r2, [r7, #12]
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	ea42 0303 	orr.w	r3, r2, r3
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:662
+  
+  /* Store the new value */
+  PWR->CR = tmpreg;
+  2e:	4b0d      	ldr	r3, [pc, #52]	; (64 <PWR_EnterSTOPMode+0x64>)
+  30:	68fa      	ldr	r2, [r7, #12]
+  32:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:665
+  
+  /* Set SLEEPDEEP bit of Cortex System Control Register */
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  34:	4b0c      	ldr	r3, [pc, #48]	; (68 <PWR_EnterSTOPMode+0x68>)
+  36:	4a0c      	ldr	r2, [pc, #48]	; (68 <PWR_EnterSTOPMode+0x68>)
+  38:	6912      	ldr	r2, [r2, #16]
+  3a:	f042 0204 	orr.w	r2, r2, #4
+  3e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:668
+  
+  /* Select STOP mode entry --------------------------------------------------*/
+  if(PWR_STOPEntry == PWR_STOPEntry_WFI)
+  40:	78fb      	ldrb	r3, [r7, #3]
+  42:	2b01      	cmp	r3, #1
+  44:	d101      	bne.n	4a <PWR_EnterSTOPMode+0x4a>
+__WFI():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/core_cmInstr.h:338
+    Wait For Interrupt is a hint instruction that suspends execution
+    until one of a number of events occurs.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __WFI(void)
+{
+  __ASM volatile ("wfi");
+  46:	bf30      	wfi
+  48:	e000      	b.n	4c <PWR_EnterSTOPMode+0x4c>
+__WFE():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/core_cmInstr.h:349
+    Wait For Event is a hint instruction that permits the processor to enter
+    a low-power state until one of a number of events occurs.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __WFE(void)
+{
+  __ASM volatile ("wfe");
+  4a:	bf20      	wfe
+PWR_EnterSTOPMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:679
+  {
+    /* Request Wait For Event */
+    __WFE();
+  }
+  /* Reset SLEEPDEEP bit of Cortex System Control Register */
+  SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);  
+  4c:	4b06      	ldr	r3, [pc, #24]	; (68 <PWR_EnterSTOPMode+0x68>)
+  4e:	4a06      	ldr	r2, [pc, #24]	; (68 <PWR_EnterSTOPMode+0x68>)
+  50:	6912      	ldr	r2, [r2, #16]
+  52:	f022 0204 	bic.w	r2, r2, #4
+  56:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:680
+}
+  58:	f107 0714 	add.w	r7, r7, #20
+  5c:	46bd      	mov	sp, r7
+  5e:	bc80      	pop	{r7}
+  60:	4770      	bx	lr
+  62:	bf00      	nop
+  64:	40007000 	.word	0x40007000
+  68:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.PWR_EnterUnderDriveSTOPMode:
+
+00000000 <PWR_EnterUnderDriveSTOPMode>:
+PWR_EnterUnderDriveSTOPMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:710
+  *            @arg PWR_STOPEntry_WFI: enter STOP mode with WFI instruction
+  *            @arg PWR_STOPEntry_WFE: enter STOP mode with WFE instruction
+  * @retval None
+  */
+void PWR_EnterUnderDriveSTOPMode(uint32_t PWR_Regulator, uint8_t PWR_STOPEntry)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:711
+  uint32_t tmpreg = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:718
+  /* Check the parameters */
+  assert_param(IS_PWR_REGULATOR_UNDERDRIVE(PWR_Regulator));
+  assert_param(IS_PWR_STOP_ENTRY(PWR_STOPEntry));
+  
+  /* Select the regulator state in STOP mode ---------------------------------*/
+  tmpreg = PWR->CR;
+  12:	4b14      	ldr	r3, [pc, #80]	; (64 <PWR_EnterUnderDriveSTOPMode+0x64>)
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:720
+  /* Clear PDDS and LPDS bits */
+  tmpreg &= CR_DS_MASK;
+  18:	68fb      	ldr	r3, [r7, #12]
+  1a:	f423 6340 	bic.w	r3, r3, #3072	; 0xc00
+  1e:	f023 0303 	bic.w	r3, r3, #3
+  22:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:723
+  
+  /* Set LPDS, MRLUDS and LPLUDS bits according to PWR_Regulator value */
+  tmpreg |= PWR_Regulator;
+  24:	68fa      	ldr	r2, [r7, #12]
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	ea42 0303 	orr.w	r3, r2, r3
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:726
+  
+  /* Store the new value */
+  PWR->CR = tmpreg;
+  2e:	4b0d      	ldr	r3, [pc, #52]	; (64 <PWR_EnterUnderDriveSTOPMode+0x64>)
+  30:	68fa      	ldr	r2, [r7, #12]
+  32:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:729
+  
+  /* Set SLEEPDEEP bit of Cortex System Control Register */
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  34:	4b0c      	ldr	r3, [pc, #48]	; (68 <PWR_EnterUnderDriveSTOPMode+0x68>)
+  36:	4a0c      	ldr	r2, [pc, #48]	; (68 <PWR_EnterUnderDriveSTOPMode+0x68>)
+  38:	6912      	ldr	r2, [r2, #16]
+  3a:	f042 0204 	orr.w	r2, r2, #4
+  3e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:732
+  
+  /* Select STOP mode entry --------------------------------------------------*/
+  if(PWR_STOPEntry == PWR_STOPEntry_WFI)
+  40:	78fb      	ldrb	r3, [r7, #3]
+  42:	2b01      	cmp	r3, #1
+  44:	d101      	bne.n	4a <PWR_EnterUnderDriveSTOPMode+0x4a>
+__WFI():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/core_cmInstr.h:338
+    Wait For Interrupt is a hint instruction that suspends execution
+    until one of a number of events occurs.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __WFI(void)
+{
+  __ASM volatile ("wfi");
+  46:	bf30      	wfi
+  48:	e000      	b.n	4c <PWR_EnterUnderDriveSTOPMode+0x4c>
+__WFE():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/core_cmInstr.h:349
+    Wait For Event is a hint instruction that permits the processor to enter
+    a low-power state until one of a number of events occurs.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __WFE(void)
+{
+  __ASM volatile ("wfe");
+  4a:	bf20      	wfe
+PWR_EnterUnderDriveSTOPMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:743
+  {
+    /* Request Wait For Event */
+    __WFE();
+  }
+  /* Reset SLEEPDEEP bit of Cortex System Control Register */
+  SCB->SCR &= (uint32_t)~((uint32_t)SCB_SCR_SLEEPDEEP_Msk);  
+  4c:	4b06      	ldr	r3, [pc, #24]	; (68 <PWR_EnterUnderDriveSTOPMode+0x68>)
+  4e:	4a06      	ldr	r2, [pc, #24]	; (68 <PWR_EnterUnderDriveSTOPMode+0x68>)
+  50:	6912      	ldr	r2, [r2, #16]
+  52:	f022 0204 	bic.w	r2, r2, #4
+  56:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:744
+}
+  58:	f107 0714 	add.w	r7, r7, #20
+  5c:	46bd      	mov	sp, r7
+  5e:	bc80      	pop	{r7}
+  60:	4770      	bx	lr
+  62:	bf00      	nop
+  64:	40007000 	.word	0x40007000
+  68:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.PWR_EnterSTANDBYMode:
+
+00000000 <PWR_EnterSTANDBYMode>:
+PWR_EnterSTANDBYMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:758
+  *          - WKUP pin 1 (PA0) if enabled.       
+  * @param  None
+  * @retval None
+  */
+void PWR_EnterSTANDBYMode(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:760
+  /* Clear Wakeup flag */
+  PWR->CR |= PWR_CR_CWUF;
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <PWR_EnterSTANDBYMode+0x30>)
+   6:	4a0a      	ldr	r2, [pc, #40]	; (30 <PWR_EnterSTANDBYMode+0x30>)
+   8:	6812      	ldr	r2, [r2, #0]
+   a:	f042 0204 	orr.w	r2, r2, #4
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:763
+  
+  /* Select STANDBY mode */
+  PWR->CR |= PWR_CR_PDDS;
+  10:	4b07      	ldr	r3, [pc, #28]	; (30 <PWR_EnterSTANDBYMode+0x30>)
+  12:	4a07      	ldr	r2, [pc, #28]	; (30 <PWR_EnterSTANDBYMode+0x30>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f042 0202 	orr.w	r2, r2, #2
+  1a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:766
+  
+  /* Set SLEEPDEEP bit of Cortex System Control Register */
+  SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <PWR_EnterSTANDBYMode+0x34>)
+  1e:	4a05      	ldr	r2, [pc, #20]	; (34 <PWR_EnterSTANDBYMode+0x34>)
+  20:	6912      	ldr	r2, [r2, #16]
+  22:	f042 0204 	orr.w	r2, r2, #4
+  26:	611a      	str	r2, [r3, #16]
+__WFI():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/core_cmInstr.h:338
+    Wait For Interrupt is a hint instruction that suspends execution
+    until one of a number of events occurs.
+ */
+__attribute__( ( always_inline ) ) __STATIC_INLINE void __WFI(void)
+{
+  __ASM volatile ("wfi");
+  28:	bf30      	wfi
+PWR_EnterSTANDBYMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:774
+#if defined ( __CC_ARM   )
+  __force_stores();
+#endif
+  /* Request Wait For Interrupt */
+  __WFI();
+}
+  2a:	46bd      	mov	sp, r7
+  2c:	bc80      	pop	{r7}
+  2e:	4770      	bx	lr
+  30:	40007000 	.word	0x40007000
+  34:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.PWR_GetFlagStatus:
+
+00000000 <PWR_GetFlagStatus>:
+PWR_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:821
+  *            @arg PWR_FLAG_UDRDY: This flag indicates that the Under-drive mode
+  *                 is enabled in Stop mode (STM32F42xxx/43xxx devices)
+  * @retval The new state of PWR_FLAG (SET or RESET).
+  */
+FlagStatus PWR_GetFlagStatus(uint32_t PWR_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:822
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:827
+  
+  /* Check the parameters */
+  assert_param(IS_PWR_GET_FLAG(PWR_FLAG));
+  
+  if ((PWR->CSR & PWR_FLAG) != (uint32_t)RESET)
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <PWR_GetFlagStatus+0x38>)
+  10:	685a      	ldr	r2, [r3, #4]
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <PWR_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:829
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <PWR_GetFlagStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:833
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:836
+  }
+  /* Return the flag status */
+  return bitstatus;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:837
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40007000 	.word	0x40007000
+
+Disassembly of section .text.PWR_ClearFlag:
+
+00000000 <PWR_ClearFlag>:
+PWR_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:849
+  *            @arg PWR_FLAG_SB: StandBy flag
+  *            @arg PWR_FLAG_UDRDY: Under-drive ready flag (STM32F42xxx/43xxx devices)
+  * @retval None
+  */
+void PWR_ClearFlag(uint32_t PWR_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:854
+  /* Check the parameters */
+  assert_param(IS_PWR_CLEAR_FLAG(PWR_FLAG));
+  
+#if defined (STM32F427_437xx) || defined (STM32F429_439xx)
+  if (PWR_FLAG != PWR_FLAG_UDRDY)
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f5b3 2f40 	cmp.w	r3, #786432	; 0xc0000
+   e:	d009      	beq.n	24 <PWR_ClearFlag+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:856
+  {
+    PWR->CR |=  PWR_FLAG << 2;
+  10:	4b0a      	ldr	r3, [pc, #40]	; (3c <PWR_ClearFlag+0x3c>)
+  12:	4a0a      	ldr	r2, [pc, #40]	; (3c <PWR_ClearFlag+0x3c>)
+  14:	6811      	ldr	r1, [r2, #0]
+  16:	687a      	ldr	r2, [r7, #4]
+  18:	ea4f 0282 	mov.w	r2, r2, lsl #2
+  1c:	ea41 0202 	orr.w	r2, r1, r2
+  20:	601a      	str	r2, [r3, #0]
+  22:	e005      	b.n	30 <PWR_ClearFlag+0x30>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:860
+  }
+  else
+  {
+    PWR->CSR |= PWR_FLAG_UDRDY;
+  24:	4b05      	ldr	r3, [pc, #20]	; (3c <PWR_ClearFlag+0x3c>)
+  26:	4a05      	ldr	r2, [pc, #20]	; (3c <PWR_ClearFlag+0x3c>)
+  28:	6852      	ldr	r2, [r2, #4]
+  2a:	f442 2240 	orr.w	r2, r2, #786432	; 0xc0000
+  2e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_pwr.c:867
+#endif /* STM32F427_437xx ||  STM32F429_439xx */
+
+#if defined (STM32F40_41xxx) || defined (STM32F401xx) 
+  PWR->CR |=  PWR_FLAG << 2;
+#endif /* STM32F40_41xxx */
+}
+  30:	f107 070c 	add.w	r7, r7, #12
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40007000 	.word	0x40007000

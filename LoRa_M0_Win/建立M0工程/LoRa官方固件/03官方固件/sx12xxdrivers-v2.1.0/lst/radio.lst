@@ -1,0 +1,68 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\radio.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\radio.o
+
+
+Disassembly of section .text.RadioDriverInit:
+
+00000000 <RadioDriverInit>:
+RadioDriverInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:38
+#endif    
+
+tRadioDriver RadioDriver;
+
+tRadioDriver* RadioDriverInit( void )
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:54
+    RadioDriver.StartRx = SX1272StartRx;
+    RadioDriver.GetRxPacket = SX1272GetRxPacket;
+    RadioDriver.SetTxPacket = SX1272SetTxPacket;
+    RadioDriver.Process = SX1272Process;
+#elif defined( USE_SX1276_RADIO )
+    RadioDriver.Init = SX1276Init;
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <RadioDriverInit+0x34>)
+   6:	4a0c      	ldr	r2, [pc, #48]	; (38 <RadioDriverInit+0x38>)
+   8:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:55
+    RadioDriver.Reset = SX1276Reset;
+   a:	4b0a      	ldr	r3, [pc, #40]	; (34 <RadioDriverInit+0x34>)
+   c:	4a0b      	ldr	r2, [pc, #44]	; (3c <RadioDriverInit+0x3c>)
+   e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:56
+    RadioDriver.StartRx = SX1276StartRx;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <RadioDriverInit+0x34>)
+  12:	4a0b      	ldr	r2, [pc, #44]	; (40 <RadioDriverInit+0x40>)
+  14:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:57
+    RadioDriver.GetRxPacket = SX1276GetRxPacket;
+  16:	4b07      	ldr	r3, [pc, #28]	; (34 <RadioDriverInit+0x34>)
+  18:	4a0a      	ldr	r2, [pc, #40]	; (44 <RadioDriverInit+0x44>)
+  1a:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:58
+    RadioDriver.SetTxPacket = SX1276SetTxPacket;
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <RadioDriverInit+0x34>)
+  1e:	4a0a      	ldr	r2, [pc, #40]	; (48 <RadioDriverInit+0x48>)
+  20:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:59
+    RadioDriver.Process = SX1276Process;
+  22:	4b04      	ldr	r3, [pc, #16]	; (34 <RadioDriverInit+0x34>)
+  24:	4a09      	ldr	r2, [pc, #36]	; (4c <RadioDriverInit+0x4c>)
+  26:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:64
+#else
+    #error "Missing define: USE_XXXXXX_RADIO (ie. USE_SX1272_RADIO)"
+#endif    
+
+    return &RadioDriver;
+  28:	4b02      	ldr	r3, [pc, #8]	; (34 <RadioDriverInit+0x34>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/radio.c:65
+}
+  2a:	4618      	mov	r0, r3
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+	...

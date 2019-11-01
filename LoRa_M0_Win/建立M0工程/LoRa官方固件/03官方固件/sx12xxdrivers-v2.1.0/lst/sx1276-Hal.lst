@@ -1,0 +1,676 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-Hal.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-Hal.o
+
+
+Disassembly of section .text.SX1276InitIo:
+
+00000000 <SX1276InitIo>:
+SX1276InitIo():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:130
+#define RXTX_PIN                                    FEM_CTX_PIN
+#endif
+
+
+void SX1276InitIo( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:134
+    GPIO_InitTypeDef GPIO_InitStructure;
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+    RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB |
+   6:	f04f 0043 	mov.w	r0, #67	; 0x43
+   a:	f04f 0101 	mov.w	r1, #1
+   e:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:142
+    RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB |
+                            RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE );
+#endif
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  12:	f04f 0301 	mov.w	r3, #1
+  16:	713b      	strb	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:143
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  18:	f04f 0302 	mov.w	r3, #2
+  1c:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:144
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  1e:	f04f 0300 	mov.w	r3, #0
+  22:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:145
+    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+  24:	f04f 0301 	mov.w	r3, #1
+  28:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:152
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+#endif
+    
+    // Configure NSS as output
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_SET );
+  2a:	4818      	ldr	r0, [pc, #96]	; (8c <SX1276InitIo+0x8c>)
+  2c:	f04f 0110 	mov.w	r1, #16
+  30:	f04f 0201 	mov.w	r2, #1
+  34:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:153
+    GPIO_InitStructure.GPIO_Pin = NSS_PIN;
+  38:	f04f 0310 	mov.w	r3, #16
+  3c:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:154
+    GPIO_Init( NSS_IOPORT, &GPIO_InitStructure );
+  3e:	463b      	mov	r3, r7
+  40:	4812      	ldr	r0, [pc, #72]	; (8c <SX1276InitIo+0x8c>)
+  42:	4619      	mov	r1, r3
+  44:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:158
+
+    // Configure radio DIO as inputs
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  48:	f04f 0300 	mov.w	r3, #0
+  4c:	713b      	strb	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:159
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  4e:	f04f 0302 	mov.w	r3, #2
+  52:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:165
+#else
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+#endif
+
+    // Configure DIO0
+    GPIO_InitStructure.GPIO_Pin =  DIO0_PIN;
+  54:	f44f 5300 	mov.w	r3, #8192	; 0x2000
+  58:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:166
+    GPIO_Init( DIO0_IOPORT, &GPIO_InitStructure );
+  5a:	463b      	mov	r3, r7
+  5c:	480c      	ldr	r0, [pc, #48]	; (90 <SX1276InitIo+0x90>)
+  5e:	4619      	mov	r1, r3
+  60:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:169
+    
+    // Configure DIO1
+    GPIO_InitStructure.GPIO_Pin =  DIO1_PIN;
+  64:	f04f 0380 	mov.w	r3, #128	; 0x80
+  68:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:170
+    GPIO_Init( DIO1_IOPORT, &GPIO_InitStructure );
+  6a:	463b      	mov	r3, r7
+  6c:	4809      	ldr	r0, [pc, #36]	; (94 <SX1276InitIo+0x94>)
+  6e:	4619      	mov	r1, r3
+  70:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:173
+    
+    // Configure DIO2
+    GPIO_InitStructure.GPIO_Pin =  DIO2_PIN;
+  74:	f04f 0304 	mov.w	r3, #4
+  78:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:174
+    GPIO_Init( DIO2_IOPORT, &GPIO_InitStructure );
+  7a:	463b      	mov	r3, r7
+  7c:	4803      	ldr	r0, [pc, #12]	; (8c <SX1276InitIo+0x8c>)
+  7e:	4619      	mov	r1, r3
+  80:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:183
+    // Configure DIO3 as input
+    
+    // Configure DIO4 as input
+    
+    // Configure DIO5 as input
+}
+  84:	f107 0708 	add.w	r7, r7, #8
+  88:	46bd      	mov	sp, r7
+  8a:	bd80      	pop	{r7, pc}
+  8c:	40020000 	.word	0x40020000
+  90:	40021800 	.word	0x40021800
+  94:	40020400 	.word	0x40020400
+
+Disassembly of section .text.SX1276SetReset:
+
+00000000 <SX1276SetReset>:
+SX1276SetReset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:186
+
+void SX1276SetReset( uint8_t state )
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:189
+    GPIO_InitTypeDef GPIO_InitStructure;
+
+    if( state == RADIO_RESET_ON )
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b01      	cmp	r3, #1
+   e:	d119      	bne.n	44 <SX1276SetReset+0x44>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:192
+    {
+        // Set RESET pin to 0
+        GPIO_WriteBit( RESET_IOPORT, RESET_PIN, Bit_RESET );
+  10:	4816      	ldr	r0, [pc, #88]	; (6c <SX1276SetReset+0x6c>)
+  12:	f44f 5180 	mov.w	r1, #4096	; 0x1000
+  16:	f04f 0200 	mov.w	r2, #0
+  1a:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:196
+
+        // Configure RESET as output
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+  1e:	f04f 0301 	mov.w	r3, #1
+  22:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:197
+        GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:202
+#else
+
+        GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+#endif        
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  2a:	f04f 0302 	mov.w	r3, #2
+  2e:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:203
+        GPIO_InitStructure.GPIO_Pin = RESET_PIN;
+  30:	f44f 5380 	mov.w	r3, #4096	; 0x1000
+  34:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:204
+        GPIO_Init( RESET_IOPORT, &GPIO_InitStructure );
+  36:	f107 0308 	add.w	r3, r7, #8
+  3a:	480c      	ldr	r0, [pc, #48]	; (6c <SX1276SetReset+0x6c>)
+  3c:	4619      	mov	r1, r3
+  3e:	f7ff fffe 	bl	0 <GPIO_Init>
+  42:	e00e      	b.n	62 <SX1276SetReset+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:211
+    else
+    {
+#if FPGA == 0    
+        // Configure RESET as input
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  44:	f04f 0300 	mov.w	r3, #0
+  48:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:215
+#else
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+#endif        
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  4a:	f04f 0302 	mov.w	r3, #2
+  4e:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:216
+        GPIO_InitStructure.GPIO_Pin =  RESET_PIN;
+  50:	f44f 5380 	mov.w	r3, #4096	; 0x1000
+  54:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:217
+        GPIO_Init( RESET_IOPORT, &GPIO_InitStructure );
+  56:	f107 0308 	add.w	r3, r7, #8
+  5a:	4804      	ldr	r0, [pc, #16]	; (6c <SX1276SetReset+0x6c>)
+  5c:	4619      	mov	r1, r3
+  5e:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:222
+#else
+        GPIO_WriteBit( RESET_IOPORT, RESET_PIN, Bit_RESET );
+#endif
+    }
+}
+  62:	f107 0710 	add.w	r7, r7, #16
+  66:	46bd      	mov	sp, r7
+  68:	bd80      	pop	{r7, pc}
+  6a:	bf00      	nop
+  6c:	40021800 	.word	0x40021800
+
+Disassembly of section .text.SX1276Write:
+
+00000000 <SX1276Write>:
+SX1276Write():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:225
+
+void SX1276Write( uint8_t addr, uint8_t data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:226
+    SX1276WriteBuffer( addr, &data, 1 );
+   e:	79fa      	ldrb	r2, [r7, #7]
+  10:	f107 0306 	add.w	r3, r7, #6
+  14:	4610      	mov	r0, r2
+  16:	4619      	mov	r1, r3
+  18:	f04f 0201 	mov.w	r2, #1
+  1c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:227
+}
+  20:	f107 0708 	add.w	r7, r7, #8
+  24:	46bd      	mov	sp, r7
+  26:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.SX1276Read:
+
+00000000 <SX1276Read>:
+SX1276Read():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:230
+
+void SX1276Read( uint8_t addr, uint8_t *data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:231
+    SX1276ReadBuffer( addr, data, 1 );
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	4618      	mov	r0, r3
+  10:	6839      	ldr	r1, [r7, #0]
+  12:	f04f 0201 	mov.w	r2, #1
+  16:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:232
+}
+  1a:	f107 0708 	add.w	r7, r7, #8
+  1e:	46bd      	mov	sp, r7
+  20:	bd80      	pop	{r7, pc}
+  22:	bf00      	nop
+
+Disassembly of section .text.SX1276WriteBuffer:
+
+00000000 <SX1276WriteBuffer>:
+SX1276WriteBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:235
+
+void SX1276WriteBuffer( uint8_t addr, uint8_t *buffer, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60b9      	str	r1, [r7, #8]
+   8:	4613      	mov	r3, r2
+   a:	4602      	mov	r2, r0
+   c:	73fa      	strb	r2, [r7, #15]
+   e:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:239
+    uint8_t i;
+
+    //NSS = 0;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_RESET );
+  10:	4815      	ldr	r0, [pc, #84]	; (68 <SX1276WriteBuffer+0x68>)
+  12:	f04f 0110 	mov.w	r1, #16
+  16:	f04f 0200 	mov.w	r2, #0
+  1a:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:241
+
+    SpiInOut( addr | 0x80 );
+  1e:	7bfb      	ldrb	r3, [r7, #15]
+  20:	f063 037f 	orn	r3, r3, #127	; 0x7f
+  24:	b2db      	uxtb	r3, r3
+  26:	4618      	mov	r0, r3
+  28:	f7ff fffe 	bl	0 <SpiInOut>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:242
+    for( i = 0; i < size; i++ )
+  2c:	f04f 0300 	mov.w	r3, #0
+  30:	75fb      	strb	r3, [r7, #23]
+  32:	e00a      	b.n	4a <SX1276WriteBuffer+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:244
+    {
+        SpiInOut( buffer[i] );
+  34:	7dfb      	ldrb	r3, [r7, #23]
+  36:	68ba      	ldr	r2, [r7, #8]
+  38:	18d3      	adds	r3, r2, r3
+  3a:	781b      	ldrb	r3, [r3, #0]
+  3c:	4618      	mov	r0, r3
+  3e:	f7ff fffe 	bl	0 <SpiInOut>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:242
+
+    //NSS = 0;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_RESET );
+
+    SpiInOut( addr | 0x80 );
+    for( i = 0; i < size; i++ )
+  42:	7dfb      	ldrb	r3, [r7, #23]
+  44:	f103 0301 	add.w	r3, r3, #1
+  48:	75fb      	strb	r3, [r7, #23]
+  4a:	7dfa      	ldrb	r2, [r7, #23]
+  4c:	79fb      	ldrb	r3, [r7, #7]
+  4e:	429a      	cmp	r2, r3
+  50:	d3f0      	bcc.n	34 <SX1276WriteBuffer+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:248
+    {
+        SpiInOut( buffer[i] );
+    }
+
+    //NSS = 1;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_SET );
+  52:	4805      	ldr	r0, [pc, #20]	; (68 <SX1276WriteBuffer+0x68>)
+  54:	f04f 0110 	mov.w	r1, #16
+  58:	f04f 0201 	mov.w	r2, #1
+  5c:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:249
+}
+  60:	f107 0718 	add.w	r7, r7, #24
+  64:	46bd      	mov	sp, r7
+  66:	bd80      	pop	{r7, pc}
+  68:	40020000 	.word	0x40020000
+
+Disassembly of section .text.SX1276ReadBuffer:
+
+00000000 <SX1276ReadBuffer>:
+SX1276ReadBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:252
+
+void SX1276ReadBuffer( uint8_t addr, uint8_t *buffer, uint8_t size )
+{
+   0:	b590      	push	{r4, r7, lr}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	60b9      	str	r1, [r7, #8]
+   8:	4613      	mov	r3, r2
+   a:	4602      	mov	r2, r0
+   c:	73fa      	strb	r2, [r7, #15]
+   e:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:256
+    uint8_t i;
+
+    //NSS = 0;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_RESET );
+  10:	4816      	ldr	r0, [pc, #88]	; (6c <SX1276ReadBuffer+0x6c>)
+  12:	f04f 0110 	mov.w	r1, #16
+  16:	f04f 0200 	mov.w	r2, #0
+  1a:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:258
+
+    SpiInOut( addr & 0x7F );
+  1e:	7bfb      	ldrb	r3, [r7, #15]
+  20:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  24:	b2db      	uxtb	r3, r3
+  26:	4618      	mov	r0, r3
+  28:	f7ff fffe 	bl	0 <SpiInOut>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:260
+
+    for( i = 0; i < size; i++ )
+  2c:	f04f 0300 	mov.w	r3, #0
+  30:	75fb      	strb	r3, [r7, #23]
+  32:	e00c      	b.n	4e <SX1276ReadBuffer+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:262
+    {
+        buffer[i] = SpiInOut( 0 );
+  34:	7dfb      	ldrb	r3, [r7, #23]
+  36:	68ba      	ldr	r2, [r7, #8]
+  38:	18d4      	adds	r4, r2, r3
+  3a:	f04f 0000 	mov.w	r0, #0
+  3e:	f7ff fffe 	bl	0 <SpiInOut>
+  42:	4603      	mov	r3, r0
+  44:	7023      	strb	r3, [r4, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:260
+    //NSS = 0;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_RESET );
+
+    SpiInOut( addr & 0x7F );
+
+    for( i = 0; i < size; i++ )
+  46:	7dfb      	ldrb	r3, [r7, #23]
+  48:	f103 0301 	add.w	r3, r3, #1
+  4c:	75fb      	strb	r3, [r7, #23]
+  4e:	7dfa      	ldrb	r2, [r7, #23]
+  50:	79fb      	ldrb	r3, [r7, #7]
+  52:	429a      	cmp	r2, r3
+  54:	d3ee      	bcc.n	34 <SX1276ReadBuffer+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:266
+    {
+        buffer[i] = SpiInOut( 0 );
+    }
+
+    //NSS = 1;
+    GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_SET );
+  56:	4805      	ldr	r0, [pc, #20]	; (6c <SX1276ReadBuffer+0x6c>)
+  58:	f04f 0110 	mov.w	r1, #16
+  5c:	f04f 0201 	mov.w	r2, #1
+  60:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:267
+}
+  64:	f107 071c 	add.w	r7, r7, #28
+  68:	46bd      	mov	sp, r7
+  6a:	bd90      	pop	{r4, r7, pc}
+  6c:	40020000 	.word	0x40020000
+
+Disassembly of section .text.SX1276WriteFifo:
+
+00000000 <SX1276WriteFifo>:
+SX1276WriteFifo():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:270
+
+void SX1276WriteFifo( uint8_t *buffer, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:271
+    SX1276WriteBuffer( 0, buffer, size );
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	f04f 0000 	mov.w	r0, #0
+  12:	6879      	ldr	r1, [r7, #4]
+  14:	461a      	mov	r2, r3
+  16:	f7ff fffe 	bl	0 <SX1276WriteFifo>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:272
+}
+  1a:	f107 0708 	add.w	r7, r7, #8
+  1e:	46bd      	mov	sp, r7
+  20:	bd80      	pop	{r7, pc}
+  22:	bf00      	nop
+
+Disassembly of section .text.SX1276ReadFifo:
+
+00000000 <SX1276ReadFifo>:
+SX1276ReadFifo():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:275
+
+void SX1276ReadFifo( uint8_t *buffer, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:276
+    SX1276ReadBuffer( 0, buffer, size );
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	f04f 0000 	mov.w	r0, #0
+  12:	6879      	ldr	r1, [r7, #4]
+  14:	461a      	mov	r2, r3
+  16:	f7ff fffe 	bl	0 <SX1276ReadFifo>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:277
+}
+  1a:	f107 0708 	add.w	r7, r7, #8
+  1e:	46bd      	mov	sp, r7
+  20:	bd80      	pop	{r7, pc}
+  22:	bf00      	nop
+
+Disassembly of section .text.SX1276ReadDio0:
+
+00000000 <SX1276ReadDio0>:
+SX1276ReadDio0():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:280
+
+inline uint8_t SX1276ReadDio0( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:281
+    return GPIO_ReadInputDataBit( DIO0_IOPORT, DIO0_PIN );
+   4:	4803      	ldr	r0, [pc, #12]	; (14 <SX1276ReadDio0+0x14>)
+   6:	f44f 5100 	mov.w	r1, #8192	; 0x2000
+   a:	f7ff fffe 	bl	0 <GPIO_ReadInputDataBit>
+   e:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:282
+}
+  10:	4618      	mov	r0, r3
+  12:	bd80      	pop	{r7, pc}
+  14:	40021800 	.word	0x40021800
+
+Disassembly of section .text.SX1276ReadDio1:
+
+00000000 <SX1276ReadDio1>:
+SX1276ReadDio1():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:285
+
+inline uint8_t SX1276ReadDio1( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:286
+    return GPIO_ReadInputDataBit( DIO1_IOPORT, DIO1_PIN );
+   4:	4803      	ldr	r0, [pc, #12]	; (14 <SX1276ReadDio1+0x14>)
+   6:	f04f 0180 	mov.w	r1, #128	; 0x80
+   a:	f7ff fffe 	bl	0 <GPIO_ReadInputDataBit>
+   e:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:287
+}
+  10:	4618      	mov	r0, r3
+  12:	bd80      	pop	{r7, pc}
+  14:	40020400 	.word	0x40020400
+
+Disassembly of section .text.SX1276ReadDio2:
+
+00000000 <SX1276ReadDio2>:
+SX1276ReadDio2():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:290
+
+inline uint8_t SX1276ReadDio2( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:291
+    return GPIO_ReadInputDataBit( DIO2_IOPORT, DIO2_PIN );
+   4:	4803      	ldr	r0, [pc, #12]	; (14 <SX1276ReadDio2+0x14>)
+   6:	f04f 0104 	mov.w	r1, #4
+   a:	f7ff fffe 	bl	0 <GPIO_ReadInputDataBit>
+   e:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:292
+}
+  10:	4618      	mov	r0, r3
+  12:	bd80      	pop	{r7, pc}
+  14:	40020000 	.word	0x40020000
+
+Disassembly of section .text.SX1276ReadDio3:
+
+00000000 <SX1276ReadDio3>:
+SX1276ReadDio3():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:295
+
+inline uint8_t SX1276ReadDio3( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:296
+    return IoePinGet( RF_DIO3_PIN );
+   4:	f04f 0000 	mov.w	r0, #0
+   8:	f7ff fffe 	bl	0 <IoePinGet>
+   c:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:297
+}
+   e:	4618      	mov	r0, r3
+  10:	bd80      	pop	{r7, pc}
+  12:	bf00      	nop
+
+Disassembly of section .text.SX1276ReadDio4:
+
+00000000 <SX1276ReadDio4>:
+SX1276ReadDio4():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:300
+
+inline uint8_t SX1276ReadDio4( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:301
+    return IoePinGet( RF_DIO4_PIN );
+   4:	f04f 0001 	mov.w	r0, #1
+   8:	f7ff fffe 	bl	0 <IoePinGet>
+   c:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:302
+}
+   e:	4618      	mov	r0, r3
+  10:	bd80      	pop	{r7, pc}
+  12:	bf00      	nop
+
+Disassembly of section .text.SX1276ReadDio5:
+
+00000000 <SX1276ReadDio5>:
+SX1276ReadDio5():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:305
+
+inline uint8_t SX1276ReadDio5( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:306
+    return IoePinGet( RF_DIO5_PIN );
+   4:	f04f 0002 	mov.w	r0, #2
+   8:	f7ff fffe 	bl	0 <IoePinGet>
+   c:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:307
+}
+   e:	4618      	mov	r0, r3
+  10:	bd80      	pop	{r7, pc}
+  12:	bf00      	nop
+
+Disassembly of section .text.SX1276WriteRxTx:
+
+00000000 <SX1276WriteRxTx>:
+SX1276WriteRxTx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:310
+
+inline void SX1276WriteRxTx( uint8_t txEnable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:311
+    if( txEnable != 0 )
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d008      	beq.n	22 <SX1276WriteRxTx+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:313
+    {
+        IoePinOn( FEM_CTX_PIN );
+  10:	f04f 000b 	mov.w	r0, #11
+  14:	f7ff fffe 	bl	0 <IoePinOn>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:314
+        IoePinOff( FEM_CPS_PIN );
+  18:	f04f 000a 	mov.w	r0, #10
+  1c:	f7ff fffe 	bl	0 <IoePinOff>
+  20:	e007      	b.n	32 <SX1276WriteRxTx+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:318
+    }
+    else
+    {
+        IoePinOff( FEM_CTX_PIN );
+  22:	f04f 000b 	mov.w	r0, #11
+  26:	f7ff fffe 	bl	0 <IoePinOff>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:319
+        IoePinOn( FEM_CPS_PIN );
+  2a:	f04f 000a 	mov.w	r0, #10
+  2e:	f7ff fffe 	bl	0 <IoePinOn>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1276-Hal.c:321
+    }
+}
+  32:	f107 0708 	add.w	r7, r7, #8
+  36:	46bd      	mov	sp, r7
+  38:	bd80      	pop	{r7, pc}
+  3a:	bf00      	nop

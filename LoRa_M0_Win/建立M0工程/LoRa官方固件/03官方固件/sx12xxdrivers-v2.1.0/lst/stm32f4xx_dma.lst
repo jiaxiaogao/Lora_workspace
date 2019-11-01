@@ -1,0 +1,1821 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_dma.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_dma.o
+
+
+Disassembly of section .text.DMA_DeInit:
+
+00000000 <DMA_DeInit>:
+DMA_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:197
+  * @param  DMAy_Streamx: where y can be 1 or 2 to select the DMA and x can be 0
+  *         to 7 to select the DMA Stream.
+  * @retval None
+  */
+void DMA_DeInit(DMA_Stream_TypeDef* DMAy_Streamx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:202
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+
+  /* Disable the selected DMAy Streamx */
+  DMAy_Streamx->CR &= ~((uint32_t)DMA_SxCR_EN);
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	681b      	ldr	r3, [r3, #0]
+   c:	f023 0201 	bic.w	r2, r3, #1
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:205
+
+  /* Reset DMAy Streamx control register */
+  DMAy_Streamx->CR  = 0;
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	f04f 0200 	mov.w	r2, #0
+  1a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:208
+  
+  /* Reset DMAy Streamx Number of Data to Transfer register */
+  DMAy_Streamx->NDTR = 0;
+  1c:	687b      	ldr	r3, [r7, #4]
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:211
+  
+  /* Reset DMAy Streamx peripheral address register */
+  DMAy_Streamx->PAR  = 0;
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	f04f 0200 	mov.w	r2, #0
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:214
+  
+  /* Reset DMAy Streamx memory 0 address register */
+  DMAy_Streamx->M0AR = 0;
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	f04f 0200 	mov.w	r2, #0
+  32:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:217
+
+  /* Reset DMAy Streamx memory 1 address register */
+  DMAy_Streamx->M1AR = 0;
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	f04f 0200 	mov.w	r2, #0
+  3a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:220
+
+  /* Reset DMAy Streamx FIFO control register */
+  DMAy_Streamx->FCR = (uint32_t)0x00000021; 
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	f04f 0221 	mov.w	r2, #33	; 0x21
+  42:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:223
+
+  /* Reset interrupt pending bits for the selected stream */
+  if (DMAy_Streamx == DMA1_Stream0)
+  44:	687a      	ldr	r2, [r7, #4]
+  46:	4b46      	ldr	r3, [pc, #280]	; (160 <DMA_DeInit+0x160>)
+  48:	429a      	cmp	r2, r3
+  4a:	d104      	bne.n	56 <DMA_DeInit+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:226
+  {
+    /* Reset interrupt pending bits for DMA1 Stream0 */
+    DMA1->LIFCR = DMA_Stream0_IT_MASK;
+  4c:	4b45      	ldr	r3, [pc, #276]	; (164 <DMA_DeInit+0x164>)
+  4e:	f04f 023d 	mov.w	r2, #61	; 0x3d
+  52:	609a      	str	r2, [r3, #8]
+  54:	e07f      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:228
+  }
+  else if (DMAy_Streamx == DMA1_Stream1)
+  56:	687a      	ldr	r2, [r7, #4]
+  58:	4b43      	ldr	r3, [pc, #268]	; (168 <DMA_DeInit+0x168>)
+  5a:	429a      	cmp	r2, r3
+  5c:	d104      	bne.n	68 <DMA_DeInit+0x68>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:231
+  {
+    /* Reset interrupt pending bits for DMA1 Stream1 */
+    DMA1->LIFCR = DMA_Stream1_IT_MASK;
+  5e:	4b41      	ldr	r3, [pc, #260]	; (164 <DMA_DeInit+0x164>)
+  60:	f44f 6274 	mov.w	r2, #3904	; 0xf40
+  64:	609a      	str	r2, [r3, #8]
+  66:	e076      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:233
+  }
+  else if (DMAy_Streamx == DMA1_Stream2)
+  68:	687a      	ldr	r2, [r7, #4]
+  6a:	4b40      	ldr	r3, [pc, #256]	; (16c <DMA_DeInit+0x16c>)
+  6c:	429a      	cmp	r2, r3
+  6e:	d104      	bne.n	7a <DMA_DeInit+0x7a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:236
+  {
+    /* Reset interrupt pending bits for DMA1 Stream2 */
+    DMA1->LIFCR = DMA_Stream2_IT_MASK;
+  70:	4b3c      	ldr	r3, [pc, #240]	; (164 <DMA_DeInit+0x164>)
+  72:	f44f 1274 	mov.w	r2, #3997696	; 0x3d0000
+  76:	609a      	str	r2, [r3, #8]
+  78:	e06d      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:238
+  }
+  else if (DMAy_Streamx == DMA1_Stream3)
+  7a:	687a      	ldr	r2, [r7, #4]
+  7c:	4b3c      	ldr	r3, [pc, #240]	; (170 <DMA_DeInit+0x170>)
+  7e:	429a      	cmp	r2, r3
+  80:	d104      	bne.n	8c <DMA_DeInit+0x8c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:241
+  {
+    /* Reset interrupt pending bits for DMA1 Stream3 */
+    DMA1->LIFCR = DMA_Stream3_IT_MASK;
+  82:	4b38      	ldr	r3, [pc, #224]	; (164 <DMA_DeInit+0x164>)
+  84:	f04f 6274 	mov.w	r2, #255852544	; 0xf400000
+  88:	609a      	str	r2, [r3, #8]
+  8a:	e064      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:243
+  }
+  else if (DMAy_Streamx == DMA1_Stream4)
+  8c:	687a      	ldr	r2, [r7, #4]
+  8e:	4b39      	ldr	r3, [pc, #228]	; (174 <DMA_DeInit+0x174>)
+  90:	429a      	cmp	r2, r3
+  92:	d103      	bne.n	9c <DMA_DeInit+0x9c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:246
+  {
+    /* Reset interrupt pending bits for DMA1 Stream4 */
+    DMA1->HIFCR = DMA_Stream4_IT_MASK;
+  94:	4b33      	ldr	r3, [pc, #204]	; (164 <DMA_DeInit+0x164>)
+  96:	4a38      	ldr	r2, [pc, #224]	; (178 <DMA_DeInit+0x178>)
+  98:	60da      	str	r2, [r3, #12]
+  9a:	e05c      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:248
+  }
+  else if (DMAy_Streamx == DMA1_Stream5)
+  9c:	687a      	ldr	r2, [r7, #4]
+  9e:	4b37      	ldr	r3, [pc, #220]	; (17c <DMA_DeInit+0x17c>)
+  a0:	429a      	cmp	r2, r3
+  a2:	d103      	bne.n	ac <DMA_DeInit+0xac>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:251
+  {
+    /* Reset interrupt pending bits for DMA1 Stream5 */
+    DMA1->HIFCR = DMA_Stream5_IT_MASK;
+  a4:	4b2f      	ldr	r3, [pc, #188]	; (164 <DMA_DeInit+0x164>)
+  a6:	4a36      	ldr	r2, [pc, #216]	; (180 <DMA_DeInit+0x180>)
+  a8:	60da      	str	r2, [r3, #12]
+  aa:	e054      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:253
+  }
+  else if (DMAy_Streamx == DMA1_Stream6)
+  ac:	687a      	ldr	r2, [r7, #4]
+  ae:	4b35      	ldr	r3, [pc, #212]	; (184 <DMA_DeInit+0x184>)
+  b0:	429a      	cmp	r2, r3
+  b2:	d103      	bne.n	bc <DMA_DeInit+0xbc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:256
+  {
+    /* Reset interrupt pending bits for DMA1 Stream6 */
+    DMA1->HIFCR = (uint32_t)DMA_Stream6_IT_MASK;
+  b4:	4b2b      	ldr	r3, [pc, #172]	; (164 <DMA_DeInit+0x164>)
+  b6:	4a34      	ldr	r2, [pc, #208]	; (188 <DMA_DeInit+0x188>)
+  b8:	60da      	str	r2, [r3, #12]
+  ba:	e04c      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:258
+  }
+  else if (DMAy_Streamx == DMA1_Stream7)
+  bc:	687a      	ldr	r2, [r7, #4]
+  be:	4b33      	ldr	r3, [pc, #204]	; (18c <DMA_DeInit+0x18c>)
+  c0:	429a      	cmp	r2, r3
+  c2:	d104      	bne.n	ce <DMA_DeInit+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:261
+  {
+    /* Reset interrupt pending bits for DMA1 Stream7 */
+    DMA1->HIFCR = DMA_Stream7_IT_MASK;
+  c4:	4b27      	ldr	r3, [pc, #156]	; (164 <DMA_DeInit+0x164>)
+  c6:	f04f 523d 	mov.w	r2, #792723456	; 0x2f400000
+  ca:	60da      	str	r2, [r3, #12]
+  cc:	e043      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:263
+  }
+  else if (DMAy_Streamx == DMA2_Stream0)
+  ce:	687a      	ldr	r2, [r7, #4]
+  d0:	4b2f      	ldr	r3, [pc, #188]	; (190 <DMA_DeInit+0x190>)
+  d2:	429a      	cmp	r2, r3
+  d4:	d104      	bne.n	e0 <DMA_DeInit+0xe0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:266
+  {
+    /* Reset interrupt pending bits for DMA2 Stream0 */
+    DMA2->LIFCR = DMA_Stream0_IT_MASK;
+  d6:	4b2f      	ldr	r3, [pc, #188]	; (194 <DMA_DeInit+0x194>)
+  d8:	f04f 023d 	mov.w	r2, #61	; 0x3d
+  dc:	609a      	str	r2, [r3, #8]
+  de:	e03a      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:268
+  }
+  else if (DMAy_Streamx == DMA2_Stream1)
+  e0:	687a      	ldr	r2, [r7, #4]
+  e2:	4b2d      	ldr	r3, [pc, #180]	; (198 <DMA_DeInit+0x198>)
+  e4:	429a      	cmp	r2, r3
+  e6:	d104      	bne.n	f2 <DMA_DeInit+0xf2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:271
+  {
+    /* Reset interrupt pending bits for DMA2 Stream1 */
+    DMA2->LIFCR = DMA_Stream1_IT_MASK;
+  e8:	4b2a      	ldr	r3, [pc, #168]	; (194 <DMA_DeInit+0x194>)
+  ea:	f44f 6274 	mov.w	r2, #3904	; 0xf40
+  ee:	609a      	str	r2, [r3, #8]
+  f0:	e031      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:273
+  }
+  else if (DMAy_Streamx == DMA2_Stream2)
+  f2:	687a      	ldr	r2, [r7, #4]
+  f4:	4b29      	ldr	r3, [pc, #164]	; (19c <DMA_DeInit+0x19c>)
+  f6:	429a      	cmp	r2, r3
+  f8:	d104      	bne.n	104 <DMA_DeInit+0x104>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:276
+  {
+    /* Reset interrupt pending bits for DMA2 Stream2 */
+    DMA2->LIFCR = DMA_Stream2_IT_MASK;
+  fa:	4b26      	ldr	r3, [pc, #152]	; (194 <DMA_DeInit+0x194>)
+  fc:	f44f 1274 	mov.w	r2, #3997696	; 0x3d0000
+ 100:	609a      	str	r2, [r3, #8]
+ 102:	e028      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:278
+  }
+  else if (DMAy_Streamx == DMA2_Stream3)
+ 104:	687a      	ldr	r2, [r7, #4]
+ 106:	4b26      	ldr	r3, [pc, #152]	; (1a0 <DMA_DeInit+0x1a0>)
+ 108:	429a      	cmp	r2, r3
+ 10a:	d104      	bne.n	116 <DMA_DeInit+0x116>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:281
+  {
+    /* Reset interrupt pending bits for DMA2 Stream3 */
+    DMA2->LIFCR = DMA_Stream3_IT_MASK;
+ 10c:	4b21      	ldr	r3, [pc, #132]	; (194 <DMA_DeInit+0x194>)
+ 10e:	f04f 6274 	mov.w	r2, #255852544	; 0xf400000
+ 112:	609a      	str	r2, [r3, #8]
+ 114:	e01f      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:283
+  }
+  else if (DMAy_Streamx == DMA2_Stream4)
+ 116:	687a      	ldr	r2, [r7, #4]
+ 118:	4b22      	ldr	r3, [pc, #136]	; (1a4 <DMA_DeInit+0x1a4>)
+ 11a:	429a      	cmp	r2, r3
+ 11c:	d103      	bne.n	126 <DMA_DeInit+0x126>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:286
+  {
+    /* Reset interrupt pending bits for DMA2 Stream4 */
+    DMA2->HIFCR = DMA_Stream4_IT_MASK;
+ 11e:	4b1d      	ldr	r3, [pc, #116]	; (194 <DMA_DeInit+0x194>)
+ 120:	4a15      	ldr	r2, [pc, #84]	; (178 <DMA_DeInit+0x178>)
+ 122:	60da      	str	r2, [r3, #12]
+ 124:	e017      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:288
+  }
+  else if (DMAy_Streamx == DMA2_Stream5)
+ 126:	687a      	ldr	r2, [r7, #4]
+ 128:	4b1f      	ldr	r3, [pc, #124]	; (1a8 <DMA_DeInit+0x1a8>)
+ 12a:	429a      	cmp	r2, r3
+ 12c:	d103      	bne.n	136 <DMA_DeInit+0x136>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:291
+  {
+    /* Reset interrupt pending bits for DMA2 Stream5 */
+    DMA2->HIFCR = DMA_Stream5_IT_MASK;
+ 12e:	4b19      	ldr	r3, [pc, #100]	; (194 <DMA_DeInit+0x194>)
+ 130:	4a13      	ldr	r2, [pc, #76]	; (180 <DMA_DeInit+0x180>)
+ 132:	60da      	str	r2, [r3, #12]
+ 134:	e00f      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:293
+  }
+  else if (DMAy_Streamx == DMA2_Stream6)
+ 136:	687a      	ldr	r2, [r7, #4]
+ 138:	4b1c      	ldr	r3, [pc, #112]	; (1ac <DMA_DeInit+0x1ac>)
+ 13a:	429a      	cmp	r2, r3
+ 13c:	d103      	bne.n	146 <DMA_DeInit+0x146>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:296
+  {
+    /* Reset interrupt pending bits for DMA2 Stream6 */
+    DMA2->HIFCR = DMA_Stream6_IT_MASK;
+ 13e:	4b15      	ldr	r3, [pc, #84]	; (194 <DMA_DeInit+0x194>)
+ 140:	4a11      	ldr	r2, [pc, #68]	; (188 <DMA_DeInit+0x188>)
+ 142:	60da      	str	r2, [r3, #12]
+ 144:	e007      	b.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:300
+  }
+  else 
+  {
+    if (DMAy_Streamx == DMA2_Stream7)
+ 146:	687a      	ldr	r2, [r7, #4]
+ 148:	4b19      	ldr	r3, [pc, #100]	; (1b0 <DMA_DeInit+0x1b0>)
+ 14a:	429a      	cmp	r2, r3
+ 14c:	d103      	bne.n	156 <DMA_DeInit+0x156>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:303
+    {
+      /* Reset interrupt pending bits for DMA2 Stream7 */
+      DMA2->HIFCR = DMA_Stream7_IT_MASK;
+ 14e:	4b11      	ldr	r3, [pc, #68]	; (194 <DMA_DeInit+0x194>)
+ 150:	f04f 523d 	mov.w	r2, #792723456	; 0x2f400000
+ 154:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:306
+    }
+  }
+}
+ 156:	f107 070c 	add.w	r7, r7, #12
+ 15a:	46bd      	mov	sp, r7
+ 15c:	bc80      	pop	{r7}
+ 15e:	4770      	bx	lr
+ 160:	40026010 	.word	0x40026010
+ 164:	40026000 	.word	0x40026000
+ 168:	40026028 	.word	0x40026028
+ 16c:	40026040 	.word	0x40026040
+ 170:	40026058 	.word	0x40026058
+ 174:	40026070 	.word	0x40026070
+ 178:	2000003d 	.word	0x2000003d
+ 17c:	40026088 	.word	0x40026088
+ 180:	20000f40 	.word	0x20000f40
+ 184:	400260a0 	.word	0x400260a0
+ 188:	203d0000 	.word	0x203d0000
+ 18c:	400260b8 	.word	0x400260b8
+ 190:	40026410 	.word	0x40026410
+ 194:	40026400 	.word	0x40026400
+ 198:	40026428 	.word	0x40026428
+ 19c:	40026440 	.word	0x40026440
+ 1a0:	40026458 	.word	0x40026458
+ 1a4:	40026470 	.word	0x40026470
+ 1a8:	40026488 	.word	0x40026488
+ 1ac:	400264a0 	.word	0x400264a0
+ 1b0:	400264b8 	.word	0x400264b8
+
+Disassembly of section .text.DMA_Init:
+
+00000000 <DMA_Init>:
+DMA_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:320
+  * @param  DMA_InitStruct: pointer to a DMA_InitTypeDef structure that contains
+  *         the configuration information for the specified DMA Stream.  
+  * @retval None
+  */
+void DMA_Init(DMA_Stream_TypeDef* DMAy_Streamx, DMA_InitTypeDef* DMA_InitStruct)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:321
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:341
+  assert_param(IS_DMA_MEMORY_BURST(DMA_InitStruct->DMA_MemoryBurst));
+  assert_param(IS_DMA_PERIPHERAL_BURST(DMA_InitStruct->DMA_PeripheralBurst));
+
+  /*------------------------- DMAy Streamx CR Configuration ------------------*/
+  /* Get the DMAy_Streamx CR value */
+  tmpreg = DMAy_Streamx->CR;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	681b      	ldr	r3, [r3, #0]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:344
+
+  /* Clear CHSEL, MBURST, PBURST, PL, MSIZE, PSIZE, MINC, PINC, CIRC and DIR bits */
+  tmpreg &= ((uint32_t)~(DMA_SxCR_CHSEL | DMA_SxCR_MBURST | DMA_SxCR_PBURST | \
+  16:	68fa      	ldr	r2, [r7, #12]
+  18:	4b26      	ldr	r3, [pc, #152]	; (b4 <DMA_Init+0xb4>)
+  1a:	ea02 0303 	and.w	r3, r2, r3
+  1e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:360
+  /* Set MSIZE bits according to DMA_MemoryDataSize value */
+  /* Set CIRC bit according to DMA_Mode value */
+  /* Set PL bits according to DMA_Priority value */
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	681a      	ldr	r2, [r3, #0]
+  24:	683b      	ldr	r3, [r7, #0]
+  26:	68db      	ldr	r3, [r3, #12]
+  28:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:361
+            DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+  2a:	683b      	ldr	r3, [r7, #0]
+  2c:	695b      	ldr	r3, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:360
+  /* Set MSIZE bits according to DMA_MemoryDataSize value */
+  /* Set CIRC bit according to DMA_Mode value */
+  /* Set PL bits according to DMA_Priority value */
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+  2e:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:361
+            DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+  30:	683b      	ldr	r3, [r7, #0]
+  32:	699b      	ldr	r3, [r3, #24]
+  34:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:362
+            DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+  36:	683b      	ldr	r3, [r7, #0]
+  38:	69db      	ldr	r3, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:361
+  /* Set CIRC bit according to DMA_Mode value */
+  /* Set PL bits according to DMA_Priority value */
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+            DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+  3a:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:362
+            DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+  3c:	683b      	ldr	r3, [r7, #0]
+  3e:	6a1b      	ldr	r3, [r3, #32]
+  40:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:363
+            DMA_InitStruct->DMA_Mode | DMA_InitStruct->DMA_Priority |
+  42:	683b      	ldr	r3, [r7, #0]
+  44:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:362
+  /* Set PL bits according to DMA_Priority value */
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+            DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+            DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+  46:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:363
+            DMA_InitStruct->DMA_Mode | DMA_InitStruct->DMA_Priority |
+  48:	683b      	ldr	r3, [r7, #0]
+  4a:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  4c:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:364
+            DMA_InitStruct->DMA_MemoryBurst | DMA_InitStruct->DMA_PeripheralBurst;
+  4e:	683b      	ldr	r3, [r7, #0]
+  50:	6b5b      	ldr	r3, [r3, #52]	; 0x34
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:363
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+            DMA_InitStruct->DMA_PeripheralInc | DMA_InitStruct->DMA_MemoryInc |
+            DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+            DMA_InitStruct->DMA_Mode | DMA_InitStruct->DMA_Priority |
+  52:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:364
+            DMA_InitStruct->DMA_MemoryBurst | DMA_InitStruct->DMA_PeripheralBurst;
+  54:	683b      	ldr	r3, [r7, #0]
+  56:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  58:	ea42 0303 	orr.w	r3, r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:360
+  /* Set MSIZE bits according to DMA_MemoryDataSize value */
+  /* Set CIRC bit according to DMA_Mode value */
+  /* Set PL bits according to DMA_Priority value */
+  /* Set MBURST bits according to DMA_MemoryBurst value */
+  /* Set PBURST bits according to DMA_PeripheralBurst value */
+  tmpreg |= DMA_InitStruct->DMA_Channel | DMA_InitStruct->DMA_DIR |
+  5c:	68fa      	ldr	r2, [r7, #12]
+  5e:	ea42 0303 	orr.w	r3, r2, r3
+  62:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:367
+            DMA_InitStruct->DMA_PeripheralDataSize | DMA_InitStruct->DMA_MemoryDataSize |
+            DMA_InitStruct->DMA_Mode | DMA_InitStruct->DMA_Priority |
+            DMA_InitStruct->DMA_MemoryBurst | DMA_InitStruct->DMA_PeripheralBurst;
+
+  /* Write to DMAy Streamx CR register */
+  DMAy_Streamx->CR = tmpreg;
+  64:	687b      	ldr	r3, [r7, #4]
+  66:	68fa      	ldr	r2, [r7, #12]
+  68:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:371
+
+  /*------------------------- DMAy Streamx FCR Configuration -----------------*/
+  /* Get the DMAy_Streamx FCR value */
+  tmpreg = DMAy_Streamx->FCR;
+  6a:	687b      	ldr	r3, [r7, #4]
+  6c:	695b      	ldr	r3, [r3, #20]
+  6e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:374
+
+  /* Clear DMDIS and FTH bits */
+  tmpreg &= (uint32_t)~(DMA_SxFCR_DMDIS | DMA_SxFCR_FTH);
+  70:	68fb      	ldr	r3, [r7, #12]
+  72:	f023 0307 	bic.w	r3, r3, #7
+  76:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:379
+
+  /* Configure DMAy Streamx FIFO: 
+    Set DMDIS bits according to DMA_FIFOMode value 
+    Set FTH bits according to DMA_FIFOThreshold value */
+  tmpreg |= DMA_InitStruct->DMA_FIFOMode | DMA_InitStruct->DMA_FIFOThreshold;
+  78:	683b      	ldr	r3, [r7, #0]
+  7a:	6ada      	ldr	r2, [r3, #44]	; 0x2c
+  7c:	683b      	ldr	r3, [r7, #0]
+  7e:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+  80:	ea42 0303 	orr.w	r3, r2, r3
+  84:	68fa      	ldr	r2, [r7, #12]
+  86:	ea42 0303 	orr.w	r3, r2, r3
+  8a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:382
+
+  /* Write to DMAy Streamx CR */
+  DMAy_Streamx->FCR = tmpreg;
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	68fa      	ldr	r2, [r7, #12]
+  90:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:386
+
+  /*------------------------- DMAy Streamx NDTR Configuration ----------------*/
+  /* Write to DMAy Streamx NDTR register */
+  DMAy_Streamx->NDTR = DMA_InitStruct->DMA_BufferSize;
+  92:	683b      	ldr	r3, [r7, #0]
+  94:	691a      	ldr	r2, [r3, #16]
+  96:	687b      	ldr	r3, [r7, #4]
+  98:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:390
+
+  /*------------------------- DMAy Streamx PAR Configuration -----------------*/
+  /* Write to DMAy Streamx PAR */
+  DMAy_Streamx->PAR = DMA_InitStruct->DMA_PeripheralBaseAddr;
+  9a:	683b      	ldr	r3, [r7, #0]
+  9c:	685a      	ldr	r2, [r3, #4]
+  9e:	687b      	ldr	r3, [r7, #4]
+  a0:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:394
+
+  /*------------------------- DMAy Streamx M0AR Configuration ----------------*/
+  /* Write to DMAy Streamx M0AR */
+  DMAy_Streamx->M0AR = DMA_InitStruct->DMA_Memory0BaseAddr;
+  a2:	683b      	ldr	r3, [r7, #0]
+  a4:	689a      	ldr	r2, [r3, #8]
+  a6:	687b      	ldr	r3, [r7, #4]
+  a8:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:395
+}
+  aa:	f107 0714 	add.w	r7, r7, #20
+  ae:	46bd      	mov	sp, r7
+  b0:	bc80      	pop	{r7}
+  b2:	4770      	bx	lr
+  b4:	f01c803f 	.word	0xf01c803f
+
+Disassembly of section .text.DMA_StructInit:
+
+00000000 <DMA_StructInit>:
+DMA_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:404
+  * @param  DMA_InitStruct : pointer to a DMA_InitTypeDef structure which will 
+  *         be initialized.
+  * @retval None
+  */
+void DMA_StructInit(DMA_InitTypeDef* DMA_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:407
+  /*-------------- Reset DMA init structure parameters values ----------------*/
+  /* Initialize the DMA_Channel member */
+  DMA_InitStruct->DMA_Channel = 0;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:410
+
+  /* Initialize the DMA_PeripheralBaseAddr member */
+  DMA_InitStruct->DMA_PeripheralBaseAddr = 0;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:413
+
+  /* Initialize the DMA_Memory0BaseAddr member */
+  DMA_InitStruct->DMA_Memory0BaseAddr = 0;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:416
+
+  /* Initialize the DMA_DIR member */
+  DMA_InitStruct->DMA_DIR = DMA_DIR_PeripheralToMemory;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:419
+
+  /* Initialize the DMA_BufferSize member */
+  DMA_InitStruct->DMA_BufferSize = 0;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:422
+
+  /* Initialize the DMA_PeripheralInc member */
+  DMA_InitStruct->DMA_PeripheralInc = DMA_PeripheralInc_Disable;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:425
+
+  /* Initialize the DMA_MemoryInc member */
+  DMA_InitStruct->DMA_MemoryInc = DMA_MemoryInc_Disable;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f04f 0200 	mov.w	r2, #0
+  3e:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:428
+
+  /* Initialize the DMA_PeripheralDataSize member */
+  DMA_InitStruct->DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f04f 0200 	mov.w	r2, #0
+  46:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:431
+
+  /* Initialize the DMA_MemoryDataSize member */
+  DMA_InitStruct->DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f04f 0200 	mov.w	r2, #0
+  4e:	621a      	str	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:434
+
+  /* Initialize the DMA_Mode member */
+  DMA_InitStruct->DMA_Mode = DMA_Mode_Normal;
+  50:	687b      	ldr	r3, [r7, #4]
+  52:	f04f 0200 	mov.w	r2, #0
+  56:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:437
+
+  /* Initialize the DMA_Priority member */
+  DMA_InitStruct->DMA_Priority = DMA_Priority_Low;
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	f04f 0200 	mov.w	r2, #0
+  5e:	629a      	str	r2, [r3, #40]	; 0x28
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:440
+
+  /* Initialize the DMA_FIFOMode member */
+  DMA_InitStruct->DMA_FIFOMode = DMA_FIFOMode_Disable;
+  60:	687b      	ldr	r3, [r7, #4]
+  62:	f04f 0200 	mov.w	r2, #0
+  66:	62da      	str	r2, [r3, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:443
+
+  /* Initialize the DMA_FIFOThreshold member */
+  DMA_InitStruct->DMA_FIFOThreshold = DMA_FIFOThreshold_1QuarterFull;
+  68:	687b      	ldr	r3, [r7, #4]
+  6a:	f04f 0200 	mov.w	r2, #0
+  6e:	631a      	str	r2, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:446
+
+  /* Initialize the DMA_MemoryBurst member */
+  DMA_InitStruct->DMA_MemoryBurst = DMA_MemoryBurst_Single;
+  70:	687b      	ldr	r3, [r7, #4]
+  72:	f04f 0200 	mov.w	r2, #0
+  76:	635a      	str	r2, [r3, #52]	; 0x34
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:449
+
+  /* Initialize the DMA_PeripheralBurst member */
+  DMA_InitStruct->DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
+  78:	687b      	ldr	r3, [r7, #4]
+  7a:	f04f 0200 	mov.w	r2, #0
+  7e:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:450
+}
+  80:	f107 070c 	add.w	r7, r7, #12
+  84:	46bd      	mov	sp, r7
+  86:	bc80      	pop	{r7}
+  88:	4770      	bx	lr
+  8a:	bf00      	nop
+
+Disassembly of section .text.DMA_Cmd:
+
+00000000 <DMA_Cmd>:
+DMA_Cmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:479
+  *        this single data is finished.            
+  *    
+  * @retval None
+  */
+void DMA_Cmd(DMA_Stream_TypeDef* DMAy_Streamx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:484
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <DMA_Cmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:487
+  {
+    /* Enable the selected DMAy Streamx by setting EN bit */
+    DMAy_Streamx->CR |= (uint32_t)DMA_SxCR_EN;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	f043 0201 	orr.w	r2, r3, #1
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	601a      	str	r2, [r3, #0]
+  1e:	e005      	b.n	2c <DMA_Cmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:492
+  }
+  else
+  {
+    /* Disable the selected DMAy Streamx by clearing EN bit */
+    DMAy_Streamx->CR &= ~(uint32_t)DMA_SxCR_EN;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	f023 0201 	bic.w	r2, r3, #1
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:494
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.DMA_PeriphIncOffsetSizeConfig:
+
+00000000 <DMA_PeriphIncOffsetSizeConfig>:
+DMA_PeriphIncOffsetSizeConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:515
+  *            @arg DMA_PINCOS_WordAligned: Peripheral address increment offset is 
+  *                                         fixed to 4 (32-bit aligned addresses). 
+  * @retval None
+  */
+void DMA_PeriphIncOffsetSizeConfig(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_Pincos)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:521
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_PINCOS_SIZE(DMA_Pincos));
+
+  /* Check the needed Peripheral increment offset */
+  if(DMA_Pincos != DMA_PINCOS_Psize)
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <DMA_PeriphIncOffsetSizeConfig+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:524
+  {
+    /* Configure DMA_SxCR_PINCOS bit with the input parameter */
+    DMAy_Streamx->CR |= (uint32_t)DMA_SxCR_PINCOS;     
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	681b      	ldr	r3, [r3, #0]
+  14:	f443 4200 	orr.w	r2, r3, #32768	; 0x8000
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <DMA_PeriphIncOffsetSizeConfig+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:529
+  }
+  else
+  {
+    /* Clear the PINCOS bit: Peripheral address incremented according to PSIZE */
+    DMAy_Streamx->CR &= ~(uint32_t)DMA_SxCR_PINCOS;    
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	681b      	ldr	r3, [r3, #0]
+  22:	f423 4200 	bic.w	r2, r3, #32768	; 0x8000
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:531
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+
+Disassembly of section .text.DMA_FlowControllerConfig:
+
+00000000 <DMA_FlowControllerConfig>:
+DMA_FlowControllerConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:551
+  *            @arg DMA_FlowCtrl_Peripheral: DMAy_Streamx transactions flow controller 
+  *                                          is the peripheral.    
+  * @retval None
+  */
+void DMA_FlowControllerConfig(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_FlowCtrl)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:557
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_FLOW_CTRL(DMA_FlowCtrl));
+
+  /* Check the needed flow controller  */
+  if(DMA_FlowCtrl != DMA_FlowCtrl_Memory)
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <DMA_FlowControllerConfig+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:560
+  {
+    /* Configure DMA_SxCR_PFCTRL bit with the input parameter */
+    DMAy_Streamx->CR |= (uint32_t)DMA_SxCR_PFCTRL;   
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	681b      	ldr	r3, [r3, #0]
+  14:	f043 0220 	orr.w	r2, r3, #32
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <DMA_FlowControllerConfig+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:565
+  }
+  else
+  {
+    /* Clear the PFCTRL bit: Memory is the flow controller */
+    DMAy_Streamx->CR &= ~(uint32_t)DMA_SxCR_PFCTRL;    
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	681b      	ldr	r3, [r3, #0]
+  22:	f023 0220 	bic.w	r2, r3, #32
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:567
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+
+Disassembly of section .text.DMA_SetCurrDataCounter:
+
+00000000 <DMA_SetCurrDataCounter>:
+DMA_SetCurrDataCounter():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:633
+  *         DMAy_SxPAR register is considered as Peripheral.
+  *      
+  * @retval The number of remaining data units in the current DMAy Streamx transfer.
+  */
+void DMA_SetCurrDataCounter(DMA_Stream_TypeDef* DMAy_Streamx, uint16_t Counter)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:638
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+
+  /* Write the number of data units to be transferred */
+  DMAy_Streamx->NDTR = (uint16_t)Counter;
+   c:	887a      	ldrh	r2, [r7, #2]
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:639
+}
+  12:	f107 070c 	add.w	r7, r7, #12
+  16:	46bd      	mov	sp, r7
+  18:	bc80      	pop	{r7}
+  1a:	4770      	bx	lr
+
+Disassembly of section .text.DMA_GetCurrDataCounter:
+
+00000000 <DMA_GetCurrDataCounter>:
+DMA_GetCurrDataCounter():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:648
+  * @param  DMAy_Streamx: where y can be 1 or 2 to select the DMA and x can be 0
+  *          to 7 to select the DMA Stream.
+  * @retval The number of remaining data units in the current DMAy Streamx transfer.
+  */
+uint16_t DMA_GetCurrDataCounter(DMA_Stream_TypeDef* DMAy_Streamx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:653
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+
+  /* Return the number of remaining data units for DMAy Streamx */
+  return ((uint16_t)(DMAy_Streamx->NDTR));
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	685b      	ldr	r3, [r3, #4]
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:654
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.DMA_DoubleBufferModeConfig:
+
+00000000 <DMA_DoubleBufferModeConfig>:
+DMA_DoubleBufferModeConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:732
+  *   
+  * @retval None
+  */
+void DMA_DoubleBufferModeConfig(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t Memory1BaseAddr,
+                                uint32_t DMA_CurrentMemory)
+{  
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:737
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_CURRENT_MEM(DMA_CurrentMemory));
+
+  if (DMA_CurrentMemory != DMA_Memory_0)
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <DMA_DoubleBufferModeConfig+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:740
+  {
+    /* Set Memory 1 as current memory address */
+    DMAy_Streamx->CR |= (uint32_t)(DMA_SxCR_CT);    
+  12:	68fb      	ldr	r3, [r7, #12]
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	f443 2200 	orr.w	r2, r3, #524288	; 0x80000
+  1a:	68fb      	ldr	r3, [r7, #12]
+  1c:	601a      	str	r2, [r3, #0]
+  1e:	e005      	b.n	2c <DMA_DoubleBufferModeConfig+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:745
+  }
+  else
+  {
+    /* Set Memory 0 as current memory address */
+    DMAy_Streamx->CR &= ~(uint32_t)(DMA_SxCR_CT);    
+  20:	68fb      	ldr	r3, [r7, #12]
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	f423 2200 	bic.w	r2, r3, #524288	; 0x80000
+  28:	68fb      	ldr	r3, [r7, #12]
+  2a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:749
+  }
+
+  /* Write to DMAy Streamx M1AR */
+  DMAy_Streamx->M1AR = Memory1BaseAddr;
+  2c:	68fb      	ldr	r3, [r7, #12]
+  2e:	68ba      	ldr	r2, [r7, #8]
+  30:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:750
+}
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+
+Disassembly of section .text.DMA_DoubleBufferModeCmd:
+
+00000000 <DMA_DoubleBufferModeCmd>:
+DMA_DoubleBufferModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:762
+  * @param  NewState: new state of the DMAy Streamx double buffer mode. 
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void DMA_DoubleBufferModeCmd(DMA_Stream_TypeDef* DMAy_Streamx, FunctionalState NewState)
+{  
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:768
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  /* Configure the Double Buffer mode */
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <DMA_DoubleBufferModeCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:771
+  {
+    /* Enable the Double buffer mode */
+    DMAy_Streamx->CR |= (uint32_t)DMA_SxCR_DBM;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	f443 2280 	orr.w	r2, r3, #262144	; 0x40000
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	601a      	str	r2, [r3, #0]
+  1e:	e005      	b.n	2c <DMA_DoubleBufferModeCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:776
+  }
+  else
+  {
+    /* Disable the Double buffer mode */
+    DMAy_Streamx->CR &= ~(uint32_t)DMA_SxCR_DBM;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	f423 2280 	bic.w	r2, r3, #262144	; 0x40000
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:778
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.DMA_MemoryTargetConfig:
+
+00000000 <DMA_MemoryTargetConfig>:
+DMA_MemoryTargetConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:804
+  *  
+  * @retval None
+  */
+void DMA_MemoryTargetConfig(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t MemoryBaseAddr,
+                           uint32_t DMA_MemoryTarget)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:810
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_CURRENT_MEM(DMA_MemoryTarget));
+    
+  /* Check the Memory target to be configured */
+  if (DMA_MemoryTarget != DMA_Memory_0)
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	2b00      	cmp	r3, #0
+  10:	d003      	beq.n	1a <DMA_MemoryTargetConfig+0x1a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:813
+  {
+    /* Write to DMAy Streamx M1AR */
+    DMAy_Streamx->M1AR = MemoryBaseAddr;    
+  12:	68fb      	ldr	r3, [r7, #12]
+  14:	68ba      	ldr	r2, [r7, #8]
+  16:	611a      	str	r2, [r3, #16]
+  18:	e002      	b.n	20 <DMA_MemoryTargetConfig+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:818
+  }  
+  else
+  {
+    /* Write to DMAy Streamx M0AR */
+    DMAy_Streamx->M0AR = MemoryBaseAddr;  
+  1a:	68fb      	ldr	r3, [r7, #12]
+  1c:	68ba      	ldr	r2, [r7, #8]
+  1e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:820
+  }
+}
+  20:	f107 0714 	add.w	r7, r7, #20
+  24:	46bd      	mov	sp, r7
+  26:	bc80      	pop	{r7}
+  28:	4770      	bx	lr
+  2a:	bf00      	nop
+
+Disassembly of section .text.DMA_GetCurrentMemoryTarget:
+
+00000000 <DMA_GetCurrentMemoryTarget>:
+DMA_GetCurrentMemoryTarget():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:829
+  * @param  DMAy_Streamx: where y can be 1 or 2 to select the DMA and x can be 0
+  *          to 7 to select the DMA Stream.
+  * @retval The memory target number: 0 for Memory0 or 1 for Memory1. 
+  */
+uint32_t DMA_GetCurrentMemoryTarget(DMA_Stream_TypeDef* DMAy_Streamx)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:830
+  uint32_t tmp = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:836
+  
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+
+  /* Get the current memory target */
+  if ((DMAy_Streamx->CR & DMA_SxCR_CT) != 0)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	681b      	ldr	r3, [r3, #0]
+  12:	f403 2300 	and.w	r3, r3, #524288	; 0x80000
+  16:	2b00      	cmp	r3, #0
+  18:	d003      	beq.n	22 <DMA_GetCurrentMemoryTarget+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:839
+  {
+    /* Current memory buffer used is Memory 1 */
+    tmp = 1;
+  1a:	f04f 0301 	mov.w	r3, #1
+  1e:	60fb      	str	r3, [r7, #12]
+  20:	e002      	b.n	28 <DMA_GetCurrentMemoryTarget+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:844
+  }  
+  else
+  {
+    /* Current memory buffer used is Memory 0 */
+    tmp = 0;    
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:846
+  }
+  return tmp;
+  28:	68fb      	ldr	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:847
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.DMA_GetCmdStatus:
+
+00000000 <DMA_GetCmdStatus>:
+DMA_GetCmdStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:944
+  *          of this single data is finished.  
+  *      
+  * @retval Current state of the DMAy Streamx (ENABLE or DISABLE).
+  */
+FunctionalState DMA_GetCmdStatus(DMA_Stream_TypeDef* DMAy_Streamx)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:945
+  FunctionalState state = DISABLE;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:950
+
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+
+  if ((DMAy_Streamx->CR & (uint32_t)DMA_SxCR_EN) != 0)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	681b      	ldr	r3, [r3, #0]
+  12:	f003 0301 	and.w	r3, r3, #1
+  16:	b2db      	uxtb	r3, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <DMA_GetCmdStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:953
+  {
+    /* The selected DMAy Streamx EN bit is set (DMA is still transferring) */
+    state = ENABLE;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <DMA_GetCmdStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:959
+  }
+  else
+  {
+    /* The selected DMAy Streamx EN bit is cleared (DMA is disabled and 
+        all transfers are complete) */
+    state = DISABLE;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:961
+  }
+  return state;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:962
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+
+Disassembly of section .text.DMA_GetFIFOStatus:
+
+00000000 <DMA_GetFIFOStatus>:
+DMA_GetFIFOStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:978
+  *           - DMA_FIFOStatus_3QuartersFull: if more than 3 quarters-full.
+  *           - DMA_FIFOStatus_Empty: when FIFO is empty
+  *           - DMA_FIFOStatus_Full: when FIFO is full
+  */
+uint32_t DMA_GetFIFOStatus(DMA_Stream_TypeDef* DMAy_Streamx)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:979
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:985
+ 
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  
+  /* Get the FIFO level bits */
+  tmpreg = (uint32_t)((DMAy_Streamx->FCR & DMA_SxFCR_FS));
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	695b      	ldr	r3, [r3, #20]
+  12:	f003 0338 	and.w	r3, r3, #56	; 0x38
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:987
+  
+  return tmpreg;
+  18:	68fb      	ldr	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:988
+}
+  1a:	4618      	mov	r0, r3
+  1c:	f107 0714 	add.w	r7, r7, #20
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+
+Disassembly of section .text.DMA_GetFlagStatus:
+
+00000000 <DMA_GetFlagStatus>:
+DMA_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1005
+  *            @arg DMA_FLAG_FEIFx:  Streamx FIFO error flag
+  *         Where x can be 0 to 7 to select the DMA Stream.
+  * @retval The new state of DMA_FLAG (SET or RESET).
+  */
+FlagStatus DMA_GetFlagStatus(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1006
+  FlagStatus bitstatus = RESET;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1008
+  DMA_TypeDef* DMAy;
+  uint32_t tmpreg = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1015
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_GET_FLAG(DMA_FLAG));
+
+  /* Determine the DMA to which belongs the stream */
+  if (DMAy_Streamx < DMA2_Stream0)
+  16:	687a      	ldr	r2, [r7, #4]
+  18:	4b16      	ldr	r3, [pc, #88]	; (74 <DMA_GetFlagStatus+0x74>)
+  1a:	429a      	cmp	r2, r3
+  1c:	d802      	bhi.n	24 <DMA_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1018
+  {
+    /* DMAy_Streamx belongs to DMA1 */
+    DMAy = DMA1; 
+  1e:	4b16      	ldr	r3, [pc, #88]	; (78 <DMA_GetFlagStatus+0x78>)
+  20:	613b      	str	r3, [r7, #16]
+  22:	e001      	b.n	28 <DMA_GetFlagStatus+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1023
+  } 
+  else 
+  {
+    /* DMAy_Streamx belongs to DMA2 */
+    DMAy = DMA2; 
+  24:	4b15      	ldr	r3, [pc, #84]	; (7c <DMA_GetFlagStatus+0x7c>)
+  26:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1027
+  }
+
+  /* Check if the flag is in HISR or LISR */
+  if ((DMA_FLAG & HIGH_ISR_MASK) != (uint32_t)RESET)
+  28:	683b      	ldr	r3, [r7, #0]
+  2a:	f003 5300 	and.w	r3, r3, #536870912	; 0x20000000
+  2e:	2b00      	cmp	r3, #0
+  30:	d003      	beq.n	3a <DMA_GetFlagStatus+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1030
+  {
+    /* Get DMAy HISR register value */
+    tmpreg = DMAy->HISR;
+  32:	693b      	ldr	r3, [r7, #16]
+  34:	685b      	ldr	r3, [r3, #4]
+  36:	60fb      	str	r3, [r7, #12]
+  38:	e002      	b.n	40 <DMA_GetFlagStatus+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1035
+  }
+  else
+  {
+    /* Get DMAy LISR register value */
+    tmpreg = DMAy->LISR;
+  3a:	693b      	ldr	r3, [r7, #16]
+  3c:	681b      	ldr	r3, [r3, #0]
+  3e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1039
+  }   
+ 
+  /* Mask the reserved bits */
+  tmpreg &= (uint32_t)RESERVED_MASK;
+  40:	68fa      	ldr	r2, [r7, #12]
+  42:	4b0f      	ldr	r3, [pc, #60]	; (80 <DMA_GetFlagStatus+0x80>)
+  44:	ea02 0303 	and.w	r3, r2, r3
+  48:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1042
+
+  /* Check the status of the specified DMA flag */
+  if ((tmpreg & DMA_FLAG) != (uint32_t)RESET)
+  4a:	68fa      	ldr	r2, [r7, #12]
+  4c:	683b      	ldr	r3, [r7, #0]
+  4e:	ea02 0303 	and.w	r3, r2, r3
+  52:	2b00      	cmp	r3, #0
+  54:	d003      	beq.n	5e <DMA_GetFlagStatus+0x5e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1045
+  {
+    /* DMA_FLAG is set */
+    bitstatus = SET;
+  56:	f04f 0301 	mov.w	r3, #1
+  5a:	75fb      	strb	r3, [r7, #23]
+  5c:	e002      	b.n	64 <DMA_GetFlagStatus+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1050
+  }
+  else
+  {
+    /* DMA_FLAG is reset */
+    bitstatus = RESET;
+  5e:	f04f 0300 	mov.w	r3, #0
+  62:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1054
+  }
+
+  /* Return the DMA_FLAG status */
+  return  bitstatus;
+  64:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1055
+}
+  66:	4618      	mov	r0, r3
+  68:	f107 071c 	add.w	r7, r7, #28
+  6c:	46bd      	mov	sp, r7
+  6e:	bc80      	pop	{r7}
+  70:	4770      	bx	lr
+  72:	bf00      	nop
+  74:	4002640f 	.word	0x4002640f
+  78:	40026000 	.word	0x40026000
+  7c:	40026400 	.word	0x40026400
+  80:	0f7d0f7d 	.word	0x0f7d0f7d
+
+Disassembly of section .text.DMA_ClearFlag:
+
+00000000 <DMA_ClearFlag>:
+DMA_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1072
+  *            @arg DMA_FLAG_FEIFx:  Streamx FIFO error flag
+  *         Where x can be 0 to 7 to select the DMA Stream.   
+  * @retval None
+  */
+void DMA_ClearFlag(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_FLAG)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1080
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_CLEAR_FLAG(DMA_FLAG));
+
+  /* Determine the DMA to which belongs the stream */
+  if (DMAy_Streamx < DMA2_Stream0)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	4b0f      	ldr	r3, [pc, #60]	; (4c <DMA_ClearFlag+0x4c>)
+   e:	429a      	cmp	r2, r3
+  10:	d802      	bhi.n	18 <DMA_ClearFlag+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1083
+  {
+    /* DMAy_Streamx belongs to DMA1 */
+    DMAy = DMA1; 
+  12:	4b0f      	ldr	r3, [pc, #60]	; (50 <DMA_ClearFlag+0x50>)
+  14:	60fb      	str	r3, [r7, #12]
+  16:	e001      	b.n	1c <DMA_ClearFlag+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1088
+  } 
+  else 
+  {
+    /* DMAy_Streamx belongs to DMA2 */
+    DMAy = DMA2; 
+  18:	4b0e      	ldr	r3, [pc, #56]	; (54 <DMA_ClearFlag+0x54>)
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1092
+  }
+
+  /* Check if LIFCR or HIFCR register is targeted */
+  if ((DMA_FLAG & HIGH_ISR_MASK) != (uint32_t)RESET)
+  1c:	683b      	ldr	r3, [r7, #0]
+  1e:	f003 5300 	and.w	r3, r3, #536870912	; 0x20000000
+  22:	2b00      	cmp	r3, #0
+  24:	d006      	beq.n	34 <DMA_ClearFlag+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1095
+  {
+    /* Set DMAy HIFCR register clear flag bits */
+    DMAy->HIFCR = (uint32_t)(DMA_FLAG & RESERVED_MASK);
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	4b0b      	ldr	r3, [pc, #44]	; (58 <DMA_ClearFlag+0x58>)
+  2a:	ea02 0303 	and.w	r3, r2, r3
+  2e:	68fa      	ldr	r2, [r7, #12]
+  30:	60d3      	str	r3, [r2, #12]
+  32:	e005      	b.n	40 <DMA_ClearFlag+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1100
+  }
+  else 
+  {
+    /* Set DMAy LIFCR register clear flag bits */
+    DMAy->LIFCR = (uint32_t)(DMA_FLAG & RESERVED_MASK);
+  34:	683a      	ldr	r2, [r7, #0]
+  36:	4b08      	ldr	r3, [pc, #32]	; (58 <DMA_ClearFlag+0x58>)
+  38:	ea02 0303 	and.w	r3, r2, r3
+  3c:	68fa      	ldr	r2, [r7, #12]
+  3e:	6093      	str	r3, [r2, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1102
+  }    
+}
+  40:	f107 0714 	add.w	r7, r7, #20
+  44:	46bd      	mov	sp, r7
+  46:	bc80      	pop	{r7}
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+  4c:	4002640f 	.word	0x4002640f
+  50:	40026000 	.word	0x40026000
+  54:	40026400 	.word	0x40026400
+  58:	0f7d0f7d 	.word	0x0f7d0f7d
+
+Disassembly of section .text.DMA_ITConfig:
+
+00000000 <DMA_ITConfig>:
+DMA_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1119
+  * @param  NewState: new state of the specified DMA interrupts.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void DMA_ITConfig(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1126
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_CONFIG_IT(DMA_IT));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  /* Check if the DMA_IT parameter contains a FIFO interrupt */
+  if ((DMA_IT & DMA_IT_FE) != 0)
+   e:	68bb      	ldr	r3, [r7, #8]
+  10:	f003 0380 	and.w	r3, r3, #128	; 0x80
+  14:	2b00      	cmp	r3, #0
+  16:	d00f      	beq.n	38 <DMA_ITConfig+0x38>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1128
+  {
+    if (NewState != DISABLE)
+  18:	79fb      	ldrb	r3, [r7, #7]
+  1a:	2b00      	cmp	r3, #0
+  1c:	d006      	beq.n	2c <DMA_ITConfig+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1131
+    {
+      /* Enable the selected DMA FIFO interrupts */
+      DMAy_Streamx->FCR |= (uint32_t)DMA_IT_FE;
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	695b      	ldr	r3, [r3, #20]
+  22:	f043 0280 	orr.w	r2, r3, #128	; 0x80
+  26:	68fb      	ldr	r3, [r7, #12]
+  28:	615a      	str	r2, [r3, #20]
+  2a:	e005      	b.n	38 <DMA_ITConfig+0x38>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1136
+    }    
+    else 
+    {
+      /* Disable the selected DMA FIFO interrupts */
+      DMAy_Streamx->FCR &= ~(uint32_t)DMA_IT_FE;  
+  2c:	68fb      	ldr	r3, [r7, #12]
+  2e:	695b      	ldr	r3, [r3, #20]
+  30:	f023 0280 	bic.w	r2, r3, #128	; 0x80
+  34:	68fb      	ldr	r3, [r7, #12]
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1141
+    }
+  }
+
+  /* Check if the DMA_IT parameter contains a Transfer interrupt */
+  if (DMA_IT != DMA_IT_FE)
+  38:	68bb      	ldr	r3, [r7, #8]
+  3a:	2b80      	cmp	r3, #128	; 0x80
+  3c:	d015      	beq.n	6a <DMA_ITConfig+0x6a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1143
+  {
+    if (NewState != DISABLE)
+  3e:	79fb      	ldrb	r3, [r7, #7]
+  40:	2b00      	cmp	r3, #0
+  42:	d008      	beq.n	56 <DMA_ITConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1146
+    {
+      /* Enable the selected DMA transfer interrupts */
+      DMAy_Streamx->CR |= (uint32_t)(DMA_IT  & TRANSFER_IT_ENABLE_MASK);
+  44:	68fb      	ldr	r3, [r7, #12]
+  46:	681a      	ldr	r2, [r3, #0]
+  48:	68bb      	ldr	r3, [r7, #8]
+  4a:	f003 031e 	and.w	r3, r3, #30
+  4e:	431a      	orrs	r2, r3
+  50:	68fb      	ldr	r3, [r7, #12]
+  52:	601a      	str	r2, [r3, #0]
+  54:	e009      	b.n	6a <DMA_ITConfig+0x6a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1151
+    }
+    else
+    {
+      /* Disable the selected DMA transfer interrupts */
+      DMAy_Streamx->CR &= ~(uint32_t)(DMA_IT & TRANSFER_IT_ENABLE_MASK);
+  56:	68fb      	ldr	r3, [r7, #12]
+  58:	681a      	ldr	r2, [r3, #0]
+  5a:	68bb      	ldr	r3, [r7, #8]
+  5c:	f003 031e 	and.w	r3, r3, #30
+  60:	ea6f 0303 	mvn.w	r3, r3
+  64:	401a      	ands	r2, r3
+  66:	68fb      	ldr	r3, [r7, #12]
+  68:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1154
+    }    
+  }
+}
+  6a:	f107 0714 	add.w	r7, r7, #20
+  6e:	46bd      	mov	sp, r7
+  70:	bc80      	pop	{r7}
+  72:	4770      	bx	lr
+
+Disassembly of section .text.DMA_GetITStatus:
+
+00000000 <DMA_GetITStatus>:
+DMA_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1171
+  *            @arg DMA_IT_FEIFx:  Streamx FIFO error interrupt
+  *         Where x can be 0 to 7 to select the DMA Stream.
+  * @retval The new state of DMA_IT (SET or RESET).
+  */
+ITStatus DMA_GetITStatus(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1172
+  ITStatus bitstatus = RESET;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1174
+  DMA_TypeDef* DMAy;
+  uint32_t tmpreg = 0, enablestatus = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1181
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_GET_IT(DMA_IT));
+ 
+  /* Determine the DMA to which belongs the stream */
+  if (DMAy_Streamx < DMA2_Stream0)
+  1c:	687a      	ldr	r2, [r7, #4]
+  1e:	4b24      	ldr	r3, [pc, #144]	; (b0 <DMA_GetITStatus+0xb0>)
+  20:	429a      	cmp	r2, r3
+  22:	d802      	bhi.n	2a <DMA_GetITStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1184
+  {
+    /* DMAy_Streamx belongs to DMA1 */
+    DMAy = DMA1; 
+  24:	4b23      	ldr	r3, [pc, #140]	; (b4 <DMA_GetITStatus+0xb4>)
+  26:	613b      	str	r3, [r7, #16]
+  28:	e001      	b.n	2e <DMA_GetITStatus+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1189
+  } 
+  else 
+  {
+    /* DMAy_Streamx belongs to DMA2 */
+    DMAy = DMA2; 
+  2a:	4b23      	ldr	r3, [pc, #140]	; (b8 <DMA_GetITStatus+0xb8>)
+  2c:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1193
+  }
+
+  /* Check if the interrupt enable bit is in the CR or FCR register */
+  if ((DMA_IT & TRANSFER_IT_MASK) != (uint32_t)RESET)
+  2e:	683a      	ldr	r2, [r7, #0]
+  30:	4b22      	ldr	r3, [pc, #136]	; (bc <DMA_GetITStatus+0xbc>)
+  32:	ea02 0303 	and.w	r3, r2, r3
+  36:	2b00      	cmp	r3, #0
+  38:	d00c      	beq.n	54 <DMA_GetITStatus+0x54>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1196
+  {
+    /* Get the interrupt enable position mask in CR register */
+    tmpreg = (uint32_t)((DMA_IT >> 11) & TRANSFER_IT_ENABLE_MASK);   
+  3a:	683b      	ldr	r3, [r7, #0]
+  3c:	ea4f 23d3 	mov.w	r3, r3, lsr #11
+  40:	f003 031e 	and.w	r3, r3, #30
+  44:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1199
+    
+    /* Check the enable bit in CR register */
+    enablestatus = (uint32_t)(DMAy_Streamx->CR & tmpreg);
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	681a      	ldr	r2, [r3, #0]
+  4a:	68fb      	ldr	r3, [r7, #12]
+  4c:	ea02 0303 	and.w	r3, r2, r3
+  50:	60bb      	str	r3, [r7, #8]
+  52:	e004      	b.n	5e <DMA_GetITStatus+0x5e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1204
+  }
+  else 
+  {
+    /* Check the enable bit in FCR register */
+    enablestatus = (uint32_t)(DMAy_Streamx->FCR & DMA_IT_FE); 
+  54:	687b      	ldr	r3, [r7, #4]
+  56:	695b      	ldr	r3, [r3, #20]
+  58:	f003 0380 	and.w	r3, r3, #128	; 0x80
+  5c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1208
+  }
+ 
+  /* Check if the interrupt pending flag is in LISR or HISR */
+  if ((DMA_IT & HIGH_ISR_MASK) != (uint32_t)RESET)
+  5e:	683b      	ldr	r3, [r7, #0]
+  60:	f003 5300 	and.w	r3, r3, #536870912	; 0x20000000
+  64:	2b00      	cmp	r3, #0
+  66:	d003      	beq.n	70 <DMA_GetITStatus+0x70>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1211
+  {
+    /* Get DMAy HISR register value */
+    tmpreg = DMAy->HISR ;
+  68:	693b      	ldr	r3, [r7, #16]
+  6a:	685b      	ldr	r3, [r3, #4]
+  6c:	60fb      	str	r3, [r7, #12]
+  6e:	e002      	b.n	76 <DMA_GetITStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1216
+  }
+  else
+  {
+    /* Get DMAy LISR register value */
+    tmpreg = DMAy->LISR ;
+  70:	693b      	ldr	r3, [r7, #16]
+  72:	681b      	ldr	r3, [r3, #0]
+  74:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1220
+  } 
+
+  /* mask all reserved bits */
+  tmpreg &= (uint32_t)RESERVED_MASK;
+  76:	68fa      	ldr	r2, [r7, #12]
+  78:	4b11      	ldr	r3, [pc, #68]	; (c0 <DMA_GetITStatus+0xc0>)
+  7a:	ea02 0303 	and.w	r3, r2, r3
+  7e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1223
+
+  /* Check the status of the specified DMA interrupt */
+  if (((tmpreg & DMA_IT) != (uint32_t)RESET) && (enablestatus != (uint32_t)RESET))
+  80:	68fa      	ldr	r2, [r7, #12]
+  82:	683b      	ldr	r3, [r7, #0]
+  84:	ea02 0303 	and.w	r3, r2, r3
+  88:	2b00      	cmp	r3, #0
+  8a:	d006      	beq.n	9a <DMA_GetITStatus+0x9a>
+  8c:	68bb      	ldr	r3, [r7, #8]
+  8e:	2b00      	cmp	r3, #0
+  90:	d003      	beq.n	9a <DMA_GetITStatus+0x9a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1226
+  {
+    /* DMA_IT is set */
+    bitstatus = SET;
+  92:	f04f 0301 	mov.w	r3, #1
+  96:	75fb      	strb	r3, [r7, #23]
+  98:	e002      	b.n	a0 <DMA_GetITStatus+0xa0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1231
+  }
+  else
+  {
+    /* DMA_IT is reset */
+    bitstatus = RESET;
+  9a:	f04f 0300 	mov.w	r3, #0
+  9e:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1235
+  }
+
+  /* Return the DMA_IT status */
+  return  bitstatus;
+  a0:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1236
+}
+  a2:	4618      	mov	r0, r3
+  a4:	f107 071c 	add.w	r7, r7, #28
+  a8:	46bd      	mov	sp, r7
+  aa:	bc80      	pop	{r7}
+  ac:	4770      	bx	lr
+  ae:	bf00      	nop
+  b0:	4002640f 	.word	0x4002640f
+  b4:	40026000 	.word	0x40026000
+  b8:	40026400 	.word	0x40026400
+  bc:	0f3c0f3c 	.word	0x0f3c0f3c
+  c0:	0f7d0f7d 	.word	0x0f7d0f7d
+
+Disassembly of section .text.DMA_ClearITPendingBit:
+
+00000000 <DMA_ClearITPendingBit>:
+DMA_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1253
+  *            @arg DMA_IT_FEIFx:  Streamx FIFO error interrupt
+  *         Where x can be 0 to 7 to select the DMA Stream.
+  * @retval None
+  */
+void DMA_ClearITPendingBit(DMA_Stream_TypeDef* DMAy_Streamx, uint32_t DMA_IT)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1261
+  /* Check the parameters */
+  assert_param(IS_DMA_ALL_PERIPH(DMAy_Streamx));
+  assert_param(IS_DMA_CLEAR_IT(DMA_IT));
+
+  /* Determine the DMA to which belongs the stream */
+  if (DMAy_Streamx < DMA2_Stream0)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	4b0f      	ldr	r3, [pc, #60]	; (4c <DMA_ClearITPendingBit+0x4c>)
+   e:	429a      	cmp	r2, r3
+  10:	d802      	bhi.n	18 <DMA_ClearITPendingBit+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1264
+  {
+    /* DMAy_Streamx belongs to DMA1 */
+    DMAy = DMA1; 
+  12:	4b0f      	ldr	r3, [pc, #60]	; (50 <DMA_ClearITPendingBit+0x50>)
+  14:	60fb      	str	r3, [r7, #12]
+  16:	e001      	b.n	1c <DMA_ClearITPendingBit+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1269
+  } 
+  else 
+  {
+    /* DMAy_Streamx belongs to DMA2 */
+    DMAy = DMA2; 
+  18:	4b0e      	ldr	r3, [pc, #56]	; (54 <DMA_ClearITPendingBit+0x54>)
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1273
+  }
+
+  /* Check if LIFCR or HIFCR register is targeted */
+  if ((DMA_IT & HIGH_ISR_MASK) != (uint32_t)RESET)
+  1c:	683b      	ldr	r3, [r7, #0]
+  1e:	f003 5300 	and.w	r3, r3, #536870912	; 0x20000000
+  22:	2b00      	cmp	r3, #0
+  24:	d006      	beq.n	34 <DMA_ClearITPendingBit+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1276
+  {
+    /* Set DMAy HIFCR register clear interrupt bits */
+    DMAy->HIFCR = (uint32_t)(DMA_IT & RESERVED_MASK);
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	4b0b      	ldr	r3, [pc, #44]	; (58 <DMA_ClearITPendingBit+0x58>)
+  2a:	ea02 0303 	and.w	r3, r2, r3
+  2e:	68fa      	ldr	r2, [r7, #12]
+  30:	60d3      	str	r3, [r2, #12]
+  32:	e005      	b.n	40 <DMA_ClearITPendingBit+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1281
+  }
+  else 
+  {
+    /* Set DMAy LIFCR register clear interrupt bits */
+    DMAy->LIFCR = (uint32_t)(DMA_IT & RESERVED_MASK);
+  34:	683a      	ldr	r2, [r7, #0]
+  36:	4b08      	ldr	r3, [pc, #32]	; (58 <DMA_ClearITPendingBit+0x58>)
+  38:	ea02 0303 	and.w	r3, r2, r3
+  3c:	68fa      	ldr	r2, [r7, #12]
+  3e:	6093      	str	r3, [r2, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_dma.c:1283
+  }   
+}
+  40:	f107 0714 	add.w	r7, r7, #20
+  44:	46bd      	mov	sp, r7
+  46:	bc80      	pop	{r7}
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+  4c:	4002640f 	.word	0x4002640f
+  50:	40026000 	.word	0x40026000
+  54:	40026400 	.word	0x40026400
+  58:	0f7d0f7d 	.word	0x0f7d0f7d

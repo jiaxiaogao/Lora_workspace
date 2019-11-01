@@ -1,0 +1,1172 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usb_dcd.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usb_dcd.o
+
+
+Disassembly of section .text.DCD_Init:
+
+00000000 <DCD_Init>:
+DCD_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:93
+
+
+
+void DCD_Init(USB_OTG_CORE_HANDLE *pdev , 
+              USB_OTG_CORE_ID_TypeDef coreID)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:97
+  uint32_t i;
+  USB_OTG_EP *ep;
+  
+  USB_OTG_SelectCore (pdev , coreID);
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	6878      	ldr	r0, [r7, #4]
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <USB_OTG_SelectCore>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:99
+  
+  pdev->dev.device_status = USB_OTG_DEFAULT;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	f04f 0201 	mov.w	r2, #1
+  1c:	f883 2112 	strb.w	r2, [r3, #274]	; 0x112
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:100
+  pdev->dev.device_address = 0;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	f883 2114 	strb.w	r2, [r3, #276]	; 0x114
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:103
+  
+  /* Init ep structure */
+  for (i = 0; i < pdev->cfg.dev_endpoints ; i++)
+  2a:	f04f 0300 	mov.w	r3, #0
+  2e:	60fb      	str	r3, [r7, #12]
+  30:	e02b      	b.n	8a <DCD_Init+0x8a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:105
+  {
+    ep = &pdev->dev.in_ep[i];
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  38:	68fa      	ldr	r2, [r7, #12]
+  3a:	4613      	mov	r3, r2
+  3c:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  40:	189b      	adds	r3, r3, r2
+  42:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  46:	18cb      	adds	r3, r1, r3
+  48:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:107
+    /* Init ep structure */
+    ep->is_in = 1;
+  4a:	68bb      	ldr	r3, [r7, #8]
+  4c:	f04f 0201 	mov.w	r2, #1
+  50:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:108
+    ep->num = i;
+  52:	68fb      	ldr	r3, [r7, #12]
+  54:	b2da      	uxtb	r2, r3
+  56:	68bb      	ldr	r3, [r7, #8]
+  58:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:109
+    ep->tx_fifo_num = i;
+  5a:	68fb      	ldr	r3, [r7, #12]
+  5c:	b29a      	uxth	r2, r3
+  5e:	68bb      	ldr	r3, [r7, #8]
+  60:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:111
+    /* Control until ep is actvated */
+    ep->type = EP_TYPE_CTRL;
+  62:	68bb      	ldr	r3, [r7, #8]
+  64:	f04f 0200 	mov.w	r2, #0
+  68:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:112
+    ep->maxpacket =  USB_OTG_MAX_EP0_SIZE;
+  6a:	68bb      	ldr	r3, [r7, #8]
+  6c:	f04f 0240 	mov.w	r2, #64	; 0x40
+  70:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:113
+    ep->xfer_buff = 0;
+  72:	68bb      	ldr	r3, [r7, #8]
+  74:	f04f 0200 	mov.w	r2, #0
+  78:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:114
+    ep->xfer_len = 0;
+  7a:	68bb      	ldr	r3, [r7, #8]
+  7c:	f04f 0200 	mov.w	r2, #0
+  80:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:103
+  
+  pdev->dev.device_status = USB_OTG_DEFAULT;
+  pdev->dev.device_address = 0;
+  
+  /* Init ep structure */
+  for (i = 0; i < pdev->cfg.dev_endpoints ; i++)
+  82:	68fb      	ldr	r3, [r7, #12]
+  84:	f103 0301 	add.w	r3, r3, #1
+  88:	60fb      	str	r3, [r7, #12]
+  8a:	687b      	ldr	r3, [r7, #4]
+  8c:	785b      	ldrb	r3, [r3, #1]
+  8e:	461a      	mov	r2, r3
+  90:	68fb      	ldr	r3, [r7, #12]
+  92:	429a      	cmp	r2, r3
+  94:	d8cd      	bhi.n	32 <DCD_Init+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:117
+    ep->maxpacket =  USB_OTG_MAX_EP0_SIZE;
+    ep->xfer_buff = 0;
+    ep->xfer_len = 0;
+  }
+  
+  for (i = 0; i < pdev->cfg.dev_endpoints; i++)
+  96:	f04f 0300 	mov.w	r3, #0
+  9a:	60fb      	str	r3, [r7, #12]
+  9c:	e02b      	b.n	f6 <DCD_Init+0xf6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:119
+  {
+    ep = &pdev->dev.out_ep[i];
+  9e:	687b      	ldr	r3, [r7, #4]
+  a0:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  a4:	68fa      	ldr	r2, [r7, #12]
+  a6:	4613      	mov	r3, r2
+  a8:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  ac:	189b      	adds	r3, r3, r2
+  ae:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  b2:	18cb      	adds	r3, r1, r3
+  b4:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:121
+    /* Init ep structure */
+    ep->is_in = 0;
+  b6:	68bb      	ldr	r3, [r7, #8]
+  b8:	f04f 0200 	mov.w	r2, #0
+  bc:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:122
+    ep->num = i;
+  be:	68fb      	ldr	r3, [r7, #12]
+  c0:	b2da      	uxtb	r2, r3
+  c2:	68bb      	ldr	r3, [r7, #8]
+  c4:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:123
+    ep->tx_fifo_num = i;
+  c6:	68fb      	ldr	r3, [r7, #12]
+  c8:	b29a      	uxth	r2, r3
+  ca:	68bb      	ldr	r3, [r7, #8]
+  cc:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:125
+    /* Control until ep is activated */
+    ep->type = EP_TYPE_CTRL;
+  ce:	68bb      	ldr	r3, [r7, #8]
+  d0:	f04f 0200 	mov.w	r2, #0
+  d4:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:126
+    ep->maxpacket = USB_OTG_MAX_EP0_SIZE;
+  d6:	68bb      	ldr	r3, [r7, #8]
+  d8:	f04f 0240 	mov.w	r2, #64	; 0x40
+  dc:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:127
+    ep->xfer_buff = 0;
+  de:	68bb      	ldr	r3, [r7, #8]
+  e0:	f04f 0200 	mov.w	r2, #0
+  e4:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:128
+    ep->xfer_len = 0;
+  e6:	68bb      	ldr	r3, [r7, #8]
+  e8:	f04f 0200 	mov.w	r2, #0
+  ec:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:117
+    ep->maxpacket =  USB_OTG_MAX_EP0_SIZE;
+    ep->xfer_buff = 0;
+    ep->xfer_len = 0;
+  }
+  
+  for (i = 0; i < pdev->cfg.dev_endpoints; i++)
+  ee:	68fb      	ldr	r3, [r7, #12]
+  f0:	f103 0301 	add.w	r3, r3, #1
+  f4:	60fb      	str	r3, [r7, #12]
+  f6:	687b      	ldr	r3, [r7, #4]
+  f8:	785b      	ldrb	r3, [r3, #1]
+  fa:	461a      	mov	r2, r3
+  fc:	68fb      	ldr	r3, [r7, #12]
+  fe:	429a      	cmp	r2, r3
+ 100:	d8cd      	bhi.n	9e <DCD_Init+0x9e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:131
+    ep->maxpacket = USB_OTG_MAX_EP0_SIZE;
+    ep->xfer_buff = 0;
+    ep->xfer_len = 0;
+  }
+  
+  USB_OTG_DisableGlobalInt(pdev);
+ 102:	6878      	ldr	r0, [r7, #4]
+ 104:	f7ff fffe 	bl	0 <USB_OTG_DisableGlobalInt>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:134
+  
+  /*Init the Core (common init.) */
+  USB_OTG_CoreInit(pdev);
+ 108:	6878      	ldr	r0, [r7, #4]
+ 10a:	f7ff fffe 	bl	0 <USB_OTG_CoreInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:138
+
+
+  /* Force Device Mode*/
+  USB_OTG_SetCurrentMode(pdev, DEVICE_MODE);
+ 10e:	6878      	ldr	r0, [r7, #4]
+ 110:	f04f 0100 	mov.w	r1, #0
+ 114:	f7ff fffe 	bl	0 <USB_OTG_SetCurrentMode>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:141
+  
+  /* Init Device */
+  USB_OTG_CoreInitDev(pdev);
+ 118:	6878      	ldr	r0, [r7, #4]
+ 11a:	f7ff fffe 	bl	0 <USB_OTG_CoreInitDev>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:145
+  
+  
+  /* Enable USB Global interrupt */
+  USB_OTG_EnableGlobalInt(pdev);
+ 11e:	6878      	ldr	r0, [r7, #4]
+ 120:	f7ff fffe 	bl	0 <USB_OTG_EnableGlobalInt>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:146
+}
+ 124:	f107 0710 	add.w	r7, r7, #16
+ 128:	46bd      	mov	sp, r7
+ 12a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_EP_Open:
+
+00000000 <DCD_EP_Open>:
+DCD_EP_Open():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:159
+*/
+uint32_t DCD_EP_Open(USB_OTG_CORE_HANDLE *pdev , 
+                     uint8_t ep_addr,
+                     uint16_t ep_mps,
+                     uint8_t ep_type)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	72f9      	strb	r1, [r7, #11]
+   a:	813a      	strh	r2, [r7, #8]
+   c:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:162
+  USB_OTG_EP *ep;
+  
+  if ((ep_addr & 0x80) == 0x80)
+   e:	7afb      	ldrb	r3, [r7, #11]
+  10:	b25b      	sxtb	r3, r3
+  12:	2b00      	cmp	r3, #0
+  14:	da0e      	bge.n	34 <DCD_EP_Open+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:164
+  {
+    ep = &pdev->dev.in_ep[ep_addr & 0x7F];
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  1c:	7afb      	ldrb	r3, [r7, #11]
+  1e:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  22:	4613      	mov	r3, r2
+  24:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  28:	189b      	adds	r3, r3, r2
+  2a:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  2e:	18cb      	adds	r3, r1, r3
+  30:	617b      	str	r3, [r7, #20]
+  32:	e00d      	b.n	50 <DCD_EP_Open+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:168
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[ep_addr & 0x7F];
+  34:	68fb      	ldr	r3, [r7, #12]
+  36:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  3a:	7afb      	ldrb	r3, [r7, #11]
+  3c:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  40:	4613      	mov	r3, r2
+  42:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  46:	189b      	adds	r3, r3, r2
+  48:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  4c:	18cb      	adds	r3, r1, r3
+  4e:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:170
+  }
+  ep->num   = ep_addr & 0x7F;
+  50:	7afb      	ldrb	r3, [r7, #11]
+  52:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  56:	b2da      	uxtb	r2, r3
+  58:	697b      	ldr	r3, [r7, #20]
+  5a:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:172
+  
+  ep->is_in = (0x80 & ep_addr) != 0;
+  5c:	7afb      	ldrb	r3, [r7, #11]
+  5e:	ea4f 13d3 	mov.w	r3, r3, lsr #7
+  62:	b2da      	uxtb	r2, r3
+  64:	697b      	ldr	r3, [r7, #20]
+  66:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:173
+  ep->maxpacket = ep_mps;
+  68:	893a      	ldrh	r2, [r7, #8]
+  6a:	697b      	ldr	r3, [r7, #20]
+  6c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:174
+  ep->type = ep_type;
+  6e:	697b      	ldr	r3, [r7, #20]
+  70:	79fa      	ldrb	r2, [r7, #7]
+  72:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:175
+  if (ep->is_in)
+  74:	697b      	ldr	r3, [r7, #20]
+  76:	785b      	ldrb	r3, [r3, #1]
+  78:	2b00      	cmp	r3, #0
+  7a:	d004      	beq.n	86 <DCD_EP_Open+0x86>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:178
+  {
+    /* Assign a Tx FIFO */
+    ep->tx_fifo_num = ep->num;
+  7c:	697b      	ldr	r3, [r7, #20]
+  7e:	781b      	ldrb	r3, [r3, #0]
+  80:	461a      	mov	r2, r3
+  82:	697b      	ldr	r3, [r7, #20]
+  84:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:181
+  }
+  /* Set initial data PID. */
+  if (ep_type == USB_OTG_EP_BULK )
+  86:	79fb      	ldrb	r3, [r7, #7]
+  88:	2b02      	cmp	r3, #2
+  8a:	d103      	bne.n	94 <DCD_EP_Open+0x94>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:183
+  {
+    ep->data_pid_start = 0;
+  8c:	697b      	ldr	r3, [r7, #20]
+  8e:	f04f 0200 	mov.w	r2, #0
+  92:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:185
+  }
+  USB_OTG_EPActivate(pdev , ep );
+  94:	68f8      	ldr	r0, [r7, #12]
+  96:	6979      	ldr	r1, [r7, #20]
+  98:	f7ff fffe 	bl	0 <USB_OTG_EPActivate>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:186
+  return 0;
+  9c:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:187
+}
+  a0:	4618      	mov	r0, r3
+  a2:	f107 0718 	add.w	r7, r7, #24
+  a6:	46bd      	mov	sp, r7
+  a8:	bd80      	pop	{r7, pc}
+  aa:	bf00      	nop
+
+Disassembly of section .text.DCD_EP_Close:
+
+00000000 <DCD_EP_Close>:
+DCD_EP_Close():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:195
+* @param pdev: device instance
+* @param ep_addr: endpoint address
+* @retval : status
+*/
+uint32_t DCD_EP_Close(USB_OTG_CORE_HANDLE *pdev , uint8_t  ep_addr)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:198
+  USB_OTG_EP *ep;
+  
+  if ((ep_addr&0x80) == 0x80)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	b25b      	sxtb	r3, r3
+  10:	2b00      	cmp	r3, #0
+  12:	da0e      	bge.n	32 <DCD_EP_Close+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:200
+  {
+    ep = &pdev->dev.in_ep[ep_addr & 0x7F];
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  1a:	78fb      	ldrb	r3, [r7, #3]
+  1c:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  20:	4613      	mov	r3, r2
+  22:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  26:	189b      	adds	r3, r3, r2
+  28:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  2c:	18cb      	adds	r3, r1, r3
+  2e:	60fb      	str	r3, [r7, #12]
+  30:	e00d      	b.n	4e <DCD_EP_Close+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:204
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[ep_addr & 0x7F];
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  38:	78fb      	ldrb	r3, [r7, #3]
+  3a:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  3e:	4613      	mov	r3, r2
+  40:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  44:	189b      	adds	r3, r3, r2
+  46:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  4a:	18cb      	adds	r3, r1, r3
+  4c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:206
+  }
+  ep->num   = ep_addr & 0x7F;
+  4e:	78fb      	ldrb	r3, [r7, #3]
+  50:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  54:	b2da      	uxtb	r2, r3
+  56:	68fb      	ldr	r3, [r7, #12]
+  58:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:207
+  ep->is_in = (0x80 & ep_addr) != 0;
+  5a:	78fb      	ldrb	r3, [r7, #3]
+  5c:	ea4f 13d3 	mov.w	r3, r3, lsr #7
+  60:	b2da      	uxtb	r2, r3
+  62:	68fb      	ldr	r3, [r7, #12]
+  64:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:208
+  USB_OTG_EPDeactivate(pdev , ep );
+  66:	6878      	ldr	r0, [r7, #4]
+  68:	68f9      	ldr	r1, [r7, #12]
+  6a:	f7ff fffe 	bl	0 <USB_OTG_EPDeactivate>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:209
+  return 0;
+  6e:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:210
+}
+  72:	4618      	mov	r0, r3
+  74:	f107 0710 	add.w	r7, r7, #16
+  78:	46bd      	mov	sp, r7
+  7a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_EP_PrepareRx:
+
+00000000 <DCD_EP_PrepareRx>:
+DCD_EP_PrepareRx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:225
+*/
+uint32_t   DCD_EP_PrepareRx( USB_OTG_CORE_HANDLE *pdev,
+                            uint8_t   ep_addr,
+                            uint8_t *pbuf,                        
+                            uint16_t  buf_len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	607a      	str	r2, [r7, #4]
+   a:	460a      	mov	r2, r1
+   c:	72fa      	strb	r2, [r7, #11]
+   e:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:228
+  USB_OTG_EP *ep;
+  
+  ep = &pdev->dev.out_ep[ep_addr & 0x7F];
+  10:	68fb      	ldr	r3, [r7, #12]
+  12:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  16:	7afb      	ldrb	r3, [r7, #11]
+  18:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  1c:	4613      	mov	r3, r2
+  1e:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  22:	189b      	adds	r3, r3, r2
+  24:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  28:	18cb      	adds	r3, r1, r3
+  2a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:231
+  
+  /*setup and start the Xfer */
+  ep->xfer_buff = pbuf;  
+  2c:	697b      	ldr	r3, [r7, #20]
+  2e:	687a      	ldr	r2, [r7, #4]
+  30:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:232
+  ep->xfer_len = buf_len;
+  32:	887a      	ldrh	r2, [r7, #2]
+  34:	697b      	ldr	r3, [r7, #20]
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:233
+  ep->xfer_count = 0;
+  38:	697b      	ldr	r3, [r7, #20]
+  3a:	f04f 0200 	mov.w	r2, #0
+  3e:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:234
+  ep->is_in = 0;
+  40:	697b      	ldr	r3, [r7, #20]
+  42:	f04f 0200 	mov.w	r2, #0
+  46:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:235
+  ep->num = ep_addr & 0x7F;
+  48:	7afb      	ldrb	r3, [r7, #11]
+  4a:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  4e:	b2da      	uxtb	r2, r3
+  50:	697b      	ldr	r3, [r7, #20]
+  52:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:237
+  
+  if (pdev->cfg.dma_enable == 1)
+  54:	68fb      	ldr	r3, [r7, #12]
+  56:	78db      	ldrb	r3, [r3, #3]
+  58:	2b01      	cmp	r3, #1
+  5a:	d102      	bne.n	62 <DCD_EP_PrepareRx+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:239
+  {
+    ep->dma_addr = (uint32_t)pbuf;  
+  5c:	687a      	ldr	r2, [r7, #4]
+  5e:	697b      	ldr	r3, [r7, #20]
+  60:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:242
+  }
+  
+  if ( ep->num == 0 )
+  62:	697b      	ldr	r3, [r7, #20]
+  64:	781b      	ldrb	r3, [r3, #0]
+  66:	2b00      	cmp	r3, #0
+  68:	d104      	bne.n	74 <DCD_EP_PrepareRx+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:244
+  {
+    USB_OTG_EP0StartXfer(pdev , ep);
+  6a:	68f8      	ldr	r0, [r7, #12]
+  6c:	6979      	ldr	r1, [r7, #20]
+  6e:	f7ff fffe 	bl	0 <USB_OTG_EP0StartXfer>
+  72:	e003      	b.n	7c <DCD_EP_PrepareRx+0x7c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:248
+  }
+  else
+  {
+    USB_OTG_EPStartXfer(pdev, ep );
+  74:	68f8      	ldr	r0, [r7, #12]
+  76:	6979      	ldr	r1, [r7, #20]
+  78:	f7ff fffe 	bl	0 <USB_OTG_EPStartXfer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:250
+  }
+  return 0;
+  7c:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:251
+}
+  80:	4618      	mov	r0, r3
+  82:	f107 0718 	add.w	r7, r7, #24
+  86:	46bd      	mov	sp, r7
+  88:	bd80      	pop	{r7, pc}
+  8a:	bf00      	nop
+
+Disassembly of section .text.DCD_EP_Tx:
+
+00000000 <DCD_EP_Tx>:
+DCD_EP_Tx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:265
+*/
+uint32_t  DCD_EP_Tx ( USB_OTG_CORE_HANDLE *pdev,
+                     uint8_t   ep_addr,
+                     uint8_t   *pbuf,
+                     uint32_t   buf_len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	607a      	str	r2, [r7, #4]
+   a:	603b      	str	r3, [r7, #0]
+   c:	460b      	mov	r3, r1
+   e:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:268
+  USB_OTG_EP *ep;
+  
+  ep = &pdev->dev.in_ep[ep_addr & 0x7F];
+  10:	68fb      	ldr	r3, [r7, #12]
+  12:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  16:	7afb      	ldrb	r3, [r7, #11]
+  18:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  1c:	4613      	mov	r3, r2
+  1e:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  22:	189b      	adds	r3, r3, r2
+  24:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  28:	18cb      	adds	r3, r1, r3
+  2a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:271
+  
+  /* Setup and start the Transfer */
+  ep->is_in = 1;
+  2c:	697b      	ldr	r3, [r7, #20]
+  2e:	f04f 0201 	mov.w	r2, #1
+  32:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:272
+  ep->num = ep_addr & 0x7F;  
+  34:	7afb      	ldrb	r3, [r7, #11]
+  36:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  3a:	b2da      	uxtb	r2, r3
+  3c:	697b      	ldr	r3, [r7, #20]
+  3e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:273
+  ep->xfer_buff = pbuf;
+  40:	697b      	ldr	r3, [r7, #20]
+  42:	687a      	ldr	r2, [r7, #4]
+  44:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:274
+  ep->dma_addr = (uint32_t)pbuf;  
+  46:	687a      	ldr	r2, [r7, #4]
+  48:	697b      	ldr	r3, [r7, #20]
+  4a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:275
+  ep->xfer_count = 0;
+  4c:	697b      	ldr	r3, [r7, #20]
+  4e:	f04f 0200 	mov.w	r2, #0
+  52:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:276
+  ep->xfer_len  = buf_len;
+  54:	697b      	ldr	r3, [r7, #20]
+  56:	683a      	ldr	r2, [r7, #0]
+  58:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:278
+  
+  if ( ep->num == 0 )
+  5a:	697b      	ldr	r3, [r7, #20]
+  5c:	781b      	ldrb	r3, [r3, #0]
+  5e:	2b00      	cmp	r3, #0
+  60:	d104      	bne.n	6c <DCD_EP_Tx+0x6c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:280
+  {
+    USB_OTG_EP0StartXfer(pdev , ep);
+  62:	68f8      	ldr	r0, [r7, #12]
+  64:	6979      	ldr	r1, [r7, #20]
+  66:	f7ff fffe 	bl	0 <USB_OTG_EP0StartXfer>
+  6a:	e003      	b.n	74 <DCD_EP_Tx+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:284
+  }
+  else
+  {
+    USB_OTG_EPStartXfer(pdev, ep );
+  6c:	68f8      	ldr	r0, [r7, #12]
+  6e:	6979      	ldr	r1, [r7, #20]
+  70:	f7ff fffe 	bl	0 <USB_OTG_EPStartXfer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:286
+  }
+  return 0;
+  74:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:287
+}
+  78:	4618      	mov	r0, r3
+  7a:	f107 0718 	add.w	r7, r7, #24
+  7e:	46bd      	mov	sp, r7
+  80:	bd80      	pop	{r7, pc}
+  82:	bf00      	nop
+
+Disassembly of section .text.DCD_EP_Stall:
+
+00000000 <DCD_EP_Stall>:
+DCD_EP_Stall():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:297
+* @param pdev: device instance
+* @param epnum: endpoint address
+* @retval : status
+*/
+uint32_t  DCD_EP_Stall (USB_OTG_CORE_HANDLE *pdev, uint8_t   epnum)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:299
+  USB_OTG_EP *ep;
+  if ((0x80 & epnum) == 0x80)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	b25b      	sxtb	r3, r3
+  10:	2b00      	cmp	r3, #0
+  12:	da0e      	bge.n	32 <DCD_EP_Stall+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:301
+  {
+    ep = &pdev->dev.in_ep[epnum & 0x7F];
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  1a:	78fb      	ldrb	r3, [r7, #3]
+  1c:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  20:	4613      	mov	r3, r2
+  22:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  26:	189b      	adds	r3, r3, r2
+  28:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  2c:	18cb      	adds	r3, r1, r3
+  2e:	60fb      	str	r3, [r7, #12]
+  30:	e00b      	b.n	4a <DCD_EP_Stall+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:305
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[epnum];
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  38:	78fa      	ldrb	r2, [r7, #3]
+  3a:	4613      	mov	r3, r2
+  3c:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  40:	189b      	adds	r3, r3, r2
+  42:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  46:	18cb      	adds	r3, r1, r3
+  48:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:308
+  }
+
+  ep->is_stall = 1;
+  4a:	68fb      	ldr	r3, [r7, #12]
+  4c:	f04f 0201 	mov.w	r2, #1
+  50:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:309
+  ep->num   = epnum & 0x7F;
+  52:	78fb      	ldrb	r3, [r7, #3]
+  54:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  58:	b2da      	uxtb	r2, r3
+  5a:	68fb      	ldr	r3, [r7, #12]
+  5c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:310
+  ep->is_in = ((epnum & 0x80) == 0x80);
+  5e:	78fb      	ldrb	r3, [r7, #3]
+  60:	ea4f 13d3 	mov.w	r3, r3, lsr #7
+  64:	b2da      	uxtb	r2, r3
+  66:	68fb      	ldr	r3, [r7, #12]
+  68:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:312
+  
+  USB_OTG_EPSetStall(pdev , ep);
+  6a:	6878      	ldr	r0, [r7, #4]
+  6c:	68f9      	ldr	r1, [r7, #12]
+  6e:	f7ff fffe 	bl	0 <USB_OTG_EPSetStall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:313
+  return (0);
+  72:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:314
+}
+  76:	4618      	mov	r0, r3
+  78:	f107 0710 	add.w	r7, r7, #16
+  7c:	46bd      	mov	sp, r7
+  7e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_EP_ClrStall:
+
+00000000 <DCD_EP_ClrStall>:
+DCD_EP_ClrStall():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:324
+* @param pdev: device instance
+* @param epnum: endpoint address
+* @retval : status
+*/
+uint32_t  DCD_EP_ClrStall (USB_OTG_CORE_HANDLE *pdev, uint8_t epnum)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:326
+  USB_OTG_EP *ep;
+  if ((0x80 & epnum) == 0x80)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	b25b      	sxtb	r3, r3
+  10:	2b00      	cmp	r3, #0
+  12:	da0e      	bge.n	32 <DCD_EP_ClrStall+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:328
+  {
+    ep = &pdev->dev.in_ep[epnum & 0x7F];    
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  1a:	78fb      	ldrb	r3, [r7, #3]
+  1c:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  20:	4613      	mov	r3, r2
+  22:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  26:	189b      	adds	r3, r3, r2
+  28:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  2c:	18cb      	adds	r3, r1, r3
+  2e:	60fb      	str	r3, [r7, #12]
+  30:	e00b      	b.n	4a <DCD_EP_ClrStall+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:332
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[epnum];
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  38:	78fa      	ldrb	r2, [r7, #3]
+  3a:	4613      	mov	r3, r2
+  3c:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  40:	189b      	adds	r3, r3, r2
+  42:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  46:	18cb      	adds	r3, r1, r3
+  48:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:335
+  }
+  
+  ep->is_stall = 0;  
+  4a:	68fb      	ldr	r3, [r7, #12]
+  4c:	f04f 0200 	mov.w	r2, #0
+  50:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:336
+  ep->num   = epnum & 0x7F;
+  52:	78fb      	ldrb	r3, [r7, #3]
+  54:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  58:	b2da      	uxtb	r2, r3
+  5a:	68fb      	ldr	r3, [r7, #12]
+  5c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:337
+  ep->is_in = ((epnum & 0x80) == 0x80);
+  5e:	78fb      	ldrb	r3, [r7, #3]
+  60:	ea4f 13d3 	mov.w	r3, r3, lsr #7
+  64:	b2da      	uxtb	r2, r3
+  66:	68fb      	ldr	r3, [r7, #12]
+  68:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:339
+  
+  USB_OTG_EPClearStall(pdev , ep);
+  6a:	6878      	ldr	r0, [r7, #4]
+  6c:	68f9      	ldr	r1, [r7, #12]
+  6e:	f7ff fffe 	bl	0 <USB_OTG_EPClearStall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:340
+  return (0);
+  72:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:341
+}
+  76:	4618      	mov	r0, r3
+  78:	f107 0710 	add.w	r7, r7, #16
+  7c:	46bd      	mov	sp, r7
+  7e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_EP_Flush:
+
+00000000 <DCD_EP_Flush>:
+DCD_EP_Flush():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:351
+* @param pdev: device instance
+* @param epnum: endpoint address
+* @retval : status
+*/
+uint32_t  DCD_EP_Flush (USB_OTG_CORE_HANDLE *pdev , uint8_t epnum)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:353
+
+  if ((epnum & 0x80) == 0x80)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	b25b      	sxtb	r3, r3
+  10:	2b00      	cmp	r3, #0
+  12:	da07      	bge.n	24 <DCD_EP_Flush+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:355
+  {
+    USB_OTG_FlushTxFifo(pdev, epnum & 0x7F);
+  14:	78fb      	ldrb	r3, [r7, #3]
+  16:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  1a:	6878      	ldr	r0, [r7, #4]
+  1c:	4619      	mov	r1, r3
+  1e:	f7ff fffe 	bl	0 <USB_OTG_FlushTxFifo>
+  22:	e002      	b.n	2a <DCD_EP_Flush+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:359
+  }
+  else
+  {
+    USB_OTG_FlushRxFifo(pdev);
+  24:	6878      	ldr	r0, [r7, #4]
+  26:	f7ff fffe 	bl	0 <USB_OTG_FlushRxFifo>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:362
+  }
+
+  return (0);
+  2a:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:363
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0708 	add.w	r7, r7, #8
+  34:	46bd      	mov	sp, r7
+  36:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_EP_SetAddress:
+
+00000000 <DCD_EP_SetAddress>:
+DCD_EP_SetAddress():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:373
+* @param pdev: device instance
+* @param address: new device address
+* @retval : status
+*/
+void  DCD_EP_SetAddress (USB_OTG_CORE_HANDLE *pdev, uint8_t address)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:375
+  USB_OTG_DCFG_TypeDef  dcfg;
+  dcfg.d32 = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:376
+  dcfg.b.devaddr = address;
+  12:	78fb      	ldrb	r3, [r7, #3]
+  14:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  18:	b2da      	uxtb	r2, r3
+  1a:	68fb      	ldr	r3, [r7, #12]
+  1c:	f362 130a 	bfi	r3, r2, #4, #7
+  20:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:377
+  USB_OTG_MODIFY_REG32( &pdev->regs.DREGS->DCFG, 0, dcfg.d32);
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	691b      	ldr	r3, [r3, #16]
+  26:	687a      	ldr	r2, [r7, #4]
+  28:	6912      	ldr	r2, [r2, #16]
+  2a:	6811      	ldr	r1, [r2, #0]
+  2c:	68fa      	ldr	r2, [r7, #12]
+  2e:	ea41 0202 	orr.w	r2, r1, r2
+  32:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:378
+}
+  34:	f107 0714 	add.w	r7, r7, #20
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.DCD_DevConnect:
+
+00000000 <DCD_DevConnect>:
+DCD_DevConnect():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:386
+* @brief  Connect device (enable internal pull-up)
+* @param pdev: device instance
+* @retval : None
+*/
+void  DCD_DevConnect (USB_OTG_CORE_HANDLE *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:389
+#ifndef USE_OTG_MODE
+  USB_OTG_DCTL_TypeDef  dctl;
+  dctl.d32 = USB_OTG_READ_REG32(&pdev->regs.DREGS->DCTL);
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	691b      	ldr	r3, [r3, #16]
+   c:	685b      	ldr	r3, [r3, #4]
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:391
+  /* Connect device */
+  dctl.b.sftdiscon  = 0;
+  10:	68fb      	ldr	r3, [r7, #12]
+  12:	f36f 0341 	bfc	r3, #1, #1
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:392
+  USB_OTG_WRITE_REG32(&pdev->regs.DREGS->DCTL, dctl.d32);
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	691b      	ldr	r3, [r3, #16]
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:393
+  USB_OTG_BSP_mDelay(3);
+  20:	f04f 0003 	mov.w	r0, #3
+  24:	f7ff fffe 	bl	0 <USB_OTG_BSP_mDelay>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:395
+#endif
+}
+  28:	f107 0710 	add.w	r7, r7, #16
+  2c:	46bd      	mov	sp, r7
+  2e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_DevDisconnect:
+
+00000000 <DCD_DevDisconnect>:
+DCD_DevDisconnect():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:404
+* @brief  Disconnect device (disable internal pull-up)
+* @param pdev: device instance
+* @retval : None
+*/
+void  DCD_DevDisconnect (USB_OTG_CORE_HANDLE *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:407
+#ifndef USE_OTG_MODE
+  USB_OTG_DCTL_TypeDef  dctl;
+  dctl.d32 = USB_OTG_READ_REG32(&pdev->regs.DREGS->DCTL);
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	691b      	ldr	r3, [r3, #16]
+   c:	685b      	ldr	r3, [r3, #4]
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:409
+  /* Disconnect device for 3ms */
+  dctl.b.sftdiscon  = 1;
+  10:	68fb      	ldr	r3, [r7, #12]
+  12:	f043 0302 	orr.w	r3, r3, #2
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:410
+  USB_OTG_WRITE_REG32(&pdev->regs.DREGS->DCTL, dctl.d32);
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	691b      	ldr	r3, [r3, #16]
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:411
+  USB_OTG_BSP_mDelay(3);
+  20:	f04f 0003 	mov.w	r0, #3
+  24:	f7ff fffe 	bl	0 <USB_OTG_BSP_mDelay>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:413
+#endif
+}
+  28:	f107 0710 	add.w	r7, r7, #16
+  2c:	46bd      	mov	sp, r7
+  2e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.DCD_GetEPStatus:
+
+00000000 <DCD_GetEPStatus>:
+DCD_GetEPStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:424
+*         epnum : endpoint address
+* @retval : EP status
+*/
+
+uint32_t DCD_GetEPStatus(USB_OTG_CORE_HANDLE *pdev ,uint8_t epnum)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:426
+  USB_OTG_EP *ep;
+  uint32_t Status = 0;  
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:428
+  
+  if ((0x80 & epnum) == 0x80)
+  12:	78fb      	ldrb	r3, [r7, #3]
+  14:	b25b      	sxtb	r3, r3
+  16:	2b00      	cmp	r3, #0
+  18:	da0e      	bge.n	38 <DCD_GetEPStatus+0x38>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:430
+  {
+    ep = &pdev->dev.in_ep[epnum & 0x7F];    
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  26:	4613      	mov	r3, r2
+  28:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  2c:	189b      	adds	r3, r3, r2
+  2e:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  32:	18cb      	adds	r3, r1, r3
+  34:	60fb      	str	r3, [r7, #12]
+  36:	e00b      	b.n	50 <DCD_GetEPStatus+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:434
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[epnum];
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  3e:	78fa      	ldrb	r2, [r7, #3]
+  40:	4613      	mov	r3, r2
+  42:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  46:	189b      	adds	r3, r3, r2
+  48:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  4c:	18cb      	adds	r3, r1, r3
+  4e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:437
+  }
+  
+  Status = USB_OTG_GetEPStatus(pdev ,ep);
+  50:	6878      	ldr	r0, [r7, #4]
+  52:	68f9      	ldr	r1, [r7, #12]
+  54:	f7ff fffe 	bl	0 <USB_OTG_GetEPStatus>
+  58:	60b8      	str	r0, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:440
+
+  /* Return the current status */
+  return Status;
+  5a:	68bb      	ldr	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:441
+}
+  5c:	4618      	mov	r0, r3
+  5e:	f107 0710 	add.w	r7, r7, #16
+  62:	46bd      	mov	sp, r7
+  64:	bd80      	pop	{r7, pc}
+  66:	bf00      	nop
+
+Disassembly of section .text.DCD_SetEPStatus:
+
+00000000 <DCD_SetEPStatus>:
+DCD_SetEPStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:451
+*         Status : new Status
+*         epnum : EP address
+* @retval : None
+*/
+void DCD_SetEPStatus (USB_OTG_CORE_HANDLE *pdev , uint8_t epnum , uint32_t Status)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	460b      	mov	r3, r1
+   a:	607a      	str	r2, [r7, #4]
+   c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:454
+  USB_OTG_EP *ep;
+  
+  if ((0x80 & epnum) == 0x80)
+   e:	7afb      	ldrb	r3, [r7, #11]
+  10:	b25b      	sxtb	r3, r3
+  12:	2b00      	cmp	r3, #0
+  14:	da0e      	bge.n	34 <DCD_SetEPStatus+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:456
+  {
+    ep = &pdev->dev.in_ep[epnum & 0x7F];    
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f503 718e 	add.w	r1, r3, #284	; 0x11c
+  1c:	7afb      	ldrb	r3, [r7, #11]
+  1e:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+  22:	4613      	mov	r3, r2
+  24:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  28:	189b      	adds	r3, r3, r2
+  2a:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  2e:	18cb      	adds	r3, r1, r3
+  30:	617b      	str	r3, [r7, #20]
+  32:	e00b      	b.n	4c <DCD_SetEPStatus+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:460
+  }
+  else
+  {
+    ep = &pdev->dev.out_ep[epnum];
+  34:	68fb      	ldr	r3, [r7, #12]
+  36:	f503 715d 	add.w	r1, r3, #884	; 0x374
+  3a:	7afa      	ldrb	r2, [r7, #11]
+  3c:	4613      	mov	r3, r2
+  3e:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  42:	189b      	adds	r3, r3, r2
+  44:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  48:	18cb      	adds	r3, r1, r3
+  4a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:463
+  }
+  
+   USB_OTG_SetEPStatus(pdev ,ep , Status);
+  4c:	68f8      	ldr	r0, [r7, #12]
+  4e:	6979      	ldr	r1, [r7, #20]
+  50:	687a      	ldr	r2, [r7, #4]
+  52:	f7ff fffe 	bl	0 <USB_OTG_SetEPStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_OTG_Driver\src/usb_dcd.c:464
+}
+  56:	f107 0718 	add.w	r7, r7, #24
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop

@@ -1,0 +1,190 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\led.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\led.o
+
+
+Disassembly of section .text.LedInit:
+
+00000000 <LedInit>:
+LedInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:34
+                                LED5_GPIO_CLK
+#endif    
+                                };
+
+void LedInit( tLed led )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:39
+    GPIO_InitTypeDef  GPIO_InitStructure;
+
+#if defined( STM32F2XX ) || defined( STM32F4XX ) || defined( STM32F429_439xx )
+    
+    RCC_AHB1PeriphClockCmd( LedClk[led], ENABLE );
+   a:	79fa      	ldrb	r2, [r7, #7]
+   c:	4b1a      	ldr	r3, [pc, #104]	; (78 <LedInit+0x78>)
+   e:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+  12:	4618      	mov	r0, r3
+  14:	f04f 0101 	mov.w	r1, #1
+  18:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:41
+
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_OUT;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:42
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:43
+    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:44
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  2e:	f04f 0302 	mov.w	r3, #2
+  32:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:53
+
+    GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+#endif
+
+    GPIO_InitStructure.GPIO_Pin = LedPin[led];
+  34:	79fa      	ldrb	r2, [r7, #7]
+  36:	4b11      	ldr	r3, [pc, #68]	; (7c <LedInit+0x7c>)
+  38:	f833 3012 	ldrh.w	r3, [r3, r2, lsl #1]
+  3c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:54
+    GPIO_Init( LedPort[led], &GPIO_InitStructure );
+  3e:	79fa      	ldrb	r2, [r7, #7]
+  40:	4b0f      	ldr	r3, [pc, #60]	; (80 <LedInit+0x80>)
+  42:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  46:	f107 0308 	add.w	r3, r7, #8
+  4a:	4610      	mov	r0, r2
+  4c:	4619      	mov	r1, r3
+  4e:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:55
+    GPIO_WriteBit( LedPort[led], LedPin[led], LED_OFF );
+  52:	79fa      	ldrb	r2, [r7, #7]
+  54:	4b0a      	ldr	r3, [pc, #40]	; (80 <LedInit+0x80>)
+  56:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  5a:	79f9      	ldrb	r1, [r7, #7]
+  5c:	4b07      	ldr	r3, [pc, #28]	; (7c <LedInit+0x7c>)
+  5e:	f833 3011 	ldrh.w	r3, [r3, r1, lsl #1]
+  62:	4610      	mov	r0, r2
+  64:	4619      	mov	r1, r3
+  66:	f04f 0201 	mov.w	r2, #1
+  6a:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:56
+}
+  6e:	f107 0710 	add.w	r7, r7, #16
+  72:	46bd      	mov	sp, r7
+  74:	bd80      	pop	{r7, pc}
+  76:	bf00      	nop
+	...
+
+Disassembly of section .text.LedOn:
+
+00000000 <LedOn>:
+LedOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:59
+
+void LedOn( tLed led )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:60
+    GPIO_WriteBit( LedPort[led], LedPin[led], LED_ON );
+   a:	79fa      	ldrb	r2, [r7, #7]
+   c:	4b08      	ldr	r3, [pc, #32]	; (30 <LedOn+0x30>)
+   e:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  12:	79f9      	ldrb	r1, [r7, #7]
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <LedOn+0x34>)
+  16:	f833 3011 	ldrh.w	r3, [r3, r1, lsl #1]
+  1a:	4610      	mov	r0, r2
+  1c:	4619      	mov	r1, r3
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:61
+}
+  26:	f107 0708 	add.w	r7, r7, #8
+  2a:	46bd      	mov	sp, r7
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.LedOff:
+
+00000000 <LedOff>:
+LedOff():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:64
+
+void LedOff( tLed led )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:65
+    GPIO_WriteBit( LedPort[led], LedPin[led], LED_OFF ); 
+   a:	79fa      	ldrb	r2, [r7, #7]
+   c:	4b08      	ldr	r3, [pc, #32]	; (30 <LedOff+0x30>)
+   e:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  12:	79f9      	ldrb	r1, [r7, #7]
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <LedOff+0x34>)
+  16:	f833 3011 	ldrh.w	r3, [r3, r1, lsl #1]
+  1a:	4610      	mov	r0, r2
+  1c:	4619      	mov	r1, r3
+  1e:	f04f 0201 	mov.w	r2, #1
+  22:	f7ff fffe 	bl	0 <GPIO_WriteBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:66
+}
+  26:	f107 0708 	add.w	r7, r7, #8
+  2a:	46bd      	mov	sp, r7
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.LedToggle:
+
+00000000 <LedToggle>:
+LedToggle():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:69
+
+void LedToggle( tLed led )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:70
+    LedPort[led]->ODR ^= LedPin[led]; 
+   a:	79fa      	ldrb	r2, [r7, #7]
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <LedToggle+0x34>)
+   e:	f853 3022 	ldr.w	r3, [r3, r2, lsl #2]
+  12:	79f9      	ldrb	r1, [r7, #7]
+  14:	4a07      	ldr	r2, [pc, #28]	; (34 <LedToggle+0x34>)
+  16:	f852 2021 	ldr.w	r2, [r2, r1, lsl #2]
+  1a:	6951      	ldr	r1, [r2, #20]
+  1c:	79f8      	ldrb	r0, [r7, #7]
+  1e:	4a06      	ldr	r2, [pc, #24]	; (38 <LedToggle+0x38>)
+  20:	f832 2010 	ldrh.w	r2, [r2, r0, lsl #1]
+  24:	ea81 0202 	eor.w	r2, r1, r2
+  28:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/led.c:71
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+	...

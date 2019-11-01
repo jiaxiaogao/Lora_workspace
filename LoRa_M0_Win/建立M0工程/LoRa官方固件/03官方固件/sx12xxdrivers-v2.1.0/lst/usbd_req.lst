@@ -1,0 +1,2196 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_req.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_req.o
+
+
+Disassembly of section .text.USBD_StdDevReq:
+
+00000000 <USBD_StdDevReq>:
+USBD_StdDevReq():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:149
+* @param  pdev: device instance
+* @param  req: usb request
+* @retval status
+*/
+USBD_Status  USBD_StdDevReq (USB_OTG_CORE_HANDLE  *pdev, USB_SETUP_REQ  *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:150
+  USBD_Status ret = USBD_OK;  
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:152
+  
+  switch (req->bRequest) 
+  10:	683b      	ldr	r3, [r7, #0]
+  12:	785b      	ldrb	r3, [r3, #1]
+  14:	2b09      	cmp	r3, #9
+  16:	d83a      	bhi.n	8e <USBD_StdDevReq+0x8e>
+  18:	a201      	add	r2, pc, #4	; (adr r2, 20 <USBD_StdDevReq+0x20>)
+  1a:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  1e:	bf00      	nop
+  20:	00000071 	.word	0x00000071
+  24:	00000085 	.word	0x00000085
+  28:	0000008f 	.word	0x0000008f
+  2c:	0000007b 	.word	0x0000007b
+  30:	0000008f 	.word	0x0000008f
+  34:	00000053 	.word	0x00000053
+  38:	00000049 	.word	0x00000049
+  3c:	0000008f 	.word	0x0000008f
+  40:	00000067 	.word	0x00000067
+  44:	0000005d 	.word	0x0000005d
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:156
+  {
+  case USB_REQ_GET_DESCRIPTOR: 
+    
+    USBD_GetDescriptor (pdev, req) ;
+  48:	6878      	ldr	r0, [r7, #4]
+  4a:	6839      	ldr	r1, [r7, #0]
+  4c:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:157
+    break;
+  50:	e022      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:160
+    
+  case USB_REQ_SET_ADDRESS:                      
+    USBD_SetAddress(pdev, req);
+  52:	6878      	ldr	r0, [r7, #4]
+  54:	6839      	ldr	r1, [r7, #0]
+  56:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:161
+    break;
+  5a:	e01d      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:164
+    
+  case USB_REQ_SET_CONFIGURATION:                    
+    USBD_SetConfig (pdev , req);
+  5c:	6878      	ldr	r0, [r7, #4]
+  5e:	6839      	ldr	r1, [r7, #0]
+  60:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:165
+    break;
+  64:	e018      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:168
+    
+  case USB_REQ_GET_CONFIGURATION:                 
+    USBD_GetConfig (pdev , req);
+  66:	6878      	ldr	r0, [r7, #4]
+  68:	6839      	ldr	r1, [r7, #0]
+  6a:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:169
+    break;
+  6e:	e013      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:172
+    
+  case USB_REQ_GET_STATUS:                                  
+    USBD_GetStatus (pdev , req);
+  70:	6878      	ldr	r0, [r7, #4]
+  72:	6839      	ldr	r1, [r7, #0]
+  74:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:173
+    break;
+  78:	e00e      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:177
+    
+    
+  case USB_REQ_SET_FEATURE:   
+    USBD_SetFeature (pdev , req);    
+  7a:	6878      	ldr	r0, [r7, #4]
+  7c:	6839      	ldr	r1, [r7, #0]
+  7e:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:178
+    break;
+  82:	e009      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:181
+    
+  case USB_REQ_CLEAR_FEATURE:                                   
+    USBD_ClrFeature (pdev , req);
+  84:	6878      	ldr	r0, [r7, #4]
+  86:	6839      	ldr	r1, [r7, #0]
+  88:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:182
+    break;
+  8c:	e004      	b.n	98 <USBD_StdDevReq+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:185
+    
+  default:  
+    USBD_CtlError(pdev , req);
+  8e:	6878      	ldr	r0, [r7, #4]
+  90:	6839      	ldr	r1, [r7, #0]
+  92:	f7ff fffe 	bl	0 <USBD_StdDevReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:186
+    break;
+  96:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:189
+  }
+  
+  return ret;
+  98:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:190
+}
+  9a:	4618      	mov	r0, r3
+  9c:	f107 0710 	add.w	r7, r7, #16
+  a0:	46bd      	mov	sp, r7
+  a2:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_StdItfReq:
+
+00000000 <USBD_StdItfReq>:
+USBD_StdItfReq():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:200
+* @param  pdev: USB OTG device instance
+* @param  req: usb request
+* @retval status
+*/
+USBD_Status  USBD_StdItfReq (USB_OTG_CORE_HANDLE  *pdev, USB_SETUP_REQ  *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:201
+  USBD_Status ret = USBD_OK; 
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:203
+  
+  switch (pdev->dev.device_status) 
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  16:	2b03      	cmp	r3, #3
+  18:	d11b      	bne.n	52 <USBD_StdItfReq+0x52>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:207
+  {
+  case USB_OTG_CONFIGURED:
+    
+    if (LOBYTE(req->wIndex) <= USBD_ITF_MAX_NUM) 
+  1a:	683b      	ldr	r3, [r7, #0]
+  1c:	889b      	ldrh	r3, [r3, #4]
+  1e:	b2db      	uxtb	r3, r3
+  20:	2b01      	cmp	r3, #1
+  22:	d811      	bhi.n	48 <USBD_StdItfReq+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:209
+    {
+      pdev->dev.class_cb->Setup (pdev, req); 
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  2a:	689b      	ldr	r3, [r3, #8]
+  2c:	6878      	ldr	r0, [r7, #4]
+  2e:	6839      	ldr	r1, [r7, #0]
+  30:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:211
+      
+      if((req->wLength == 0)&& (ret == USBD_OK))
+  32:	683b      	ldr	r3, [r7, #0]
+  34:	88db      	ldrh	r3, [r3, #6]
+  36:	2b00      	cmp	r3, #0
+  38:	d110      	bne.n	5c <USBD_StdItfReq+0x5c>
+  3a:	7bfb      	ldrb	r3, [r7, #15]
+  3c:	2b00      	cmp	r3, #0
+  3e:	d10f      	bne.n	60 <USBD_StdItfReq+0x60>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:213
+      {
+         USBD_CtlSendStatus(pdev);
+  40:	6878      	ldr	r0, [r7, #4]
+  42:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:220
+    } 
+    else 
+    {                                               
+       USBD_CtlError(pdev , req);
+    }
+    break;
+  46:	e00c      	b.n	62 <USBD_StdItfReq+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:218
+         USBD_CtlSendStatus(pdev);
+      }
+    } 
+    else 
+    {                                               
+       USBD_CtlError(pdev , req);
+  48:	6878      	ldr	r0, [r7, #4]
+  4a:	6839      	ldr	r1, [r7, #0]
+  4c:	f7ff fffe 	bl	0 <USBD_StdItfReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:220
+    }
+    break;
+  50:	e007      	b.n	62 <USBD_StdItfReq+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:223
+    
+  default:
+     USBD_CtlError(pdev , req);
+  52:	6878      	ldr	r0, [r7, #4]
+  54:	6839      	ldr	r1, [r7, #0]
+  56:	f7ff fffe 	bl	0 <USBD_StdItfReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:224
+    break;
+  5a:	e002      	b.n	62 <USBD_StdItfReq+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:220
+    } 
+    else 
+    {                                               
+       USBD_CtlError(pdev , req);
+    }
+    break;
+  5c:	bf00      	nop
+  5e:	e000      	b.n	62 <USBD_StdItfReq+0x62>
+  60:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:226
+    
+  default:
+     USBD_CtlError(pdev , req);
+    break;
+  }
+  return ret;
+  62:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:227
+}
+  64:	4618      	mov	r0, r3
+  66:	f107 0710 	add.w	r7, r7, #16
+  6a:	46bd      	mov	sp, r7
+  6c:	bd80      	pop	{r7, pc}
+  6e:	bf00      	nop
+
+Disassembly of section .text.USBD_StdEPReq:
+
+00000000 <USBD_StdEPReq>:
+USBD_StdEPReq():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:237
+* @param  pdev: USB OTG device instance
+* @param  req: usb request
+* @retval status
+*/
+USBD_Status  USBD_StdEPReq (USB_OTG_CORE_HANDLE  *pdev, USB_SETUP_REQ  *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:240
+  
+  uint8_t   ep_addr;
+  USBD_Status ret = USBD_OK; 
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:242
+  
+  ep_addr  = LOBYTE(req->wIndex);   
+  10:	683b      	ldr	r3, [r7, #0]
+  12:	889b      	ldrh	r3, [r3, #4]
+  14:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:244
+  
+  switch (req->bRequest) 
+  16:	683b      	ldr	r3, [r7, #0]
+  18:	785b      	ldrb	r3, [r3, #1]
+  1a:	2b01      	cmp	r3, #1
+  1c:	d038      	beq.n	90 <USBD_StdEPReq+0x90>
+  1e:	2b03      	cmp	r3, #3
+  20:	d002      	beq.n	28 <USBD_StdEPReq+0x28>
+  22:	2b00      	cmp	r3, #0
+  24:	d068      	beq.n	f8 <USBD_StdEPReq+0xf8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:355
+      break;
+    }
+    break;
+    
+  default:
+    break;
+  26:	e0c2      	b.n	1ae <USBD_StdEPReq+0x1ae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:249
+  switch (req->bRequest) 
+  {
+    
+  case USB_REQ_SET_FEATURE :
+    
+    switch (pdev->dev.device_status) 
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  2e:	2b02      	cmp	r3, #2
+  30:	d002      	beq.n	38 <USBD_StdEPReq+0x38>
+  32:	2b03      	cmp	r3, #3
+  34:	d00c      	beq.n	50 <USBD_StdEPReq+0x50>
+  36:	e025      	b.n	84 <USBD_StdEPReq+0x84>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:252
+    {
+    case USB_OTG_ADDRESSED:          
+      if ((ep_addr != 0x00) && (ep_addr != 0x80)) 
+  38:	7bbb      	ldrb	r3, [r7, #14]
+  3a:	2b00      	cmp	r3, #0
+  3c:	d007      	beq.n	4e <USBD_StdEPReq+0x4e>
+  3e:	7bbb      	ldrb	r3, [r7, #14]
+  40:	2b80      	cmp	r3, #128	; 0x80
+  42:	d004      	beq.n	4e <USBD_StdEPReq+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:254
+      {
+        DCD_EP_Stall(pdev , ep_addr);
+  44:	7bbb      	ldrb	r3, [r7, #14]
+  46:	6878      	ldr	r0, [r7, #4]
+  48:	4619      	mov	r1, r3
+  4a:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:256
+      }
+      break;	
+  4e:	e01e      	b.n	8e <USBD_StdEPReq+0x8e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:259
+      
+    case USB_OTG_CONFIGURED:   
+      if (req->wValue == USB_FEATURE_EP_HALT)
+  50:	683b      	ldr	r3, [r7, #0]
+  52:	885b      	ldrh	r3, [r3, #2]
+  54:	2b00      	cmp	r3, #0
+  56:	d10a      	bne.n	6e <USBD_StdEPReq+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:261
+      {
+        if ((ep_addr != 0x00) && (ep_addr != 0x80)) 
+  58:	7bbb      	ldrb	r3, [r7, #14]
+  5a:	2b00      	cmp	r3, #0
+  5c:	d007      	beq.n	6e <USBD_StdEPReq+0x6e>
+  5e:	7bbb      	ldrb	r3, [r7, #14]
+  60:	2b80      	cmp	r3, #128	; 0x80
+  62:	d004      	beq.n	6e <USBD_StdEPReq+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:263
+        { 
+          DCD_EP_Stall(pdev , ep_addr);
+  64:	7bbb      	ldrb	r3, [r7, #14]
+  66:	6878      	ldr	r0, [r7, #4]
+  68:	4619      	mov	r1, r3
+  6a:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:267
+          
+        }
+      }
+      pdev->dev.class_cb->Setup (pdev, req);   
+  6e:	687b      	ldr	r3, [r7, #4]
+  70:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  74:	689b      	ldr	r3, [r3, #8]
+  76:	6878      	ldr	r0, [r7, #4]
+  78:	6839      	ldr	r1, [r7, #0]
+  7a:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:268
+      USBD_CtlSendStatus(pdev);
+  7c:	6878      	ldr	r0, [r7, #4]
+  7e:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:270
+      
+      break;
+  82:	e004      	b.n	8e <USBD_StdEPReq+0x8e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:273
+      
+    default:                         
+      USBD_CtlError(pdev , req);
+  84:	6878      	ldr	r0, [r7, #4]
+  86:	6839      	ldr	r1, [r7, #0]
+  88:	f7ff fffe 	bl	0 <USBD_StdEPReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:274
+      break;    
+  8c:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:276
+    }
+    break;
+  8e:	e08e      	b.n	1ae <USBD_StdEPReq+0x1ae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:280
+    
+  case USB_REQ_CLEAR_FEATURE :
+    
+    switch (pdev->dev.device_status) 
+  90:	687b      	ldr	r3, [r7, #4]
+  92:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  96:	2b02      	cmp	r3, #2
+  98:	d002      	beq.n	a0 <USBD_StdEPReq+0xa0>
+  9a:	2b03      	cmp	r3, #3
+  9c:	d00c      	beq.n	b8 <USBD_StdEPReq+0xb8>
+  9e:	e025      	b.n	ec <USBD_StdEPReq+0xec>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:283
+    {
+    case USB_OTG_ADDRESSED:          
+      if ((ep_addr != 0x00) && (ep_addr != 0x80)) 
+  a0:	7bbb      	ldrb	r3, [r7, #14]
+  a2:	2b00      	cmp	r3, #0
+  a4:	d007      	beq.n	b6 <USBD_StdEPReq+0xb6>
+  a6:	7bbb      	ldrb	r3, [r7, #14]
+  a8:	2b80      	cmp	r3, #128	; 0x80
+  aa:	d004      	beq.n	b6 <USBD_StdEPReq+0xb6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:285
+      {
+        DCD_EP_Stall(pdev , ep_addr);
+  ac:	7bbb      	ldrb	r3, [r7, #14]
+  ae:	6878      	ldr	r0, [r7, #4]
+  b0:	4619      	mov	r1, r3
+  b2:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:287
+      }
+      break;	
+  b6:	e01e      	b.n	f6 <USBD_StdEPReq+0xf6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:290
+      
+    case USB_OTG_CONFIGURED:   
+      if (req->wValue == USB_FEATURE_EP_HALT)
+  b8:	683b      	ldr	r3, [r7, #0]
+  ba:	885b      	ldrh	r3, [r3, #2]
+  bc:	2b00      	cmp	r3, #0
+  be:	d114      	bne.n	ea <USBD_StdEPReq+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:292
+      {
+        if ((ep_addr != 0x00) && (ep_addr != 0x80)) 
+  c0:	7bbb      	ldrb	r3, [r7, #14]
+  c2:	2b00      	cmp	r3, #0
+  c4:	d00e      	beq.n	e4 <USBD_StdEPReq+0xe4>
+  c6:	7bbb      	ldrb	r3, [r7, #14]
+  c8:	2b80      	cmp	r3, #128	; 0x80
+  ca:	d00b      	beq.n	e4 <USBD_StdEPReq+0xe4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:294
+        {        
+          DCD_EP_ClrStall(pdev , ep_addr);
+  cc:	7bbb      	ldrb	r3, [r7, #14]
+  ce:	6878      	ldr	r0, [r7, #4]
+  d0:	4619      	mov	r1, r3
+  d2:	f7ff fffe 	bl	0 <DCD_EP_ClrStall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:295
+          pdev->dev.class_cb->Setup (pdev, req);
+  d6:	687b      	ldr	r3, [r7, #4]
+  d8:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  dc:	689b      	ldr	r3, [r3, #8]
+  de:	6878      	ldr	r0, [r7, #4]
+  e0:	6839      	ldr	r1, [r7, #0]
+  e2:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:297
+        }
+        USBD_CtlSendStatus(pdev);
+  e4:	6878      	ldr	r0, [r7, #4]
+  e6:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:299
+      }
+      break;
+  ea:	e004      	b.n	f6 <USBD_StdEPReq+0xf6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:302
+      
+    default:                         
+       USBD_CtlError(pdev , req);
+  ec:	6878      	ldr	r0, [r7, #4]
+  ee:	6839      	ldr	r1, [r7, #0]
+  f0:	f7ff fffe 	bl	0 <USBD_StdEPReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:303
+      break;    
+  f4:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:305
+    }
+    break;
+  f6:	e05a      	b.n	1ae <USBD_StdEPReq+0x1ae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:308
+    
+  case USB_REQ_GET_STATUS:                  
+    switch (pdev->dev.device_status) 
+  f8:	687b      	ldr	r3, [r7, #4]
+  fa:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  fe:	2b02      	cmp	r3, #2
+ 100:	d002      	beq.n	108 <USBD_StdEPReq+0x108>
+ 102:	2b03      	cmp	r3, #3
+ 104:	d00c      	beq.n	120 <USBD_StdEPReq+0x120>
+ 106:	e04c      	b.n	1a2 <USBD_StdEPReq+0x1a2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:311
+    {
+    case USB_OTG_ADDRESSED:          
+      if ((ep_addr != 0x00) && (ep_addr != 0x80)) 
+ 108:	7bbb      	ldrb	r3, [r7, #14]
+ 10a:	2b00      	cmp	r3, #0
+ 10c:	d007      	beq.n	11e <USBD_StdEPReq+0x11e>
+ 10e:	7bbb      	ldrb	r3, [r7, #14]
+ 110:	2b80      	cmp	r3, #128	; 0x80
+ 112:	d004      	beq.n	11e <USBD_StdEPReq+0x11e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:313
+      {
+        DCD_EP_Stall(pdev , ep_addr);
+ 114:	7bbb      	ldrb	r3, [r7, #14]
+ 116:	6878      	ldr	r0, [r7, #4]
+ 118:	4619      	mov	r1, r3
+ 11a:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:315
+      }
+      break;	
+ 11e:	e045      	b.n	1ac <USBD_StdEPReq+0x1ac>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:320
+      
+    case USB_OTG_CONFIGURED:         
+      
+      
+      if ((ep_addr & 0x80)== 0x80)
+ 120:	7bbb      	ldrb	r3, [r7, #14]
+ 122:	b25b      	sxtb	r3, r3
+ 124:	2b00      	cmp	r3, #0
+ 126:	da19      	bge.n	15c <USBD_StdEPReq+0x15c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:322
+      {
+        if(pdev->dev.in_ep[ep_addr & 0x7F].is_stall)
+ 128:	7bbb      	ldrb	r3, [r7, #14]
+ 12a:	f003 027f 	and.w	r2, r3, #127	; 0x7f
+ 12e:	6879      	ldr	r1, [r7, #4]
+ 130:	4613      	mov	r3, r2
+ 132:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 136:	189b      	adds	r3, r3, r2
+ 138:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+ 13c:	18cb      	adds	r3, r1, r3
+ 13e:	f503 738c 	add.w	r3, r3, #280	; 0x118
+ 142:	799b      	ldrb	r3, [r3, #6]
+ 144:	2b00      	cmp	r3, #0
+ 146:	d004      	beq.n	152 <USBD_StdEPReq+0x152>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:324
+        {
+          USBD_ep_status = 0x0001;     
+ 148:	4b1c      	ldr	r3, [pc, #112]	; (1bc <USBD_StdEPReq+0x1bc>)
+ 14a:	f04f 0201 	mov.w	r2, #1
+ 14e:	601a      	str	r2, [r3, #0]
+ 150:	e01f      	b.n	192 <USBD_StdEPReq+0x192>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:328
+        }
+        else
+        {
+          USBD_ep_status = 0x0000;  
+ 152:	4b1a      	ldr	r3, [pc, #104]	; (1bc <USBD_StdEPReq+0x1bc>)
+ 154:	f04f 0200 	mov.w	r2, #0
+ 158:	601a      	str	r2, [r3, #0]
+ 15a:	e01a      	b.n	192 <USBD_StdEPReq+0x192>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:331
+        }
+      }
+      else if ((ep_addr & 0x80)== 0x00)
+ 15c:	7bbb      	ldrb	r3, [r7, #14]
+ 15e:	b25b      	sxtb	r3, r3
+ 160:	2b00      	cmp	r3, #0
+ 162:	db16      	blt.n	192 <USBD_StdEPReq+0x192>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:333
+      {
+        if(pdev->dev.out_ep[ep_addr].is_stall)
+ 164:	7bba      	ldrb	r2, [r7, #14]
+ 166:	6879      	ldr	r1, [r7, #4]
+ 168:	4613      	mov	r3, r2
+ 16a:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 16e:	189b      	adds	r3, r3, r2
+ 170:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+ 174:	18cb      	adds	r3, r1, r3
+ 176:	f503 735c 	add.w	r3, r3, #880	; 0x370
+ 17a:	799b      	ldrb	r3, [r3, #6]
+ 17c:	2b00      	cmp	r3, #0
+ 17e:	d004      	beq.n	18a <USBD_StdEPReq+0x18a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:335
+        {
+          USBD_ep_status = 0x0001;     
+ 180:	4b0e      	ldr	r3, [pc, #56]	; (1bc <USBD_StdEPReq+0x1bc>)
+ 182:	f04f 0201 	mov.w	r2, #1
+ 186:	601a      	str	r2, [r3, #0]
+ 188:	e003      	b.n	192 <USBD_StdEPReq+0x192>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:340
+        }
+        
+        else 
+        {
+          USBD_ep_status = 0x0000;     
+ 18a:	4b0c      	ldr	r3, [pc, #48]	; (1bc <USBD_StdEPReq+0x1bc>)
+ 18c:	f04f 0200 	mov.w	r2, #0
+ 190:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:343
+        }      
+      }
+      USBD_CtlSendData (pdev,
+ 192:	4b0a      	ldr	r3, [pc, #40]	; (1bc <USBD_StdEPReq+0x1bc>)
+ 194:	6878      	ldr	r0, [r7, #4]
+ 196:	4619      	mov	r1, r3
+ 198:	f04f 0202 	mov.w	r2, #2
+ 19c:	f7ff fffe 	bl	0 <USBD_CtlSendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:346
+                        (uint8_t *)&USBD_ep_status,
+                        2);
+      break;
+ 1a0:	e004      	b.n	1ac <USBD_StdEPReq+0x1ac>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:349
+      
+    default:                         
+       USBD_CtlError(pdev , req);
+ 1a2:	6878      	ldr	r0, [r7, #4]
+ 1a4:	6839      	ldr	r1, [r7, #0]
+ 1a6:	f7ff fffe 	bl	0 <USBD_StdEPReq>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:350
+      break;
+ 1aa:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:352
+    }
+    break;
+ 1ac:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:357
+    
+  default:
+    break;
+  }
+  return ret;
+ 1ae:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:358
+}
+ 1b0:	4618      	mov	r0, r3
+ 1b2:	f107 0710 	add.w	r7, r7, #16
+ 1b6:	46bd      	mov	sp, r7
+ 1b8:	bd80      	pop	{r7, pc}
+ 1ba:	bf00      	nop
+ 1bc:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_GetDescriptor:
+
+00000000 <USBD_GetDescriptor>:
+USBD_GetDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:368
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_GetDescriptor(USB_OTG_CORE_HANDLE  *pdev, 
+                               USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	.short	0xb084
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	.short	0x6078
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:373
+  uint16_t len;
+  uint8_t *pbuf;
+  
+    
+  switch (req->wValue >> 8)
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	885b      	ldrh	r3, [r3, #2]
+   e:	ea4f 2313 	mov.w	r3, r3, lsr #8
+  12:	b29b      	uxth	r3, r3
+  14:	f103 33ff 	add.w	r3, r3, #4294967295
+  18:	2b06      	cmp	r3, #6
+  1a:	f200 8108 	bhi.w	22e <USBD_GetDescriptor+0x22e>
+  1e:	a201      	add	r2, pc, #4	; (adr r2, 24 <USBD_GetDescriptor+0x24>)
+  20:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  24:	00000041 	.word	0x00000041
+  28:	00000075 	.word	0x00000075
+  2c:	000000cb 	.word	0x000000cb
+  30:	0000022f 	.word	0x0000022f
+  34:	0000022f 	.word	0x0000022f
+  38:	0000019d 	.word	0x0000019d
+  3c:	000001f7 	.word	0x000001f7
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:376
+  {
+  case USB_DESC_TYPE_DEVICE:
+    pbuf = pdev->dev.usr_device->GetDeviceDescriptor(pdev->cfg.speed, &len);
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	687a      	ldr	r2, [r7, #4]
+  4a:	7891      	ldrb	r1, [r2, #2]
+  4c:	f107 020a 	add.w	r2, r7, #10
+  50:	4608      	mov	r0, r1
+  52:	4611      	mov	r1, r2
+  54:	4798      	blx	r3
+  56:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:377
+    if ((req->wLength == 64) ||( pdev->dev.device_status == USB_OTG_DEFAULT))  
+  58:	683b      	ldr	r3, [r7, #0]
+  5a:	88db      	ldrh	r3, [r3, #6]
+  5c:	2b40      	cmp	r3, #64	; 0x40
+  5e:	d005      	beq.n	6c <USBD_GetDescriptor+0x6c>
+  60:	687b      	ldr	r3, [r7, #4]
+  62:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  66:	2b01      	cmp	r3, #1
+  68:	f040 80e6 	bne.w	238 <USBD_GetDescriptor+0x238>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:379
+    {                  
+      len = 8;
+  6c:	f04f 0308 	mov.w	r3, #8
+  70:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:381
+    }
+    break;
+  72:	e0e2      	b.n	23a <USBD_GetDescriptor+0x23a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:384
+    
+  case USB_DESC_TYPE_CONFIGURATION:
+      pbuf   = (uint8_t *)pdev->dev.class_cb->GetConfigDescriptor(pdev->cfg.speed, &len);
+  74:	687b      	ldr	r3, [r7, #4]
+  76:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  7a:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  7c:	687a      	ldr	r2, [r7, #4]
+  7e:	7891      	ldrb	r1, [r2, #2]
+  80:	f107 020a 	add.w	r2, r7, #10
+  84:	4608      	mov	r0, r1
+  86:	4611      	mov	r1, r2
+  88:	4798      	blx	r3
+  8a:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:386
+#ifdef USB_OTG_HS_CORE
+    if((pdev->cfg.speed == USB_OTG_SPEED_FULL )&&
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	789b      	ldrb	r3, [r3, #2]
+  90:	2b01      	cmp	r3, #1
+  92:	d10f      	bne.n	b4 <USBD_GetDescriptor+0xb4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:387
+       (pdev->cfg.phy_itface  == USB_OTG_ULPI_PHY))
+  94:	687b      	ldr	r3, [r7, #4]
+  96:	7a1b      	ldrb	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:386
+    break;
+    
+  case USB_DESC_TYPE_CONFIGURATION:
+      pbuf   = (uint8_t *)pdev->dev.class_cb->GetConfigDescriptor(pdev->cfg.speed, &len);
+#ifdef USB_OTG_HS_CORE
+    if((pdev->cfg.speed == USB_OTG_SPEED_FULL )&&
+  98:	2b01      	cmp	r3, #1
+  9a:	d10b      	bne.n	b4 <USBD_GetDescriptor+0xb4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:389
+       (pdev->cfg.phy_itface  == USB_OTG_ULPI_PHY))
+    {
+      pbuf   = (uint8_t *)pdev->dev.class_cb->GetOtherConfigDescriptor(pdev->cfg.speed, &len);
+  9c:	687b      	ldr	r3, [r7, #4]
+  9e:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  a2:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+  a4:	687a      	ldr	r2, [r7, #4]
+  a6:	7891      	ldrb	r1, [r2, #2]
+  a8:	f107 020a 	add.w	r2, r7, #10
+  ac:	4608      	mov	r0, r1
+  ae:	4611      	mov	r1, r2
+  b0:	4798      	blx	r3
+  b2:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:392
+    }
+#endif  
+    pbuf[1] = USB_DESC_TYPE_CONFIGURATION;
+  b4:	68fb      	ldr	r3, [r7, #12]
+  b6:	f103 0301 	add.w	r3, r3, #1
+  ba:	f04f 0202 	mov.w	r2, #2
+  be:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:393
+    pdev->dev.pConfig_descriptor = pbuf;    
+  c0:	687b      	ldr	r3, [r7, #4]
+  c2:	68fa      	ldr	r2, [r7, #12]
+  c4:	f8c3 25f0 	str.w	r2, [r3, #1520]	; 0x5f0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:394
+    break;
+  c8:	e0b7      	b.n	23a <USBD_GetDescriptor+0x23a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:397
+    
+  case USB_DESC_TYPE_STRING:
+    switch ((uint8_t)(req->wValue))
+  ca:	683b      	ldr	r3, [r7, #0]
+  cc:	885b      	ldrh	r3, [r3, #2]
+  ce:	b2db      	uxtb	r3, r3
+  d0:	2b05      	cmp	r3, #5
+  d2:	d85d      	bhi.n	190 <USBD_GetDescriptor+0x190>
+  d4:	a201      	add	r2, pc, #4	; (adr r2, dc <USBD_GetDescriptor+0xdc>)
+  d6:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  da:	bf00      	nop
+  dc:	000000f5 	.word	0x000000f5
+  e0:	0000010f 	.word	0x0000010f
+  e4:	00000129 	.word	0x00000129
+  e8:	00000143 	.word	0x00000143
+  ec:	0000015d 	.word	0x0000015d
+  f0:	00000177 	.word	0x00000177
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:400
+    {
+    case USBD_IDX_LANGID_STR:
+     pbuf = pdev->dev.usr_device->GetLangIDStrDescriptor(pdev->cfg.speed, &len);        
+  f4:	687b      	ldr	r3, [r7, #4]
+  f6:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+  fa:	685b      	ldr	r3, [r3, #4]
+  fc:	687a      	ldr	r2, [r7, #4]
+  fe:	7891      	ldrb	r1, [r2, #2]
+ 100:	f107 020a 	add.w	r2, r7, #10
+ 104:	4608      	mov	r0, r1
+ 106:	4611      	mov	r1, r2
+ 108:	4798      	blx	r3
+ 10a:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:401
+      break;
+ 10c:	e045      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:404
+      
+    case USBD_IDX_MFC_STR:
+      pbuf = pdev->dev.usr_device->GetManufacturerStrDescriptor(pdev->cfg.speed, &len);
+ 10e:	687b      	ldr	r3, [r7, #4]
+ 110:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+ 114:	689b      	ldr	r3, [r3, #8]
+ 116:	687a      	ldr	r2, [r7, #4]
+ 118:	7891      	ldrb	r1, [r2, #2]
+ 11a:	f107 020a 	add.w	r2, r7, #10
+ 11e:	4608      	mov	r0, r1
+ 120:	4611      	mov	r1, r2
+ 122:	4798      	blx	r3
+ 124:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:405
+      break;
+ 126:	e038      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:408
+      
+    case USBD_IDX_PRODUCT_STR:
+      pbuf = pdev->dev.usr_device->GetProductStrDescriptor(pdev->cfg.speed, &len);
+ 128:	687b      	ldr	r3, [r7, #4]
+ 12a:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+ 12e:	68db      	ldr	r3, [r3, #12]
+ 130:	687a      	ldr	r2, [r7, #4]
+ 132:	7891      	ldrb	r1, [r2, #2]
+ 134:	f107 020a 	add.w	r2, r7, #10
+ 138:	4608      	mov	r0, r1
+ 13a:	4611      	mov	r1, r2
+ 13c:	4798      	blx	r3
+ 13e:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:409
+      break;
+ 140:	e02b      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:412
+      
+    case USBD_IDX_SERIAL_STR:
+      pbuf = pdev->dev.usr_device->GetSerialStrDescriptor(pdev->cfg.speed, &len);
+ 142:	687b      	ldr	r3, [r7, #4]
+ 144:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+ 148:	691b      	ldr	r3, [r3, #16]
+ 14a:	687a      	ldr	r2, [r7, #4]
+ 14c:	7891      	ldrb	r1, [r2, #2]
+ 14e:	f107 020a 	add.w	r2, r7, #10
+ 152:	4608      	mov	r0, r1
+ 154:	4611      	mov	r1, r2
+ 156:	4798      	blx	r3
+ 158:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:413
+      break;
+ 15a:	e01e      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:416
+      
+    case USBD_IDX_CONFIG_STR:
+      pbuf = pdev->dev.usr_device->GetConfigurationStrDescriptor(pdev->cfg.speed, &len);
+ 15c:	687b      	ldr	r3, [r7, #4]
+ 15e:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+ 162:	695b      	ldr	r3, [r3, #20]
+ 164:	687a      	ldr	r2, [r7, #4]
+ 166:	7891      	ldrb	r1, [r2, #2]
+ 168:	f107 020a 	add.w	r2, r7, #10
+ 16c:	4608      	mov	r0, r1
+ 16e:	4611      	mov	r1, r2
+ 170:	4798      	blx	r3
+ 172:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:417
+      break;
+ 174:	e011      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:420
+      
+    case USBD_IDX_INTERFACE_STR:
+      pbuf = pdev->dev.usr_device->GetInterfaceStrDescriptor(pdev->cfg.speed, &len);
+ 176:	687b      	ldr	r3, [r7, #4]
+ 178:	f8d3 35ec 	ldr.w	r3, [r3, #1516]	; 0x5ec
+ 17c:	699b      	ldr	r3, [r3, #24]
+ 17e:	687a      	ldr	r2, [r7, #4]
+ 180:	7891      	ldrb	r1, [r2, #2]
+ 182:	f107 020a 	add.w	r2, r7, #10
+ 186:	4608      	mov	r0, r1
+ 188:	4611      	mov	r1, r2
+ 18a:	4798      	blx	r3
+ 18c:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:421
+      break;
+ 18e:	e004      	b.n	19a <USBD_GetDescriptor+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:428
+    default:
+#ifdef USB_SUPPORT_USER_STRING_DESC
+      pbuf = pdev->dev.class_cb->GetUsrStrDescriptor(pdev->cfg.speed, (req->wValue) , &len);
+      break;
+#else      
+       USBD_CtlError(pdev , req);
+ 190:	6878      	ldr	r0, [r7, #4]
+ 192:	6839      	ldr	r1, [r7, #0]
+ 194:	f7ff fffe 	bl	0 <USBD_GetDescriptor>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:429
+      return;
+ 198:	e064      	b.n	264 <USBD_GetDescriptor+0x264>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:432
+#endif /* USBD_CtlError(pdev , req); */      
+    }
+    break;
+ 19a:	e04e      	b.n	23a <USBD_GetDescriptor+0x23a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:435
+  case USB_DESC_TYPE_DEVICE_QUALIFIER:                   
+#ifdef USB_OTG_HS_CORE
+    if(pdev->cfg.speed == USB_OTG_SPEED_HIGH  )   
+ 19c:	687b      	ldr	r3, [r7, #4]
+ 19e:	789b      	ldrb	r3, [r3, #2]
+ 1a0:	2b00      	cmp	r3, #0
+ 1a2:	d123      	bne.n	1ec <USBD_GetDescriptor+0x1ec>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:438
+    {
+      
+      pbuf   = (uint8_t *)pdev->dev.class_cb->GetConfigDescriptor(pdev->cfg.speed, &len);
+ 1a4:	687b      	ldr	r3, [r7, #4]
+ 1a6:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+ 1aa:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 1ac:	687a      	ldr	r2, [r7, #4]
+ 1ae:	7891      	ldrb	r1, [r2, #2]
+ 1b0:	f107 020a 	add.w	r2, r7, #10
+ 1b4:	4608      	mov	r0, r1
+ 1b6:	4611      	mov	r1, r2
+ 1b8:	4798      	blx	r3
+ 1ba:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:440
+            
+      USBD_DeviceQualifierDesc[4]= pbuf[14];
+ 1bc:	68fb      	ldr	r3, [r7, #12]
+ 1be:	f103 030e 	add.w	r3, r3, #14
+ 1c2:	781a      	ldrb	r2, [r3, #0]
+ 1c4:	4b29      	ldr	r3, [pc, #164]	; (26c <USBD_GetDescriptor+0x26c>)
+ 1c6:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:441
+      USBD_DeviceQualifierDesc[5]= pbuf[15];
+ 1c8:	68fb      	ldr	r3, [r7, #12]
+ 1ca:	f103 030f 	add.w	r3, r3, #15
+ 1ce:	781a      	ldrb	r2, [r3, #0]
+ 1d0:	4b26      	ldr	r3, [pc, #152]	; (26c <USBD_GetDescriptor+0x26c>)
+ 1d2:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:442
+      USBD_DeviceQualifierDesc[6]= pbuf[16];
+ 1d4:	68fb      	ldr	r3, [r7, #12]
+ 1d6:	f103 0310 	add.w	r3, r3, #16
+ 1da:	781a      	ldrb	r2, [r3, #0]
+ 1dc:	4b23      	ldr	r3, [pc, #140]	; (26c <USBD_GetDescriptor+0x26c>)
+ 1de:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:444
+      
+      pbuf = USBD_DeviceQualifierDesc;
+ 1e0:	4b22      	ldr	r3, [pc, #136]	; (26c <USBD_GetDescriptor+0x26c>)
+ 1e2:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:445
+      len  = USB_LEN_DEV_QUALIFIER_DESC;
+ 1e4:	f04f 030a 	mov.w	r3, #10
+ 1e8:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:446
+      break;
+ 1ea:	e026      	b.n	23a <USBD_GetDescriptor+0x23a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:450
+    }
+    else
+    {
+      USBD_CtlError(pdev , req);
+ 1ec:	6878      	ldr	r0, [r7, #4]
+ 1ee:	6839      	ldr	r1, [r7, #0]
+ 1f0:	f7ff fffe 	bl	0 <USBD_GetDescriptor>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:451
+      return;
+ 1f4:	e036      	b.n	264 <USBD_GetDescriptor+0x264>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:461
+#endif    
+
+  case USB_DESC_TYPE_OTHER_SPEED_CONFIGURATION:
+#ifdef USB_OTG_HS_CORE   
+
+    if(pdev->cfg.speed == USB_OTG_SPEED_HIGH  )   
+ 1f6:	687b      	ldr	r3, [r7, #4]
+ 1f8:	789b      	ldrb	r3, [r3, #2]
+ 1fa:	2b00      	cmp	r3, #0
+ 1fc:	d112      	bne.n	224 <USBD_GetDescriptor+0x224>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:463
+    {
+      pbuf   = (uint8_t *)pdev->dev.class_cb->GetOtherConfigDescriptor(pdev->cfg.speed, &len);
+ 1fe:	687b      	ldr	r3, [r7, #4]
+ 200:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+ 204:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+ 206:	687a      	ldr	r2, [r7, #4]
+ 208:	7891      	ldrb	r1, [r2, #2]
+ 20a:	f107 020a 	add.w	r2, r7, #10
+ 20e:	4608      	mov	r0, r1
+ 210:	4611      	mov	r1, r2
+ 212:	4798      	blx	r3
+ 214:	60f8      	str	r0, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:464
+      pbuf[1] = USB_DESC_TYPE_OTHER_SPEED_CONFIGURATION;
+ 216:	68fb      	ldr	r3, [r7, #12]
+ 218:	f103 0301 	add.w	r3, r3, #1
+ 21c:	f04f 0207 	mov.w	r2, #7
+ 220:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:465
+      break; 
+ 222:	e00a      	b.n	23a <USBD_GetDescriptor+0x23a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:469
+    }
+    else
+    {
+      USBD_CtlError(pdev , req);
+ 224:	6878      	ldr	r0, [r7, #4]
+ 226:	6839      	ldr	r1, [r7, #0]
+ 228:	f7ff fffe 	bl	0 <USBD_GetDescriptor>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:470
+      return;
+ 22c:	e01a      	b.n	264 <USBD_GetDescriptor+0x264>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:479
+      return;
+#endif     
+
+    
+  default: 
+     USBD_CtlError(pdev , req);
+ 22e:	6878      	ldr	r0, [r7, #4]
+ 230:	6839      	ldr	r1, [r7, #0]
+ 232:	f7ff fffe 	bl	0 <USBD_GetDescriptor>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:480
+    return;
+ 236:	e015      	b.n	264 <USBD_GetDescriptor+0x264>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:381
+    pbuf = pdev->dev.usr_device->GetDeviceDescriptor(pdev->cfg.speed, &len);
+    if ((req->wLength == 64) ||( pdev->dev.device_status == USB_OTG_DEFAULT))  
+    {                  
+      len = 8;
+    }
+    break;
+ 238:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:483
+  default: 
+     USBD_CtlError(pdev , req);
+    return;
+  }
+  
+  if((len != 0)&& (req->wLength != 0))
+ 23a:	897b      	ldrh	r3, [r7, #10]
+ 23c:	2b00      	cmp	r3, #0
+ 23e:	d011      	beq.n	264 <USBD_GetDescriptor+0x264>
+ 240:	683b      	ldr	r3, [r7, #0]
+ 242:	88db      	ldrh	r3, [r3, #6]
+ 244:	2b00      	cmp	r3, #0
+ 246:	d00d      	beq.n	264 <USBD_GetDescriptor+0x264>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:486
+  {
+    
+    len = MIN(len , req->wLength);
+ 248:	683b      	ldr	r3, [r7, #0]
+ 24a:	88da      	ldrh	r2, [r3, #6]
+ 24c:	897b      	ldrh	r3, [r7, #10]
+ 24e:	429a      	cmp	r2, r3
+ 250:	bf38      	it	cc
+ 252:	4613      	movcc	r3, r2
+ 254:	b29b      	uxth	r3, r3
+ 256:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:488
+    
+    USBD_CtlSendData (pdev, 
+ 258:	897b      	ldrh	r3, [r7, #10]
+ 25a:	6878      	ldr	r0, [r7, #4]
+ 25c:	68f9      	ldr	r1, [r7, #12]
+ 25e:	461a      	mov	r2, r3
+ 260:	f7ff fffe 	bl	0 <USBD_CtlSendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:493
+                      pbuf,
+                      len);
+  }
+  
+}
+ 264:	f107 0710 	add.w	r7, r7, #16
+ 268:	46bd      	mov	sp, r7
+ 26a:	bd80      	pop	{r7, pc}
+ 26c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_SetAddress:
+
+00000000 <USBD_SetAddress>:
+USBD_SetAddress():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:504
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_SetAddress(USB_OTG_CORE_HANDLE  *pdev, 
+                            USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:507
+  uint8_t  dev_addr; 
+  
+  if ((req->wIndex == 0) && (req->wLength == 0)) 
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	889b      	ldrh	r3, [r3, #4]
+   e:	2b00      	cmp	r3, #0
+  10:	d12e      	bne.n	70 <USBD_SetAddress+0x70>
+  12:	683b      	ldr	r3, [r7, #0]
+  14:	88db      	ldrh	r3, [r3, #6]
+  16:	2b00      	cmp	r3, #0
+  18:	d12a      	bne.n	70 <USBD_SetAddress+0x70>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:509
+  {
+    dev_addr = (uint8_t)(req->wValue) & 0x7F;     
+  1a:	683b      	ldr	r3, [r7, #0]
+  1c:	885b      	ldrh	r3, [r3, #2]
+  1e:	b2db      	uxtb	r3, r3
+  20:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  24:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:511
+    
+    if (pdev->dev.device_status == USB_OTG_CONFIGURED) 
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  2c:	2b03      	cmp	r3, #3
+  2e:	d104      	bne.n	3a <USBD_SetAddress+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:513
+    {
+      USBD_CtlError(pdev , req);
+  30:	6878      	ldr	r0, [r7, #4]
+  32:	6839      	ldr	r1, [r7, #0]
+  34:	f7ff fffe 	bl	0 <USBD_SetAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:511
+  
+  if ((req->wIndex == 0) && (req->wLength == 0)) 
+  {
+    dev_addr = (uint8_t)(req->wValue) & 0x7F;     
+    
+    if (pdev->dev.device_status == USB_OTG_CONFIGURED) 
+  38:	e01e      	b.n	78 <USBD_SetAddress+0x78>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:517
+    {
+      USBD_CtlError(pdev , req);
+    } 
+    else 
+    {
+      pdev->dev.device_address = dev_addr;
+  3a:	687b      	ldr	r3, [r7, #4]
+  3c:	7bfa      	ldrb	r2, [r7, #15]
+  3e:	f883 2114 	strb.w	r2, [r3, #276]	; 0x114
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:518
+      DCD_EP_SetAddress(pdev, dev_addr);               
+  42:	7bfb      	ldrb	r3, [r7, #15]
+  44:	6878      	ldr	r0, [r7, #4]
+  46:	4619      	mov	r1, r3
+  48:	f7ff fffe 	bl	0 <DCD_EP_SetAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:519
+      USBD_CtlSendStatus(pdev);                         
+  4c:	6878      	ldr	r0, [r7, #4]
+  4e:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:521
+      
+      if (dev_addr != 0) 
+  52:	7bfb      	ldrb	r3, [r7, #15]
+  54:	2b00      	cmp	r3, #0
+  56:	d005      	beq.n	64 <USBD_SetAddress+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:523
+      {
+        pdev->dev.device_status  = USB_OTG_ADDRESSED;
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	f04f 0202 	mov.w	r2, #2
+  5e:	f883 2112 	strb.w	r2, [r3, #274]	; 0x112
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:511
+  
+  if ((req->wIndex == 0) && (req->wLength == 0)) 
+  {
+    dev_addr = (uint8_t)(req->wValue) & 0x7F;     
+    
+    if (pdev->dev.device_status == USB_OTG_CONFIGURED) 
+  62:	e009      	b.n	78 <USBD_SetAddress+0x78>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:527
+      {
+        pdev->dev.device_status  = USB_OTG_ADDRESSED;
+      } 
+      else 
+      {
+        pdev->dev.device_status  = USB_OTG_DEFAULT; 
+  64:	687b      	ldr	r3, [r7, #4]
+  66:	f04f 0201 	mov.w	r2, #1
+  6a:	f883 2112 	strb.w	r2, [r3, #274]	; 0x112
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:511
+  
+  if ((req->wIndex == 0) && (req->wLength == 0)) 
+  {
+    dev_addr = (uint8_t)(req->wValue) & 0x7F;     
+    
+    if (pdev->dev.device_status == USB_OTG_CONFIGURED) 
+  6e:	e003      	b.n	78 <USBD_SetAddress+0x78>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:533
+      }
+    }
+  } 
+  else 
+  {
+     USBD_CtlError(pdev , req);                        
+  70:	6878      	ldr	r0, [r7, #4]
+  72:	6839      	ldr	r1, [r7, #0]
+  74:	f7ff fffe 	bl	0 <USBD_SetAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:535
+  } 
+}
+  78:	f107 0710 	add.w	r7, r7, #16
+  7c:	46bd      	mov	sp, r7
+  7e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_SetConfig:
+
+00000000 <USBD_SetConfig>:
+USBD_SetConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:546
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_SetConfig(USB_OTG_CORE_HANDLE  *pdev, 
+                           USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:550
+  
+  static uint8_t  cfgidx;
+  
+  cfgidx = (uint8_t)(req->wValue);                 
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	885b      	ldrh	r3, [r3, #2]
+   e:	b2da      	uxtb	r2, r3
+  10:	4b38      	ldr	r3, [pc, #224]	; (f4 <USBD_SetConfig+0xf4>)
+  12:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:552
+  
+  if (cfgidx > USBD_CFG_MAX_NUM ) 
+  14:	4b37      	ldr	r3, [pc, #220]	; (f4 <USBD_SetConfig+0xf4>)
+  16:	781b      	ldrb	r3, [r3, #0]
+  18:	2b01      	cmp	r3, #1
+  1a:	d904      	bls.n	26 <USBD_SetConfig+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:554
+  {            
+     USBD_CtlError(pdev , req);                              
+  1c:	6878      	ldr	r0, [r7, #4]
+  1e:	6839      	ldr	r1, [r7, #0]
+  20:	f7ff fffe 	bl	0 <USBD_SetConfig>
+  24:	e061      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:558
+  } 
+  else 
+  {
+    switch (pdev->dev.device_status) 
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  2c:	2b02      	cmp	r3, #2
+  2e:	d002      	beq.n	36 <USBD_SetConfig+0x36>
+  30:	2b03      	cmp	r3, #3
+  32:	d01c      	beq.n	6e <USBD_SetConfig+0x6e>
+  34:	e054      	b.n	e0 <USBD_SetConfig+0xe0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:561
+    {
+    case USB_OTG_ADDRESSED:
+      if (cfgidx) 
+  36:	4b2f      	ldr	r3, [pc, #188]	; (f4 <USBD_SetConfig+0xf4>)
+  38:	781b      	ldrb	r3, [r3, #0]
+  3a:	2b00      	cmp	r3, #0
+  3c:	d013      	beq.n	66 <USBD_SetConfig+0x66>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:563
+      {                                			   							   							   				
+        pdev->dev.device_config = cfgidx;
+  3e:	4b2d      	ldr	r3, [pc, #180]	; (f4 <USBD_SetConfig+0xf4>)
+  40:	781a      	ldrb	r2, [r3, #0]
+  42:	687b      	ldr	r3, [r7, #4]
+  44:	f883 2110 	strb.w	r2, [r3, #272]	; 0x110
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:564
+        pdev->dev.device_status = USB_OTG_CONFIGURED;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f04f 0203 	mov.w	r2, #3
+  4e:	f883 2112 	strb.w	r2, [r3, #274]	; 0x112
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:565
+        USBD_SetCfg(pdev , cfgidx);
+  52:	4b28      	ldr	r3, [pc, #160]	; (f4 <USBD_SetConfig+0xf4>)
+  54:	781b      	ldrb	r3, [r3, #0]
+  56:	6878      	ldr	r0, [r7, #4]
+  58:	4619      	mov	r1, r3
+  5a:	f7ff fffe 	bl	0 <USBD_SetCfg>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:566
+        USBD_CtlSendStatus(pdev);
+  5e:	6878      	ldr	r0, [r7, #4]
+  60:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:572
+      }
+      else 
+      {
+         USBD_CtlSendStatus(pdev);
+      }
+      break;
+  64:	e041      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:570
+        USBD_SetCfg(pdev , cfgidx);
+        USBD_CtlSendStatus(pdev);
+      }
+      else 
+      {
+         USBD_CtlSendStatus(pdev);
+  66:	6878      	ldr	r0, [r7, #4]
+  68:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:572
+      }
+      break;
+  6c:	e03d      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:575
+      
+    case USB_OTG_CONFIGURED:
+      if (cfgidx == 0) 
+  6e:	4b21      	ldr	r3, [pc, #132]	; (f4 <USBD_SetConfig+0xf4>)
+  70:	781b      	ldrb	r3, [r3, #0]
+  72:	2b00      	cmp	r3, #0
+  74:	d113      	bne.n	9e <USBD_SetConfig+0x9e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:577
+      {                           
+        pdev->dev.device_status = USB_OTG_ADDRESSED;
+  76:	687b      	ldr	r3, [r7, #4]
+  78:	f04f 0202 	mov.w	r2, #2
+  7c:	f883 2112 	strb.w	r2, [r3, #274]	; 0x112
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:578
+        pdev->dev.device_config = cfgidx;          
+  80:	4b1c      	ldr	r3, [pc, #112]	; (f4 <USBD_SetConfig+0xf4>)
+  82:	781a      	ldrb	r2, [r3, #0]
+  84:	687b      	ldr	r3, [r7, #4]
+  86:	f883 2110 	strb.w	r2, [r3, #272]	; 0x110
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:579
+        USBD_ClrCfg(pdev , cfgidx);
+  8a:	4b1a      	ldr	r3, [pc, #104]	; (f4 <USBD_SetConfig+0xf4>)
+  8c:	781b      	ldrb	r3, [r3, #0]
+  8e:	6878      	ldr	r0, [r7, #4]
+  90:	4619      	mov	r1, r3
+  92:	f7ff fffe 	bl	0 <USBD_ClrCfg>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:580
+        USBD_CtlSendStatus(pdev);
+  96:	6878      	ldr	r0, [r7, #4]
+  98:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:597
+      }
+      else
+      {
+        USBD_CtlSendStatus(pdev);
+      }
+      break;
+  9c:	e025      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:583
+        pdev->dev.device_config = cfgidx;          
+        USBD_ClrCfg(pdev , cfgidx);
+        USBD_CtlSendStatus(pdev);
+        
+      } 
+      else  if (cfgidx != pdev->dev.device_config) 
+  9e:	687b      	ldr	r3, [r7, #4]
+  a0:	f893 2110 	ldrb.w	r2, [r3, #272]	; 0x110
+  a4:	4b13      	ldr	r3, [pc, #76]	; (f4 <USBD_SetConfig+0xf4>)
+  a6:	781b      	ldrb	r3, [r3, #0]
+  a8:	429a      	cmp	r2, r3
+  aa:	d015      	beq.n	d8 <USBD_SetConfig+0xd8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:586
+      {
+        /* Clear old configuration */
+        USBD_ClrCfg(pdev , pdev->dev.device_config);
+  ac:	687b      	ldr	r3, [r7, #4]
+  ae:	f893 3110 	ldrb.w	r3, [r3, #272]	; 0x110
+  b2:	6878      	ldr	r0, [r7, #4]
+  b4:	4619      	mov	r1, r3
+  b6:	f7ff fffe 	bl	0 <USBD_ClrCfg>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:589
+        
+        /* set new configuration */
+        pdev->dev.device_config = cfgidx;
+  ba:	4b0e      	ldr	r3, [pc, #56]	; (f4 <USBD_SetConfig+0xf4>)
+  bc:	781a      	ldrb	r2, [r3, #0]
+  be:	687b      	ldr	r3, [r7, #4]
+  c0:	f883 2110 	strb.w	r2, [r3, #272]	; 0x110
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:590
+        USBD_SetCfg(pdev , cfgidx);
+  c4:	4b0b      	ldr	r3, [pc, #44]	; (f4 <USBD_SetConfig+0xf4>)
+  c6:	781b      	ldrb	r3, [r3, #0]
+  c8:	6878      	ldr	r0, [r7, #4]
+  ca:	4619      	mov	r1, r3
+  cc:	f7ff fffe 	bl	0 <USBD_SetCfg>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:591
+        USBD_CtlSendStatus(pdev);
+  d0:	6878      	ldr	r0, [r7, #4]
+  d2:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:597
+      }
+      else
+      {
+        USBD_CtlSendStatus(pdev);
+      }
+      break;
+  d6:	e008      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:595
+        USBD_SetCfg(pdev , cfgidx);
+        USBD_CtlSendStatus(pdev);
+      }
+      else
+      {
+        USBD_CtlSendStatus(pdev);
+  d8:	6878      	ldr	r0, [r7, #4]
+  da:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:597
+      }
+      break;
+  de:	e004      	b.n	ea <USBD_SetConfig+0xea>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:600
+      
+    default:					
+       USBD_CtlError(pdev , req);                     
+  e0:	6878      	ldr	r0, [r7, #4]
+  e2:	6839      	ldr	r1, [r7, #0]
+  e4:	f7ff fffe 	bl	0 <USBD_SetConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:601
+      break;
+  e8:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:604
+    }
+  }
+}
+  ea:	f107 0708 	add.w	r7, r7, #8
+  ee:	46bd      	mov	sp, r7
+  f0:	bd80      	pop	{r7, pc}
+  f2:	bf00      	nop
+  f4:	0000000c 	.word	0x0000000c
+
+Disassembly of section .text.USBD_GetConfig:
+
+00000000 <USBD_GetConfig>:
+USBD_GetConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:615
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_GetConfig(USB_OTG_CORE_HANDLE  *pdev, 
+                           USB_SETUP_REQ *req)
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:617
+ 
+  if (req->wLength != 1) 
+   a:	683b      	ldr	r3, [r7, #0]
+   c:	88db      	ldrh	r3, [r3, #6]
+   e:	2b01      	cmp	r3, #1
+  10:	d004      	beq.n	1c <USBD_GetConfig+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:619
+  {                   
+     USBD_CtlError(pdev , req);
+  12:	6878      	ldr	r0, [r7, #4]
+  14:	6839      	ldr	r1, [r7, #0]
+  16:	f7ff fffe 	bl	0 <USBD_GetConfig>
+  1a:	e01e      	b.n	5a <USBD_GetConfig+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:623
+  }
+  else 
+  {
+    switch (pdev->dev.device_status )  
+  1c:	687b      	ldr	r3, [r7, #4]
+  1e:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  22:	2b02      	cmp	r3, #2
+  24:	d002      	beq.n	2c <USBD_GetConfig+0x2c>
+  26:	2b03      	cmp	r3, #3
+  28:	d008      	beq.n	3c <USBD_GetConfig+0x3c>
+  2a:	e011      	b.n	50 <USBD_GetConfig+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:627
+    {
+    case USB_OTG_ADDRESSED:                     
+      
+      USBD_CtlSendData (pdev, 
+  2c:	4b0d      	ldr	r3, [pc, #52]	; (64 <USBD_GetConfig+0x64>)
+  2e:	6878      	ldr	r0, [r7, #4]
+  30:	4619      	mov	r1, r3
+  32:	f04f 0201 	mov.w	r2, #1
+  36:	f7ff fffe 	bl	0 <USBD_CtlSendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:630
+                        (uint8_t *)&USBD_default_cfg,
+                        1);
+      break;
+  3a:	e00e      	b.n	5a <USBD_GetConfig+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:634
+      
+    case USB_OTG_CONFIGURED:                   
+      
+      USBD_CtlSendData (pdev, 
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	f503 7388 	add.w	r3, r3, #272	; 0x110
+  42:	6878      	ldr	r0, [r7, #4]
+  44:	4619      	mov	r1, r3
+  46:	f04f 0201 	mov.w	r2, #1
+  4a:	f7ff fffe 	bl	0 <USBD_CtlSendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:637
+                        &pdev->dev.device_config,
+                        1);
+      break;
+  4e:	e004      	b.n	5a <USBD_GetConfig+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:640
+      
+    default:
+       USBD_CtlError(pdev , req);
+  50:	6878      	ldr	r0, [r7, #4]
+  52:	6839      	ldr	r1, [r7, #0]
+  54:	f7ff fffe 	bl	0 <USBD_GetConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:641
+      break;
+  58:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:644
+    }
+  }
+}
+  5a:	f107 0708 	add.w	r7, r7, #8
+  5e:	46bd      	mov	sp, r7
+  60:	bd80      	pop	{r7, pc}
+  62:	bf00      	nop
+  64:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_GetStatus:
+
+00000000 <USBD_GetStatus>:
+USBD_GetStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:655
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_GetStatus(USB_OTG_CORE_HANDLE  *pdev, 
+                           USB_SETUP_REQ *req)
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:658
+  
+    
+  switch (pdev->dev.device_status) 
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  10:	f1a3 0302 	sub.w	r3, r3, #2
+  14:	2b01      	cmp	r3, #1
+  16:	d816      	bhi.n	46 <USBD_GetStatus+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:664
+  {
+  case USB_OTG_ADDRESSED:
+  case USB_OTG_CONFIGURED:
+    
+#ifdef USBD_SELF_POWERED
+    USBD_cfg_status = USB_CONFIG_SELF_POWERED;                                    
+  18:	4b0f      	ldr	r3, [pc, #60]	; (58 <USBD_GetStatus+0x58>)
+  1a:	f04f 0201 	mov.w	r2, #1
+  1e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:669
+#else
+    USBD_cfg_status = 0x00;                                    
+#endif
+                      
+    if (pdev->dev.DevRemoteWakeup) 
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f8d3 3118 	ldr.w	r3, [r3, #280]	; 0x118
+  26:	2b00      	cmp	r3, #0
+  28:	d005      	beq.n	36 <USBD_GetStatus+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:671
+    {
+      USBD_cfg_status |= USB_CONFIG_REMOTE_WAKEUP;                                
+  2a:	4b0b      	ldr	r3, [pc, #44]	; (58 <USBD_GetStatus+0x58>)
+  2c:	681b      	ldr	r3, [r3, #0]
+  2e:	f043 0202 	orr.w	r2, r3, #2
+  32:	4b09      	ldr	r3, [pc, #36]	; (58 <USBD_GetStatus+0x58>)
+  34:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:674
+    }
+    
+    USBD_CtlSendData (pdev, 
+  36:	4b08      	ldr	r3, [pc, #32]	; (58 <USBD_GetStatus+0x58>)
+  38:	6878      	ldr	r0, [r7, #4]
+  3a:	4619      	mov	r1, r3
+  3c:	f04f 0202 	mov.w	r2, #2
+  40:	f7ff fffe 	bl	0 <USBD_CtlSendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:677
+                      (uint8_t *)&USBD_cfg_status,
+                      2);
+    break;
+  44:	e004      	b.n	50 <USBD_GetStatus+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:680
+    
+  default :
+    USBD_CtlError(pdev , req);                        
+  46:	6878      	ldr	r0, [r7, #4]
+  48:	6839      	ldr	r1, [r7, #0]
+  4a:	f7ff fffe 	bl	0 <USBD_GetStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:681
+    break;
+  4e:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:683
+  }
+}
+  50:	f107 0708 	add.w	r7, r7, #8
+  54:	46bd      	mov	sp, r7
+  56:	bd80      	pop	{r7, pc}
+  58:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_SetFeature:
+
+00000000 <USBD_SetFeature>:
+USBD_SetFeature():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:695
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_SetFeature(USB_OTG_CORE_HANDLE  *pdev, 
+                            USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:698
+
+  USB_OTG_DCTL_TypeDef     dctl;
+  uint8_t test_mode = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:700
+ 
+  if (req->wValue == USB_FEATURE_REMOTE_WAKEUP)
+  10:	683b      	ldr	r3, [r7, #0]
+  12:	885b      	ldrh	r3, [r3, #2]
+  14:	2b01      	cmp	r3, #1
+  16:	d10f      	bne.n	38 <USBD_SetFeature+0x38>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:702
+  {
+    pdev->dev.DevRemoteWakeup = 1;  
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0201 	mov.w	r2, #1
+  1e:	f8c3 2118 	str.w	r2, [r3, #280]	; 0x118
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:703
+    pdev->dev.class_cb->Setup (pdev, req);   
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  28:	689b      	ldr	r3, [r3, #8]
+  2a:	6878      	ldr	r0, [r7, #4]
+  2c:	6839      	ldr	r1, [r7, #0]
+  2e:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:704
+    USBD_CtlSendStatus(pdev);
+  30:	6878      	ldr	r0, [r7, #4]
+  32:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+  36:	e053      	b.n	e0 <USBD_SetFeature+0xe0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:707
+  }
+
+  else if ((req->wValue == USB_FEATURE_TEST_MODE) && 
+  38:	683b      	ldr	r3, [r7, #0]
+  3a:	885b      	ldrh	r3, [r3, #2]
+  3c:	2b02      	cmp	r3, #2
+  3e:	d14f      	bne.n	e0 <USBD_SetFeature+0xe0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:708
+           ((req->wIndex & 0xFF) == 0))
+  40:	683b      	ldr	r3, [r7, #0]
+  42:	889b      	ldrh	r3, [r3, #4]
+  44:	f003 03ff 	and.w	r3, r3, #255	; 0xff
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:707
+    pdev->dev.DevRemoteWakeup = 1;  
+    pdev->dev.class_cb->Setup (pdev, req);   
+    USBD_CtlSendStatus(pdev);
+  }
+
+  else if ((req->wValue == USB_FEATURE_TEST_MODE) && 
+  48:	2b00      	cmp	r3, #0
+  4a:	d149      	bne.n	e0 <USBD_SetFeature+0xe0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:710
+           ((req->wIndex & 0xFF) == 0))
+  {
+    dctl.d32 = USB_OTG_READ_REG32(&pdev->regs.DREGS->DCTL);
+  4c:	687b      	ldr	r3, [r7, #4]
+  4e:	691b      	ldr	r3, [r3, #16]
+  50:	685b      	ldr	r3, [r3, #4]
+  52:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:712
+    
+    test_mode = req->wIndex >> 8;
+  54:	683b      	ldr	r3, [r7, #0]
+  56:	889b      	ldrh	r3, [r3, #4]
+  58:	ea4f 2313 	mov.w	r3, r3, lsr #8
+  5c:	b29b      	uxth	r3, r3
+  5e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:713
+    switch (test_mode) 
+  60:	7bfb      	ldrb	r3, [r7, #15]
+  62:	f103 33ff 	add.w	r3, r3, #4294967295
+  66:	2b04      	cmp	r3, #4
+  68:	d82f      	bhi.n	ca <USBD_SetFeature+0xca>
+  6a:	a201      	add	r2, pc, #4	; (adr r2, 70 <USBD_SetFeature+0x70>)
+  6c:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  70:	00000085 	.word	0x00000085
+  74:	00000093 	.word	0x00000093
+  78:	000000a1 	.word	0x000000a1
+  7c:	000000af 	.word	0x000000af
+  80:	000000bd 	.word	0x000000bd
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:716
+    {
+    case 1: // TEST_J
+      dctl.b.tstctl = 1;
+  84:	68bb      	ldr	r3, [r7, #8]
+  86:	f04f 0201 	mov.w	r2, #1
+  8a:	f362 1306 	bfi	r3, r2, #4, #3
+  8e:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:717
+      break;
+  90:	e01b      	b.n	ca <USBD_SetFeature+0xca>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:720
+      
+    case 2: // TEST_K	
+      dctl.b.tstctl = 2;
+  92:	68bb      	ldr	r3, [r7, #8]
+  94:	f04f 0202 	mov.w	r2, #2
+  98:	f362 1306 	bfi	r3, r2, #4, #3
+  9c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:721
+      break;
+  9e:	e014      	b.n	ca <USBD_SetFeature+0xca>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:724
+      
+    case 3: // TEST_SE0_NAK
+      dctl.b.tstctl = 3;
+  a0:	68bb      	ldr	r3, [r7, #8]
+  a2:	f04f 0203 	mov.w	r2, #3
+  a6:	f362 1306 	bfi	r3, r2, #4, #3
+  aa:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:725
+      break;
+  ac:	e00d      	b.n	ca <USBD_SetFeature+0xca>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:728
+      
+    case 4: // TEST_PACKET
+      dctl.b.tstctl = 4;
+  ae:	68bb      	ldr	r3, [r7, #8]
+  b0:	f04f 0204 	mov.w	r2, #4
+  b4:	f362 1306 	bfi	r3, r2, #4, #3
+  b8:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:729
+      break;
+  ba:	e006      	b.n	ca <USBD_SetFeature+0xca>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:732
+      
+    case 5: // TEST_FORCE_ENABLE
+      dctl.b.tstctl = 5;
+  bc:	68bb      	ldr	r3, [r7, #8]
+  be:	f04f 0205 	mov.w	r2, #5
+  c2:	f362 1306 	bfi	r3, r2, #4, #3
+  c6:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:733
+      break;
+  c8:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:735
+    }
+    SET_TEST_MODE = dctl;
+  ca:	4b07      	ldr	r3, [pc, #28]	; (e8 <USBD_SetFeature+0xe8>)
+  cc:	68ba      	ldr	r2, [r7, #8]
+  ce:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:736
+    pdev->dev.test_mode = 1;
+  d0:	687b      	ldr	r3, [r7, #4]
+  d2:	f04f 0201 	mov.w	r2, #1
+  d6:	f883 2116 	strb.w	r2, [r3, #278]	; 0x116
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:737
+    USBD_CtlSendStatus(pdev);
+  da:	6878      	ldr	r0, [r7, #4]
+  dc:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:740
+  }
+
+}
+  e0:	f107 0710 	add.w	r7, r7, #16
+  e4:	46bd      	mov	sp, r7
+  e6:	bd80      	pop	{r7, pc}
+  e8:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_ClrFeature:
+
+00000000 <USBD_ClrFeature>:
+USBD_ClrFeature():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:752
+* @param  req: usb request
+* @retval status
+*/
+static void USBD_ClrFeature(USB_OTG_CORE_HANDLE  *pdev, 
+                            USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:753
+  switch (pdev->dev.device_status)
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	f893 3112 	ldrb.w	r3, [r3, #274]	; 0x112
+  10:	f1a3 0302 	sub.w	r3, r3, #2
+  14:	2b01      	cmp	r3, #1
+  16:	d813      	bhi.n	40 <USBD_ClrFeature+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:757
+  {
+  case USB_OTG_ADDRESSED:
+  case USB_OTG_CONFIGURED:
+    if (req->wValue == USB_FEATURE_REMOTE_WAKEUP) 
+  18:	683b      	ldr	r3, [r7, #0]
+  1a:	885b      	ldrh	r3, [r3, #2]
+  1c:	2b01      	cmp	r3, #1
+  1e:	d115      	bne.n	4c <USBD_ClrFeature+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:759
+    {
+      pdev->dev.DevRemoteWakeup = 0; 
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	f8c3 2118 	str.w	r2, [r3, #280]	; 0x118
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:760
+      pdev->dev.class_cb->Setup (pdev, req);   
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	f8d3 35e4 	ldr.w	r3, [r3, #1508]	; 0x5e4
+  30:	689b      	ldr	r3, [r3, #8]
+  32:	6878      	ldr	r0, [r7, #4]
+  34:	6839      	ldr	r1, [r7, #0]
+  36:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:761
+      USBD_CtlSendStatus(pdev);
+  38:	6878      	ldr	r0, [r7, #4]
+  3a:	f7ff fffe 	bl	0 <USBD_CtlSendStatus>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:763
+    }
+    break;
+  3e:	e006      	b.n	4e <USBD_ClrFeature+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:766
+    
+  default :
+     USBD_CtlError(pdev , req);
+  40:	6878      	ldr	r0, [r7, #4]
+  42:	6839      	ldr	r1, [r7, #0]
+  44:	f7ff fffe 	bl	0 <USBD_ClrFeature>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:767
+    break;
+  48:	bf00      	nop
+  4a:	e000      	b.n	4e <USBD_ClrFeature+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:763
+    {
+      pdev->dev.DevRemoteWakeup = 0; 
+      pdev->dev.class_cb->Setup (pdev, req);   
+      USBD_CtlSendStatus(pdev);
+    }
+    break;
+  4c:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:769
+    
+  default :
+     USBD_CtlError(pdev , req);
+    break;
+  }
+}
+  4e:	f107 0708 	add.w	r7, r7, #8
+  52:	46bd      	mov	sp, r7
+  54:	bd80      	pop	{r7, pc}
+  56:	bf00      	nop
+
+Disassembly of section .text.USBD_ParseSetupRequest:
+
+00000000 <USBD_ParseSetupRequest>:
+USBD_ParseSetupRequest():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:781
+* @retval None
+*/
+
+void USBD_ParseSetupRequest( USB_OTG_CORE_HANDLE  *pdev,
+                            USB_SETUP_REQ *req)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:782
+  req->bmRequest     = *(uint8_t *)  (pdev->dev.setup_packet);
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	f893 25cc 	ldrb.w	r2, [r3, #1484]	; 0x5cc
+  10:	683b      	ldr	r3, [r7, #0]
+  12:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:783
+  req->bRequest      = *(uint8_t *)  (pdev->dev.setup_packet +  1);
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	f503 63b8 	add.w	r3, r3, #1472	; 0x5c0
+  1a:	f103 030d 	add.w	r3, r3, #13
+  1e:	781a      	ldrb	r2, [r3, #0]
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:784
+  req->wValue        = SWAPBYTE      (pdev->dev.setup_packet +  2);
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	f503 63b8 	add.w	r3, r3, #1472	; 0x5c0
+  2a:	f103 030e 	add.w	r3, r3, #14
+  2e:	781b      	ldrb	r3, [r3, #0]
+  30:	461a      	mov	r2, r3
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	f503 63b8 	add.w	r3, r3, #1472	; 0x5c0
+  38:	f103 030f 	add.w	r3, r3, #15
+  3c:	781b      	ldrb	r3, [r3, #0]
+  3e:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  42:	b29b      	uxth	r3, r3
+  44:	18d3      	adds	r3, r2, r3
+  46:	b29a      	uxth	r2, r3
+  48:	683b      	ldr	r3, [r7, #0]
+  4a:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:785
+  req->wIndex        = SWAPBYTE      (pdev->dev.setup_packet +  4);
+  4c:	687b      	ldr	r3, [r7, #4]
+  4e:	f503 63ba 	add.w	r3, r3, #1488	; 0x5d0
+  52:	781b      	ldrb	r3, [r3, #0]
+  54:	461a      	mov	r2, r3
+  56:	687b      	ldr	r3, [r7, #4]
+  58:	f503 63ba 	add.w	r3, r3, #1488	; 0x5d0
+  5c:	f103 0301 	add.w	r3, r3, #1
+  60:	781b      	ldrb	r3, [r3, #0]
+  62:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  66:	b29b      	uxth	r3, r3
+  68:	18d3      	adds	r3, r2, r3
+  6a:	b29a      	uxth	r2, r3
+  6c:	683b      	ldr	r3, [r7, #0]
+  6e:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:786
+  req->wLength       = SWAPBYTE      (pdev->dev.setup_packet +  6);
+  70:	687b      	ldr	r3, [r7, #4]
+  72:	f503 63ba 	add.w	r3, r3, #1488	; 0x5d0
+  76:	f103 0302 	add.w	r3, r3, #2
+  7a:	781b      	ldrb	r3, [r3, #0]
+  7c:	461a      	mov	r2, r3
+  7e:	687b      	ldr	r3, [r7, #4]
+  80:	f503 63ba 	add.w	r3, r3, #1488	; 0x5d0
+  84:	f103 0303 	add.w	r3, r3, #3
+  88:	781b      	ldrb	r3, [r3, #0]
+  8a:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  8e:	b29b      	uxth	r3, r3
+  90:	18d3      	adds	r3, r2, r3
+  92:	b29a      	uxth	r2, r3
+  94:	683b      	ldr	r3, [r7, #0]
+  96:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:788
+  
+  pdev->dev.in_ep[0].ctl_data_len = req->wLength  ;
+  98:	683b      	ldr	r3, [r7, #0]
+  9a:	88db      	ldrh	r3, [r3, #6]
+  9c:	461a      	mov	r2, r3
+  9e:	687b      	ldr	r3, [r7, #4]
+  a0:	f8c3 2140 	str.w	r2, [r3, #320]	; 0x140
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:789
+  pdev->dev.device_state = USB_OTG_EP0_SETUP;
+  a4:	687b      	ldr	r3, [r7, #4]
+  a6:	f04f 0201 	mov.w	r2, #1
+  aa:	f883 2111 	strb.w	r2, [r3, #273]	; 0x111
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:790
+}
+  ae:	f107 070c 	add.w	r7, r7, #12
+  b2:	46bd      	mov	sp, r7
+  b4:	bc80      	pop	{r7}
+  b6:	4770      	bx	lr
+
+Disassembly of section .text.USBD_CtlError:
+
+00000000 <USBD_CtlError>:
+USBD_CtlError():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:802
+* @retval None
+*/
+
+void USBD_CtlError( USB_OTG_CORE_HANDLE  *pdev,
+                            USB_SETUP_REQ *req)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:804
+  
+  DCD_EP_Stall(pdev , 0x80);
+   a:	6878      	ldr	r0, [r7, #4]
+   c:	f04f 0180 	mov.w	r1, #128	; 0x80
+  10:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:805
+  DCD_EP_Stall(pdev , 0);
+  14:	6878      	ldr	r0, [r7, #4]
+  16:	f04f 0100 	mov.w	r1, #0
+  1a:	f7ff fffe 	bl	0 <DCD_EP_Stall>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:806
+  USB_OTG_EP0_OutStart(pdev);  
+  1e:	6878      	ldr	r0, [r7, #4]
+  20:	f7ff fffe 	bl	0 <USB_OTG_EP0_OutStart>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:807
+}
+  24:	f107 0708 	add.w	r7, r7, #8
+  28:	46bd      	mov	sp, r7
+  2a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_GetString:
+
+00000000 <USBD_GetString>:
+USBD_GetString():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:819
+  * @param  unicode : Formatted string buffer (unicode)
+  * @param  len : descriptor length
+  * @retval None
+  */
+void USBD_GetString(uint8_t *desc, uint8_t *unicode, uint16_t *len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:820
+  uint8_t idx = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:822
+  
+  if (desc != NULL) 
+  12:	68fb      	ldr	r3, [r7, #12]
+  14:	2b00      	cmp	r3, #0
+  16:	d03d      	beq.n	94 <USBD_GetString+0x94>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:824
+  {
+    *len =  USBD_GetLen(desc) * 2 + 2;    
+  18:	68f8      	ldr	r0, [r7, #12]
+  1a:	f7ff fffe 	bl	0 <USBD_GetString>
+  1e:	4603      	mov	r3, r0
+  20:	f103 0301 	add.w	r3, r3, #1
+  24:	b29b      	uxth	r3, r3
+  26:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  2a:	b29a      	uxth	r2, r3
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:825
+    unicode[idx++] = *len;
+  30:	7dfb      	ldrb	r3, [r7, #23]
+  32:	68ba      	ldr	r2, [r7, #8]
+  34:	18d3      	adds	r3, r2, r3
+  36:	687a      	ldr	r2, [r7, #4]
+  38:	8812      	ldrh	r2, [r2, #0]
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	701a      	strb	r2, [r3, #0]
+  3e:	7dfb      	ldrb	r3, [r7, #23]
+  40:	f103 0301 	add.w	r3, r3, #1
+  44:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:826
+    unicode[idx++] =  USB_DESC_TYPE_STRING;
+  46:	7dfb      	ldrb	r3, [r7, #23]
+  48:	68ba      	ldr	r2, [r7, #8]
+  4a:	18d3      	adds	r3, r2, r3
+  4c:	f04f 0203 	mov.w	r2, #3
+  50:	701a      	strb	r2, [r3, #0]
+  52:	7dfb      	ldrb	r3, [r7, #23]
+  54:	f103 0301 	add.w	r3, r3, #1
+  58:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:828
+    
+    while (*desc != NULL) 
+  5a:	e017      	b.n	8c <USBD_GetString+0x8c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:830
+    {
+      unicode[idx++] = *desc++;
+  5c:	7dfb      	ldrb	r3, [r7, #23]
+  5e:	68ba      	ldr	r2, [r7, #8]
+  60:	18d3      	adds	r3, r2, r3
+  62:	68fa      	ldr	r2, [r7, #12]
+  64:	7812      	ldrb	r2, [r2, #0]
+  66:	701a      	strb	r2, [r3, #0]
+  68:	7dfb      	ldrb	r3, [r7, #23]
+  6a:	f103 0301 	add.w	r3, r3, #1
+  6e:	75fb      	strb	r3, [r7, #23]
+  70:	68fb      	ldr	r3, [r7, #12]
+  72:	f103 0301 	add.w	r3, r3, #1
+  76:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:831
+      unicode[idx++] =  0x00;
+  78:	7dfb      	ldrb	r3, [r7, #23]
+  7a:	68ba      	ldr	r2, [r7, #8]
+  7c:	18d3      	adds	r3, r2, r3
+  7e:	f04f 0200 	mov.w	r2, #0
+  82:	701a      	strb	r2, [r3, #0]
+  84:	7dfb      	ldrb	r3, [r7, #23]
+  86:	f103 0301 	add.w	r3, r3, #1
+  8a:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:828
+  {
+    *len =  USBD_GetLen(desc) * 2 + 2;    
+    unicode[idx++] = *len;
+    unicode[idx++] =  USB_DESC_TYPE_STRING;
+    
+    while (*desc != NULL) 
+  8c:	68fb      	ldr	r3, [r7, #12]
+  8e:	781b      	ldrb	r3, [r3, #0]
+  90:	2b00      	cmp	r3, #0
+  92:	d1e3      	bne.n	5c <USBD_GetString+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:834
+    {
+      unicode[idx++] = *desc++;
+      unicode[idx++] =  0x00;
+    }
+  } 
+}
+  94:	f107 0718 	add.w	r7, r7, #24
+  98:	46bd      	mov	sp, r7
+  9a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_GetLen:
+
+00000000 <USBD_GetLen>:
+USBD_GetLen():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:843
+  *         return the string length
+   * @param  buf : pointer to the ascii string buffer
+  * @retval string length
+  */
+static uint8_t USBD_GetLen(uint8_t *buf)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:844
+    uint8_t  len = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:846
+
+    while (*buf != NULL) 
+   e:	e007      	b.n	20 <USBD_GetLen+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:848
+    {
+        len++;
+  10:	7bfb      	ldrb	r3, [r7, #15]
+  12:	f103 0301 	add.w	r3, r3, #1
+  16:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:849
+        buf++;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f103 0301 	add.w	r3, r3, #1
+  1e:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:846
+  */
+static uint8_t USBD_GetLen(uint8_t *buf)
+{
+    uint8_t  len = 0;
+
+    while (*buf != NULL) 
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	781b      	ldrb	r3, [r3, #0]
+  24:	2b00      	cmp	r3, #0
+  26:	d1f3      	bne.n	10 <USBD_GetLen+0x10>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:852
+    {
+        len++;
+        buf++;
+    }
+
+    return len;
+  28:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_req.c:853
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop

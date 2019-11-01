@@ -1,0 +1,2048 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_spi.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_spi.o
+
+
+Disassembly of section .text.SPI_I2S_DeInit:
+
+00000000 <SPI_I2S_DeInit>:
+SPI_I2S_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:225
+  *         is managed by the I2S peripheral clock).
+  *             
+  * @retval None
+  */
+void SPI_I2S_DeInit(SPI_TypeDef* SPIx)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:229
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+
+  if (SPIx == SPI1)
+   8:	687a      	ldr	r2, [r7, #4]
+   a:	4b34      	ldr	r3, [pc, #208]	; (dc <SPI_I2S_DeInit+0xdc>)
+   c:	429a      	cmp	r2, r3
+   e:	d10c      	bne.n	2a <SPI_I2S_DeInit+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:232
+  {
+    /* Enable SPI1 reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, ENABLE);
+  10:	f44f 5080 	mov.w	r0, #4096	; 0x1000
+  14:	f04f 0101 	mov.w	r1, #1
+  18:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:234
+    /* Release SPI1 from reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI1, DISABLE);
+  1c:	f44f 5080 	mov.w	r0, #4096	; 0x1000
+  20:	f04f 0100 	mov.w	r1, #0
+  24:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+  28:	e053      	b.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:236
+  }
+  else if (SPIx == SPI2)
+  2a:	687a      	ldr	r2, [r7, #4]
+  2c:	4b2c      	ldr	r3, [pc, #176]	; (e0 <SPI_I2S_DeInit+0xe0>)
+  2e:	429a      	cmp	r2, r3
+  30:	d10c      	bne.n	4c <SPI_I2S_DeInit+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:239
+  {
+    /* Enable SPI2 reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, ENABLE);
+  32:	f44f 4080 	mov.w	r0, #16384	; 0x4000
+  36:	f04f 0101 	mov.w	r1, #1
+  3a:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:241
+    /* Release SPI2 from reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI2, DISABLE);
+  3e:	f44f 4080 	mov.w	r0, #16384	; 0x4000
+  42:	f04f 0100 	mov.w	r1, #0
+  46:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+  4a:	e042      	b.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:243
+  }
+  else if (SPIx == SPI3)
+  4c:	687a      	ldr	r2, [r7, #4]
+  4e:	4b25      	ldr	r3, [pc, #148]	; (e4 <SPI_I2S_DeInit+0xe4>)
+  50:	429a      	cmp	r2, r3
+  52:	d10c      	bne.n	6e <SPI_I2S_DeInit+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:246
+  {
+    /* Enable SPI3 reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI3, ENABLE);
+  54:	f44f 4000 	mov.w	r0, #32768	; 0x8000
+  58:	f04f 0101 	mov.w	r1, #1
+  5c:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:248
+    /* Release SPI3 from reset state */
+    RCC_APB1PeriphResetCmd(RCC_APB1Periph_SPI3, DISABLE);
+  60:	f44f 4000 	mov.w	r0, #32768	; 0x8000
+  64:	f04f 0100 	mov.w	r1, #0
+  68:	f7ff fffe 	bl	0 <RCC_APB1PeriphResetCmd>
+  6c:	e031      	b.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:250
+  }
+  else if (SPIx == SPI4)
+  6e:	687a      	ldr	r2, [r7, #4]
+  70:	4b1d      	ldr	r3, [pc, #116]	; (e8 <SPI_I2S_DeInit+0xe8>)
+  72:	429a      	cmp	r2, r3
+  74:	d10c      	bne.n	90 <SPI_I2S_DeInit+0x90>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:253
+  {
+    /* Enable SPI4 reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI4, ENABLE);
+  76:	f44f 5000 	mov.w	r0, #8192	; 0x2000
+  7a:	f04f 0101 	mov.w	r1, #1
+  7e:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:255
+    /* Release SPI4 from reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI4, DISABLE);
+  82:	f44f 5000 	mov.w	r0, #8192	; 0x2000
+  86:	f04f 0100 	mov.w	r1, #0
+  8a:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+  8e:	e020      	b.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:257
+  }
+  else if (SPIx == SPI5)
+  90:	687a      	ldr	r2, [r7, #4]
+  92:	4b16      	ldr	r3, [pc, #88]	; (ec <SPI_I2S_DeInit+0xec>)
+  94:	429a      	cmp	r2, r3
+  96:	d10c      	bne.n	b2 <SPI_I2S_DeInit+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:260
+  {
+    /* Enable SPI5 reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI5, ENABLE);
+  98:	f44f 1080 	mov.w	r0, #1048576	; 0x100000
+  9c:	f04f 0101 	mov.w	r1, #1
+  a0:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:262
+    /* Release SPI5 from reset state */
+    RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI5, DISABLE);
+  a4:	f44f 1080 	mov.w	r0, #1048576	; 0x100000
+  a8:	f04f 0100 	mov.w	r1, #0
+  ac:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+  b0:	e00f      	b.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:266
+  }
+  else 
+  {
+    if (SPIx == SPI6)
+  b2:	687a      	ldr	r2, [r7, #4]
+  b4:	4b0e      	ldr	r3, [pc, #56]	; (f0 <SPI_I2S_DeInit+0xf0>)
+  b6:	429a      	cmp	r2, r3
+  b8:	d10b      	bne.n	d2 <SPI_I2S_DeInit+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:269
+    {
+      /* Enable SPI6 reset state */
+      RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI6, ENABLE);
+  ba:	f44f 1000 	mov.w	r0, #2097152	; 0x200000
+  be:	f04f 0101 	mov.w	r1, #1
+  c2:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:271
+      /* Release SPI6 from reset state */
+      RCC_APB2PeriphResetCmd(RCC_APB2Periph_SPI6, DISABLE);
+  c6:	f44f 1000 	mov.w	r0, #2097152	; 0x200000
+  ca:	f04f 0100 	mov.w	r1, #0
+  ce:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:274
+    }
+  }
+}
+  d2:	f107 0708 	add.w	r7, r7, #8
+  d6:	46bd      	mov	sp, r7
+  d8:	bd80      	pop	{r7, pc}
+  da:	bf00      	nop
+  dc:	40013000 	.word	0x40013000
+  e0:	40003800 	.word	0x40003800
+  e4:	40003c00 	.word	0x40003c00
+  e8:	40013400 	.word	0x40013400
+  ec:	40015000 	.word	0x40015000
+  f0:	40015400 	.word	0x40015400
+
+Disassembly of section .text.SPI_Init:
+
+00000000 <SPI_Init>:
+SPI_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:285
+  * @param  SPI_InitStruct: pointer to a SPI_InitTypeDef structure that
+  *         contains the configuration information for the specified SPI peripheral.
+  * @retval None
+  */
+void SPI_Init(SPI_TypeDef* SPIx, SPI_InitTypeDef* SPI_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:286
+  uint16_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:304
+  assert_param(IS_SPI_FIRST_BIT(SPI_InitStruct->SPI_FirstBit));
+  assert_param(IS_SPI_CRC_POLYNOMIAL(SPI_InitStruct->SPI_CRCPolynomial));
+
+/*---------------------------- SPIx CR1 Configuration ------------------------*/
+  /* Get the SPIx CR1 value */
+  tmpreg = SPIx->CR1;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	881b      	ldrh	r3, [r3, #0]
+  14:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:306
+  /* Clear BIDIMode, BIDIOE, RxONLY, SSM, SSI, LSBFirst, BR, MSTR, CPOL and CPHA bits */
+  tmpreg &= CR1_CLEAR_MASK;
+  16:	89fb      	ldrh	r3, [r7, #14]
+  18:	f403 5341 	and.w	r3, r3, #12352	; 0x3040
+  1c:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  1e:	683b      	ldr	r3, [r7, #0]
+  20:	881a      	ldrh	r2, [r3, #0]
+  22:	683b      	ldr	r3, [r7, #0]
+  24:	885b      	ldrh	r3, [r3, #2]
+  26:	ea42 0303 	orr.w	r3, r2, r3
+  2a:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:316
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+  2c:	683b      	ldr	r3, [r7, #0]
+  2e:	889b      	ldrh	r3, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  30:	ea42 0303 	orr.w	r3, r2, r3
+  34:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:316
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+  36:	683b      	ldr	r3, [r7, #0]
+  38:	88db      	ldrh	r3, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  3a:	ea42 0303 	orr.w	r3, r2, r3
+  3e:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:317
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+                  SPI_InitStruct->SPI_CPHA | SPI_InitStruct->SPI_NSS |  
+  40:	683b      	ldr	r3, [r7, #0]
+  42:	891b      	ldrh	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  44:	ea42 0303 	orr.w	r3, r2, r3
+  48:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:317
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+                  SPI_InitStruct->SPI_CPHA | SPI_InitStruct->SPI_NSS |  
+  4a:	683b      	ldr	r3, [r7, #0]
+  4c:	895b      	ldrh	r3, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  4e:	ea42 0303 	orr.w	r3, r2, r3
+  52:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:318
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+                  SPI_InitStruct->SPI_CPHA | SPI_InitStruct->SPI_NSS |  
+                  SPI_InitStruct->SPI_BaudRatePrescaler | SPI_InitStruct->SPI_FirstBit);
+  54:	683b      	ldr	r3, [r7, #0]
+  56:	899b      	ldrh	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  58:	ea42 0303 	orr.w	r3, r2, r3
+  5c:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:318
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+                  SPI_InitStruct->SPI_CPHA | SPI_InitStruct->SPI_NSS |  
+                  SPI_InitStruct->SPI_BaudRatePrescaler | SPI_InitStruct->SPI_FirstBit);
+  5e:	683b      	ldr	r3, [r7, #0]
+  60:	89db      	ldrh	r3, [r3, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:315
+  /* Set SSM, SSI and MSTR bits according to SPI_Mode and SPI_NSS values */
+  /* Set LSBFirst bit according to SPI_FirstBit value */
+  /* Set BR bits according to SPI_BaudRatePrescaler value */
+  /* Set CPOL bit according to SPI_CPOL value */
+  /* Set CPHA bit according to SPI_CPHA value */
+  tmpreg |= (uint16_t)((uint32_t)SPI_InitStruct->SPI_Direction | SPI_InitStruct->SPI_Mode |
+  62:	ea42 0303 	orr.w	r3, r2, r3
+  66:	b29a      	uxth	r2, r3
+  68:	89fb      	ldrh	r3, [r7, #14]
+  6a:	ea42 0303 	orr.w	r3, r2, r3
+  6e:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:320
+                  SPI_InitStruct->SPI_DataSize | SPI_InitStruct->SPI_CPOL |  
+                  SPI_InitStruct->SPI_CPHA | SPI_InitStruct->SPI_NSS |  
+                  SPI_InitStruct->SPI_BaudRatePrescaler | SPI_InitStruct->SPI_FirstBit);
+  /* Write to SPIx CR1 */
+  SPIx->CR1 = tmpreg;
+  70:	687b      	ldr	r3, [r7, #4]
+  72:	89fa      	ldrh	r2, [r7, #14]
+  74:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:323
+
+  /* Activate the SPI mode (Reset I2SMOD bit in I2SCFGR register) */
+  SPIx->I2SCFGR &= (uint16_t)~((uint16_t)SPI_I2SCFGR_I2SMOD);
+  76:	687b      	ldr	r3, [r7, #4]
+  78:	8b9b      	ldrh	r3, [r3, #28]
+  7a:	b29b      	uxth	r3, r3
+  7c:	f423 6300 	bic.w	r3, r3, #2048	; 0x800
+  80:	b29a      	uxth	r2, r3
+  82:	687b      	ldr	r3, [r7, #4]
+  84:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:326
+/*---------------------------- SPIx CRCPOLY Configuration --------------------*/
+  /* Write to SPIx CRCPOLY */
+  SPIx->CRCPR = SPI_InitStruct->SPI_CRCPolynomial;
+  86:	683b      	ldr	r3, [r7, #0]
+  88:	8a1a      	ldrh	r2, [r3, #16]
+  8a:	687b      	ldr	r3, [r7, #4]
+  8c:	821a      	strh	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:327
+}
+  8e:	f107 0714 	add.w	r7, r7, #20
+  92:	46bd      	mov	sp, r7
+  94:	bc80      	pop	{r7}
+  96:	4770      	bx	lr
+
+Disassembly of section .text.I2S_Init:
+
+00000000 <I2S_Init>:
+I2S_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:349
+  *         to the value of the the source clock frequency (in Hz).
+  *  
+  * @retval None
+  */
+void I2S_Init(SPI_TypeDef* SPIx, I2S_InitTypeDef* I2S_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b08b      	sub	sp, #44	; 0x2c
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:350
+  uint16_t tmpreg = 0, i2sdiv = 2, i2sodd = 0, packetlength = 1;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	837b      	strh	r3, [r7, #26]
+  10:	f04f 0302 	mov.w	r3, #2
+  14:	84fb      	strh	r3, [r7, #38]	; 0x26
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	84bb      	strh	r3, [r7, #36]	; 0x24
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	847b      	strh	r3, [r7, #34]	; 0x22
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:351
+  uint32_t tmp = 0, i2sclk = 0;
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	61fb      	str	r3, [r7, #28]
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:353
+#ifndef I2S_EXTERNAL_CLOCK_VAL
+  uint32_t pllm = 0, plln = 0, pllr = 0;
+  2e:	f04f 0300 	mov.w	r3, #0
+  32:	613b      	str	r3, [r7, #16]
+  34:	f04f 0300 	mov.w	r3, #0
+  38:	60fb      	str	r3, [r7, #12]
+  3a:	f04f 0300 	mov.w	r3, #0
+  3e:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:367
+  assert_param(IS_I2S_AUDIO_FREQ(I2S_InitStruct->I2S_AudioFreq));
+  assert_param(IS_I2S_CPOL(I2S_InitStruct->I2S_CPOL));  
+
+/*----------------------- SPIx I2SCFGR & I2SPR Configuration -----------------*/
+  /* Clear I2SMOD, I2SE, I2SCFG, PCMSYNC, I2SSTD, CKPOL, DATLEN and CHLEN bits */
+  SPIx->I2SCFGR &= I2SCFGR_CLEAR_MASK; 
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	8b9b      	ldrh	r3, [r3, #28]
+  44:	b29b      	uxth	r3, r3
+  46:	f423 637a 	bic.w	r3, r3, #4000	; 0xfa0
+  4a:	f023 031f 	bic.w	r3, r3, #31
+  4e:	b29a      	uxth	r2, r3
+  50:	687b      	ldr	r3, [r7, #4]
+  52:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:368
+  SPIx->I2SPR = 0x0002;
+  54:	687b      	ldr	r3, [r7, #4]
+  56:	f04f 0202 	mov.w	r2, #2
+  5a:	841a      	strh	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:371
+  
+  /* Get the I2SCFGR register value */
+  tmpreg = SPIx->I2SCFGR;
+  5c:	687b      	ldr	r3, [r7, #4]
+  5e:	8b9b      	ldrh	r3, [r3, #28]
+  60:	837b      	strh	r3, [r7, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:374
+  
+  /* If the default value has to be written, reinitialize i2sdiv and i2sodd*/
+  if(I2S_InitStruct->I2S_AudioFreq == I2S_AudioFreq_Default)
+  62:	683b      	ldr	r3, [r7, #0]
+  64:	689b      	ldr	r3, [r3, #8]
+  66:	2b02      	cmp	r3, #2
+  68:	d106      	bne.n	78 <I2S_Init+0x78>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:376
+  {
+    i2sodd = (uint16_t)0;
+  6a:	f04f 0300 	mov.w	r3, #0
+  6e:	84bb      	strh	r3, [r7, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:377
+    i2sdiv = (uint16_t)2;   
+  70:	f04f 0302 	mov.w	r3, #2
+  74:	84fb      	strh	r3, [r7, #38]	; 0x26
+  76:	e083      	b.n	180 <I2S_Init+0x180>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:383
+  }
+  /* If the requested audio frequency is not the default, compute the prescaler */
+  else
+  {
+    /* Check the frame length (For the Prescaler computing) *******************/
+    if(I2S_InitStruct->I2S_DataFormat == I2S_DataFormat_16b)
+  78:	683b      	ldr	r3, [r7, #0]
+  7a:	889b      	ldrh	r3, [r3, #4]
+  7c:	2b00      	cmp	r3, #0
+  7e:	d103      	bne.n	88 <I2S_Init+0x88>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:386
+    {
+      /* Packet length is 16 bits */
+      packetlength = 1;
+  80:	f04f 0301 	mov.w	r3, #1
+  84:	847b      	strh	r3, [r7, #34]	; 0x22
+  86:	e002      	b.n	8e <I2S_Init+0x8e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:391
+    }
+    else
+    {
+      /* Packet length is 32 bits */
+      packetlength = 2;
+  88:	f04f 0302 	mov.w	r3, #2
+  8c:	847b      	strh	r3, [r7, #34]	; 0x22
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:410
+    /* Set the I2S clock to the external clock  value */
+    i2sclk = I2S_EXTERNAL_CLOCK_VAL;
+
+  #else /* There is no define for External I2S clock source */
+    /* Set PLLI2S as I2S clock source */
+    if ((RCC->CFGR & RCC_CFGR_I2SSRC) != 0)
+  8e:	4b58      	ldr	r3, [pc, #352]	; (1f0 <I2S_Init+0x1f0>)
+  90:	689b      	ldr	r3, [r3, #8]
+  92:	f403 0300 	and.w	r3, r3, #8388608	; 0x800000
+  96:	2b00      	cmp	r3, #0
+  98:	d005      	beq.n	a6 <I2S_Init+0xa6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:412
+    {
+      RCC->CFGR &= ~(uint32_t)RCC_CFGR_I2SSRC;
+  9a:	4b55      	ldr	r3, [pc, #340]	; (1f0 <I2S_Init+0x1f0>)
+  9c:	4a54      	ldr	r2, [pc, #336]	; (1f0 <I2S_Init+0x1f0>)
+  9e:	6892      	ldr	r2, [r2, #8]
+  a0:	f422 0200 	bic.w	r2, r2, #8388608	; 0x800000
+  a4:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:416
+    }    
+    
+    /* Get the PLLI2SN value */
+    plln = (uint32_t)(((RCC->PLLI2SCFGR & RCC_PLLI2SCFGR_PLLI2SN) >> 6) & \
+  a6:	4b52      	ldr	r3, [pc, #328]	; (1f0 <I2S_Init+0x1f0>)
+  a8:	f8d3 2084 	ldr.w	r2, [r3, #132]	; 0x84
+  ac:	f647 73c0 	movw	r3, #32704	; 0x7fc0
+  b0:	ea02 0303 	and.w	r3, r2, r3
+  b4:	ea4f 1393 	mov.w	r3, r3, lsr #6
+  b8:	ea4f 53c3 	mov.w	r3, r3, lsl #23
+  bc:	ea4f 53d3 	mov.w	r3, r3, lsr #23
+  c0:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:420
+                      (RCC_PLLI2SCFGR_PLLI2SN >> 6));
+    
+    /* Get the PLLI2SR value */
+    pllr = (uint32_t)(((RCC->PLLI2SCFGR & RCC_PLLI2SCFGR_PLLI2SR) >> 28) & \
+  c2:	4b4b      	ldr	r3, [pc, #300]	; (1f0 <I2S_Init+0x1f0>)
+  c4:	f8d3 3084 	ldr.w	r3, [r3, #132]	; 0x84
+  c8:	f003 43e0 	and.w	r3, r3, #1879048192	; 0x70000000
+  cc:	ea4f 7313 	mov.w	r3, r3, lsr #28
+  d0:	f003 0307 	and.w	r3, r3, #7
+  d4:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:424
+                      (RCC_PLLI2SCFGR_PLLI2SR >> 28));
+    
+    /* Get the PLLM value */
+    pllm = (uint32_t)(RCC->PLLCFGR & RCC_PLLCFGR_PLLM);      
+  d6:	4b46      	ldr	r3, [pc, #280]	; (1f0 <I2S_Init+0x1f0>)
+  d8:	685b      	ldr	r3, [r3, #4]
+  da:	f003 033f 	and.w	r3, r3, #63	; 0x3f
+  de:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:427
+
+    /* Get the I2S source clock value */
+    i2sclk = (uint32_t)(((HSE_VALUE / pllm) * plln) / pllr);
+  e0:	4a44      	ldr	r2, [pc, #272]	; (1f4 <I2S_Init+0x1f4>)
+  e2:	693b      	ldr	r3, [r7, #16]
+  e4:	fbb2 f3f3 	udiv	r3, r2, r3
+  e8:	68fa      	ldr	r2, [r7, #12]
+  ea:	fb02 f203 	mul.w	r2, r2, r3
+  ee:	68bb      	ldr	r3, [r7, #8]
+  f0:	fbb2 f3f3 	udiv	r3, r2, r3
+  f4:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:431
+  #endif /* I2S_EXTERNAL_CLOCK_VAL */
+    
+    /* Compute the Real divider depending on the MCLK output state, with a floating point */
+    if(I2S_InitStruct->I2S_MCLKOutput == I2S_MCLKOutput_Enable)
+  f6:	683b      	ldr	r3, [r7, #0]
+  f8:	88db      	ldrh	r3, [r3, #6]
+  fa:	f5b3 7f00 	cmp.w	r3, #512	; 0x200
+  fe:	d113      	bne.n	128 <I2S_Init+0x128>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:434
+    {
+      /* MCLK output is enabled */
+      tmp = (uint16_t)(((((i2sclk / 256) * 10) / I2S_InitStruct->I2S_AudioFreq)) + 5);
+ 100:	697b      	ldr	r3, [r7, #20]
+ 102:	ea4f 2213 	mov.w	r2, r3, lsr #8
+ 106:	4613      	mov	r3, r2
+ 108:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 10c:	189b      	adds	r3, r3, r2
+ 10e:	ea4f 0343 	mov.w	r3, r3, lsl #1
+ 112:	461a      	mov	r2, r3
+ 114:	683b      	ldr	r3, [r7, #0]
+ 116:	689b      	ldr	r3, [r3, #8]
+ 118:	fbb2 f3f3 	udiv	r3, r2, r3
+ 11c:	b29b      	uxth	r3, r3
+ 11e:	f103 0305 	add.w	r3, r3, #5
+ 122:	b29b      	uxth	r3, r3
+ 124:	61fb      	str	r3, [r7, #28]
+ 126:	e015      	b.n	154 <I2S_Init+0x154>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:439
+    }
+    else
+    {
+      /* MCLK output is disabled */
+      tmp = (uint16_t)(((((i2sclk / (32 * packetlength)) *10 ) / I2S_InitStruct->I2S_AudioFreq)) + 5);
+ 128:	8c7b      	ldrh	r3, [r7, #34]	; 0x22
+ 12a:	ea4f 1343 	mov.w	r3, r3, lsl #5
+ 12e:	697a      	ldr	r2, [r7, #20]
+ 130:	fbb2 f2f3 	udiv	r2, r2, r3
+ 134:	4613      	mov	r3, r2
+ 136:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 13a:	189b      	adds	r3, r3, r2
+ 13c:	ea4f 0343 	mov.w	r3, r3, lsl #1
+ 140:	461a      	mov	r2, r3
+ 142:	683b      	ldr	r3, [r7, #0]
+ 144:	689b      	ldr	r3, [r3, #8]
+ 146:	fbb2 f3f3 	udiv	r3, r2, r3
+ 14a:	b29b      	uxth	r3, r3
+ 14c:	f103 0305 	add.w	r3, r3, #5
+ 150:	b29b      	uxth	r3, r3
+ 152:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:443
+    }
+    
+    /* Remove the flatting point */
+    tmp = tmp / 10;  
+ 154:	69fa      	ldr	r2, [r7, #28]
+ 156:	4b28      	ldr	r3, [pc, #160]	; (1f8 <I2S_Init+0x1f8>)
+ 158:	fba3 1302 	umull	r1, r3, r3, r2
+ 15c:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+ 160:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:446
+      
+    /* Check the parity of the divider */
+    i2sodd = (uint16_t)(tmp & (uint16_t)0x0001);
+ 162:	69fb      	ldr	r3, [r7, #28]
+ 164:	b29b      	uxth	r3, r3
+ 166:	f003 0301 	and.w	r3, r3, #1
+ 16a:	84bb      	strh	r3, [r7, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:449
+   
+    /* Compute the i2sdiv prescaler */
+    i2sdiv = (uint16_t)((tmp - i2sodd) / 2);
+ 16c:	8cbb      	ldrh	r3, [r7, #36]	; 0x24
+ 16e:	69fa      	ldr	r2, [r7, #28]
+ 170:	1ad3      	subs	r3, r2, r3
+ 172:	ea4f 0353 	mov.w	r3, r3, lsr #1
+ 176:	84fb      	strh	r3, [r7, #38]	; 0x26
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:452
+   
+    /* Get the Mask for the Odd bit (SPI_I2SPR[8]) register */
+    i2sodd = (uint16_t) (i2sodd << 8);
+ 178:	8cbb      	ldrh	r3, [r7, #36]	; 0x24
+ 17a:	ea4f 2303 	mov.w	r3, r3, lsl #8
+ 17e:	84bb      	strh	r3, [r7, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:456
+  }
+
+  /* Test if the divider is 1 or 0 or greater than 0xFF */
+  if ((i2sdiv < 2) || (i2sdiv > 0xFF))
+ 180:	8cfb      	ldrh	r3, [r7, #38]	; 0x26
+ 182:	2b01      	cmp	r3, #1
+ 184:	d902      	bls.n	18c <I2S_Init+0x18c>
+ 186:	8cfb      	ldrh	r3, [r7, #38]	; 0x26
+ 188:	2bff      	cmp	r3, #255	; 0xff
+ 18a:	d905      	bls.n	198 <I2S_Init+0x198>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:459
+  {
+    /* Set the default values */
+    i2sdiv = 2;
+ 18c:	f04f 0302 	mov.w	r3, #2
+ 190:	84fb      	strh	r3, [r7, #38]	; 0x26
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:460
+    i2sodd = 0;
+ 192:	f04f 0300 	mov.w	r3, #0
+ 196:	84bb      	strh	r3, [r7, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:464
+  }
+
+  /* Write to SPIx I2SPR register the computed value */
+  SPIx->I2SPR = (uint16_t)((uint16_t)i2sdiv | (uint16_t)(i2sodd | (uint16_t)I2S_InitStruct->I2S_MCLKOutput));
+ 198:	683b      	ldr	r3, [r7, #0]
+ 19a:	88da      	ldrh	r2, [r3, #6]
+ 19c:	8cbb      	ldrh	r3, [r7, #36]	; 0x24
+ 19e:	ea42 0303 	orr.w	r3, r2, r3
+ 1a2:	b29a      	uxth	r2, r3
+ 1a4:	8cfb      	ldrh	r3, [r7, #38]	; 0x26
+ 1a6:	ea42 0303 	orr.w	r3, r2, r3
+ 1aa:	b29a      	uxth	r2, r3
+ 1ac:	687b      	ldr	r3, [r7, #4]
+ 1ae:	841a      	strh	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:467
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(I2S_InitStruct->I2S_Mode | \
+ 1b0:	683b      	ldr	r3, [r7, #0]
+ 1b2:	881a      	ldrh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:468
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+ 1b4:	683b      	ldr	r3, [r7, #0]
+ 1b6:	8859      	ldrh	r1, [r3, #2]
+ 1b8:	683b      	ldr	r3, [r7, #0]
+ 1ba:	8898      	ldrh	r0, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:469
+                  (uint16_t)I2S_InitStruct->I2S_CPOL))));
+ 1bc:	683b      	ldr	r3, [r7, #0]
+ 1be:	899b      	ldrh	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:468
+  /* Write to SPIx I2SPR register the computed value */
+  SPIx->I2SPR = (uint16_t)((uint16_t)i2sdiv | (uint16_t)(i2sodd | (uint16_t)I2S_InitStruct->I2S_MCLKOutput));
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(I2S_InitStruct->I2S_Mode | \
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+ 1c0:	ea40 0303 	orr.w	r3, r0, r3
+ 1c4:	b29b      	uxth	r3, r3
+ 1c6:	ea41 0303 	orr.w	r3, r1, r3
+ 1ca:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:467
+
+  /* Write to SPIx I2SPR register the computed value */
+  SPIx->I2SPR = (uint16_t)((uint16_t)i2sdiv | (uint16_t)(i2sodd | (uint16_t)I2S_InitStruct->I2S_MCLKOutput));
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(I2S_InitStruct->I2S_Mode | \
+ 1cc:	ea42 0303 	orr.w	r3, r2, r3
+ 1d0:	b29a      	uxth	r2, r3
+ 1d2:	8b7b      	ldrh	r3, [r7, #26]
+ 1d4:	ea42 0303 	orr.w	r3, r2, r3
+ 1d8:	b29b      	uxth	r3, r3
+ 1da:	f443 6300 	orr.w	r3, r3, #2048	; 0x800
+ 1de:	837b      	strh	r3, [r7, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:472
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+                  (uint16_t)I2S_InitStruct->I2S_CPOL))));
+ 
+  /* Write to SPIx I2SCFGR */  
+  SPIx->I2SCFGR = tmpreg;
+ 1e0:	687b      	ldr	r3, [r7, #4]
+ 1e2:	8b7a      	ldrh	r2, [r7, #26]
+ 1e4:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:473
+}
+ 1e6:	f107 072c 	add.w	r7, r7, #44	; 0x2c
+ 1ea:	46bd      	mov	sp, r7
+ 1ec:	bc80      	pop	{r7}
+ 1ee:	4770      	bx	lr
+ 1f0:	40023800 	.word	0x40023800
+ 1f4:	017d7840 	.word	0x017d7840
+ 1f8:	cccccccd 	.word	0xcccccccd
+
+Disassembly of section .text.SPI_StructInit:
+
+00000000 <SPI_StructInit>:
+SPI_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:481
+  * @brief  Fills each SPI_InitStruct member with its default value.
+  * @param  SPI_InitStruct: pointer to a SPI_InitTypeDef structure which will be initialized.
+  * @retval None
+  */
+void SPI_StructInit(SPI_InitTypeDef* SPI_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:484
+/*--------------- Reset SPI init structure parameters values -----------------*/
+  /* Initialize the SPI_Direction member */
+  SPI_InitStruct->SPI_Direction = SPI_Direction_2Lines_FullDuplex;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:486
+  /* initialize the SPI_Mode member */
+  SPI_InitStruct->SPI_Mode = SPI_Mode_Slave;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:488
+  /* initialize the SPI_DataSize member */
+  SPI_InitStruct->SPI_DataSize = SPI_DataSize_8b;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:490
+  /* Initialize the SPI_CPOL member */
+  SPI_InitStruct->SPI_CPOL = SPI_CPOL_Low;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:492
+  /* Initialize the SPI_CPHA member */
+  SPI_InitStruct->SPI_CPHA = SPI_CPHA_1Edge;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	811a      	strh	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:494
+  /* Initialize the SPI_NSS member */
+  SPI_InitStruct->SPI_NSS = SPI_NSS_Hard;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	815a      	strh	r2, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:496
+  /* Initialize the SPI_BaudRatePrescaler member */
+  SPI_InitStruct->SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f04f 0200 	mov.w	r2, #0
+  3e:	819a      	strh	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:498
+  /* Initialize the SPI_FirstBit member */
+  SPI_InitStruct->SPI_FirstBit = SPI_FirstBit_MSB;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f04f 0200 	mov.w	r2, #0
+  46:	81da      	strh	r2, [r3, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:500
+  /* Initialize the SPI_CRCPolynomial member */
+  SPI_InitStruct->SPI_CRCPolynomial = 7;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f04f 0207 	mov.w	r2, #7
+  4e:	821a      	strh	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:501
+}
+  50:	f107 070c 	add.w	r7, r7, #12
+  54:	46bd      	mov	sp, r7
+  56:	bc80      	pop	{r7}
+  58:	4770      	bx	lr
+  5a:	bf00      	nop
+
+Disassembly of section .text.I2S_StructInit:
+
+00000000 <I2S_StructInit>:
+I2S_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:509
+  * @brief  Fills each I2S_InitStruct member with its default value.
+  * @param  I2S_InitStruct: pointer to a I2S_InitTypeDef structure which will be initialized.
+  * @retval None
+  */
+void I2S_StructInit(I2S_InitTypeDef* I2S_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:512
+/*--------------- Reset I2S init structure parameters values -----------------*/
+  /* Initialize the I2S_Mode member */
+  I2S_InitStruct->I2S_Mode = I2S_Mode_SlaveTx;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:515
+  
+  /* Initialize the I2S_Standard member */
+  I2S_InitStruct->I2S_Standard = I2S_Standard_Phillips;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:518
+  
+  /* Initialize the I2S_DataFormat member */
+  I2S_InitStruct->I2S_DataFormat = I2S_DataFormat_16b;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:521
+  
+  /* Initialize the I2S_MCLKOutput member */
+  I2S_InitStruct->I2S_MCLKOutput = I2S_MCLKOutput_Disable;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	80da      	strh	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:524
+  
+  /* Initialize the I2S_AudioFreq member */
+  I2S_InitStruct->I2S_AudioFreq = I2S_AudioFreq_Default;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0202 	mov.w	r2, #2
+  2e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:527
+  
+  /* Initialize the I2S_CPOL member */
+  I2S_InitStruct->I2S_CPOL = I2S_CPOL_Low;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	819a      	strh	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:528
+}
+  38:	f107 070c 	add.w	r7, r7, #12
+  3c:	46bd      	mov	sp, r7
+  3e:	bc80      	pop	{r7}
+  40:	4770      	bx	lr
+  42:	bf00      	nop
+
+Disassembly of section .text.SPI_Cmd:
+
+00000000 <SPI_Cmd>:
+SPI_Cmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:538
+  * @param  NewState: new state of the SPIx peripheral. 
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:542
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d008      	beq.n	24 <SPI_Cmd+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:545
+  {
+    /* Enable the selected SPI peripheral */
+    SPIx->CR1 |= SPI_CR1_SPE;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	881b      	ldrh	r3, [r3, #0]
+  16:	b29b      	uxth	r3, r3
+  18:	f043 0340 	orr.w	r3, r3, #64	; 0x40
+  1c:	b29a      	uxth	r2, r3
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	801a      	strh	r2, [r3, #0]
+  22:	e007      	b.n	34 <SPI_Cmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:550
+  }
+  else
+  {
+    /* Disable the selected SPI peripheral */
+    SPIx->CR1 &= (uint16_t)~((uint16_t)SPI_CR1_SPE);
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	881b      	ldrh	r3, [r3, #0]
+  28:	b29b      	uxth	r3, r3
+  2a:	f023 0340 	bic.w	r3, r3, #64	; 0x40
+  2e:	b29a      	uxth	r2, r3
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:552
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.I2S_Cmd:
+
+00000000 <I2S_Cmd>:
+I2S_Cmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:563
+  * @param  NewState: new state of the SPIx peripheral. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void I2S_Cmd(SPI_TypeDef* SPIx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:568
+  /* Check the parameters */
+  assert_param(IS_SPI_23_PERIPH_EXT(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d008      	beq.n	24 <I2S_Cmd+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:571
+  {
+    /* Enable the selected SPI peripheral (in I2S mode) */
+    SPIx->I2SCFGR |= SPI_I2SCFGR_I2SE;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	8b9b      	ldrh	r3, [r3, #28]
+  16:	b29b      	uxth	r3, r3
+  18:	f443 6380 	orr.w	r3, r3, #1024	; 0x400
+  1c:	b29a      	uxth	r2, r3
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	839a      	strh	r2, [r3, #28]
+  22:	e007      	b.n	34 <I2S_Cmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:576
+  }
+  else
+  {
+    /* Disable the selected SPI peripheral in I2S mode */
+    SPIx->I2SCFGR &= (uint16_t)~((uint16_t)SPI_I2SCFGR_I2SE);
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	8b9b      	ldrh	r3, [r3, #28]
+  28:	b29b      	uxth	r3, r3
+  2a:	f423 6380 	bic.w	r3, r3, #1024	; 0x400
+  2e:	b29a      	uxth	r2, r3
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:578
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.SPI_DataSizeConfig:
+
+00000000 <SPI_DataSizeConfig>:
+SPI_DataSizeConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:590
+  *            @arg SPI_DataSize_16b: Set data frame format to 16bit
+  *            @arg SPI_DataSize_8b: Set data frame format to 8bit
+  * @retval None
+  */
+void SPI_DataSizeConfig(SPI_TypeDef* SPIx, uint16_t SPI_DataSize)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:595
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_SPI_DATASIZE(SPI_DataSize));
+  /* Clear DFF bit */
+  SPIx->CR1 &= (uint16_t)~SPI_DataSize_16b;
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	881b      	ldrh	r3, [r3, #0]
+  10:	b29b      	uxth	r3, r3
+  12:	f423 6300 	bic.w	r3, r3, #2048	; 0x800
+  16:	b29a      	uxth	r2, r3
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:597
+  /* Set new DFF bit value */
+  SPIx->CR1 |= SPI_DataSize;
+  1c:	687b      	ldr	r3, [r7, #4]
+  1e:	881b      	ldrh	r3, [r3, #0]
+  20:	b29a      	uxth	r2, r3
+  22:	887b      	ldrh	r3, [r7, #2]
+  24:	ea42 0303 	orr.w	r3, r2, r3
+  28:	b29a      	uxth	r2, r3
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:598
+}
+  2e:	f107 070c 	add.w	r7, r7, #12
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+
+Disassembly of section .text.SPI_BiDirectionalLineConfig:
+
+00000000 <SPI_BiDirectionalLineConfig>:
+SPI_BiDirectionalLineConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:610
+  *            @arg SPI_Direction_Tx: Selects Tx transmission direction
+  *            @arg SPI_Direction_Rx: Selects Rx receive direction
+  * @retval None
+  */
+void SPI_BiDirectionalLineConfig(SPI_TypeDef* SPIx, uint16_t SPI_Direction)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:614
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_SPI_DIRECTION(SPI_Direction));
+  if (SPI_Direction == SPI_Direction_Tx)
+   c:	887b      	ldrh	r3, [r7, #2]
+   e:	f5b3 4f80 	cmp.w	r3, #16384	; 0x4000
+  12:	d108      	bne.n	26 <SPI_BiDirectionalLineConfig+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:617
+  {
+    /* Set the Tx only mode */
+    SPIx->CR1 |= SPI_Direction_Tx;
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	881b      	ldrh	r3, [r3, #0]
+  18:	b29b      	uxth	r3, r3
+  1a:	f443 4380 	orr.w	r3, r3, #16384	; 0x4000
+  1e:	b29a      	uxth	r2, r3
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	801a      	strh	r2, [r3, #0]
+  24:	e007      	b.n	36 <SPI_BiDirectionalLineConfig+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:622
+  }
+  else
+  {
+    /* Set the Rx only mode */
+    SPIx->CR1 &= SPI_Direction_Rx;
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	881b      	ldrh	r3, [r3, #0]
+  2a:	b29b      	uxth	r3, r3
+  2c:	f423 4380 	bic.w	r3, r3, #16384	; 0x4000
+  30:	b29a      	uxth	r2, r3
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:624
+  }
+}
+  36:	f107 070c 	add.w	r7, r7, #12
+  3a:	46bd      	mov	sp, r7
+  3c:	bc80      	pop	{r7}
+  3e:	4770      	bx	lr
+
+Disassembly of section .text.SPI_NSSInternalSoftwareConfig:
+
+00000000 <SPI_NSSInternalSoftwareConfig>:
+SPI_NSSInternalSoftwareConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:636
+  *            @arg SPI_NSSInternalSoft_Set: Set NSS pin internally
+  *            @arg SPI_NSSInternalSoft_Reset: Reset NSS pin internally
+  * @retval None
+  */
+void SPI_NSSInternalSoftwareConfig(SPI_TypeDef* SPIx, uint16_t SPI_NSSInternalSoft)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:640
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_SPI_NSS_INTERNAL(SPI_NSSInternalSoft));
+  if (SPI_NSSInternalSoft != SPI_NSSInternalSoft_Reset)
+   c:	887a      	ldrh	r2, [r7, #2]
+   e:	f64f 63ff 	movw	r3, #65279	; 0xfeff
+  12:	429a      	cmp	r2, r3
+  14:	d008      	beq.n	28 <SPI_NSSInternalSoftwareConfig+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:643
+  {
+    /* Set NSS pin internally by software */
+    SPIx->CR1 |= SPI_NSSInternalSoft_Set;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	881b      	ldrh	r3, [r3, #0]
+  1a:	b29b      	uxth	r3, r3
+  1c:	f443 7380 	orr.w	r3, r3, #256	; 0x100
+  20:	b29a      	uxth	r2, r3
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	801a      	strh	r2, [r3, #0]
+  26:	e007      	b.n	38 <SPI_NSSInternalSoftwareConfig+0x38>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:648
+  }
+  else
+  {
+    /* Reset NSS pin internally by software */
+    SPIx->CR1 &= SPI_NSSInternalSoft_Reset;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	881b      	ldrh	r3, [r3, #0]
+  2c:	b29b      	uxth	r3, r3
+  2e:	f423 7380 	bic.w	r3, r3, #256	; 0x100
+  32:	b29a      	uxth	r2, r3
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:650
+  }
+}
+  38:	f107 070c 	add.w	r7, r7, #12
+  3c:	46bd      	mov	sp, r7
+  3e:	bc80      	pop	{r7}
+  40:	4770      	bx	lr
+  42:	bf00      	nop
+
+Disassembly of section .text.SPI_SSOutputCmd:
+
+00000000 <SPI_SSOutputCmd>:
+SPI_SSOutputCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:660
+  * @param  NewState: new state of the SPIx SS output. 
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_SSOutputCmd(SPI_TypeDef* SPIx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:664
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d008      	beq.n	24 <SPI_SSOutputCmd+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:667
+  {
+    /* Enable the selected SPI SS output */
+    SPIx->CR2 |= (uint16_t)SPI_CR2_SSOE;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	889b      	ldrh	r3, [r3, #4]
+  16:	b29b      	uxth	r3, r3
+  18:	f043 0304 	orr.w	r3, r3, #4
+  1c:	b29a      	uxth	r2, r3
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	809a      	strh	r2, [r3, #4]
+  22:	e007      	b.n	34 <SPI_SSOutputCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:672
+  }
+  else
+  {
+    /* Disable the selected SPI SS output */
+    SPIx->CR2 &= (uint16_t)~((uint16_t)SPI_CR2_SSOE);
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	889b      	ldrh	r3, [r3, #4]
+  28:	b29b      	uxth	r3, r3
+  2a:	f023 0304 	bic.w	r3, r3, #4
+  2e:	b29a      	uxth	r2, r3
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:674
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.SPI_TIModeCmd:
+
+00000000 <SPI_TIModeCmd>:
+SPI_TIModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:691
+  * @param  NewState: new state of the selected SPI TI communication mode.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_TIModeCmd(SPI_TypeDef* SPIx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:696
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d008      	beq.n	24 <SPI_TIModeCmd+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:699
+  {
+    /* Enable the TI mode for the selected SPI peripheral */
+    SPIx->CR2 |= SPI_CR2_FRF;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	889b      	ldrh	r3, [r3, #4]
+  16:	b29b      	uxth	r3, r3
+  18:	f043 0310 	orr.w	r3, r3, #16
+  1c:	b29a      	uxth	r2, r3
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	809a      	strh	r2, [r3, #4]
+  22:	e007      	b.n	34 <SPI_TIModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:704
+  }
+  else
+  {
+    /* Disable the TI mode for the selected SPI peripheral */
+    SPIx->CR2 &= (uint16_t)~SPI_CR2_FRF;
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	889b      	ldrh	r3, [r3, #4]
+  28:	b29b      	uxth	r3, r3
+  2a:	f023 0310 	bic.w	r3, r3, #16
+  2e:	b29a      	uxth	r2, r3
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:706
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.I2S_FullDuplexConfig:
+
+00000000 <I2S_FullDuplexConfig>:
+I2S_FullDuplexConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:728
+  * @note   The I2S full duplex extension can be configured in slave mode only.    
+  *  
+  * @retval None
+  */
+void I2S_FullDuplexConfig(SPI_TypeDef* I2Sxext, I2S_InitTypeDef* I2S_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:729
+  uint16_t tmpreg = 0, tmp = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	81bb      	strh	r3, [r7, #12]
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:740
+  assert_param(IS_I2S_DATA_FORMAT(I2S_InitStruct->I2S_DataFormat));
+  assert_param(IS_I2S_CPOL(I2S_InitStruct->I2S_CPOL));  
+
+/*----------------------- SPIx I2SCFGR & I2SPR Configuration -----------------*/
+  /* Clear I2SMOD, I2SE, I2SCFG, PCMSYNC, I2SSTD, CKPOL, DATLEN and CHLEN bits */
+  I2Sxext->I2SCFGR &= I2SCFGR_CLEAR_MASK; 
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	8b9b      	ldrh	r3, [r3, #28]
+  1a:	b29b      	uxth	r3, r3
+  1c:	f423 637a 	bic.w	r3, r3, #4000	; 0xfa0
+  20:	f023 031f 	bic.w	r3, r3, #31
+  24:	b29a      	uxth	r2, r3
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:741
+  I2Sxext->I2SPR = 0x0002;
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	f04f 0202 	mov.w	r2, #2
+  30:	841a      	strh	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:744
+  
+  /* Get the I2SCFGR register value */
+  tmpreg = I2Sxext->I2SCFGR;
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	8b9b      	ldrh	r3, [r3, #28]
+  36:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:747
+  
+  /* Get the mode to be configured for the extended I2S */
+  if ((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterTx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_SlaveTx))
+  38:	683b      	ldr	r3, [r7, #0]
+  3a:	881b      	ldrh	r3, [r3, #0]
+  3c:	f5b3 7f00 	cmp.w	r3, #512	; 0x200
+  40:	d003      	beq.n	4a <I2S_FullDuplexConfig+0x4a>
+  42:	683b      	ldr	r3, [r7, #0]
+  44:	881b      	ldrh	r3, [r3, #0]
+  46:	2b00      	cmp	r3, #0
+  48:	d103      	bne.n	52 <I2S_FullDuplexConfig+0x52>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:749
+  {
+    tmp = I2S_Mode_SlaveRx;
+  4a:	f44f 7380 	mov.w	r3, #256	; 0x100
+  4e:	81fb      	strh	r3, [r7, #14]
+  50:	e00c      	b.n	6c <I2S_FullDuplexConfig+0x6c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:753
+  }
+  else
+  {
+    if ((I2S_InitStruct->I2S_Mode == I2S_Mode_MasterRx) || (I2S_InitStruct->I2S_Mode == I2S_Mode_SlaveRx))
+  52:	683b      	ldr	r3, [r7, #0]
+  54:	881b      	ldrh	r3, [r3, #0]
+  56:	f5b3 7f40 	cmp.w	r3, #768	; 0x300
+  5a:	d004      	beq.n	66 <I2S_FullDuplexConfig+0x66>
+  5c:	683b      	ldr	r3, [r7, #0]
+  5e:	881b      	ldrh	r3, [r3, #0]
+  60:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  64:	d102      	bne.n	6c <I2S_FullDuplexConfig+0x6c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:755
+    {
+      tmp = I2S_Mode_SlaveTx;
+  66:	f04f 0300 	mov.w	r3, #0
+  6a:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:762
+  }
+
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(tmp | \
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+  6c:	683b      	ldr	r3, [r7, #0]
+  6e:	885a      	ldrh	r2, [r3, #2]
+  70:	683b      	ldr	r3, [r7, #0]
+  72:	8899      	ldrh	r1, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:763
+                  (uint16_t)I2S_InitStruct->I2S_CPOL))));
+  74:	683b      	ldr	r3, [r7, #0]
+  76:	899b      	ldrh	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:762
+  }
+
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(tmp | \
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+  78:	ea41 0303 	orr.w	r3, r1, r3
+  7c:	b29b      	uxth	r3, r3
+  7e:	ea42 0303 	orr.w	r3, r2, r3
+  82:	b29a      	uxth	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:761
+    }
+  }
+
+ 
+  /* Configure the I2S with the SPI_InitStruct values */
+  tmpreg |= (uint16_t)((uint16_t)SPI_I2SCFGR_I2SMOD | (uint16_t)(tmp | \
+  84:	89fb      	ldrh	r3, [r7, #14]
+  86:	ea42 0303 	orr.w	r3, r2, r3
+  8a:	b29a      	uxth	r2, r3
+  8c:	89bb      	ldrh	r3, [r7, #12]
+  8e:	ea42 0303 	orr.w	r3, r2, r3
+  92:	b29b      	uxth	r3, r3
+  94:	f443 6300 	orr.w	r3, r3, #2048	; 0x800
+  98:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:766
+                  (uint16_t)(I2S_InitStruct->I2S_Standard | (uint16_t)(I2S_InitStruct->I2S_DataFormat | \
+                  (uint16_t)I2S_InitStruct->I2S_CPOL))));
+ 
+  /* Write to SPIx I2SCFGR */  
+  I2Sxext->I2SCFGR = tmpreg;
+  9a:	687b      	ldr	r3, [r7, #4]
+  9c:	89ba      	ldrh	r2, [r7, #12]
+  9e:	839a      	strh	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:767
+}
+  a0:	f107 0714 	add.w	r7, r7, #20
+  a4:	46bd      	mov	sp, r7
+  a6:	bc80      	pop	{r7}
+  a8:	4770      	bx	lr
+  aa:	bf00      	nop
+
+Disassembly of section .text.SPI_I2S_ReceiveData:
+
+00000000 <SPI_I2S_ReceiveData>:
+SPI_I2S_ReceiveData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:802
+  * @param  SPIx: To select the SPIx/I2Sx peripheral, where x can be: 1, 2, 3, 4, 5 or 6 
+  *         in SPI mode or 2 or 3 in I2S mode or I2Sxext for I2S full duplex mode. 
+  * @retval The value of the received data.
+  */
+uint16_t SPI_I2S_ReceiveData(SPI_TypeDef* SPIx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:807
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  
+  /* Return the data in the DR register */
+  return SPIx->DR;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	899b      	ldrh	r3, [r3, #12]
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:808
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.SPI_I2S_SendData:
+
+00000000 <SPI_I2S_SendData>:
+SPI_I2S_SendData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:818
+  *         in SPI mode or 2 or 3 in I2S mode or I2Sxext for I2S full duplex mode.     
+  * @param  Data: Data to be transmitted.
+  * @retval None
+  */
+void SPI_I2S_SendData(SPI_TypeDef* SPIx, uint16_t Data)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:823
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  
+  /* Write in the DR register the data to be sent */
+  SPIx->DR = Data;
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	887a      	ldrh	r2, [r7, #2]
+  10:	819a      	strh	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:824
+}
+  12:	f107 070c 	add.w	r7, r7, #12
+  16:	46bd      	mov	sp, r7
+  18:	bc80      	pop	{r7}
+  1a:	4770      	bx	lr
+
+Disassembly of section .text.SPI_CalculateCRC:
+
+00000000 <SPI_CalculateCRC>:
+SPI_CalculateCRC():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:908
+  * @param  NewState: new state of the SPIx CRC value calculation.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_CalculateCRC(SPI_TypeDef* SPIx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:912
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d008      	beq.n	24 <SPI_CalculateCRC+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:915
+  {
+    /* Enable the selected SPI CRC calculation */
+    SPIx->CR1 |= SPI_CR1_CRCEN;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	881b      	ldrh	r3, [r3, #0]
+  16:	b29b      	uxth	r3, r3
+  18:	f443 5300 	orr.w	r3, r3, #8192	; 0x2000
+  1c:	b29a      	uxth	r2, r3
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	801a      	strh	r2, [r3, #0]
+  22:	e007      	b.n	34 <SPI_CalculateCRC+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:920
+  }
+  else
+  {
+    /* Disable the selected SPI CRC calculation */
+    SPIx->CR1 &= (uint16_t)~((uint16_t)SPI_CR1_CRCEN);
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	881b      	ldrh	r3, [r3, #0]
+  28:	b29b      	uxth	r3, r3
+  2a:	f423 5300 	bic.w	r3, r3, #8192	; 0x2000
+  2e:	b29a      	uxth	r2, r3
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:922
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+
+Disassembly of section .text.SPI_TransmitCRC:
+
+00000000 <SPI_TransmitCRC>:
+SPI_TransmitCRC():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:930
+  * @brief  Transmit the SPIx CRC value.
+  * @param  SPIx: where x can be 1, 2, 3, 4, 5 or 6 to select the SPI peripheral.
+  * @retval None
+  */
+void SPI_TransmitCRC(SPI_TypeDef* SPIx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:935
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  
+  /* Enable the selected SPI CRC transmission */
+  SPIx->CR1 |= SPI_CR1_CRCNEXT;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	881b      	ldrh	r3, [r3, #0]
+   c:	b29b      	uxth	r3, r3
+   e:	f443 5380 	orr.w	r3, r3, #4096	; 0x1000
+  12:	b29a      	uxth	r2, r3
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:936
+}
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+
+Disassembly of section .text.SPI_GetCRC:
+
+00000000 <SPI_GetCRC>:
+SPI_GetCRC():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:948
+  *            @arg SPI_CRC_Tx: Selects Tx CRC register
+  *            @arg SPI_CRC_Rx: Selects Rx CRC register
+  * @retval The selected CRC register value..
+  */
+uint16_t SPI_GetCRC(SPI_TypeDef* SPIx, uint8_t SPI_CRC)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:949
+  uint16_t crcreg = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:953
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  assert_param(IS_SPI_CRC(SPI_CRC));
+  if (SPI_CRC != SPI_CRC_Rx)
+  12:	78fb      	ldrb	r3, [r7, #3]
+  14:	2b01      	cmp	r3, #1
+  16:	d003      	beq.n	20 <SPI_GetCRC+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:956
+  {
+    /* Get the Tx CRC register */
+    crcreg = SPIx->TXCRCR;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	8b1b      	ldrh	r3, [r3, #24]
+  1c:	81fb      	strh	r3, [r7, #14]
+  1e:	e002      	b.n	26 <SPI_GetCRC+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:961
+  }
+  else
+  {
+    /* Get the Rx CRC register */
+    crcreg = SPIx->RXCRCR;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	8a9b      	ldrh	r3, [r3, #20]
+  24:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:964
+  }
+  /* Return the selected CRC register */
+  return crcreg;
+  26:	89fb      	ldrh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:965
+}
+  28:	4618      	mov	r0, r3
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+
+Disassembly of section .text.SPI_GetCRCPolynomial:
+
+00000000 <SPI_GetCRCPolynomial>:
+SPI_GetCRCPolynomial():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:973
+  * @brief  Returns the CRC Polynomial register value for the specified SPI.
+  * @param  SPIx: where x can be 1, 2, 3, 4, 5 or 6 to select the SPI peripheral.
+  * @retval The CRC Polynomial register value.
+  */
+uint16_t SPI_GetCRCPolynomial(SPI_TypeDef* SPIx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:978
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH(SPIx));
+  
+  /* Return the CRC polynomial register */
+  return SPIx->CRCPR;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	8a1b      	ldrh	r3, [r3, #16]
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:979
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.SPI_I2S_DMACmd:
+
+00000000 <SPI_I2S_DMACmd>:
+SPI_I2S_DMACmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1010
+  * @param  NewState: new state of the selected SPI DMA transfer request.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_I2S_DMACmd(SPI_TypeDef* SPIx, uint16_t SPI_I2S_DMAReq, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	807a      	strh	r2, [r7, #2]
+   e:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1016
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  assert_param(IS_SPI_I2S_DMAREQ(SPI_I2S_DMAReq));
+
+  if (NewState != DISABLE)
+  10:	787b      	ldrb	r3, [r7, #1]
+  12:	2b00      	cmp	r3, #0
+  14:	d009      	beq.n	2a <SPI_I2S_DMACmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1019
+  {
+    /* Enable the selected SPI DMA requests */
+    SPIx->CR2 |= SPI_I2S_DMAReq;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	889b      	ldrh	r3, [r3, #4]
+  1a:	b29a      	uxth	r2, r3
+  1c:	887b      	ldrh	r3, [r7, #2]
+  1e:	ea42 0303 	orr.w	r3, r2, r3
+  22:	b29a      	uxth	r2, r3
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	809a      	strh	r2, [r3, #4]
+  28:	e00b      	b.n	42 <SPI_I2S_DMACmd+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1024
+  }
+  else
+  {
+    /* Disable the selected SPI DMA requests */
+    SPIx->CR2 &= (uint16_t)~SPI_I2S_DMAReq;
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	889b      	ldrh	r3, [r3, #4]
+  2e:	b29a      	uxth	r2, r3
+  30:	887b      	ldrh	r3, [r7, #2]
+  32:	ea6f 0303 	mvn.w	r3, r3
+  36:	b29b      	uxth	r3, r3
+  38:	ea02 0303 	and.w	r3, r2, r3
+  3c:	b29a      	uxth	r2, r3
+  3e:	687b      	ldr	r3, [r7, #4]
+  40:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1026
+  }
+}
+  42:	f107 070c 	add.w	r7, r7, #12
+  46:	46bd      	mov	sp, r7
+  48:	bc80      	pop	{r7}
+  4a:	4770      	bx	lr
+
+Disassembly of section .text.SPI_I2S_ITConfig:
+
+00000000 <SPI_I2S_ITConfig>:
+SPI_I2S_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1118
+  * @param  NewState: new state of the specified SPI interrupt.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SPI_I2S_ITConfig(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	70fa      	strb	r2, [r7, #3]
+   e:	70bb      	strb	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1119
+  uint16_t itpos = 0, itmask = 0 ;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	81fb      	strh	r3, [r7, #14]
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1127
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  assert_param(IS_SPI_I2S_CONFIG_IT(SPI_I2S_IT));
+
+  /* Get the SPI IT index */
+  itpos = SPI_I2S_IT >> 4;
+  1c:	78fb      	ldrb	r3, [r7, #3]
+  1e:	ea4f 1313 	mov.w	r3, r3, lsr #4
+  22:	b2db      	uxtb	r3, r3
+  24:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1130
+
+  /* Set the IT mask */
+  itmask = (uint16_t)1 << (uint16_t)itpos;
+  26:	89fb      	ldrh	r3, [r7, #14]
+  28:	f04f 0201 	mov.w	r2, #1
+  2c:	fa02 f303 	lsl.w	r3, r2, r3
+  30:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1132
+
+  if (NewState != DISABLE)
+  32:	78bb      	ldrb	r3, [r7, #2]
+  34:	2b00      	cmp	r3, #0
+  36:	d009      	beq.n	4c <SPI_I2S_ITConfig+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1135
+  {
+    /* Enable the selected SPI interrupt */
+    SPIx->CR2 |= itmask;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	889b      	ldrh	r3, [r3, #4]
+  3c:	b29a      	uxth	r2, r3
+  3e:	89bb      	ldrh	r3, [r7, #12]
+  40:	ea42 0303 	orr.w	r3, r2, r3
+  44:	b29a      	uxth	r2, r3
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	809a      	strh	r2, [r3, #4]
+  4a:	e00b      	b.n	64 <SPI_I2S_ITConfig+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1140
+  }
+  else
+  {
+    /* Disable the selected SPI interrupt */
+    SPIx->CR2 &= (uint16_t)~itmask;
+  4c:	687b      	ldr	r3, [r7, #4]
+  4e:	889b      	ldrh	r3, [r3, #4]
+  50:	b29a      	uxth	r2, r3
+  52:	89bb      	ldrh	r3, [r7, #12]
+  54:	ea6f 0303 	mvn.w	r3, r3
+  58:	b29b      	uxth	r3, r3
+  5a:	ea02 0303 	and.w	r3, r2, r3
+  5e:	b29a      	uxth	r2, r3
+  60:	687b      	ldr	r3, [r7, #4]
+  62:	809a      	strh	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1142
+  }
+}
+  64:	f107 0714 	add.w	r7, r7, #20
+  68:	46bd      	mov	sp, r7
+  6a:	bc80      	pop	{r7}
+  6c:	4770      	bx	lr
+  6e:	bf00      	nop
+
+Disassembly of section .text.SPI_I2S_GetFlagStatus:
+
+00000000 <SPI_I2S_GetFlagStatus>:
+SPI_I2S_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1162
+  *            @arg I2S_FLAG_UDR: Underrun Error flag.
+  *            @arg I2S_FLAG_CHSIDE: Channel Side flag.  
+  * @retval The new state of SPI_I2S_FLAG (SET or RESET).
+  */
+FlagStatus SPI_I2S_GetFlagStatus(SPI_TypeDef* SPIx, uint16_t SPI_I2S_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1163
+  FlagStatus bitstatus = RESET;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1169
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_SPI_I2S_GET_FLAG(SPI_I2S_FLAG));
+  
+  /* Check the status of the specified SPI flag */
+  if ((SPIx->SR & SPI_I2S_FLAG) != (uint16_t)RESET)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	891b      	ldrh	r3, [r3, #8]
+  16:	b29a      	uxth	r2, r3
+  18:	887b      	ldrh	r3, [r7, #2]
+  1a:	ea02 0303 	and.w	r3, r2, r3
+  1e:	b29b      	uxth	r3, r3
+  20:	2b00      	cmp	r3, #0
+  22:	d003      	beq.n	2c <SPI_I2S_GetFlagStatus+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1172
+  {
+    /* SPI_I2S_FLAG is set */
+    bitstatus = SET;
+  24:	f04f 0301 	mov.w	r3, #1
+  28:	73fb      	strb	r3, [r7, #15]
+  2a:	e002      	b.n	32 <SPI_I2S_GetFlagStatus+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1177
+  }
+  else
+  {
+    /* SPI_I2S_FLAG is reset */
+    bitstatus = RESET;
+  2c:	f04f 0300 	mov.w	r3, #0
+  30:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1180
+  }
+  /* Return the SPI_I2S_FLAG status */
+  return  bitstatus;
+  32:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1181
+}
+  34:	4618      	mov	r0, r3
+  36:	f107 0714 	add.w	r7, r7, #20
+  3a:	46bd      	mov	sp, r7
+  3c:	bc80      	pop	{r7}
+  3e:	4770      	bx	lr
+
+Disassembly of section .text.SPI_I2S_ClearFlag:
+
+00000000 <SPI_I2S_ClearFlag>:
+SPI_I2S_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1203
+  *          write operation to SPI_CR1 register (SPI_Cmd() to enable the SPI).
+  *  
+  * @retval None
+  */
+void SPI_I2S_ClearFlag(SPI_TypeDef* SPIx, uint16_t SPI_I2S_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1209
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_SPI_I2S_CLEAR_FLAG(SPI_I2S_FLAG));
+    
+  /* Clear the selected SPI CRC Error (CRCERR) flag */
+  SPIx->SR = (uint16_t)~SPI_I2S_FLAG;
+   c:	887b      	ldrh	r3, [r7, #2]
+   e:	ea6f 0303 	mvn.w	r3, r3
+  12:	b29a      	uxth	r2, r3
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	811a      	strh	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1210
+}
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+
+Disassembly of section .text.SPI_I2S_GetITStatus:
+
+00000000 <SPI_I2S_GetITStatus>:
+SPI_I2S_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1228
+  *            @arg I2S_IT_UDR: Underrun interrupt.  
+  *            @arg SPI_I2S_IT_TIFRFE: Format Error interrupt.  
+  * @retval The new state of SPI_I2S_IT (SET or RESET).
+  */
+ITStatus SPI_I2S_GetITStatus(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1229
+  ITStatus bitstatus = RESET;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1230
+  uint16_t itpos = 0, itmask = 0, enablestatus = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	81bb      	strh	r3, [r7, #12]
+  18:	f04f 0300 	mov.w	r3, #0
+  1c:	817b      	strh	r3, [r7, #10]
+  1e:	f04f 0300 	mov.w	r3, #0
+  22:	813b      	strh	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1237
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_SPI_I2S_GET_IT(SPI_I2S_IT));
+
+  /* Get the SPI_I2S_IT index */
+  itpos = 0x01 << (SPI_I2S_IT & 0x0F);
+  24:	78fb      	ldrb	r3, [r7, #3]
+  26:	f003 030f 	and.w	r3, r3, #15
+  2a:	f04f 0201 	mov.w	r2, #1
+  2e:	fa02 f303 	lsl.w	r3, r2, r3
+  32:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1240
+
+  /* Get the SPI_I2S_IT IT mask */
+  itmask = SPI_I2S_IT >> 4;
+  34:	78fb      	ldrb	r3, [r7, #3]
+  36:	ea4f 1313 	mov.w	r3, r3, lsr #4
+  3a:	b2db      	uxtb	r3, r3
+  3c:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1243
+
+  /* Set the IT mask */
+  itmask = 0x01 << itmask;
+  3e:	897b      	ldrh	r3, [r7, #10]
+  40:	f04f 0201 	mov.w	r2, #1
+  44:	fa02 f303 	lsl.w	r3, r2, r3
+  48:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1246
+
+  /* Get the SPI_I2S_IT enable bit status */
+  enablestatus = (SPIx->CR2 & itmask) ;
+  4a:	687b      	ldr	r3, [r7, #4]
+  4c:	889b      	ldrh	r3, [r3, #4]
+  4e:	b29a      	uxth	r2, r3
+  50:	897b      	ldrh	r3, [r7, #10]
+  52:	ea02 0303 	and.w	r3, r2, r3
+  56:	813b      	strh	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1249
+
+  /* Check the status of the specified SPI interrupt */
+  if (((SPIx->SR & itpos) != (uint16_t)RESET) && enablestatus)
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	891b      	ldrh	r3, [r3, #8]
+  5c:	b29a      	uxth	r2, r3
+  5e:	89bb      	ldrh	r3, [r7, #12]
+  60:	ea02 0303 	and.w	r3, r2, r3
+  64:	b29b      	uxth	r3, r3
+  66:	2b00      	cmp	r3, #0
+  68:	d006      	beq.n	78 <SPI_I2S_GetITStatus+0x78>
+  6a:	893b      	ldrh	r3, [r7, #8]
+  6c:	2b00      	cmp	r3, #0
+  6e:	d003      	beq.n	78 <SPI_I2S_GetITStatus+0x78>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1252
+  {
+    /* SPI_I2S_IT is set */
+    bitstatus = SET;
+  70:	f04f 0301 	mov.w	r3, #1
+  74:	73fb      	strb	r3, [r7, #15]
+  76:	e002      	b.n	7e <SPI_I2S_GetITStatus+0x7e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1257
+  }
+  else
+  {
+    /* SPI_I2S_IT is reset */
+    bitstatus = RESET;
+  78:	f04f 0300 	mov.w	r3, #0
+  7c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1260
+  }
+  /* Return the SPI_I2S_IT status */
+  return bitstatus;
+  7e:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1261
+}
+  80:	4618      	mov	r0, r3
+  82:	f107 0714 	add.w	r7, r7, #20
+  86:	46bd      	mov	sp, r7
+  88:	bc80      	pop	{r7}
+  8a:	4770      	bx	lr
+
+Disassembly of section .text.SPI_I2S_ClearITPendingBit:
+
+00000000 <SPI_I2S_ClearITPendingBit>:
+SPI_I2S_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1283
+  *          followed by a write operation to SPI_CR1 register (SPI_Cmd() to enable 
+  *          the SPI).
+  * @retval None
+  */
+void SPI_I2S_ClearITPendingBit(SPI_TypeDef* SPIx, uint8_t SPI_I2S_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1284
+  uint16_t itpos = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1290
+  /* Check the parameters */
+  assert_param(IS_SPI_ALL_PERIPH_EXT(SPIx));
+  assert_param(IS_SPI_I2S_CLEAR_IT(SPI_I2S_IT));
+
+  /* Get the SPI_I2S IT index */
+  itpos = 0x01 << (SPI_I2S_IT & 0x0F);
+  12:	78fb      	ldrb	r3, [r7, #3]
+  14:	f003 030f 	and.w	r3, r3, #15
+  18:	f04f 0201 	mov.w	r2, #1
+  1c:	fa02 f303 	lsl.w	r3, r2, r3
+  20:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1293
+
+  /* Clear the selected SPI CRC Error (CRCERR) interrupt pending bit */
+  SPIx->SR = (uint16_t)~itpos;
+  22:	89fb      	ldrh	r3, [r7, #14]
+  24:	ea6f 0303 	mvn.w	r3, r3
+  28:	b29a      	uxth	r2, r3
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	811a      	strh	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_spi.c:1294
+}
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr

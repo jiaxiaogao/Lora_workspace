@@ -1,0 +1,324 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usb_bsp.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usb_bsp.o
+
+
+Disassembly of section .text.USB_OTG_BSP_Init:
+
+00000000 <USB_OTG_BSP_Init>:
+USB_OTG_BSP_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:96
+* @param  None
+* @retval None
+*/
+
+void USB_OTG_BSP_Init(USB_OTG_CORE_HANDLE *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:199
+  RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS | 
+                         RCC_AHB1Periph_OTG_HS_ULPI, ENABLE) ;    
+   
+  #else
+  
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB , ENABLE);
+   8:	f04f 0002 	mov.w	r0, #2
+   c:	f04f 0101 	mov.w	r1, #1
+  10:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:201
+  
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12 | 
+  14:	f44f 4350 	mov.w	r3, #53248	; 0xd000
+  18:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:205
+                                GPIO_Pin_14 | 
+                                GPIO_Pin_15;
+  
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  1a:	f04f 0303 	mov.w	r3, #3
+  1e:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:206
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  20:	f04f 0302 	mov.w	r3, #2
+  24:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:207
+  GPIO_Init(GPIOB, &GPIO_InitStructure);  
+  26:	f107 0308 	add.w	r3, r7, #8
+  2a:	481f      	ldr	r0, [pc, #124]	; (a8 <USB_OTG_BSP_Init+0xa8>)
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:209
+  
+  GPIO_PinAFConfig(GPIOB,GPIO_PinSource12, GPIO_AF_OTG2_FS) ; 
+  32:	481d      	ldr	r0, [pc, #116]	; (a8 <USB_OTG_BSP_Init+0xa8>)
+  34:	f04f 010c 	mov.w	r1, #12
+  38:	f04f 020c 	mov.w	r2, #12
+  3c:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:210
+  GPIO_PinAFConfig(GPIOB,GPIO_PinSource14,GPIO_AF_OTG2_FS) ; 
+  40:	4819      	ldr	r0, [pc, #100]	; (a8 <USB_OTG_BSP_Init+0xa8>)
+  42:	f04f 010e 	mov.w	r1, #14
+  46:	f04f 020c 	mov.w	r2, #12
+  4a:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:211
+  GPIO_PinAFConfig(GPIOB,GPIO_PinSource15,GPIO_AF_OTG2_FS) ;
+  4e:	4816      	ldr	r0, [pc, #88]	; (a8 <USB_OTG_BSP_Init+0xa8>)
+  50:	f04f 010f 	mov.w	r1, #15
+  54:	f04f 020c 	mov.w	r2, #12
+  58:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:213
+  
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13;
+  5c:	f44f 5300 	mov.w	r3, #8192	; 0x2000
+  60:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:214
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  62:	f04f 0303 	mov.w	r3, #3
+  66:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:215
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  68:	f04f 0300 	mov.w	r3, #0
+  6c:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:216
+  GPIO_Init(GPIOB, &GPIO_InitStructure);  
+  6e:	f107 0308 	add.w	r3, r7, #8
+  72:	480d      	ldr	r0, [pc, #52]	; (a8 <USB_OTG_BSP_Init+0xa8>)
+  74:	4619      	mov	r1, r3
+  76:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:219
+
+  
+  RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_OTG_HS, ENABLE);
+  7a:	f04f 5000 	mov.w	r0, #536870912	; 0x20000000
+  7e:	f04f 0101 	mov.w	r1, #1
+  82:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:222
+  
+  // YRT130712 fix bug USB when CircleOS in sleep mode  
+  RCC_AHB1PeriphClockLPModeCmd(RCC_AHB1Periph_OTG_HS_ULPI, DISABLE);
+  86:	f04f 4080 	mov.w	r0, #1073741824	; 0x40000000
+  8a:	f04f 0100 	mov.w	r1, #0
+  8e:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockLPModeCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:223
+  RCC_AHB1PeriphClockLPModeCmd(RCC_AHB1Periph_OTG_HS, ENABLE);
+  92:	f04f 5000 	mov.w	r0, #536870912	; 0x20000000
+  96:	f04f 0101 	mov.w	r1, #1
+  9a:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockLPModeCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:228
+  
+  #endif
+ #endif //USB_OTG_HS
+#endif //USE_STM322xG_EVAL
+}
+  9e:	f107 0710 	add.w	r7, r7, #16
+  a2:	46bd      	mov	sp, r7
+  a4:	bd80      	pop	{r7, pc}
+  a6:	bf00      	nop
+  a8:	40020400 	.word	0x40020400
+
+Disassembly of section .text.USB_OTG_BSP_EnableInterrupt:
+
+00000000 <USB_OTG_BSP_EnableInterrupt>:
+USB_OTG_BSP_EnableInterrupt():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:236
+*         Enabele USB Global interrupt
+* @param  None
+* @retval None
+*/
+void USB_OTG_BSP_EnableInterrupt(USB_OTG_CORE_HANDLE *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:239
+  NVIC_InitTypeDef NVIC_InitStructure; 
+  
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+   8:	f44f 60c0 	mov.w	r0, #1536	; 0x600
+   c:	f7ff fffe 	bl	0 <NVIC_PriorityGroupConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:241
+#ifdef USE_USB_OTG_HS   
+  NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_IRQn;
+  10:	f04f 034d 	mov.w	r3, #77	; 0x4d
+  14:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:245
+#else
+  NVIC_InitStructure.NVIC_IRQChannel = OTG_FS_IRQn;  
+#endif
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+  16:	f04f 0301 	mov.w	r3, #1
+  1a:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:246
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;
+  1c:	f04f 0303 	mov.w	r3, #3
+  20:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:247
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  22:	f04f 0301 	mov.w	r3, #1
+  26:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:248
+  NVIC_Init(&NVIC_InitStructure);  
+  28:	f107 030c 	add.w	r3, r7, #12
+  2c:	4618      	mov	r0, r3
+  2e:	f7ff fffe 	bl	0 <NVIC_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:250
+#ifdef USB_OTG_HS_DEDICATED_EP1_ENABLED
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+  32:	f44f 60c0 	mov.w	r0, #1536	; 0x600
+  36:	f7ff fffe 	bl	0 <NVIC_PriorityGroupConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:251
+  NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_OUT_IRQn;
+  3a:	f04f 034a 	mov.w	r3, #74	; 0x4a
+  3e:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:252
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+  40:	f04f 0301 	mov.w	r3, #1
+  44:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:253
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;
+  46:	f04f 0302 	mov.w	r3, #2
+  4a:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:254
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  4c:	f04f 0301 	mov.w	r3, #1
+  50:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:255
+  NVIC_Init(&NVIC_InitStructure);  
+  52:	f107 030c 	add.w	r3, r7, #12
+  56:	4618      	mov	r0, r3
+  58:	f7ff fffe 	bl	0 <NVIC_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:257
+  
+  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+  5c:	f44f 60c0 	mov.w	r0, #1536	; 0x600
+  60:	f7ff fffe 	bl	0 <NVIC_PriorityGroupConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:258
+  NVIC_InitStructure.NVIC_IRQChannel = OTG_HS_EP1_IN_IRQn;
+  64:	f04f 034b 	mov.w	r3, #75	; 0x4b
+  68:	733b      	strb	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:259
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+  6a:	f04f 0301 	mov.w	r3, #1
+  6e:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:260
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+  70:	f04f 0301 	mov.w	r3, #1
+  74:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:261
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  76:	f04f 0301 	mov.w	r3, #1
+  7a:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:262
+  NVIC_Init(&NVIC_InitStructure);   
+  7c:	f107 030c 	add.w	r3, r7, #12
+  80:	4618      	mov	r0, r3
+  82:	f7ff fffe 	bl	0 <NVIC_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:264
+#endif
+}
+  86:	f107 0710 	add.w	r7, r7, #16
+  8a:	46bd      	mov	sp, r7
+  8c:	bd80      	pop	{r7, pc}
+  8e:	bf00      	nop
+
+Disassembly of section .text.USB_OTG_BSP_uDelay:
+
+00000000 <USB_OTG_BSP_uDelay>:
+USB_OTG_BSP_uDelay():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:272
+*         This function provides delay time in micro sec
+* @param  usec : Value of delay required in micro sec
+* @retval None
+*/
+void USB_OTG_BSP_uDelay (const uint32_t usec)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:273
+  uint32_t count = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:274
+  const uint32_t utime = (120 * usec / 7);
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	4613      	mov	r3, r2
+  12:	ea4f 1303 	mov.w	r3, r3, lsl #4
+  16:	1a9b      	subs	r3, r3, r2
+  18:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  1c:	461a      	mov	r2, r3
+  1e:	4b0c      	ldr	r3, [pc, #48]	; (50 <USB_OTG_BSP_uDelay+0x50>)
+  20:	fba3 1302 	umull	r1, r3, r3, r2
+  24:	1ad2      	subs	r2, r2, r3
+  26:	ea4f 0252 	mov.w	r2, r2, lsr #1
+  2a:	189b      	adds	r3, r3, r2
+  2c:	ea4f 0393 	mov.w	r3, r3, lsr #2
+  30:	60bb      	str	r3, [r7, #8]
+  32:	e000      	b.n	36 <USB_OTG_BSP_uDelay+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:282
+    if ( ++count > utime )
+    {
+      return ;
+    }
+  }
+  while (1);
+  34:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:277
+{
+  uint32_t count = 0;
+  const uint32_t utime = (120 * usec / 7);
+  do
+  {
+    if ( ++count > utime )
+  36:	68fb      	ldr	r3, [r7, #12]
+  38:	f103 0301 	add.w	r3, r3, #1
+  3c:	60fb      	str	r3, [r7, #12]
+  3e:	68fa      	ldr	r2, [r7, #12]
+  40:	68bb      	ldr	r3, [r7, #8]
+  42:	429a      	cmp	r2, r3
+  44:	d9f6      	bls.n	34 <USB_OTG_BSP_uDelay+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:283
+    {
+      return ;
+    }
+  }
+  while (1);
+}
+  46:	f107 0714 	add.w	r7, r7, #20
+  4a:	46bd      	mov	sp, r7
+  4c:	bc80      	pop	{r7}
+  4e:	4770      	bx	lr
+  50:	24924925 	.word	0x24924925
+
+Disassembly of section .text.USB_OTG_BSP_mDelay:
+
+00000000 <USB_OTG_BSP_mDelay>:
+USB_OTG_BSP_mDelay():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:293
+*          This function provides delay time in milli sec
+* @param  msec : Value of delay required in milli sec
+* @retval None
+*/
+void USB_OTG_BSP_mDelay (const uint32_t msec)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:294
+  USB_OTG_BSP_uDelay(msec * 1000);   
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f44f 727a 	mov.w	r2, #1000	; 0x3e8
+   e:	fb02 f303 	mul.w	r3, r2, r3
+  12:	4618      	mov	r0, r3
+  14:	f7ff fffe 	bl	0 <USB_OTG_BSP_mDelay>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usb_bsp.c:295
+}
+  18:	f107 0708 	add.w	r7, r7, #8
+  1c:	46bd      	mov	sp, r7
+  1e:	bd80      	pop	{r7, pc}

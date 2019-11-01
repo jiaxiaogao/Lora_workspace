@@ -1,0 +1,2401 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-FskMisc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-FskMisc.o
+
+
+Disassembly of section .text.SX1276FskSetRFFrequency:
+
+00000000 <SX1276FskSetRFFrequency>:
+SX1276FskSetRFFrequency():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:44
+#include "sx1276-FskMisc.h"
+
+extern tFskSettings FskSettings;
+
+void SX1276FskSetRFFrequency( uint32_t freq )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:45
+    FskSettings.RFFrequency = freq;
+   8:	4b1f      	ldr	r3, [pc, #124]	; (88 <SX1276FskSetRFFrequency+0x88>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:47
+
+    freq = ( uint32_t )( ( double )freq / ( double )FREQ_STEP );
+   e:	6878      	ldr	r0, [r7, #4]
+  10:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  14:	4602      	mov	r2, r0
+  16:	460b      	mov	r3, r1
+  18:	4610      	mov	r0, r2
+  1a:	4619      	mov	r1, r3
+  1c:	a318      	add	r3, pc, #96	; (adr r3, 80 <SX1276FskSetRFFrequency+0x80>)
+  1e:	e9d3 2300 	ldrd	r2, r3, [r3]
+  22:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  26:	4602      	mov	r2, r0
+  28:	460b      	mov	r3, r1
+  2a:	4610      	mov	r0, r2
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  32:	4603      	mov	r3, r0
+  34:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:48
+    SX1276->RegFrfMsb = ( uint8_t )( ( freq >> 16 ) & 0xFF );
+  36:	4b15      	ldr	r3, [pc, #84]	; (8c <SX1276FskSetRFFrequency+0x8c>)
+  38:	681b      	ldr	r3, [r3, #0]
+  3a:	687a      	ldr	r2, [r7, #4]
+  3c:	ea4f 4212 	mov.w	r2, r2, lsr #16
+  40:	b2d2      	uxtb	r2, r2
+  42:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:49
+    SX1276->RegFrfMid = ( uint8_t )( ( freq >> 8 ) & 0xFF );
+  44:	4b11      	ldr	r3, [pc, #68]	; (8c <SX1276FskSetRFFrequency+0x8c>)
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	687a      	ldr	r2, [r7, #4]
+  4a:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  4e:	b2d2      	uxtb	r2, r2
+  50:	71da      	strb	r2, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:50
+    SX1276->RegFrfLsb = ( uint8_t )( freq & 0xFF );
+  52:	4b0e      	ldr	r3, [pc, #56]	; (8c <SX1276FskSetRFFrequency+0x8c>)
+  54:	681b      	ldr	r3, [r3, #0]
+  56:	687a      	ldr	r2, [r7, #4]
+  58:	b2d2      	uxtb	r2, r2
+  5a:	721a      	strb	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:51
+    SX1276WriteBuffer( REG_FRFMSB, &SX1276->RegFrfMsb, 3 );
+  5c:	4b0b      	ldr	r3, [pc, #44]	; (8c <SX1276FskSetRFFrequency+0x8c>)
+  5e:	681b      	ldr	r3, [r3, #0]
+  60:	f103 0306 	add.w	r3, r3, #6
+  64:	f04f 0006 	mov.w	r0, #6
+  68:	4619      	mov	r1, r3
+  6a:	f04f 0203 	mov.w	r2, #3
+  6e:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:52
+}
+  72:	f107 0708 	add.w	r7, r7, #8
+  76:	46bd      	mov	sp, r7
+  78:	bd80      	pop	{r7, pc}
+  7a:	bf00      	nop
+  7c:	f3af 8000 	nop.w
+  80:	00000000 	.word	0x00000000
+  84:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276FskGetRFFrequency:
+
+00000000 <SX1276FskGetRFFrequency>:
+SX1276FskGetRFFrequency():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:55
+
+uint32_t SX1276FskGetRFFrequency( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:56
+    SX1276ReadBuffer( REG_FRFMSB, &SX1276->RegFrfMsb, 3 );
+   4:	4b1e      	ldr	r3, [pc, #120]	; (80 <SX1276FskGetRFFrequency+0x80>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0306 	add.w	r3, r3, #6
+   c:	f04f 0006 	mov.w	r0, #6
+  10:	4619      	mov	r1, r3
+  12:	f04f 0203 	mov.w	r2, #3
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:57
+    FskSettings.RFFrequency = ( ( uint32_t )SX1276->RegFrfMsb << 16 ) | ( ( uint32_t )SX1276->RegFrfMid << 8 ) | ( ( uint32_t )SX1276->RegFrfLsb );
+  1a:	4b19      	ldr	r3, [pc, #100]	; (80 <SX1276FskGetRFFrequency+0x80>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	799b      	ldrb	r3, [r3, #6]
+  20:	ea4f 4203 	mov.w	r2, r3, lsl #16
+  24:	4b16      	ldr	r3, [pc, #88]	; (80 <SX1276FskGetRFFrequency+0x80>)
+  26:	681b      	ldr	r3, [r3, #0]
+  28:	79db      	ldrb	r3, [r3, #7]
+  2a:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  2e:	431a      	orrs	r2, r3
+  30:	4b13      	ldr	r3, [pc, #76]	; (80 <SX1276FskGetRFFrequency+0x80>)
+  32:	681b      	ldr	r3, [r3, #0]
+  34:	7a1b      	ldrb	r3, [r3, #8]
+  36:	431a      	orrs	r2, r3
+  38:	4b12      	ldr	r3, [pc, #72]	; (84 <SX1276FskGetRFFrequency+0x84>)
+  3a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:58
+    FskSettings.RFFrequency = ( uint32_t )( ( double )FskSettings.RFFrequency * ( double )FREQ_STEP );
+  3c:	4b11      	ldr	r3, [pc, #68]	; (84 <SX1276FskGetRFFrequency+0x84>)
+  3e:	681b      	ldr	r3, [r3, #0]
+  40:	4618      	mov	r0, r3
+  42:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  46:	4602      	mov	r2, r0
+  48:	460b      	mov	r3, r1
+  4a:	4610      	mov	r0, r2
+  4c:	4619      	mov	r1, r3
+  4e:	a30a      	add	r3, pc, #40	; (adr r3, 78 <SX1276FskGetRFFrequency+0x78>)
+  50:	e9d3 2300 	ldrd	r2, r3, [r3]
+  54:	f7ff fffe 	bl	0 <__aeabi_dmul>
+  58:	4602      	mov	r2, r0
+  5a:	460b      	mov	r3, r1
+  5c:	4610      	mov	r0, r2
+  5e:	4619      	mov	r1, r3
+  60:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  64:	4602      	mov	r2, r0
+  66:	4b07      	ldr	r3, [pc, #28]	; (84 <SX1276FskGetRFFrequency+0x84>)
+  68:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:60
+
+    return FskSettings.RFFrequency;
+  6a:	4b06      	ldr	r3, [pc, #24]	; (84 <SX1276FskGetRFFrequency+0x84>)
+  6c:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:61
+}
+  6e:	4618      	mov	r0, r3
+  70:	bd80      	pop	{r7, pc}
+  72:	bf00      	nop
+  74:	f3af 8000 	nop.w
+  78:	00000000 	.word	0x00000000
+  7c:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276FskRxCalibrate:
+
+00000000 <SX1276FskRxCalibrate>:
+SX1276FskRxCalibrate():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:64
+
+void SX1276FskRxCalibrate( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:70
+    // the function RadioRxCalibrate is called just after the reset so all register are at their default values
+    uint8_t regPaConfigInitVal;
+    uint32_t initialFreq;
+
+    // save register values;
+    SX1276Read( REG_PACONFIG, &regPaConfigInitVal );
+   6:	f107 0303 	add.w	r3, r7, #3
+   a:	f04f 0009 	mov.w	r0, #9
+   e:	4619      	mov	r1, r3
+  10:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:71
+    initialFreq = SX1276FskGetRFFrequency( );
+  14:	f7ff fffe 	bl	0 <SX1276FskRxCalibrate>
+  18:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:74
+
+    // Cut the PA just in case
+    SX1276->RegPaConfig = 0x00; // RFO output, power = -1 dBm
+  1a:	4b2d      	ldr	r3, [pc, #180]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:75
+    SX1276Write( REG_PACONFIG, SX1276->RegPaConfig );
+  24:	4b2a      	ldr	r3, [pc, #168]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  26:	681b      	ldr	r3, [r3, #0]
+  28:	7a5b      	ldrb	r3, [r3, #9]
+  2a:	f04f 0009 	mov.w	r0, #9
+  2e:	4619      	mov	r1, r3
+  30:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:78
+
+    // Set Frequency in HF band
+    SX1276FskSetRFFrequency( 860000000 );
+  34:	4827      	ldr	r0, [pc, #156]	; (a0 <SX1276FskRxCalibrate+0xa0>)
+  36:	f7ff fffe 	bl	0 <SX1276FskRxCalibrate>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:81
+
+    // Rx chain re-calibration workaround
+    SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );    
+  3a:	4b25      	ldr	r3, [pc, #148]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  3c:	681b      	ldr	r3, [r3, #0]
+  3e:	f103 033b 	add.w	r3, r3, #59	; 0x3b
+  42:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  46:	4619      	mov	r1, r3
+  48:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:82
+    SX1276->RegImageCal = ( SX1276->RegImageCal & RF_IMAGECAL_IMAGECAL_MASK ) | RF_IMAGECAL_IMAGECAL_START;
+  4c:	4b20      	ldr	r3, [pc, #128]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  4e:	681b      	ldr	r3, [r3, #0]
+  50:	4a1f      	ldr	r2, [pc, #124]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  52:	6812      	ldr	r2, [r2, #0]
+  54:	f892 203b 	ldrb.w	r2, [r2, #59]	; 0x3b
+  58:	f042 0240 	orr.w	r2, r2, #64	; 0x40
+  5c:	b2d2      	uxtb	r2, r2
+  5e:	f883 203b 	strb.w	r2, [r3, #59]	; 0x3b
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:83
+    SX1276Write( REG_IMAGECAL, SX1276->RegImageCal );
+  62:	4b1b      	ldr	r3, [pc, #108]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  64:	681b      	ldr	r3, [r3, #0]
+  66:	f893 303b 	ldrb.w	r3, [r3, #59]	; 0x3b
+  6a:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  6e:	4619      	mov	r1, r3
+  70:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:85
+
+    SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+  74:	4b16      	ldr	r3, [pc, #88]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  76:	681b      	ldr	r3, [r3, #0]
+  78:	f103 033b 	add.w	r3, r3, #59	; 0x3b
+  7c:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  80:	4619      	mov	r1, r3
+  82:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:87
+    // rx_cal_run goes low when calibration in finished
+    while( ( SX1276->RegImageCal & RF_IMAGECAL_IMAGECAL_RUNNING ) == RF_IMAGECAL_IMAGECAL_RUNNING )
+  86:	e008      	b.n	9a <SX1276FskRxCalibrate+0x9a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:89
+    {
+        SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+  88:	4b11      	ldr	r3, [pc, #68]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  8a:	681b      	ldr	r3, [r3, #0]
+  8c:	f103 033b 	add.w	r3, r3, #59	; 0x3b
+  90:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  94:	4619      	mov	r1, r3
+  96:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:87
+    SX1276->RegImageCal = ( SX1276->RegImageCal & RF_IMAGECAL_IMAGECAL_MASK ) | RF_IMAGECAL_IMAGECAL_START;
+    SX1276Write( REG_IMAGECAL, SX1276->RegImageCal );
+
+    SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+    // rx_cal_run goes low when calibration in finished
+    while( ( SX1276->RegImageCal & RF_IMAGECAL_IMAGECAL_RUNNING ) == RF_IMAGECAL_IMAGECAL_RUNNING )
+  9a:	4b0d      	ldr	r3, [pc, #52]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  9c:	681b      	ldr	r3, [r3, #0]
+  9e:	f893 303b 	ldrb.w	r3, [r3, #59]	; 0x3b
+  a2:	f003 0320 	and.w	r3, r3, #32
+  a6:	2b00      	cmp	r3, #0
+  a8:	d1ee      	bne.n	88 <SX1276FskRxCalibrate+0x88>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:93
+    {
+        SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+    }
+
+    // reload saved values into the registers
+    SX1276->RegPaConfig = regPaConfigInitVal;
+  aa:	4b09      	ldr	r3, [pc, #36]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  ac:	681b      	ldr	r3, [r3, #0]
+  ae:	78fa      	ldrb	r2, [r7, #3]
+  b0:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:94
+    SX1276Write( REG_PACONFIG, SX1276->RegPaConfig );
+  b2:	4b07      	ldr	r3, [pc, #28]	; (d0 <SX1276FskRxCalibrate+0xd0>)
+  b4:	681b      	ldr	r3, [r3, #0]
+  b6:	7a5b      	ldrb	r3, [r3, #9]
+  b8:	f04f 0009 	mov.w	r0, #9
+  bc:	4619      	mov	r1, r3
+  be:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:96
+
+    SX1276FskSetRFFrequency( initialFreq );
+  c2:	6878      	ldr	r0, [r7, #4]
+  c4:	f7ff fffe 	bl	0 <SX1276FskRxCalibrate>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:98
+
+}
+  c8:	f107 0708 	add.w	r7, r7, #8
+  cc:	46bd      	mov	sp, r7
+  ce:	bd80      	pop	{r7, pc}
+  d0:	00000000 	.word	0x00000000
+  d4:	33428f00 	.word	0x33428f00
+
+Disassembly of section .text.SX1276FskSetBitrate:
+
+00000000 <SX1276FskSetBitrate>:
+SX1276FskSetBitrate():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:101
+
+void SX1276FskSetBitrate( uint32_t bitrate )
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:102
+    FskSettings.Bitrate = bitrate;
+   8:	4b1b      	ldr	r3, [pc, #108]	; (78 <SX1276FskSetBitrate+0x78>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:104
+    
+    bitrate = ( uint16_t )( ( double )XTAL_FREQ / ( double )bitrate );
+   e:	6878      	ldr	r0, [r7, #4]
+  10:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  14:	4602      	mov	r2, r0
+  16:	460b      	mov	r3, r1
+  18:	a115      	add	r1, pc, #84	; (adr r1, 70 <SX1276FskSetBitrate+0x70>)
+  1a:	e9d1 0100 	ldrd	r0, r1, [r1]
+  1e:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  22:	4602      	mov	r2, r0
+  24:	460b      	mov	r3, r1
+  26:	4610      	mov	r0, r2
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  2e:	4603      	mov	r3, r0
+  30:	b29b      	uxth	r3, r3
+  32:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:105
+    SX1276->RegBitrateMsb    = ( uint8_t )( bitrate >> 8 );
+  34:	4b11      	ldr	r3, [pc, #68]	; (7c <SX1276FskSetBitrate+0x7c>)
+  36:	681b      	ldr	r3, [r3, #0]
+  38:	687a      	ldr	r2, [r7, #4]
+  3a:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  3e:	b2d2      	uxtb	r2, r2
+  40:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:106
+    SX1276->RegBitrateLsb    = ( uint8_t )( bitrate & 0xFF );
+  42:	4b0e      	ldr	r3, [pc, #56]	; (7c <SX1276FskSetBitrate+0x7c>)
+  44:	681b      	ldr	r3, [r3, #0]
+  46:	687a      	ldr	r2, [r7, #4]
+  48:	b2d2      	uxtb	r2, r2
+  4a:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:107
+    SX1276WriteBuffer( REG_BITRATEMSB, &SX1276->RegBitrateMsb, 2 );    
+  4c:	4b0b      	ldr	r3, [pc, #44]	; (7c <SX1276FskSetBitrate+0x7c>)
+  4e:	681b      	ldr	r3, [r3, #0]
+  50:	f103 0302 	add.w	r3, r3, #2
+  54:	f04f 0002 	mov.w	r0, #2
+  58:	4619      	mov	r1, r3
+  5a:	f04f 0202 	mov.w	r2, #2
+  5e:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:108
+}
+  62:	f107 0708 	add.w	r7, r7, #8
+  66:	46bd      	mov	sp, r7
+  68:	bd80      	pop	{r7, pc}
+  6a:	bf00      	nop
+  6c:	f3af 8000 	nop.w
+  70:	00000000 	.word	0x00000000
+  74:	417e8480 	.word	0x417e8480
+	...
+
+Disassembly of section .text.SX1276FskGetBitrate:
+
+00000000 <SX1276FskGetBitrate>:
+SX1276FskGetBitrate():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:111
+
+uint32_t SX1276FskGetBitrate( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:112
+    SX1276ReadBuffer( REG_BITRATEMSB, &SX1276->RegBitrateMsb, 2 );
+   4:	4b1a      	ldr	r3, [pc, #104]	; (70 <SX1276FskGetBitrate+0x70>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0302 	add.w	r3, r3, #2
+   c:	f04f 0002 	mov.w	r0, #2
+  10:	4619      	mov	r1, r3
+  12:	f04f 0202 	mov.w	r2, #2
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:113
+    FskSettings.Bitrate = ( ( ( uint32_t )SX1276->RegBitrateMsb << 8 ) | ( ( uint32_t )SX1276->RegBitrateLsb ) );
+  1a:	4b15      	ldr	r3, [pc, #84]	; (70 <SX1276FskGetBitrate+0x70>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	789b      	ldrb	r3, [r3, #2]
+  20:	ea4f 2203 	mov.w	r2, r3, lsl #8
+  24:	4b12      	ldr	r3, [pc, #72]	; (70 <SX1276FskGetBitrate+0x70>)
+  26:	681b      	ldr	r3, [r3, #0]
+  28:	78db      	ldrb	r3, [r3, #3]
+  2a:	431a      	orrs	r2, r3
+  2c:	4b11      	ldr	r3, [pc, #68]	; (74 <SX1276FskGetBitrate+0x74>)
+  2e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:114
+    FskSettings.Bitrate = ( uint16_t )( ( double )XTAL_FREQ / ( double )FskSettings.Bitrate );
+  30:	4b10      	ldr	r3, [pc, #64]	; (74 <SX1276FskGetBitrate+0x74>)
+  32:	685b      	ldr	r3, [r3, #4]
+  34:	4618      	mov	r0, r3
+  36:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  3a:	4602      	mov	r2, r0
+  3c:	460b      	mov	r3, r1
+  3e:	a10a      	add	r1, pc, #40	; (adr r1, 68 <SX1276FskGetBitrate+0x68>)
+  40:	e9d1 0100 	ldrd	r0, r1, [r1]
+  44:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  48:	4602      	mov	r2, r0
+  4a:	460b      	mov	r3, r1
+  4c:	4610      	mov	r0, r2
+  4e:	4619      	mov	r1, r3
+  50:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  54:	4603      	mov	r3, r0
+  56:	b29b      	uxth	r3, r3
+  58:	461a      	mov	r2, r3
+  5a:	4b06      	ldr	r3, [pc, #24]	; (74 <SX1276FskGetBitrate+0x74>)
+  5c:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:116
+
+    return FskSettings.Bitrate;
+  5e:	4b05      	ldr	r3, [pc, #20]	; (74 <SX1276FskGetBitrate+0x74>)
+  60:	685b      	ldr	r3, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:117
+}
+  62:	4618      	mov	r0, r3
+  64:	bd80      	pop	{r7, pc}
+  66:	bf00      	nop
+  68:	00000000 	.word	0x00000000
+  6c:	417e8480 	.word	0x417e8480
+	...
+
+Disassembly of section .text.SX1276FskSetFdev:
+
+00000000 <SX1276FskSetFdev>:
+SX1276FskSetFdev():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:120
+
+void SX1276FskSetFdev( uint32_t fdev )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:121
+    FskSettings.Fdev = fdev;
+   8:	4b27      	ldr	r3, [pc, #156]	; (a8 <SX1276FskSetFdev+0xa8>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:123
+
+    SX1276Read( REG_FDEVMSB, &SX1276->RegFdevMsb ); 
+   e:	4b27      	ldr	r3, [pc, #156]	; (ac <SX1276FskSetFdev+0xac>)
+  10:	681b      	ldr	r3, [r3, #0]
+  12:	f103 0304 	add.w	r3, r3, #4
+  16:	f04f 0004 	mov.w	r0, #4
+  1a:	4619      	mov	r1, r3
+  1c:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:125
+
+    fdev = ( uint16_t )( ( double )fdev / ( double )FREQ_STEP );
+  20:	6878      	ldr	r0, [r7, #4]
+  22:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  26:	4602      	mov	r2, r0
+  28:	460b      	mov	r3, r1
+  2a:	4610      	mov	r0, r2
+  2c:	4619      	mov	r1, r3
+  2e:	a31c      	add	r3, pc, #112	; (adr r3, a0 <SX1276FskSetFdev+0xa0>)
+  30:	e9d3 2300 	ldrd	r2, r3, [r3]
+  34:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  38:	4602      	mov	r2, r0
+  3a:	460b      	mov	r3, r1
+  3c:	4610      	mov	r0, r2
+  3e:	4619      	mov	r1, r3
+  40:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  44:	4603      	mov	r3, r0
+  46:	b29b      	uxth	r3, r3
+  48:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:126
+    SX1276->RegFdevMsb    = ( ( SX1276->RegFdevMsb & RF_FDEVMSB_FDEV_MASK ) | ( ( ( uint8_t )( fdev >> 8 ) ) & ~RF_FDEVMSB_FDEV_MASK ) );
+  4a:	4b18      	ldr	r3, [pc, #96]	; (ac <SX1276FskSetFdev+0xac>)
+  4c:	681b      	ldr	r3, [r3, #0]
+  4e:	4a17      	ldr	r2, [pc, #92]	; (ac <SX1276FskSetFdev+0xac>)
+  50:	6812      	ldr	r2, [r2, #0]
+  52:	7912      	ldrb	r2, [r2, #4]
+  54:	b2d2      	uxtb	r2, r2
+  56:	f022 023f 	bic.w	r2, r2, #63	; 0x3f
+  5a:	b2d1      	uxtb	r1, r2
+  5c:	687a      	ldr	r2, [r7, #4]
+  5e:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  62:	b2d2      	uxtb	r2, r2
+  64:	f002 023f 	and.w	r2, r2, #63	; 0x3f
+  68:	b2d2      	uxtb	r2, r2
+  6a:	ea41 0202 	orr.w	r2, r1, r2
+  6e:	b2d2      	uxtb	r2, r2
+  70:	b2d2      	uxtb	r2, r2
+  72:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:127
+    SX1276->RegFdevLsb    = ( uint8_t )( fdev & 0xFF );
+  74:	4b0d      	ldr	r3, [pc, #52]	; (ac <SX1276FskSetFdev+0xac>)
+  76:	681b      	ldr	r3, [r3, #0]
+  78:	687a      	ldr	r2, [r7, #4]
+  7a:	b2d2      	uxtb	r2, r2
+  7c:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:128
+    SX1276WriteBuffer( REG_FDEVMSB, &SX1276->RegFdevMsb, 2 );    
+  7e:	4b0b      	ldr	r3, [pc, #44]	; (ac <SX1276FskSetFdev+0xac>)
+  80:	681b      	ldr	r3, [r3, #0]
+  82:	f103 0304 	add.w	r3, r3, #4
+  86:	f04f 0004 	mov.w	r0, #4
+  8a:	4619      	mov	r1, r3
+  8c:	f04f 0202 	mov.w	r2, #2
+  90:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:129
+}
+  94:	f107 0708 	add.w	r7, r7, #8
+  98:	46bd      	mov	sp, r7
+  9a:	bd80      	pop	{r7, pc}
+  9c:	f3af 8000 	nop.w
+  a0:	00000000 	.word	0x00000000
+  a4:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276FskGetFdev:
+
+00000000 <SX1276FskGetFdev>:
+SX1276FskGetFdev():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:132
+
+uint32_t SX1276FskGetFdev( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:133
+    SX1276ReadBuffer( REG_FDEVMSB, &SX1276->RegFdevMsb, 2 );
+   4:	4b1c      	ldr	r3, [pc, #112]	; (78 <SX1276FskGetFdev+0x78>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0304 	add.w	r3, r3, #4
+   c:	f04f 0004 	mov.w	r0, #4
+  10:	4619      	mov	r1, r3
+  12:	f04f 0202 	mov.w	r2, #2
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:134
+    FskSettings.Fdev = ( ( ( uint32_t )( ( SX1276->RegFdevMsb << 8 ) & ~RF_FDEVMSB_FDEV_MASK ) ) | ( ( uint32_t )SX1276->RegFdevLsb ) );
+  1a:	4b17      	ldr	r3, [pc, #92]	; (78 <SX1276FskGetFdev+0x78>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	791b      	ldrb	r3, [r3, #4]
+  20:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  24:	461a      	mov	r2, r3
+  26:	4b14      	ldr	r3, [pc, #80]	; (78 <SX1276FskGetFdev+0x78>)
+  28:	681b      	ldr	r3, [r3, #0]
+  2a:	795b      	ldrb	r3, [r3, #5]
+  2c:	431a      	orrs	r2, r3
+  2e:	4b13      	ldr	r3, [pc, #76]	; (7c <SX1276FskGetFdev+0x7c>)
+  30:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:135
+    FskSettings.Fdev = ( uint16_t )( ( double )FskSettings.Fdev * ( double )FREQ_STEP );
+  32:	4b12      	ldr	r3, [pc, #72]	; (7c <SX1276FskGetFdev+0x7c>)
+  34:	689b      	ldr	r3, [r3, #8]
+  36:	4618      	mov	r0, r3
+  38:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  3c:	4602      	mov	r2, r0
+  3e:	460b      	mov	r3, r1
+  40:	4610      	mov	r0, r2
+  42:	4619      	mov	r1, r3
+  44:	a30a      	add	r3, pc, #40	; (adr r3, 70 <SX1276FskGetFdev+0x70>)
+  46:	e9d3 2300 	ldrd	r2, r3, [r3]
+  4a:	f7ff fffe 	bl	0 <__aeabi_dmul>
+  4e:	4602      	mov	r2, r0
+  50:	460b      	mov	r3, r1
+  52:	4610      	mov	r0, r2
+  54:	4619      	mov	r1, r3
+  56:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  5a:	4603      	mov	r3, r0
+  5c:	b29b      	uxth	r3, r3
+  5e:	461a      	mov	r2, r3
+  60:	4b06      	ldr	r3, [pc, #24]	; (7c <SX1276FskGetFdev+0x7c>)
+  62:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:137
+
+    return FskSettings.Fdev;
+  64:	4b05      	ldr	r3, [pc, #20]	; (7c <SX1276FskGetFdev+0x7c>)
+  66:	689b      	ldr	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:138
+}
+  68:	4618      	mov	r0, r3
+  6a:	bd80      	pop	{r7, pc}
+  6c:	f3af 8000 	nop.w
+  70:	00000000 	.word	0x00000000
+  74:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276FskSetRFPower:
+
+00000000 <SX1276FskSetRFPower>:
+SX1276FskSetRFPower():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:141
+
+void SX1276FskSetRFPower( int8_t power )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:142
+    SX1276Read( REG_PACONFIG, &SX1276->RegPaConfig );
+   a:	4b5d      	ldr	r3, [pc, #372]	; (180 <SX1276FskSetRFPower+0x180>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0309 	add.w	r3, r3, #9
+  12:	f04f 0009 	mov.w	r0, #9
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:143
+    SX1276Read( REG_PADAC, &SX1276->RegPaDac );
+  1c:	4b58      	ldr	r3, [pc, #352]	; (180 <SX1276FskSetRFPower+0x180>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	f103 034d 	add.w	r3, r3, #77	; 0x4d
+  24:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:145
+    
+    if( ( SX1276->RegPaConfig & RF_PACONFIG_PASELECT_PABOOST ) == RF_PACONFIG_PASELECT_PABOOST )
+  2e:	4b54      	ldr	r3, [pc, #336]	; (180 <SX1276FskSetRFPower+0x180>)
+  30:	681b      	ldr	r3, [r3, #0]
+  32:	7a5b      	ldrb	r3, [r3, #9]
+  34:	b2db      	uxtb	r3, r3
+  36:	b25b      	sxtb	r3, r3
+  38:	2b00      	cmp	r3, #0
+  3a:	da63      	bge.n	104 <SX1276FskSetRFPower+0x104>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:147
+    {
+        if( ( SX1276->RegPaDac & 0x87 ) == 0x87 )
+  3c:	4b50      	ldr	r3, [pc, #320]	; (180 <SX1276FskSetRFPower+0x180>)
+  3e:	681b      	ldr	r3, [r3, #0]
+  40:	f893 304d 	ldrb.w	r3, [r3, #77]	; 0x4d
+  44:	f003 0387 	and.w	r3, r3, #135	; 0x87
+  48:	2b87      	cmp	r3, #135	; 0x87
+  4a:	d12d      	bne.n	a8 <SX1276FskSetRFPower+0xa8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:149
+        {
+            if( power < 5 )
+  4c:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  50:	2b04      	cmp	r3, #4
+  52:	dc02      	bgt.n	5a <SX1276FskSetRFPower+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:151
+            {
+                power = 5;
+  54:	f04f 0305 	mov.w	r3, #5
+  58:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:153
+            }
+            if( power > 20 )
+  5a:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  5e:	2b14      	cmp	r3, #20
+  60:	dd02      	ble.n	68 <SX1276FskSetRFPower+0x68>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:155
+            {
+                power = 20;
+  62:	f04f 0314 	mov.w	r3, #20
+  66:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:157
+            }
+            SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_MAX_POWER_MASK ) | 0x70;
+  68:	4b45      	ldr	r3, [pc, #276]	; (180 <SX1276FskSetRFPower+0x180>)
+  6a:	681b      	ldr	r3, [r3, #0]
+  6c:	4a44      	ldr	r2, [pc, #272]	; (180 <SX1276FskSetRFPower+0x180>)
+  6e:	6812      	ldr	r2, [r2, #0]
+  70:	7a52      	ldrb	r2, [r2, #9]
+  72:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+  76:	b2d2      	uxtb	r2, r2
+  78:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:158
+            SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power - 5 ) & 0x0F );
+  7a:	4b41      	ldr	r3, [pc, #260]	; (180 <SX1276FskSetRFPower+0x180>)
+  7c:	681b      	ldr	r3, [r3, #0]
+  7e:	4a40      	ldr	r2, [pc, #256]	; (180 <SX1276FskSetRFPower+0x180>)
+  80:	6812      	ldr	r2, [r2, #0]
+  82:	7a52      	ldrb	r2, [r2, #9]
+  84:	b2d2      	uxtb	r2, r2
+  86:	f022 020f 	bic.w	r2, r2, #15
+  8a:	b2d1      	uxtb	r1, r2
+  8c:	79fa      	ldrb	r2, [r7, #7]
+  8e:	f1a2 0205 	sub.w	r2, r2, #5
+  92:	b2d2      	uxtb	r2, r2
+  94:	b2d2      	uxtb	r2, r2
+  96:	f002 020f 	and.w	r2, r2, #15
+  9a:	b2d2      	uxtb	r2, r2
+  9c:	ea41 0202 	orr.w	r2, r1, r2
+  a0:	b2d2      	uxtb	r2, r2
+  a2:	b2d2      	uxtb	r2, r2
+  a4:	725a      	strb	r2, [r3, #9]
+  a6:	e05b      	b.n	160 <SX1276FskSetRFPower+0x160>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:162
+        }
+        else
+        {
+            if( power < 2 )
+  a8:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  ac:	2b01      	cmp	r3, #1
+  ae:	dc02      	bgt.n	b6 <SX1276FskSetRFPower+0xb6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:164
+            {
+                power = 2;
+  b0:	f04f 0302 	mov.w	r3, #2
+  b4:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:166
+            }
+            if( power > 17 )
+  b6:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  ba:	2b11      	cmp	r3, #17
+  bc:	dd02      	ble.n	c4 <SX1276FskSetRFPower+0xc4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:168
+            {
+                power = 17;
+  be:	f04f 0311 	mov.w	r3, #17
+  c2:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:170
+            }
+            SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_MAX_POWER_MASK ) | 0x70;
+  c4:	4b2e      	ldr	r3, [pc, #184]	; (180 <SX1276FskSetRFPower+0x180>)
+  c6:	681b      	ldr	r3, [r3, #0]
+  c8:	4a2d      	ldr	r2, [pc, #180]	; (180 <SX1276FskSetRFPower+0x180>)
+  ca:	6812      	ldr	r2, [r2, #0]
+  cc:	7a52      	ldrb	r2, [r2, #9]
+  ce:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+  d2:	b2d2      	uxtb	r2, r2
+  d4:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:171
+            SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power - 2 ) & 0x0F );
+  d6:	4b2a      	ldr	r3, [pc, #168]	; (180 <SX1276FskSetRFPower+0x180>)
+  d8:	681b      	ldr	r3, [r3, #0]
+  da:	4a29      	ldr	r2, [pc, #164]	; (180 <SX1276FskSetRFPower+0x180>)
+  dc:	6812      	ldr	r2, [r2, #0]
+  de:	7a52      	ldrb	r2, [r2, #9]
+  e0:	b2d2      	uxtb	r2, r2
+  e2:	f022 020f 	bic.w	r2, r2, #15
+  e6:	b2d1      	uxtb	r1, r2
+  e8:	79fa      	ldrb	r2, [r7, #7]
+  ea:	f1a2 0202 	sub.w	r2, r2, #2
+  ee:	b2d2      	uxtb	r2, r2
+  f0:	b2d2      	uxtb	r2, r2
+  f2:	f002 020f 	and.w	r2, r2, #15
+  f6:	b2d2      	uxtb	r2, r2
+  f8:	ea41 0202 	orr.w	r2, r1, r2
+  fc:	b2d2      	uxtb	r2, r2
+  fe:	b2d2      	uxtb	r2, r2
+ 100:	725a      	strb	r2, [r3, #9]
+ 102:	e02d      	b.n	160 <SX1276FskSetRFPower+0x160>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:176
+        }
+    }
+    else
+    {
+        if( power < -1 )
+ 104:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 108:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 10c:	da02      	bge.n	114 <SX1276FskSetRFPower+0x114>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:178
+        {
+            power = -1;
+ 10e:	f04f 03ff 	mov.w	r3, #255	; 0xff
+ 112:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:180
+        }
+        if( power > 14 )
+ 114:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 118:	2b0e      	cmp	r3, #14
+ 11a:	dd02      	ble.n	122 <SX1276FskSetRFPower+0x122>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:182
+        {
+            power = 14;
+ 11c:	f04f 030e 	mov.w	r3, #14
+ 120:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:184
+        }
+        SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_MAX_POWER_MASK ) | 0x70;
+ 122:	4b17      	ldr	r3, [pc, #92]	; (180 <SX1276FskSetRFPower+0x180>)
+ 124:	681b      	ldr	r3, [r3, #0]
+ 126:	4a16      	ldr	r2, [pc, #88]	; (180 <SX1276FskSetRFPower+0x180>)
+ 128:	6812      	ldr	r2, [r2, #0]
+ 12a:	7a52      	ldrb	r2, [r2, #9]
+ 12c:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+ 130:	b2d2      	uxtb	r2, r2
+ 132:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:185
+        SX1276->RegPaConfig = ( SX1276->RegPaConfig & RF_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power + 1 ) & 0x0F );
+ 134:	4b12      	ldr	r3, [pc, #72]	; (180 <SX1276FskSetRFPower+0x180>)
+ 136:	681b      	ldr	r3, [r3, #0]
+ 138:	4a11      	ldr	r2, [pc, #68]	; (180 <SX1276FskSetRFPower+0x180>)
+ 13a:	6812      	ldr	r2, [r2, #0]
+ 13c:	7a52      	ldrb	r2, [r2, #9]
+ 13e:	b2d2      	uxtb	r2, r2
+ 140:	f022 020f 	bic.w	r2, r2, #15
+ 144:	b2d1      	uxtb	r1, r2
+ 146:	79fa      	ldrb	r2, [r7, #7]
+ 148:	f102 0201 	add.w	r2, r2, #1
+ 14c:	b2d2      	uxtb	r2, r2
+ 14e:	b2d2      	uxtb	r2, r2
+ 150:	f002 020f 	and.w	r2, r2, #15
+ 154:	b2d2      	uxtb	r2, r2
+ 156:	ea41 0202 	orr.w	r2, r1, r2
+ 15a:	b2d2      	uxtb	r2, r2
+ 15c:	b2d2      	uxtb	r2, r2
+ 15e:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:187
+    }
+    SX1276Write( REG_PACONFIG, SX1276->RegPaConfig );
+ 160:	4b07      	ldr	r3, [pc, #28]	; (180 <SX1276FskSetRFPower+0x180>)
+ 162:	681b      	ldr	r3, [r3, #0]
+ 164:	7a5b      	ldrb	r3, [r3, #9]
+ 166:	f04f 0009 	mov.w	r0, #9
+ 16a:	4619      	mov	r1, r3
+ 16c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:188
+    FskSettings.Power = power;
+ 170:	4b04      	ldr	r3, [pc, #16]	; (184 <SX1276FskSetRFPower+0x184>)
+ 172:	79fa      	ldrb	r2, [r7, #7]
+ 174:	731a      	strb	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:189
+}
+ 176:	f107 0708 	add.w	r7, r7, #8
+ 17a:	46bd      	mov	sp, r7
+ 17c:	bd80      	pop	{r7, pc}
+ 17e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskGetRFPower:
+
+00000000 <SX1276FskGetRFPower>:
+SX1276FskGetRFPower():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:192
+
+int8_t SX1276FskGetRFPower( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:193
+    SX1276Read( REG_PACONFIG, &SX1276->RegPaConfig );
+   4:	4b25      	ldr	r3, [pc, #148]	; (9c <SX1276FskGetRFPower+0x9c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0309 	add.w	r3, r3, #9
+   c:	f04f 0009 	mov.w	r0, #9
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:194
+    SX1276Read( REG_PADAC, &SX1276->RegPaDac );
+  16:	4b21      	ldr	r3, [pc, #132]	; (9c <SX1276FskGetRFPower+0x9c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f103 034d 	add.w	r3, r3, #77	; 0x4d
+  1e:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  22:	4619      	mov	r1, r3
+  24:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:196
+
+    if( ( SX1276->RegPaConfig & RF_PACONFIG_PASELECT_PABOOST ) == RF_PACONFIG_PASELECT_PABOOST )
+  28:	4b1c      	ldr	r3, [pc, #112]	; (9c <SX1276FskGetRFPower+0x9c>)
+  2a:	681b      	ldr	r3, [r3, #0]
+  2c:	7a5b      	ldrb	r3, [r3, #9]
+  2e:	b2db      	uxtb	r3, r3
+  30:	b25b      	sxtb	r3, r3
+  32:	2b00      	cmp	r3, #0
+  34:	da21      	bge.n	7a <SX1276FskGetRFPower+0x7a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:198
+    {
+        if( ( SX1276->RegPaDac & 0x07 ) == 0x07 )
+  36:	4b19      	ldr	r3, [pc, #100]	; (9c <SX1276FskGetRFPower+0x9c>)
+  38:	681b      	ldr	r3, [r3, #0]
+  3a:	f893 304d 	ldrb.w	r3, [r3, #77]	; 0x4d
+  3e:	f003 0307 	and.w	r3, r3, #7
+  42:	2b07      	cmp	r3, #7
+  44:	d10c      	bne.n	60 <SX1276FskGetRFPower+0x60>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:200
+        {
+            FskSettings.Power = 5 + ( SX1276->RegPaConfig & ~RF_PACONFIG_OUTPUTPOWER_MASK );
+  46:	4b15      	ldr	r3, [pc, #84]	; (9c <SX1276FskGetRFPower+0x9c>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	7a5b      	ldrb	r3, [r3, #9]
+  4c:	f003 030f 	and.w	r3, r3, #15
+  50:	b2db      	uxtb	r3, r3
+  52:	f103 0305 	add.w	r3, r3, #5
+  56:	b2db      	uxtb	r3, r3
+  58:	b2da      	uxtb	r2, r3
+  5a:	4b11      	ldr	r3, [pc, #68]	; (a0 <SX1276FskGetRFPower+0xa0>)
+  5c:	731a      	strb	r2, [r3, #12]
+  5e:	e018      	b.n	92 <SX1276FskGetRFPower+0x92>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:204
+        }
+        else
+        {
+            FskSettings.Power = 2 + ( SX1276->RegPaConfig & ~RF_PACONFIG_OUTPUTPOWER_MASK );
+  60:	4b0e      	ldr	r3, [pc, #56]	; (9c <SX1276FskGetRFPower+0x9c>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	7a5b      	ldrb	r3, [r3, #9]
+  66:	f003 030f 	and.w	r3, r3, #15
+  6a:	b2db      	uxtb	r3, r3
+  6c:	f103 0302 	add.w	r3, r3, #2
+  70:	b2db      	uxtb	r3, r3
+  72:	b2da      	uxtb	r2, r3
+  74:	4b0a      	ldr	r3, [pc, #40]	; (a0 <SX1276FskGetRFPower+0xa0>)
+  76:	731a      	strb	r2, [r3, #12]
+  78:	e00b      	b.n	92 <SX1276FskGetRFPower+0x92>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:209
+        }
+    }
+    else
+    {
+        FskSettings.Power = -1 + ( SX1276->RegPaConfig & ~RF_PACONFIG_OUTPUTPOWER_MASK );
+  7a:	4b08      	ldr	r3, [pc, #32]	; (9c <SX1276FskGetRFPower+0x9c>)
+  7c:	681b      	ldr	r3, [r3, #0]
+  7e:	7a5b      	ldrb	r3, [r3, #9]
+  80:	f003 030f 	and.w	r3, r3, #15
+  84:	b2db      	uxtb	r3, r3
+  86:	f103 33ff 	add.w	r3, r3, #4294967295
+  8a:	b2db      	uxtb	r3, r3
+  8c:	b2da      	uxtb	r2, r3
+  8e:	4b04      	ldr	r3, [pc, #16]	; (a0 <SX1276FskGetRFPower+0xa0>)
+  90:	731a      	strb	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:211
+    }
+    return FskSettings.Power;
+  92:	4b03      	ldr	r3, [pc, #12]	; (a0 <SX1276FskGetRFPower+0xa0>)
+  94:	7b1b      	ldrb	r3, [r3, #12]
+  96:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:212
+}
+  98:	4618      	mov	r0, r3
+  9a:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276FskComputeRxBw:
+
+00000000 <SX1276FskComputeRxBw>:
+SX1276FskComputeRxBw():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:222
+ * \param [IN] mantisse Mantisse of the bandwidth value
+ * \param [IN] exponent Exponent of the bandwidth value
+ * \retval bandwidth Computed bandwidth
+ */
+static uint32_t SX1276FskComputeRxBw( uint8_t mantisse, uint8_t exponent )
+{
+   0:	b5b0      	push	{r4, r5, r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:226
+    // rxBw
+    if( ( SX1276->RegOpMode & RF_OPMODE_MODULATIONTYPE_FSK ) == RF_OPMODE_MODULATIONTYPE_FSK )
+    {
+        return ( uint32_t )( ( double )XTAL_FREQ / ( mantisse * ( double )pow( 2, exponent + 2 ) ) );
+   e:	79fb      	ldrb	r3, [r7, #7]
+  10:	4618      	mov	r0, r3
+  12:	f7ff fffe 	bl	0 <__aeabi_i2d>
+  16:	4604      	mov	r4, r0
+  18:	460d      	mov	r5, r1
+  1a:	79bb      	ldrb	r3, [r7, #6]
+  1c:	f103 0302 	add.w	r3, r3, #2
+  20:	4618      	mov	r0, r3
+  22:	f7ff fffe 	bl	0 <__aeabi_i2d>
+  26:	4602      	mov	r2, r0
+  28:	460b      	mov	r3, r1
+  2a:	f04f 0000 	mov.w	r0, #0
+  2e:	f04f 4180 	mov.w	r1, #1073741824	; 0x40000000
+  32:	f7ff fffe 	bl	0 <pow>
+  36:	4602      	mov	r2, r0
+  38:	460b      	mov	r3, r1
+  3a:	4620      	mov	r0, r4
+  3c:	4629      	mov	r1, r5
+  3e:	f7ff fffe 	bl	0 <__aeabi_dmul>
+  42:	4602      	mov	r2, r0
+  44:	460b      	mov	r3, r1
+  46:	a108      	add	r1, pc, #32	; (adr r1, 68 <SX1276FskComputeRxBw+0x68>)
+  48:	e9d1 0100 	ldrd	r0, r1, [r1]
+  4c:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  50:	4602      	mov	r2, r0
+  52:	460b      	mov	r3, r1
+  54:	4610      	mov	r0, r2
+  56:	4619      	mov	r1, r3
+  58:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  5c:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:232
+    }
+    else
+    {
+        return ( uint32_t )( ( double )XTAL_FREQ / ( mantisse * ( double )pow( 2, exponent + 3 ) ) );
+    }
+}
+  5e:	4618      	mov	r0, r3
+  60:	f107 0708 	add.w	r7, r7, #8
+  64:	46bd      	mov	sp, r7
+  66:	bdb0      	pop	{r4, r5, r7, pc}
+  68:	00000000 	.word	0x00000000
+  6c:	417e8480 	.word	0x417e8480
+
+Disassembly of section .text.SX1276FskComputeRxBwMantExp:
+
+00000000 <SX1276FskComputeRxBwMantExp>:
+SX1276FskComputeRxBwMantExp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:242
+ * \param [IN] rxBwValue Bandwidth value
+ * \param [OUT] mantisse Mantisse of the bandwidth value
+ * \param [OUT] exponent Exponent of the bandwidth value
+ */
+static void SX1276FskComputeRxBwMantExp( uint32_t rxBwValue, uint8_t* mantisse, uint8_t* exponent )
+{
+   0:	e92d 43f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, lr}
+   4:	b08b      	sub	sp, #44	; 0x2c
+   6:	af00      	add	r7, sp, #0
+   8:	60f8      	str	r0, [r7, #12]
+   a:	60b9      	str	r1, [r7, #8]
+   c:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:243
+    uint8_t tmpExp = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	f887 3027 	strb.w	r3, [r7, #39]	; 0x27
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:244
+    uint8_t tmpMant = 0;
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	f887 3026 	strb.w	r3, [r7, #38]	; 0x26
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:246
+
+    double tmpRxBw = 0;
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	e9c7 2304 	strd	r2, r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:247
+    double rxBwMin = 10e6;
+  2a:	a343      	add	r3, pc, #268	; (adr r3, 138 <SX1276FskComputeRxBwMantExp+0x138>)
+  2c:	e9d3 2300 	ldrd	r2, r3, [r3]
+  30:	e9c7 2306 	strd	r2, r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:249
+
+    for( tmpExp = 0; tmpExp < 8; tmpExp++ )
+  34:	f04f 0300 	mov.w	r3, #0
+  38:	f887 3027 	strb.w	r3, [r7, #39]	; 0x27
+  3c:	e073      	b.n	126 <SX1276FskComputeRxBwMantExp+0x126>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:251
+    {
+        for( tmpMant = 16; tmpMant <= 24; tmpMant += 4 )
+  3e:	f04f 0310 	mov.w	r3, #16
+  42:	f887 3026 	strb.w	r3, [r7, #38]	; 0x26
+  46:	e064      	b.n	112 <SX1276FskComputeRxBwMantExp+0x112>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:255
+        {
+            if( ( SX1276->RegOpMode & RF_OPMODE_MODULATIONTYPE_FSK ) == RF_OPMODE_MODULATIONTYPE_FSK )
+            {
+                tmpRxBw = ( double )XTAL_FREQ / ( tmpMant * ( double )pow( 2, tmpExp + 2 ) );
+  48:	f897 3026 	ldrb.w	r3, [r7, #38]	; 0x26
+  4c:	4618      	mov	r0, r3
+  4e:	f7ff fffe 	bl	0 <__aeabi_i2d>
+  52:	4680      	mov	r8, r0
+  54:	4689      	mov	r9, r1
+  56:	f897 3027 	ldrb.w	r3, [r7, #39]	; 0x27
+  5a:	f103 0302 	add.w	r3, r3, #2
+  5e:	4618      	mov	r0, r3
+  60:	f7ff fffe 	bl	0 <__aeabi_i2d>
+  64:	4602      	mov	r2, r0
+  66:	460b      	mov	r3, r1
+  68:	f04f 0000 	mov.w	r0, #0
+  6c:	f04f 4180 	mov.w	r1, #1073741824	; 0x40000000
+  70:	f7ff fffe 	bl	0 <pow>
+  74:	4602      	mov	r2, r0
+  76:	460b      	mov	r3, r1
+  78:	4640      	mov	r0, r8
+  7a:	4649      	mov	r1, r9
+  7c:	f7ff fffe 	bl	0 <__aeabi_dmul>
+  80:	4602      	mov	r2, r0
+  82:	460b      	mov	r3, r1
+  84:	a12e      	add	r1, pc, #184	; (adr r1, 140 <SX1276FskComputeRxBwMantExp+0x140>)
+  86:	e9d1 0100 	ldrd	r0, r1, [r1]
+  8a:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  8e:	4602      	mov	r2, r0
+  90:	460b      	mov	r3, r1
+  92:	e9c7 2304 	strd	r2, r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:261
+            }
+            else
+            {
+                tmpRxBw = ( double )XTAL_FREQ / ( tmpMant * ( double )pow( 2, tmpExp + 3 ) );
+            }
+            if( fabs( tmpRxBw - rxBwValue ) < rxBwMin )
+  96:	68f8      	ldr	r0, [r7, #12]
+  98:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  9c:	4602      	mov	r2, r0
+  9e:	460b      	mov	r3, r1
+  a0:	e9d7 0104 	ldrd	r0, r1, [r7, #16]
+  a4:	f7ff fffe 	bl	0 <__aeabi_dsub>
+  a8:	4602      	mov	r2, r0
+  aa:	460b      	mov	r3, r1
+  ac:	4614      	mov	r4, r2
+  ae:	f023 4500 	bic.w	r5, r3, #2147483648	; 0x80000000
+  b2:	f04f 0301 	mov.w	r3, #1
+  b6:	461e      	mov	r6, r3
+  b8:	4620      	mov	r0, r4
+  ba:	4629      	mov	r1, r5
+  bc:	e9d7 2306 	ldrd	r2, r3, [r7, #24]
+  c0:	f7ff fffe 	bl	0 <__aeabi_dcmplt>
+  c4:	4603      	mov	r3, r0
+  c6:	2b00      	cmp	r3, #0
+  c8:	d102      	bne.n	d0 <SX1276FskComputeRxBwMantExp+0xd0>
+  ca:	f04f 0300 	mov.w	r3, #0
+  ce:	461e      	mov	r6, r3
+  d0:	b2f3      	uxtb	r3, r6
+  d2:	2b00      	cmp	r3, #0
+  d4:	d017      	beq.n	106 <SX1276FskComputeRxBwMantExp+0x106>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:263
+            {
+                rxBwMin = fabs( tmpRxBw - rxBwValue );
+  d6:	68f8      	ldr	r0, [r7, #12]
+  d8:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  dc:	4602      	mov	r2, r0
+  de:	460b      	mov	r3, r1
+  e0:	e9d7 0104 	ldrd	r0, r1, [r7, #16]
+  e4:	f7ff fffe 	bl	0 <__aeabi_dsub>
+  e8:	4602      	mov	r2, r0
+  ea:	460b      	mov	r3, r1
+  ec:	4611      	mov	r1, r2
+  ee:	61b9      	str	r1, [r7, #24]
+  f0:	f023 4300 	bic.w	r3, r3, #2147483648	; 0x80000000
+  f4:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:264
+                *mantisse = tmpMant;
+  f6:	68bb      	ldr	r3, [r7, #8]
+  f8:	f897 2026 	ldrb.w	r2, [r7, #38]	; 0x26
+  fc:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:265
+                *exponent = tmpExp;
+  fe:	687b      	ldr	r3, [r7, #4]
+ 100:	f897 2027 	ldrb.w	r2, [r7, #39]	; 0x27
+ 104:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:251
+    double tmpRxBw = 0;
+    double rxBwMin = 10e6;
+
+    for( tmpExp = 0; tmpExp < 8; tmpExp++ )
+    {
+        for( tmpMant = 16; tmpMant <= 24; tmpMant += 4 )
+ 106:	f897 3026 	ldrb.w	r3, [r7, #38]	; 0x26
+ 10a:	f103 0304 	add.w	r3, r3, #4
+ 10e:	f887 3026 	strb.w	r3, [r7, #38]	; 0x26
+ 112:	f897 3026 	ldrb.w	r3, [r7, #38]	; 0x26
+ 116:	2b18      	cmp	r3, #24
+ 118:	d996      	bls.n	48 <SX1276FskComputeRxBwMantExp+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:249
+    uint8_t tmpMant = 0;
+
+    double tmpRxBw = 0;
+    double rxBwMin = 10e6;
+
+    for( tmpExp = 0; tmpExp < 8; tmpExp++ )
+ 11a:	f897 3027 	ldrb.w	r3, [r7, #39]	; 0x27
+ 11e:	f103 0301 	add.w	r3, r3, #1
+ 122:	f887 3027 	strb.w	r3, [r7, #39]	; 0x27
+ 126:	f897 3027 	ldrb.w	r3, [r7, #39]	; 0x27
+ 12a:	2b07      	cmp	r3, #7
+ 12c:	d987      	bls.n	3e <SX1276FskComputeRxBwMantExp+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:269
+                *mantisse = tmpMant;
+                *exponent = tmpExp;
+            }
+        }
+    }
+}
+ 12e:	f107 072c 	add.w	r7, r7, #44	; 0x2c
+ 132:	46bd      	mov	sp, r7
+ 134:	e8bd 83f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, pc}
+ 138:	00000000 	.word	0x00000000
+ 13c:	416312d0 	.word	0x416312d0
+ 140:	00000000 	.word	0x00000000
+ 144:	417e8480 	.word	0x417e8480
+
+Disassembly of section .text.SX1276FskSetDccBw:
+
+00000000 <SX1276FskSetDccBw>:
+SX1276FskSetDccBw():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:272
+
+void SX1276FskSetDccBw( uint8_t* reg, uint32_t dccValue, uint32_t rxBwValue )
+{
+   0:	b086b580 	.word	0xb086b580
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:273
+    uint8_t mantisse = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:274
+    uint8_t exponent = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	75bb      	strb	r3, [r7, #22]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:276
+    
+    if( reg == &SX1276->RegRxBw )
+  18:	4b38      	ldr	r3, [pc, #224]	; (fc <SX1276FskSetDccBw+0xfc>)
+  1a:	681b      	ldr	r3, [r3, #0]
+  1c:	f103 0212 	add.w	r2, r3, #18
+  20:	68fb      	ldr	r3, [r7, #12]
+  22:	429a      	cmp	r2, r3
+  24:	d107      	bne.n	36 <SX1276FskSetDccBw+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:278
+    {
+        *reg = ( uint8_t )dccValue & 0x60;
+  26:	68bb      	ldr	r3, [r7, #8]
+  28:	b2db      	uxtb	r3, r3
+  2a:	f003 0360 	and.w	r3, r3, #96	; 0x60
+  2e:	b2da      	uxtb	r2, r3
+  30:	68fb      	ldr	r3, [r7, #12]
+  32:	701a      	strb	r2, [r3, #0]
+  34:	e003      	b.n	3e <SX1276FskSetDccBw+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:282
+    }
+    else
+    {
+        *reg = 0;
+  36:	68fb      	ldr	r3, [r7, #12]
+  38:	f04f 0200 	mov.w	r2, #0
+  3c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:285
+    }
+
+    SX1276FskComputeRxBwMantExp( rxBwValue, &mantisse, &exponent );
+  3e:	f107 0217 	add.w	r2, r7, #23
+  42:	f107 0316 	add.w	r3, r7, #22
+  46:	6878      	ldr	r0, [r7, #4]
+  48:	4611      	mov	r1, r2
+  4a:	461a      	mov	r2, r3
+  4c:	f7ff fffe 	bl	0 <SX1276FskSetDccBw>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:287
+
+    switch( mantisse )
+  50:	7dfb      	ldrb	r3, [r7, #23]
+  52:	2b14      	cmp	r3, #20
+  54:	d012      	beq.n	7c <SX1276FskSetDccBw+0x7c>
+  56:	2b18      	cmp	r3, #24
+  58:	d01f      	beq.n	9a <SX1276FskSetDccBw+0x9a>
+  5a:	2b10      	cmp	r3, #16
+  5c:	d12c      	bne.n	b8 <SX1276FskSetDccBw+0xb8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:290
+    {
+        case 16:
+            *reg |= ( uint8_t )( 0x00 | ( exponent & 0x07 ) );
+  5e:	68fb      	ldr	r3, [r7, #12]
+  60:	781b      	ldrb	r3, [r3, #0]
+  62:	b2da      	uxtb	r2, r3
+  64:	7dbb      	ldrb	r3, [r7, #22]
+  66:	b2db      	uxtb	r3, r3
+  68:	f003 0307 	and.w	r3, r3, #7
+  6c:	b2db      	uxtb	r3, r3
+  6e:	ea42 0303 	orr.w	r3, r2, r3
+  72:	b2db      	uxtb	r3, r3
+  74:	b2da      	uxtb	r2, r3
+  76:	68fb      	ldr	r3, [r7, #12]
+  78:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:291
+            break;
+  7a:	e01e      	b.n	ba <SX1276FskSetDccBw+0xba>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:293
+        case 20:
+            *reg |= ( uint8_t )( 0x08 | ( exponent & 0x07 ) );
+  7c:	68fb      	ldr	r3, [r7, #12]
+  7e:	781a      	ldrb	r2, [r3, #0]
+  80:	7dbb      	ldrb	r3, [r7, #22]
+  82:	f003 0307 	and.w	r3, r3, #7
+  86:	b2db      	uxtb	r3, r3
+  88:	ea42 0303 	orr.w	r3, r2, r3
+  8c:	b2db      	uxtb	r3, r3
+  8e:	f043 0308 	orr.w	r3, r3, #8
+  92:	b2da      	uxtb	r2, r3
+  94:	68fb      	ldr	r3, [r7, #12]
+  96:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:294
+            break;
+  98:	e00f      	b.n	ba <SX1276FskSetDccBw+0xba>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:296
+        case 24:
+            *reg |= ( uint8_t )( 0x10 | ( exponent & 0x07 ) );
+  9a:	68fb      	ldr	r3, [r7, #12]
+  9c:	781a      	ldrb	r2, [r3, #0]
+  9e:	7dbb      	ldrb	r3, [r7, #22]
+  a0:	f003 0307 	and.w	r3, r3, #7
+  a4:	b2db      	uxtb	r3, r3
+  a6:	ea42 0303 	orr.w	r3, r2, r3
+  aa:	b2db      	uxtb	r3, r3
+  ac:	f043 0310 	orr.w	r3, r3, #16
+  b0:	b2da      	uxtb	r2, r3
+  b2:	68fb      	ldr	r3, [r7, #12]
+  b4:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:297
+            break;
+  b6:	e000      	b.n	ba <SX1276FskSetDccBw+0xba>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:300
+        default:
+            // Something went terribely wrong
+            break;
+  b8:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:303
+    }
+
+    if( reg == &SX1276->RegRxBw )
+  ba:	4b10      	ldr	r3, [pc, #64]	; (fc <SX1276FskSetDccBw+0xfc>)
+  bc:	681b      	ldr	r3, [r3, #0]
+  be:	f103 0212 	add.w	r2, r3, #18
+  c2:	68fb      	ldr	r3, [r7, #12]
+  c4:	429a      	cmp	r2, r3
+  c6:	d10a      	bne.n	de <SX1276FskSetDccBw+0xde>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:305
+    {
+        SX1276Write( REG_RXBW, *reg );
+  c8:	68fb      	ldr	r3, [r7, #12]
+  ca:	781b      	ldrb	r3, [r3, #0]
+  cc:	f04f 0012 	mov.w	r0, #18
+  d0:	4619      	mov	r1, r3
+  d2:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:306
+        FskSettings.RxBw = rxBwValue;
+  d6:	4b0a      	ldr	r3, [pc, #40]	; (100 <SX1276FskSetDccBw+0x100>)
+  d8:	687a      	ldr	r2, [r7, #4]
+  da:	611a      	str	r2, [r3, #16]
+  dc:	e009      	b.n	f2 <SX1276FskSetDccBw+0xf2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:310
+    }
+    else
+    {
+        SX1276Write( REG_AFCBW, *reg );
+  de:	68fb      	ldr	r3, [r7, #12]
+  e0:	781b      	ldrb	r3, [r3, #0]
+  e2:	f04f 0013 	mov.w	r0, #19
+  e6:	4619      	mov	r1, r3
+  e8:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:311
+        FskSettings.RxBwAfc = rxBwValue;
+  ec:	4b04      	ldr	r3, [pc, #16]	; (100 <SX1276FskSetDccBw+0x100>)
+  ee:	687a      	ldr	r2, [r7, #4]
+  f0:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:313
+    }
+}
+  f2:	f107 0718 	add.w	r7, r7, #24
+  f6:	46bd      	mov	sp, r7
+  f8:	bd80      	pop	{r7, pc}
+  fa:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskGetBw:
+
+00000000 <SX1276FskGetBw>:
+SX1276FskGetBw():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:316
+
+uint32_t SX1276FskGetBw( uint8_t* reg )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:317
+    uint32_t rxBwValue = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:318
+    uint8_t mantisse = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:319
+    switch( ( *reg & 0x18 ) >> 3 )
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	781b      	ldrb	r3, [r3, #0]
+  18:	f003 0318 	and.w	r3, r3, #24
+  1c:	ea4f 03e3 	mov.w	r3, r3, asr #3
+  20:	2b01      	cmp	r3, #1
+  22:	d007      	beq.n	34 <SX1276FskGetBw+0x34>
+  24:	2b02      	cmp	r3, #2
+  26:	d009      	beq.n	3c <SX1276FskGetBw+0x3c>
+  28:	2b00      	cmp	r3, #0
+  2a:	d10b      	bne.n	44 <SX1276FskGetBw+0x44>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:322
+    {
+        case 0:
+            mantisse = 16;
+  2c:	f04f 0310 	mov.w	r3, #16
+  30:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:323
+            break;
+  32:	e008      	b.n	46 <SX1276FskGetBw+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:325
+        case 1:
+            mantisse = 20;
+  34:	f04f 0314 	mov.w	r3, #20
+  38:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:326
+            break;
+  3a:	e004      	b.n	46 <SX1276FskGetBw+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:328
+        case 2:
+            mantisse = 24;
+  3c:	f04f 0318 	mov.w	r3, #24
+  40:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:329
+            break;
+  42:	e000      	b.n	46 <SX1276FskGetBw+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:331
+        default:
+            break;
+  44:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:333
+    }
+    rxBwValue = SX1276FskComputeRxBw( mantisse, ( uint8_t )*reg & 0x07 );
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	781b      	ldrb	r3, [r3, #0]
+  4a:	f003 0307 	and.w	r3, r3, #7
+  4e:	b2db      	uxtb	r3, r3
+  50:	7bfa      	ldrb	r2, [r7, #15]
+  52:	4610      	mov	r0, r2
+  54:	4619      	mov	r1, r3
+  56:	f7ff fffe 	bl	0 <SX1276FskGetBw>
+  5a:	60b8      	str	r0, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:334
+    if( reg == &SX1276->RegRxBw )
+  5c:	4b0b      	ldr	r3, [pc, #44]	; (8c <SX1276FskGetBw+0x8c>)
+  5e:	681b      	ldr	r3, [r3, #0]
+  60:	f103 0212 	add.w	r2, r3, #18
+  64:	687b      	ldr	r3, [r7, #4]
+  66:	429a      	cmp	r2, r3
+  68:	d105      	bne.n	76 <SX1276FskGetBw+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:336
+    {
+        return FskSettings.RxBw = rxBwValue;
+  6a:	4b09      	ldr	r3, [pc, #36]	; (90 <SX1276FskGetBw+0x90>)
+  6c:	68ba      	ldr	r2, [r7, #8]
+  6e:	611a      	str	r2, [r3, #16]
+  70:	4b07      	ldr	r3, [pc, #28]	; (90 <SX1276FskGetBw+0x90>)
+  72:	691b      	ldr	r3, [r3, #16]
+  74:	e004      	b.n	80 <SX1276FskGetBw+0x80>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:340
+    }
+    else
+    {
+        return FskSettings.RxBwAfc = rxBwValue;
+  76:	4b06      	ldr	r3, [pc, #24]	; (90 <SX1276FskGetBw+0x90>)
+  78:	68ba      	ldr	r2, [r7, #8]
+  7a:	615a      	str	r2, [r3, #20]
+  7c:	4b04      	ldr	r3, [pc, #16]	; (90 <SX1276FskGetBw+0x90>)
+  7e:	695b      	ldr	r3, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:342
+    }
+}
+  80:	4618      	mov	r0, r3
+  82:	f107 0710 	add.w	r7, r7, #16
+  86:	46bd      	mov	sp, r7
+  88:	bd80      	pop	{r7, pc}
+  8a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskSetPacketCrcOn:
+
+00000000 <SX1276FskSetPacketCrcOn>:
+SX1276FskSetPacketCrcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:345
+
+void SX1276FskSetPacketCrcOn( bool enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:346
+    SX1276Read( REG_PACKETCONFIG1, &SX1276->RegPacketConfig1 );
+   a:	4b16      	ldr	r3, [pc, #88]	; (64 <SX1276FskSetPacketCrcOn+0x64>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0330 	add.w	r3, r3, #48	; 0x30
+  12:	f04f 0030 	mov.w	r0, #48	; 0x30
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:347
+    SX1276->RegPacketConfig1 = ( SX1276->RegPacketConfig1 & RF_PACKETCONFIG1_CRC_MASK ) | ( enable << 4 );
+  1c:	4b11      	ldr	r3, [pc, #68]	; (64 <SX1276FskSetPacketCrcOn+0x64>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a10      	ldr	r2, [pc, #64]	; (64 <SX1276FskSetPacketCrcOn+0x64>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f892 2030 	ldrb.w	r2, [r2, #48]	; 0x30
+  28:	b2d2      	uxtb	r2, r2
+  2a:	f022 0210 	bic.w	r2, r2, #16
+  2e:	b2d1      	uxtb	r1, r2
+  30:	79fa      	ldrb	r2, [r7, #7]
+  32:	ea4f 1202 	mov.w	r2, r2, lsl #4
+  36:	b2d2      	uxtb	r2, r2
+  38:	ea41 0202 	orr.w	r2, r1, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	b2d2      	uxtb	r2, r2
+  40:	f883 2030 	strb.w	r2, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:348
+    SX1276Write( REG_PACKETCONFIG1, SX1276->RegPacketConfig1 );
+  44:	4b07      	ldr	r3, [pc, #28]	; (64 <SX1276FskSetPacketCrcOn+0x64>)
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	f893 3030 	ldrb.w	r3, [r3, #48]	; 0x30
+  4c:	f04f 0030 	mov.w	r0, #48	; 0x30
+  50:	4619      	mov	r1, r3
+  52:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:349
+    FskSettings.CrcOn = enable;
+  56:	4b04      	ldr	r3, [pc, #16]	; (68 <SX1276FskSetPacketCrcOn+0x68>)
+  58:	79fa      	ldrb	r2, [r7, #7]
+  5a:	761a      	strb	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:350
+}
+  5c:	f107 0708 	add.w	r7, r7, #8
+  60:	46bd      	mov	sp, r7
+  62:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276FskGetPacketCrcOn:
+
+00000000 <SX1276FskGetPacketCrcOn>:
+SX1276FskGetPacketCrcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:353
+
+bool SX1276FskGetPacketCrcOn( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:354
+    SX1276Read( REG_PACKETCONFIG1, &SX1276->RegPacketConfig1 );
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <SX1276FskGetPacketCrcOn+0x3c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0330 	add.w	r3, r3, #48	; 0x30
+   c:	f04f 0030 	mov.w	r0, #48	; 0x30
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:355
+    FskSettings.CrcOn = ( SX1276->RegPacketConfig1 & RF_PACKETCONFIG1_CRC_ON ) >> 4;
+  16:	4b09      	ldr	r3, [pc, #36]	; (3c <SX1276FskGetPacketCrcOn+0x3c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 3030 	ldrb.w	r3, [r3, #48]	; 0x30
+  1e:	f003 0310 	and.w	r3, r3, #16
+  22:	ea4f 1323 	mov.w	r3, r3, asr #4
+  26:	2b00      	cmp	r3, #0
+  28:	bf0c      	ite	eq
+  2a:	2300      	moveq	r3, #0
+  2c:	2301      	movne	r3, #1
+  2e:	b2da      	uxtb	r2, r3
+  30:	4b03      	ldr	r3, [pc, #12]	; (40 <SX1276FskGetPacketCrcOn+0x40>)
+  32:	761a      	strb	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:356
+    return FskSettings.CrcOn;
+  34:	4b02      	ldr	r3, [pc, #8]	; (40 <SX1276FskGetPacketCrcOn+0x40>)
+  36:	7e1b      	ldrb	r3, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:357
+}
+  38:	4618      	mov	r0, r3
+  3a:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276FskSetAfcOn:
+
+00000000 <SX1276FskSetAfcOn>:
+SX1276FskSetAfcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:360
+
+void SX1276FskSetAfcOn( bool enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:361
+    SX1276Read( REG_RXCONFIG, &SX1276->RegRxConfig );
+   a:	4b15      	ldr	r3, [pc, #84]	; (60 <SX1276FskSetAfcOn+0x60>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 030d 	add.w	r3, r3, #13
+  12:	f04f 000d 	mov.w	r0, #13
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:362
+    SX1276->RegRxConfig = ( SX1276->RegRxConfig & RF_RXCONFIG_AFCAUTO_MASK ) | ( enable << 4 );
+  1c:	4b10      	ldr	r3, [pc, #64]	; (60 <SX1276FskSetAfcOn+0x60>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0f      	ldr	r2, [pc, #60]	; (60 <SX1276FskSetAfcOn+0x60>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7b52      	ldrb	r2, [r2, #13]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 0210 	bic.w	r2, r2, #16
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea4f 1202 	mov.w	r2, r2, lsl #4
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	735a      	strb	r2, [r3, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:363
+    SX1276Write( REG_RXCONFIG, SX1276->RegRxConfig );
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <SX1276FskSetAfcOn+0x60>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7b5b      	ldrb	r3, [r3, #13]
+  46:	f04f 000d 	mov.w	r0, #13
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:364
+    FskSettings.AfcOn = enable;
+  50:	4b04      	ldr	r3, [pc, #16]	; (64 <SX1276FskSetAfcOn+0x64>)
+  52:	79fa      	ldrb	r2, [r7, #7]
+  54:	765a      	strb	r2, [r3, #25]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:365
+}
+  56:	f107 0708 	add.w	r7, r7, #8
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskGetAfcOn:
+
+00000000 <SX1276FskGetAfcOn>:
+SX1276FskGetAfcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:368
+
+bool SX1276FskGetAfcOn( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:369
+    SX1276Read( REG_RXCONFIG, &SX1276->RegRxConfig );
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <SX1276FskGetAfcOn+0x3c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 030d 	add.w	r3, r3, #13
+   c:	f04f 000d 	mov.w	r0, #13
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:370
+    FskSettings.AfcOn = ( SX1276->RegRxConfig & RF_RXCONFIG_AFCAUTO_ON ) >> 4;
+  16:	4b09      	ldr	r3, [pc, #36]	; (3c <SX1276FskGetAfcOn+0x3c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7b5b      	ldrb	r3, [r3, #13]
+  1c:	f003 0310 	and.w	r3, r3, #16
+  20:	ea4f 1323 	mov.w	r3, r3, asr #4
+  24:	2b00      	cmp	r3, #0
+  26:	bf0c      	ite	eq
+  28:	2300      	moveq	r3, #0
+  2a:	2301      	movne	r3, #1
+  2c:	b2da      	uxtb	r2, r3
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <SX1276FskGetAfcOn+0x40>)
+  30:	765a      	strb	r2, [r3, #25]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:371
+    return FskSettings.AfcOn;
+  32:	4b03      	ldr	r3, [pc, #12]	; (40 <SX1276FskGetAfcOn+0x40>)
+  34:	7e5b      	ldrb	r3, [r3, #25]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:372
+}
+  36:	4618      	mov	r0, r3
+  38:	bd80      	pop	{r7, pc}
+  3a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskSetPayloadLength:
+
+00000000 <SX1276FskSetPayloadLength>:
+SX1276FskSetPayloadLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:375
+
+void SX1276FskSetPayloadLength( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:376
+    SX1276->RegPayloadLength = value;
+   a:	4b0a      	ldr	r3, [pc, #40]	; (34 <SX1276FskSetPayloadLength+0x34>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	79fa      	ldrb	r2, [r7, #7]
+  10:	f883 2032 	strb.w	r2, [r3, #50]	; 0x32
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:377
+    SX1276Write( REG_PAYLOADLENGTH, SX1276->RegPayloadLength );
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <SX1276FskSetPayloadLength+0x34>)
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f893 3032 	ldrb.w	r3, [r3, #50]	; 0x32
+  1c:	f04f 0032 	mov.w	r0, #50	; 0x32
+  20:	4619      	mov	r1, r3
+  22:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:378
+    FskSettings.PayloadLength = value;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <SX1276FskSetPayloadLength+0x38>)
+  28:	79fa      	ldrb	r2, [r7, #7]
+  2a:	769a      	strb	r2, [r3, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:379
+}
+  2c:	f107 0708 	add.w	r7, r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276FskGetPayloadLength:
+
+00000000 <SX1276FskGetPayloadLength>:
+SX1276FskGetPayloadLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:382
+
+uint8_t SX1276FskGetPayloadLength( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:383
+    SX1276Read( REG_PAYLOADLENGTH, &SX1276->RegPayloadLength );
+   4:	4b09      	ldr	r3, [pc, #36]	; (2c <SX1276FskGetPayloadLength+0x2c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0332 	add.w	r3, r3, #50	; 0x32
+   c:	f04f 0032 	mov.w	r0, #50	; 0x32
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:384
+    FskSettings.PayloadLength = SX1276->RegPayloadLength;
+  16:	4b05      	ldr	r3, [pc, #20]	; (2c <SX1276FskGetPayloadLength+0x2c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 2032 	ldrb.w	r2, [r3, #50]	; 0x32
+  1e:	4b04      	ldr	r3, [pc, #16]	; (30 <SX1276FskGetPayloadLength+0x30>)
+  20:	769a      	strb	r2, [r3, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:385
+    return FskSettings.PayloadLength;
+  22:	4b03      	ldr	r3, [pc, #12]	; (30 <SX1276FskGetPayloadLength+0x30>)
+  24:	7e9b      	ldrb	r3, [r3, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:386
+}
+  26:	4618      	mov	r0, r3
+  28:	bd80      	pop	{r7, pc}
+  2a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276FskSetPa20dBm:
+
+00000000 <SX1276FskSetPa20dBm>:
+SX1276FskSetPa20dBm():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:389
+
+void SX1276FskSetPa20dBm( bool enale )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:390
+    SX1276Read( REG_PADAC, &SX1276->RegPaDac );
+   a:	4b1b      	ldr	r3, [pc, #108]	; (78 <SX1276FskSetPa20dBm+0x78>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 034d 	add.w	r3, r3, #77	; 0x4d
+  12:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:391
+    SX1276Read( REG_PACONFIG, &SX1276->RegPaConfig );
+  1c:	4b16      	ldr	r3, [pc, #88]	; (78 <SX1276FskSetPa20dBm+0x78>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	f103 0309 	add.w	r3, r3, #9
+  24:	f04f 0009 	mov.w	r0, #9
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:393
+
+    if( ( SX1276->RegPaConfig & RF_PACONFIG_PASELECT_PABOOST ) == RF_PACONFIG_PASELECT_PABOOST )
+  2e:	4b12      	ldr	r3, [pc, #72]	; (78 <SX1276FskSetPa20dBm+0x78>)
+  30:	681b      	ldr	r3, [r3, #0]
+  32:	7a5b      	ldrb	r3, [r3, #9]
+  34:	b2db      	uxtb	r3, r3
+  36:	b25b      	sxtb	r3, r3
+  38:	2b00      	cmp	r3, #0
+  3a:	da09      	bge.n	50 <SX1276FskSetPa20dBm+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:395
+    {    
+        if( enale == true )
+  3c:	79fb      	ldrb	r3, [r7, #7]
+  3e:	2b00      	cmp	r3, #0
+  40:	d00c      	beq.n	5c <SX1276FskSetPa20dBm+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:397
+        {
+            SX1276->RegPaDac = 0x87;
+  42:	4b0d      	ldr	r3, [pc, #52]	; (78 <SX1276FskSetPa20dBm+0x78>)
+  44:	681b      	ldr	r3, [r3, #0]
+  46:	f04f 0287 	mov.w	r2, #135	; 0x87
+  4a:	f883 204d 	strb.w	r2, [r3, #77]	; 0x4d
+  4e:	e005      	b.n	5c <SX1276FskSetPa20dBm+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:402
+        }
+    }
+    else
+    {
+        SX1276->RegPaDac = 0x84;
+  50:	4b09      	ldr	r3, [pc, #36]	; (78 <SX1276FskSetPa20dBm+0x78>)
+  52:	681b      	ldr	r3, [r3, #0]
+  54:	f04f 0284 	mov.w	r2, #132	; 0x84
+  58:	f883 204d 	strb.w	r2, [r3, #77]	; 0x4d
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:404
+    }
+    SX1276Write( REG_PADAC, SX1276->RegPaDac );
+  5c:	4b06      	ldr	r3, [pc, #24]	; (78 <SX1276FskSetPa20dBm+0x78>)
+  5e:	681b      	ldr	r3, [r3, #0]
+  60:	f893 304d 	ldrb.w	r3, [r3, #77]	; 0x4d
+  64:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  68:	4619      	mov	r1, r3
+  6a:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:405
+}
+  6e:	f107 0708 	add.w	r7, r7, #8
+  72:	46bd      	mov	sp, r7
+  74:	bd80      	pop	{r7, pc}
+  76:	bf00      	nop
+  78:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskGetPa20dBm:
+
+00000000 <SX1276FskGetPa20dBm>:
+SX1276FskGetPa20dBm():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:408
+
+bool SX1276FskGetPa20dBm( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:409
+    SX1276Read( REG_PADAC, &SX1276->RegPaDac );
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <SX1276FskGetPa20dBm+0x30>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 034d 	add.w	r3, r3, #77	; 0x4d
+   c:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:411
+    
+    return ( ( SX1276->RegPaDac & 0x07 ) == 0x07 ) ? true : false;
+  16:	4b06      	ldr	r3, [pc, #24]	; (30 <SX1276FskGetPa20dBm+0x30>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 304d 	ldrb.w	r3, [r3, #77]	; 0x4d
+  1e:	f003 0307 	and.w	r3, r3, #7
+  22:	2b07      	cmp	r3, #7
+  24:	bf14      	ite	ne
+  26:	2300      	movne	r3, #0
+  28:	2301      	moveq	r3, #1
+  2a:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:412
+}
+  2c:	4618      	mov	r0, r3
+  2e:	bd80      	pop	{r7, pc}
+  30:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskSetPAOutput:
+
+00000000 <SX1276FskSetPAOutput>:
+SX1276FskSetPAOutput():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:415
+
+void SX1276FskSetPAOutput( uint8_t outputPin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:416
+    SX1276Read( REG_PACONFIG, &SX1276->RegPaConfig );
+   a:	4b12      	ldr	r3, [pc, #72]	; (54 <SX1276FskSetPAOutput+0x54>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0309 	add.w	r3, r3, #9
+  12:	f04f 0009 	mov.w	r0, #9
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:417
+    SX1276->RegPaConfig = (SX1276->RegPaConfig & RF_PACONFIG_PASELECT_MASK ) | outputPin;
+  1c:	4b0d      	ldr	r3, [pc, #52]	; (54 <SX1276FskSetPAOutput+0x54>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0c      	ldr	r2, [pc, #48]	; (54 <SX1276FskSetPAOutput+0x54>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7a52      	ldrb	r2, [r2, #9]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f002 027f 	and.w	r2, r2, #127	; 0x7f
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea41 0202 	orr.w	r2, r1, r2
+  34:	b2d2      	uxtb	r2, r2
+  36:	b2d2      	uxtb	r2, r2
+  38:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:418
+    SX1276Write( REG_PACONFIG, SX1276->RegPaConfig );
+  3a:	4b06      	ldr	r3, [pc, #24]	; (54 <SX1276FskSetPAOutput+0x54>)
+  3c:	681b      	ldr	r3, [r3, #0]
+  3e:	7a5b      	ldrb	r3, [r3, #9]
+  40:	f04f 0009 	mov.w	r0, #9
+  44:	4619      	mov	r1, r3
+  46:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:419
+}
+  4a:	f107 0708 	add.w	r7, r7, #8
+  4e:	46bd      	mov	sp, r7
+  50:	bd80      	pop	{r7, pc}
+  52:	bf00      	nop
+  54:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskGetPAOutput:
+
+00000000 <SX1276FskGetPAOutput>:
+SX1276FskGetPAOutput():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:422
+
+uint8_t SX1276FskGetPAOutput( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:423
+    SX1276Read( REG_PACONFIG, &SX1276->RegPaConfig );
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <SX1276FskGetPAOutput+0x28>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0309 	add.w	r3, r3, #9
+   c:	f04f 0009 	mov.w	r0, #9
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:424
+    return SX1276->RegPaConfig & ~RF_PACONFIG_PASELECT_MASK;
+  16:	4b04      	ldr	r3, [pc, #16]	; (28 <SX1276FskGetPAOutput+0x28>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7a5b      	ldrb	r3, [r3, #9]
+  1c:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+  20:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:425
+}
+  22:	4618      	mov	r0, r3
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+  28:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskSetPaRamp:
+
+00000000 <SX1276FskSetPaRamp>:
+SX1276FskSetPaRamp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:429
+
+
+void SX1276FskSetPaRamp( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:430
+    SX1276Read( REG_PARAMP, &SX1276->RegPaRamp );
+   a:	4b13      	ldr	r3, [pc, #76]	; (58 <SX1276FskSetPaRamp+0x58>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 030a 	add.w	r3, r3, #10
+  12:	f04f 000a 	mov.w	r0, #10
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:431
+    SX1276->RegPaRamp = ( SX1276->RegPaRamp & RF_PARAMP_MASK ) | ( value & ~RF_PARAMP_MASK );
+  1c:	4b0e      	ldr	r3, [pc, #56]	; (58 <SX1276FskSetPaRamp+0x58>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0d      	ldr	r2, [pc, #52]	; (58 <SX1276FskSetPaRamp+0x58>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7a92      	ldrb	r2, [r2, #10]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 020f 	bic.w	r2, r2, #15
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	f002 020f 	and.w	r2, r2, #15
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	729a      	strb	r2, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:432
+    SX1276Write( REG_PARAMP, SX1276->RegPaRamp );
+  40:	4b05      	ldr	r3, [pc, #20]	; (58 <SX1276FskSetPaRamp+0x58>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7a9b      	ldrb	r3, [r3, #10]
+  46:	f04f 000a 	mov.w	r0, #10
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:433
+}
+  50:	f107 0708 	add.w	r7, r7, #8
+  54:	46bd      	mov	sp, r7
+  56:	bd80      	pop	{r7, pc}
+  58:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskGetPaRamp:
+
+00000000 <SX1276FskGetPaRamp>:
+SX1276FskGetPaRamp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:436
+
+uint8_t SX1276FskGetPaRamp( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:437
+    SX1276Read( REG_PARAMP, &SX1276->RegPaRamp );
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <SX1276FskGetPaRamp+0x28>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 030a 	add.w	r3, r3, #10
+   c:	f04f 000a 	mov.w	r0, #10
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:438
+    return SX1276->RegPaRamp & ~RF_PARAMP_MASK;
+  16:	4b04      	ldr	r3, [pc, #16]	; (28 <SX1276FskGetPaRamp+0x28>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7a9b      	ldrb	r3, [r3, #10]
+  1c:	f003 030f 	and.w	r3, r3, #15
+  20:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:439
+}
+  22:	4618      	mov	r0, r3
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+  28:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskSetRssiOffset:
+
+00000000 <SX1276FskSetRssiOffset>:
+SX1276FskSetRssiOffset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:442
+
+void SX1276FskSetRssiOffset( int8_t offset )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:443
+    SX1276Read( REG_RSSICONFIG, &SX1276->RegRssiConfig );
+   a:	4b1b      	ldr	r3, [pc, #108]	; (78 <SX1276FskSetRssiOffset+0x78>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 030e 	add.w	r3, r3, #14
+  12:	f04f 000e 	mov.w	r0, #14
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:444
+    if( offset < 0 )
+  1c:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  20:	2b00      	cmp	r3, #0
+  22:	da10      	bge.n	46 <SX1276FskSetRssiOffset+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:446
+    {
+        offset = ( ~offset & 0x1F );
+  24:	79fb      	ldrb	r3, [r7, #7]
+  26:	ea6f 0303 	mvn.w	r3, r3
+  2a:	b2db      	uxtb	r3, r3
+  2c:	f003 031f 	and.w	r3, r3, #31
+  30:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:447
+        offset += 1;
+  32:	79fb      	ldrb	r3, [r7, #7]
+  34:	f103 0301 	add.w	r3, r3, #1
+  38:	b2db      	uxtb	r3, r3
+  3a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:448
+        offset = -offset;
+  3c:	79fb      	ldrb	r3, [r7, #7]
+  3e:	f1c3 0300 	rsb	r3, r3, #0
+  42:	b2db      	uxtb	r3, r3
+  44:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:450
+    }
+    SX1276->RegRssiConfig |= ( uint8_t )( ( offset & 0x1F ) << 3 );
+  46:	4b0c      	ldr	r3, [pc, #48]	; (78 <SX1276FskSetRssiOffset+0x78>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	4a0b      	ldr	r2, [pc, #44]	; (78 <SX1276FskSetRssiOffset+0x78>)
+  4c:	6812      	ldr	r2, [r2, #0]
+  4e:	7b91      	ldrb	r1, [r2, #14]
+  50:	79fa      	ldrb	r2, [r7, #7]
+  52:	ea4f 02c2 	mov.w	r2, r2, lsl #3
+  56:	b2d2      	uxtb	r2, r2
+  58:	ea41 0202 	orr.w	r2, r1, r2
+  5c:	b2d2      	uxtb	r2, r2
+  5e:	739a      	strb	r2, [r3, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:451
+    SX1276Write( REG_RSSICONFIG, SX1276->RegRssiConfig );
+  60:	4b05      	ldr	r3, [pc, #20]	; (78 <SX1276FskSetRssiOffset+0x78>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	7b9b      	ldrb	r3, [r3, #14]
+  66:	f04f 000e 	mov.w	r0, #14
+  6a:	4619      	mov	r1, r3
+  6c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:452
+}
+  70:	f107 0708 	add.w	r7, r7, #8
+  74:	46bd      	mov	sp, r7
+  76:	bd80      	pop	{r7, pc}
+  78:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskGetRssiOffset:
+
+00000000 <SX1276FskGetRssiOffset>:
+SX1276FskGetRssiOffset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:455
+
+int8_t SX1276FskGetRssiOffset( void )
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:456
+    SX1276Read( REG_RSSICONFIG, &SX1276->RegRssiConfig );
+   6:	4b16      	ldr	r3, [pc, #88]	; (60 <SX1276FskGetRssiOffset+0x60>)
+   8:	681b      	ldr	r3, [r3, #0]
+   a:	f103 030e 	add.w	r3, r3, #14
+   e:	f04f 000e 	mov.w	r0, #14
+  12:	4619      	mov	r1, r3
+  14:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:457
+    int8_t offset = SX1276->RegRssiConfig >> 3;
+  18:	4b11      	ldr	r3, [pc, #68]	; (60 <SX1276FskGetRssiOffset+0x60>)
+  1a:	681b      	ldr	r3, [r3, #0]
+  1c:	7b9b      	ldrb	r3, [r3, #14]
+  1e:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+  22:	b2db      	uxtb	r3, r3
+  24:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:458
+    if( ( offset & 0x10 ) == 0x10 )
+  26:	79fb      	ldrb	r3, [r7, #7]
+  28:	f003 0310 	and.w	r3, r3, #16
+  2c:	2b00      	cmp	r3, #0
+  2e:	d010      	beq.n	52 <SX1276FskGetRssiOffset+0x52>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:460
+    {
+        offset = ( ~offset & 0x1F );
+  30:	79fb      	ldrb	r3, [r7, #7]
+  32:	ea6f 0303 	mvn.w	r3, r3
+  36:	b2db      	uxtb	r3, r3
+  38:	f003 031f 	and.w	r3, r3, #31
+  3c:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:461
+        offset += 1;
+  3e:	79fb      	ldrb	r3, [r7, #7]
+  40:	f103 0301 	add.w	r3, r3, #1
+  44:	b2db      	uxtb	r3, r3
+  46:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:462
+        offset = -offset;
+  48:	79fb      	ldrb	r3, [r7, #7]
+  4a:	f1c3 0300 	rsb	r3, r3, #0
+  4e:	b2db      	uxtb	r3, r3
+  50:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:464
+    }
+    return offset;
+  52:	79fb      	ldrb	r3, [r7, #7]
+  54:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:465
+}
+  56:	4618      	mov	r0, r3
+  58:	f107 0708 	add.w	r7, r7, #8
+  5c:	46bd      	mov	sp, r7
+  5e:	bd80      	pop	{r7, pc}
+  60:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276FskGetRawTemp:
+
+00000000 <SX1276FskGetRawTemp>:
+SX1276FskGetRawTemp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:468
+
+int8_t SX1276FskGetRawTemp( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:469
+    int8_t temp = 0;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:474
+    uint8_t previousOpMode;
+    uint32_t startTick;
+    
+    // Enable Temperature reading
+    SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+   c:	4b43      	ldr	r3, [pc, #268]	; (11c <SX1276FskGetRawTemp+0x11c>)
+   e:	681b      	ldr	r3, [r3, #0]
+  10:	f103 033b 	add.w	r3, r3, #59	; 0x3b
+  14:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  18:	4619      	mov	r1, r3
+  1a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:475
+    SX1276->RegImageCal = ( SX1276->RegImageCal & RF_IMAGECAL_TEMPMONITOR_MASK ) | RF_IMAGECAL_TEMPMONITOR_ON;
+  1e:	4b3f      	ldr	r3, [pc, #252]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  20:	681b      	ldr	r3, [r3, #0]
+  22:	4a3e      	ldr	r2, [pc, #248]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  24:	6812      	ldr	r2, [r2, #0]
+  26:	f892 203b 	ldrb.w	r2, [r2, #59]	; 0x3b
+  2a:	f022 0201 	bic.w	r2, r2, #1
+  2e:	b2d2      	uxtb	r2, r2
+  30:	f883 203b 	strb.w	r2, [r3, #59]	; 0x3b
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:476
+    SX1276Write( REG_IMAGECAL, SX1276->RegImageCal );
+  34:	4b39      	ldr	r3, [pc, #228]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  36:	681b      	ldr	r3, [r3, #0]
+  38:	f893 303b 	ldrb.w	r3, [r3, #59]	; 0x3b
+  3c:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  40:	4619      	mov	r1, r3
+  42:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:479
+
+    // save current Op Mode
+    SX1276Read( REG_OPMODE, &SX1276->RegOpMode );
+  46:	4b35      	ldr	r3, [pc, #212]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	f103 0301 	add.w	r3, r3, #1
+  4e:	f04f 0001 	mov.w	r0, #1
+  52:	4619      	mov	r1, r3
+  54:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:480
+    previousOpMode = SX1276->RegOpMode;
+  58:	4b30      	ldr	r3, [pc, #192]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  5a:	681b      	ldr	r3, [r3, #0]
+  5c:	785b      	ldrb	r3, [r3, #1]
+  5e:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:483
+
+    // put device in FSK RxSynth
+    SX1276->RegOpMode = RF_OPMODE_SYNTHESIZER_RX;
+  60:	4b2e      	ldr	r3, [pc, #184]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	f04f 0204 	mov.w	r2, #4
+  68:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:484
+    SX1276Write( REG_OPMODE, SX1276->RegOpMode );
+  6a:	4b2c      	ldr	r3, [pc, #176]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  6c:	681b      	ldr	r3, [r3, #0]
+  6e:	785b      	ldrb	r3, [r3, #1]
+  70:	f04f 0001 	mov.w	r0, #1
+  74:	4619      	mov	r1, r3
+  76:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:487
+
+    // Wait 1ms
+    startTick = GET_TICK_COUNT( );
+  7a:	4b29      	ldr	r3, [pc, #164]	; (120 <SX1276FskGetRawTemp+0x120>)
+  7c:	681b      	ldr	r3, [r3, #0]
+  7e:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:488
+    while( ( GET_TICK_COUNT( ) - startTick ) < TICK_RATE_MS( 1 ) );  
+  80:	bf00      	nop
+  82:	4b27      	ldr	r3, [pc, #156]	; (120 <SX1276FskGetRawTemp+0x120>)
+  84:	681a      	ldr	r2, [r3, #0]
+  86:	683b      	ldr	r3, [r7, #0]
+  88:	429a      	cmp	r2, r3
+  8a:	d0fa      	beq.n	82 <SX1276FskGetRawTemp+0x82>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:491
+
+    // Disable Temperature reading
+    SX1276Read( REG_IMAGECAL, &SX1276->RegImageCal );
+  8c:	4b23      	ldr	r3, [pc, #140]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  8e:	681b      	ldr	r3, [r3, #0]
+  90:	f103 033b 	add.w	r3, r3, #59	; 0x3b
+  94:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  98:	4619      	mov	r1, r3
+  9a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:492
+    SX1276->RegImageCal = ( SX1276->RegImageCal & RF_IMAGECAL_TEMPMONITOR_MASK ) | RF_IMAGECAL_TEMPMONITOR_OFF;
+  9e:	4b1f      	ldr	r3, [pc, #124]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  a0:	681b      	ldr	r3, [r3, #0]
+  a2:	4a1e      	ldr	r2, [pc, #120]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  a4:	6812      	ldr	r2, [r2, #0]
+  a6:	f892 203b 	ldrb.w	r2, [r2, #59]	; 0x3b
+  aa:	f042 0201 	orr.w	r2, r2, #1
+  ae:	b2d2      	uxtb	r2, r2
+  b0:	f883 203b 	strb.w	r2, [r3, #59]	; 0x3b
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:493
+    SX1276Write( REG_IMAGECAL, SX1276->RegImageCal );
+  b4:	4b19      	ldr	r3, [pc, #100]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  b6:	681b      	ldr	r3, [r3, #0]
+  b8:	f893 303b 	ldrb.w	r3, [r3, #59]	; 0x3b
+  bc:	f04f 003b 	mov.w	r0, #59	; 0x3b
+  c0:	4619      	mov	r1, r3
+  c2:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:496
+
+    // Read temperature
+    SX1276Read( REG_TEMP, &SX1276->RegTemp );
+  c6:	4b15      	ldr	r3, [pc, #84]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  c8:	681b      	ldr	r3, [r3, #0]
+  ca:	f103 033c 	add.w	r3, r3, #60	; 0x3c
+  ce:	f04f 003c 	mov.w	r0, #60	; 0x3c
+  d2:	4619      	mov	r1, r3
+  d4:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:498
+    
+    temp = SX1276->RegTemp & 0x7F;
+  d8:	4b10      	ldr	r3, [pc, #64]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  da:	681b      	ldr	r3, [r3, #0]
+  dc:	f893 303c 	ldrb.w	r3, [r3, #60]	; 0x3c
+  e0:	b2db      	uxtb	r3, r3
+  e2:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  e6:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:500
+    
+    if( ( SX1276->RegTemp & 0x80 ) == 0x80 )
+  e8:	4b0c      	ldr	r3, [pc, #48]	; (11c <SX1276FskGetRawTemp+0x11c>)
+  ea:	681b      	ldr	r3, [r3, #0]
+  ec:	f893 303c 	ldrb.w	r3, [r3, #60]	; 0x3c
+  f0:	b2db      	uxtb	r3, r3
+  f2:	b25b      	sxtb	r3, r3
+  f4:	2b00      	cmp	r3, #0
+  f6:	da04      	bge.n	102 <SX1276FskGetRawTemp+0x102>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:502
+    {
+        temp *= -1;
+  f8:	79fb      	ldrb	r3, [r7, #7]
+  fa:	f1c3 0300 	rsb	r3, r3, #0
+  fe:	b2db      	uxtb	r3, r3
+ 100:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:506
+    }
+
+    // Reload previous Op Mode
+    SX1276Write( REG_OPMODE, previousOpMode );
+ 102:	79bb      	ldrb	r3, [r7, #6]
+ 104:	f04f 0001 	mov.w	r0, #1
+ 108:	4619      	mov	r1, r3
+ 10a:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:508
+
+    return temp;
+ 10e:	79fb      	ldrb	r3, [r7, #7]
+ 110:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:509
+}
+ 112:	4618      	mov	r0, r3
+ 114:	f107 0708 	add.w	r7, r7, #8
+ 118:	46bd      	mov	sp, r7
+ 11a:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276FskCalibreateTemp:
+
+00000000 <SX1276FskCalibreateTemp>:
+SX1276FskCalibreateTemp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:512
+
+int8_t SX1276FskCalibreateTemp( int8_t actualTemp )
+{
+   0:	b590      	push	{r4, r7, lr}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:513
+    return actualTemp - SX1276FskGetRawTemp( );
+   a:	79fc      	ldrb	r4, [r7, #7]
+   c:	f7ff fffe 	bl	0 <SX1276FskCalibreateTemp>
+  10:	4603      	mov	r3, r0
+  12:	b2db      	uxtb	r3, r3
+  14:	1ae3      	subs	r3, r4, r3
+  16:	b2db      	uxtb	r3, r3
+  18:	b2db      	uxtb	r3, r3
+  1a:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:514
+}
+  1c:	4618      	mov	r0, r3
+  1e:	f107 070c 	add.w	r7, r7, #12
+  22:	46bd      	mov	sp, r7
+  24:	bd90      	pop	{r4, r7, pc}
+  26:	bf00      	nop
+
+Disassembly of section .text.SX1276FskGetTemp:
+
+00000000 <SX1276FskGetTemp>:
+SX1276FskGetTemp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:517
+
+int8_t SX1276FskGetTemp( int8_t compensationFactor )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:518
+    return SX1276FskGetRawTemp( ) + compensationFactor;
+   a:	f7ff fffe 	bl	0 <SX1276FskGetTemp>
+   e:	4603      	mov	r3, r0
+  10:	b2da      	uxtb	r2, r3
+  12:	79fb      	ldrb	r3, [r7, #7]
+  14:	18d3      	adds	r3, r2, r3
+  16:	b2db      	uxtb	r3, r3
+  18:	b2db      	uxtb	r3, r3
+  1a:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-FskMisc.c:519
+}
+  1c:	4618      	mov	r0, r3
+  1e:	f107 0708 	add.w	r7, r7, #8
+  22:	46bd      	mov	sp, r7
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop

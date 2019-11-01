@@ -1,0 +1,2018 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-LoRaMisc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1276-LoRaMisc.o
+
+
+Disassembly of section .text.SX1276LoRaSetRFFrequency:
+
+00000000 <SX1276LoRaSetRFFrequency>:
+SX1276LoRaSetRFFrequency():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:48
+#define FREQ_STEP                                   61.03515625
+
+extern tLoRaSettings LoRaSettings;
+
+void SX1276LoRaSetRFFrequency( uint32_t freq )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:49
+    LoRaSettings.RFFrequency = freq;
+   8:	4b1f      	ldr	r3, [pc, #124]	; (88 <SX1276LoRaSetRFFrequency+0x88>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:51
+
+    freq = ( uint32_t )( ( double )freq / ( double )FREQ_STEP );
+   e:	6878      	ldr	r0, [r7, #4]
+  10:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  14:	4602      	mov	r2, r0
+  16:	460b      	mov	r3, r1
+  18:	4610      	mov	r0, r2
+  1a:	4619      	mov	r1, r3
+  1c:	a318      	add	r3, pc, #96	; (adr r3, 80 <SX1276LoRaSetRFFrequency+0x80>)
+  1e:	e9d3 2300 	ldrd	r2, r3, [r3]
+  22:	f7ff fffe 	bl	0 <__aeabi_ddiv>
+  26:	4602      	mov	r2, r0
+  28:	460b      	mov	r3, r1
+  2a:	4610      	mov	r0, r2
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  32:	4603      	mov	r3, r0
+  34:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:52
+    SX1276LR->RegFrfMsb = ( uint8_t )( ( freq >> 16 ) & 0xFF );
+  36:	4b15      	ldr	r3, [pc, #84]	; (8c <SX1276LoRaSetRFFrequency+0x8c>)
+  38:	681b      	ldr	r3, [r3, #0]
+  3a:	687a      	ldr	r2, [r7, #4]
+  3c:	ea4f 4212 	mov.w	r2, r2, lsr #16
+  40:	b2d2      	uxtb	r2, r2
+  42:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:53
+    SX1276LR->RegFrfMid = ( uint8_t )( ( freq >> 8 ) & 0xFF );
+  44:	4b11      	ldr	r3, [pc, #68]	; (8c <SX1276LoRaSetRFFrequency+0x8c>)
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	687a      	ldr	r2, [r7, #4]
+  4a:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  4e:	b2d2      	uxtb	r2, r2
+  50:	71da      	strb	r2, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:54
+    SX1276LR->RegFrfLsb = ( uint8_t )( freq & 0xFF );
+  52:	4b0e      	ldr	r3, [pc, #56]	; (8c <SX1276LoRaSetRFFrequency+0x8c>)
+  54:	681b      	ldr	r3, [r3, #0]
+  56:	687a      	ldr	r2, [r7, #4]
+  58:	b2d2      	uxtb	r2, r2
+  5a:	721a      	strb	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:55
+    SX1276WriteBuffer( REG_LR_FRFMSB, &SX1276LR->RegFrfMsb, 3 );
+  5c:	4b0b      	ldr	r3, [pc, #44]	; (8c <SX1276LoRaSetRFFrequency+0x8c>)
+  5e:	681b      	ldr	r3, [r3, #0]
+  60:	f103 0306 	add.w	r3, r3, #6
+  64:	f04f 0006 	mov.w	r0, #6
+  68:	4619      	mov	r1, r3
+  6a:	f04f 0203 	mov.w	r2, #3
+  6e:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:56
+}
+  72:	f107 0708 	add.w	r7, r7, #8
+  76:	46bd      	mov	sp, r7
+  78:	bd80      	pop	{r7, pc}
+  7a:	bf00      	nop
+  7c:	f3af 8000 	nop.w
+  80:	00000000 	.word	0x00000000
+  84:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276LoRaGetRFFrequency:
+
+00000000 <SX1276LoRaGetRFFrequency>:
+SX1276LoRaGetRFFrequency():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:59
+
+uint32_t SX1276LoRaGetRFFrequency( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:60
+    SX1276ReadBuffer( REG_LR_FRFMSB, &SX1276LR->RegFrfMsb, 3 );
+   4:	4b1e      	ldr	r3, [pc, #120]	; (80 <SX1276LoRaGetRFFrequency+0x80>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0306 	add.w	r3, r3, #6
+   c:	f04f 0006 	mov.w	r0, #6
+  10:	4619      	mov	r1, r3
+  12:	f04f 0203 	mov.w	r2, #3
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:61
+    LoRaSettings.RFFrequency = ( ( uint32_t )SX1276LR->RegFrfMsb << 16 ) | ( ( uint32_t )SX1276LR->RegFrfMid << 8 ) | ( ( uint32_t )SX1276LR->RegFrfLsb );
+  1a:	4b19      	ldr	r3, [pc, #100]	; (80 <SX1276LoRaGetRFFrequency+0x80>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	799b      	ldrb	r3, [r3, #6]
+  20:	ea4f 4203 	mov.w	r2, r3, lsl #16
+  24:	4b16      	ldr	r3, [pc, #88]	; (80 <SX1276LoRaGetRFFrequency+0x80>)
+  26:	681b      	ldr	r3, [r3, #0]
+  28:	79db      	ldrb	r3, [r3, #7]
+  2a:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  2e:	431a      	orrs	r2, r3
+  30:	4b13      	ldr	r3, [pc, #76]	; (80 <SX1276LoRaGetRFFrequency+0x80>)
+  32:	681b      	ldr	r3, [r3, #0]
+  34:	7a1b      	ldrb	r3, [r3, #8]
+  36:	431a      	orrs	r2, r3
+  38:	4b12      	ldr	r3, [pc, #72]	; (84 <SX1276LoRaGetRFFrequency+0x84>)
+  3a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:62
+    LoRaSettings.RFFrequency = ( uint32_t )( ( double )LoRaSettings.RFFrequency * ( double )FREQ_STEP );
+  3c:	4b11      	ldr	r3, [pc, #68]	; (84 <SX1276LoRaGetRFFrequency+0x84>)
+  3e:	681b      	ldr	r3, [r3, #0]
+  40:	4618      	mov	r0, r3
+  42:	f7ff fffe 	bl	0 <__aeabi_ui2d>
+  46:	4602      	mov	r2, r0
+  48:	460b      	mov	r3, r1
+  4a:	4610      	mov	r0, r2
+  4c:	4619      	mov	r1, r3
+  4e:	a30a      	add	r3, pc, #40	; (adr r3, 78 <SX1276LoRaGetRFFrequency+0x78>)
+  50:	e9d3 2300 	ldrd	r2, r3, [r3]
+  54:	f7ff fffe 	bl	0 <__aeabi_dmul>
+  58:	4602      	mov	r2, r0
+  5a:	460b      	mov	r3, r1
+  5c:	4610      	mov	r0, r2
+  5e:	4619      	mov	r1, r3
+  60:	f7ff fffe 	bl	0 <__aeabi_d2uiz>
+  64:	4602      	mov	r2, r0
+  66:	4b07      	ldr	r3, [pc, #28]	; (84 <SX1276LoRaGetRFFrequency+0x84>)
+  68:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:64
+
+    return LoRaSettings.RFFrequency;
+  6a:	4b06      	ldr	r3, [pc, #24]	; (84 <SX1276LoRaGetRFFrequency+0x84>)
+  6c:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:65
+}
+  6e:	4618      	mov	r0, r3
+  70:	bd80      	pop	{r7, pc}
+  72:	bf00      	nop
+  74:	f3af 8000 	nop.w
+  78:	00000000 	.word	0x00000000
+  7c:	404e8480 	.word	0x404e8480
+	...
+
+Disassembly of section .text.SX1276LoRaSetRFPower:
+
+00000000 <SX1276LoRaSetRFPower>:
+SX1276LoRaSetRFPower():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:68
+
+void SX1276LoRaSetRFPower( int8_t power )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:69
+    SX1276Read( REG_LR_PACONFIG, &SX1276LR->RegPaConfig );
+   a:	4b5d      	ldr	r3, [pc, #372]	; (180 <SX1276LoRaSetRFPower+0x180>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0309 	add.w	r3, r3, #9
+  12:	f04f 0009 	mov.w	r0, #9
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:70
+    SX1276Read( REG_LR_PADAC, &SX1276LR->RegPaDac );
+  1c:	4b58      	ldr	r3, [pc, #352]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	f103 0349 	add.w	r3, r3, #73	; 0x49
+  24:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:72
+    
+    if( ( SX1276LR->RegPaConfig & RFLR_PACONFIG_PASELECT_PABOOST ) == RFLR_PACONFIG_PASELECT_PABOOST )
+  2e:	4b54      	ldr	r3, [pc, #336]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  30:	681b      	ldr	r3, [r3, #0]
+  32:	7a5b      	ldrb	r3, [r3, #9]
+  34:	b2db      	uxtb	r3, r3
+  36:	b25b      	sxtb	r3, r3
+  38:	2b00      	cmp	r3, #0
+  3a:	da63      	bge.n	104 <SX1276LoRaSetRFPower+0x104>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:74
+    {
+        if( ( SX1276LR->RegPaDac & 0x87 ) == 0x87 )
+  3c:	4b50      	ldr	r3, [pc, #320]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  3e:	681b      	ldr	r3, [r3, #0]
+  40:	f893 3049 	ldrb.w	r3, [r3, #73]	; 0x49
+  44:	f003 0387 	and.w	r3, r3, #135	; 0x87
+  48:	2b87      	cmp	r3, #135	; 0x87
+  4a:	d12d      	bne.n	a8 <SX1276LoRaSetRFPower+0xa8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:76
+        {
+            if( power < 5 )
+  4c:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  50:	2b04      	cmp	r3, #4
+  52:	dc02      	bgt.n	5a <SX1276LoRaSetRFPower+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:78
+            {
+                power = 5;
+  54:	f04f 0305 	mov.w	r3, #5
+  58:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:80
+            }
+            if( power > 20 )
+  5a:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  5e:	2b14      	cmp	r3, #20
+  60:	dd02      	ble.n	68 <SX1276LoRaSetRFPower+0x68>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:82
+            {
+                power = 20;
+  62:	f04f 0314 	mov.w	r3, #20
+  66:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:84
+            }
+            SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_MAX_POWER_MASK ) | 0x70;
+  68:	4b45      	ldr	r3, [pc, #276]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  6a:	681b      	ldr	r3, [r3, #0]
+  6c:	4a44      	ldr	r2, [pc, #272]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  6e:	6812      	ldr	r2, [r2, #0]
+  70:	7a52      	ldrb	r2, [r2, #9]
+  72:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+  76:	b2d2      	uxtb	r2, r2
+  78:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:85
+            SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power - 5 ) & 0x0F );
+  7a:	4b41      	ldr	r3, [pc, #260]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  7c:	681b      	ldr	r3, [r3, #0]
+  7e:	4a40      	ldr	r2, [pc, #256]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  80:	6812      	ldr	r2, [r2, #0]
+  82:	7a52      	ldrb	r2, [r2, #9]
+  84:	b2d2      	uxtb	r2, r2
+  86:	f022 020f 	bic.w	r2, r2, #15
+  8a:	b2d1      	uxtb	r1, r2
+  8c:	79fa      	ldrb	r2, [r7, #7]
+  8e:	f1a2 0205 	sub.w	r2, r2, #5
+  92:	b2d2      	uxtb	r2, r2
+  94:	b2d2      	uxtb	r2, r2
+  96:	f002 020f 	and.w	r2, r2, #15
+  9a:	b2d2      	uxtb	r2, r2
+  9c:	ea41 0202 	orr.w	r2, r1, r2
+  a0:	b2d2      	uxtb	r2, r2
+  a2:	b2d2      	uxtb	r2, r2
+  a4:	725a      	strb	r2, [r3, #9]
+  a6:	e05b      	b.n	160 <SX1276LoRaSetRFPower+0x160>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:89
+        }
+        else
+        {
+            if( power < 2 )
+  a8:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  ac:	2b01      	cmp	r3, #1
+  ae:	dc02      	bgt.n	b6 <SX1276LoRaSetRFPower+0xb6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:91
+            {
+                power = 2;
+  b0:	f04f 0302 	mov.w	r3, #2
+  b4:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:93
+            }
+            if( power > 17 )
+  b6:	f997 3007 	ldrsb.w	r3, [r7, #7]
+  ba:	2b11      	cmp	r3, #17
+  bc:	dd02      	ble.n	c4 <SX1276LoRaSetRFPower+0xc4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:95
+            {
+                power = 17;
+  be:	f04f 0311 	mov.w	r3, #17
+  c2:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:97
+            }
+            SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_MAX_POWER_MASK ) | 0x70;
+  c4:	4b2e      	ldr	r3, [pc, #184]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  c6:	681b      	ldr	r3, [r3, #0]
+  c8:	4a2d      	ldr	r2, [pc, #180]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  ca:	6812      	ldr	r2, [r2, #0]
+  cc:	7a52      	ldrb	r2, [r2, #9]
+  ce:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+  d2:	b2d2      	uxtb	r2, r2
+  d4:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:98
+            SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power - 2 ) & 0x0F );
+  d6:	4b2a      	ldr	r3, [pc, #168]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  d8:	681b      	ldr	r3, [r3, #0]
+  da:	4a29      	ldr	r2, [pc, #164]	; (180 <SX1276LoRaSetRFPower+0x180>)
+  dc:	6812      	ldr	r2, [r2, #0]
+  de:	7a52      	ldrb	r2, [r2, #9]
+  e0:	b2d2      	uxtb	r2, r2
+  e2:	f022 020f 	bic.w	r2, r2, #15
+  e6:	b2d1      	uxtb	r1, r2
+  e8:	79fa      	ldrb	r2, [r7, #7]
+  ea:	f1a2 0202 	sub.w	r2, r2, #2
+  ee:	b2d2      	uxtb	r2, r2
+  f0:	b2d2      	uxtb	r2, r2
+  f2:	f002 020f 	and.w	r2, r2, #15
+  f6:	b2d2      	uxtb	r2, r2
+  f8:	ea41 0202 	orr.w	r2, r1, r2
+  fc:	b2d2      	uxtb	r2, r2
+  fe:	b2d2      	uxtb	r2, r2
+ 100:	725a      	strb	r2, [r3, #9]
+ 102:	e02d      	b.n	160 <SX1276LoRaSetRFPower+0x160>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:103
+        }
+    }
+    else
+    {
+        if( power < -1 )
+ 104:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 108:	f1b3 3fff 	cmp.w	r3, #4294967295
+ 10c:	da02      	bge.n	114 <SX1276LoRaSetRFPower+0x114>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:105
+        {
+            power = -1;
+ 10e:	f04f 03ff 	mov.w	r3, #255	; 0xff
+ 112:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:107
+        }
+        if( power > 14 )
+ 114:	f997 3007 	ldrsb.w	r3, [r7, #7]
+ 118:	2b0e      	cmp	r3, #14
+ 11a:	dd02      	ble.n	122 <SX1276LoRaSetRFPower+0x122>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:109
+        {
+            power = 14;
+ 11c:	f04f 030e 	mov.w	r3, #14
+ 120:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:111
+        }
+        SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_MAX_POWER_MASK ) | 0x70;
+ 122:	4b17      	ldr	r3, [pc, #92]	; (180 <SX1276LoRaSetRFPower+0x180>)
+ 124:	681b      	ldr	r3, [r3, #0]
+ 126:	4a16      	ldr	r2, [pc, #88]	; (180 <SX1276LoRaSetRFPower+0x180>)
+ 128:	6812      	ldr	r2, [r2, #0]
+ 12a:	7a52      	ldrb	r2, [r2, #9]
+ 12c:	f042 0270 	orr.w	r2, r2, #112	; 0x70
+ 130:	b2d2      	uxtb	r2, r2
+ 132:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:112
+        SX1276LR->RegPaConfig = ( SX1276LR->RegPaConfig & RFLR_PACONFIG_OUTPUTPOWER_MASK ) | ( uint8_t )( ( uint16_t )( power + 1 ) & 0x0F );
+ 134:	4b12      	ldr	r3, [pc, #72]	; (180 <SX1276LoRaSetRFPower+0x180>)
+ 136:	681b      	ldr	r3, [r3, #0]
+ 138:	4a11      	ldr	r2, [pc, #68]	; (180 <SX1276LoRaSetRFPower+0x180>)
+ 13a:	6812      	ldr	r2, [r2, #0]
+ 13c:	7a52      	ldrb	r2, [r2, #9]
+ 13e:	b2d2      	uxtb	r2, r2
+ 140:	f022 020f 	bic.w	r2, r2, #15
+ 144:	b2d1      	uxtb	r1, r2
+ 146:	79fa      	ldrb	r2, [r7, #7]
+ 148:	f102 0201 	add.w	r2, r2, #1
+ 14c:	b2d2      	uxtb	r2, r2
+ 14e:	b2d2      	uxtb	r2, r2
+ 150:	f002 020f 	and.w	r2, r2, #15
+ 154:	b2d2      	uxtb	r2, r2
+ 156:	ea41 0202 	orr.w	r2, r1, r2
+ 15a:	b2d2      	uxtb	r2, r2
+ 15c:	b2d2      	uxtb	r2, r2
+ 15e:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:114
+    }
+    SX1276Write( REG_LR_PACONFIG, SX1276LR->RegPaConfig );
+ 160:	4b07      	ldr	r3, [pc, #28]	; (180 <SX1276LoRaSetRFPower+0x180>)
+ 162:	681b      	ldr	r3, [r3, #0]
+ 164:	7a5b      	ldrb	r3, [r3, #9]
+ 166:	f04f 0009 	mov.w	r0, #9
+ 16a:	4619      	mov	r1, r3
+ 16c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:115
+    LoRaSettings.Power = power;
+ 170:	4b04      	ldr	r3, [pc, #16]	; (184 <SX1276LoRaSetRFPower+0x184>)
+ 172:	79fa      	ldrb	r2, [r7, #7]
+ 174:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:116
+}
+ 176:	f107 0708 	add.w	r7, r7, #8
+ 17a:	46bd      	mov	sp, r7
+ 17c:	bd80      	pop	{r7, pc}
+ 17e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaGetRFPower:
+
+00000000 <SX1276LoRaGetRFPower>:
+SX1276LoRaGetRFPower():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:119
+
+int8_t SX1276LoRaGetRFPower( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:120
+    SX1276Read( REG_LR_PACONFIG, &SX1276LR->RegPaConfig );
+   4:	4b25      	ldr	r3, [pc, #148]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0309 	add.w	r3, r3, #9
+   c:	f04f 0009 	mov.w	r0, #9
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:121
+    SX1276Read( REG_LR_PADAC, &SX1276LR->RegPaDac );
+  16:	4b21      	ldr	r3, [pc, #132]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f103 0349 	add.w	r3, r3, #73	; 0x49
+  1e:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  22:	4619      	mov	r1, r3
+  24:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:123
+
+    if( ( SX1276LR->RegPaConfig & RFLR_PACONFIG_PASELECT_PABOOST ) == RFLR_PACONFIG_PASELECT_PABOOST )
+  28:	4b1c      	ldr	r3, [pc, #112]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  2a:	681b      	ldr	r3, [r3, #0]
+  2c:	7a5b      	ldrb	r3, [r3, #9]
+  2e:	b2db      	uxtb	r3, r3
+  30:	b25b      	sxtb	r3, r3
+  32:	2b00      	cmp	r3, #0
+  34:	da21      	bge.n	7a <SX1276LoRaGetRFPower+0x7a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:125
+    {
+        if( ( SX1276LR->RegPaDac & 0x07 ) == 0x07 )
+  36:	4b19      	ldr	r3, [pc, #100]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  38:	681b      	ldr	r3, [r3, #0]
+  3a:	f893 3049 	ldrb.w	r3, [r3, #73]	; 0x49
+  3e:	f003 0307 	and.w	r3, r3, #7
+  42:	2b07      	cmp	r3, #7
+  44:	d10c      	bne.n	60 <SX1276LoRaGetRFPower+0x60>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:127
+        {
+            LoRaSettings.Power = 5 + ( SX1276LR->RegPaConfig & ~RFLR_PACONFIG_OUTPUTPOWER_MASK );
+  46:	4b15      	ldr	r3, [pc, #84]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	7a5b      	ldrb	r3, [r3, #9]
+  4c:	f003 030f 	and.w	r3, r3, #15
+  50:	b2db      	uxtb	r3, r3
+  52:	f103 0305 	add.w	r3, r3, #5
+  56:	b2db      	uxtb	r3, r3
+  58:	b2da      	uxtb	r2, r3
+  5a:	4b11      	ldr	r3, [pc, #68]	; (a0 <SX1276LoRaGetRFPower+0xa0>)
+  5c:	711a      	strb	r2, [r3, #4]
+  5e:	e018      	b.n	92 <SX1276LoRaGetRFPower+0x92>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:131
+        }
+        else
+        {
+            LoRaSettings.Power = 2 + ( SX1276LR->RegPaConfig & ~RFLR_PACONFIG_OUTPUTPOWER_MASK );
+  60:	4b0e      	ldr	r3, [pc, #56]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  62:	681b      	ldr	r3, [r3, #0]
+  64:	7a5b      	ldrb	r3, [r3, #9]
+  66:	f003 030f 	and.w	r3, r3, #15
+  6a:	b2db      	uxtb	r3, r3
+  6c:	f103 0302 	add.w	r3, r3, #2
+  70:	b2db      	uxtb	r3, r3
+  72:	b2da      	uxtb	r2, r3
+  74:	4b0a      	ldr	r3, [pc, #40]	; (a0 <SX1276LoRaGetRFPower+0xa0>)
+  76:	711a      	strb	r2, [r3, #4]
+  78:	e00b      	b.n	92 <SX1276LoRaGetRFPower+0x92>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:136
+        }
+    }
+    else
+    {
+        LoRaSettings.Power = -1 + ( SX1276LR->RegPaConfig & ~RFLR_PACONFIG_OUTPUTPOWER_MASK );
+  7a:	4b08      	ldr	r3, [pc, #32]	; (9c <SX1276LoRaGetRFPower+0x9c>)
+  7c:	681b      	ldr	r3, [r3, #0]
+  7e:	7a5b      	ldrb	r3, [r3, #9]
+  80:	f003 030f 	and.w	r3, r3, #15
+  84:	b2db      	uxtb	r3, r3
+  86:	f103 33ff 	add.w	r3, r3, #4294967295
+  8a:	b2db      	uxtb	r3, r3
+  8c:	b2da      	uxtb	r2, r3
+  8e:	4b04      	ldr	r3, [pc, #16]	; (a0 <SX1276LoRaGetRFPower+0xa0>)
+  90:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:138
+    }
+    return LoRaSettings.Power;
+  92:	4b03      	ldr	r3, [pc, #12]	; (a0 <SX1276LoRaGetRFPower+0xa0>)
+  94:	791b      	ldrb	r3, [r3, #4]
+  96:	b25b      	sxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:139
+}
+  98:	4618      	mov	r0, r3
+  9a:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276LoRaSetSignalBandwidth:
+
+00000000 <SX1276LoRaSetSignalBandwidth>:
+SX1276LoRaSetSignalBandwidth():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:142
+
+void SX1276LoRaSetSignalBandwidth( uint8_t bw )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:143
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   a:	4b15      	ldr	r3, [pc, #84]	; (60 <SX1276LoRaSetSignalBandwidth+0x60>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 031d 	add.w	r3, r3, #29
+  12:	f04f 001d 	mov.w	r0, #29
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:144
+    SX1276LR->RegModemConfig1 = ( SX1276LR->RegModemConfig1 & RFLR_MODEMCONFIG1_BW_MASK ) | ( bw << 4 );
+  1c:	4b10      	ldr	r3, [pc, #64]	; (60 <SX1276LoRaSetSignalBandwidth+0x60>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0f      	ldr	r2, [pc, #60]	; (60 <SX1276LoRaSetSignalBandwidth+0x60>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7f52      	ldrb	r2, [r2, #29]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f002 020f 	and.w	r2, r2, #15
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea4f 1202 	mov.w	r2, r2, lsl #4
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	775a      	strb	r2, [r3, #29]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:145
+    SX1276Write( REG_LR_MODEMCONFIG1, SX1276LR->RegModemConfig1 );
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <SX1276LoRaSetSignalBandwidth+0x60>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7f5b      	ldrb	r3, [r3, #29]
+  46:	f04f 001d 	mov.w	r0, #29
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:146
+    LoRaSettings.SignalBw = bw;
+  50:	4b04      	ldr	r3, [pc, #16]	; (64 <SX1276LoRaSetSignalBandwidth+0x64>)
+  52:	79fa      	ldrb	r2, [r7, #7]
+  54:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:147
+}
+  56:	f107 0708 	add.w	r7, r7, #8
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaGetSignalBandwidth:
+
+00000000 <SX1276LoRaGetSignalBandwidth>:
+SX1276LoRaGetSignalBandwidth():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:150
+
+uint8_t SX1276LoRaGetSignalBandwidth( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:151
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <SX1276LoRaGetSignalBandwidth+0x30>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031d 	add.w	r3, r3, #29
+   c:	f04f 001d 	mov.w	r0, #29
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:152
+    LoRaSettings.SignalBw = ( SX1276LR->RegModemConfig1 & ~RFLR_MODEMCONFIG1_BW_MASK ) >> 4;
+  16:	4b06      	ldr	r3, [pc, #24]	; (30 <SX1276LoRaGetSignalBandwidth+0x30>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7f5b      	ldrb	r3, [r3, #29]
+  1c:	ea4f 1323 	mov.w	r3, r3, asr #4
+  20:	b2da      	uxtb	r2, r3
+  22:	4b04      	ldr	r3, [pc, #16]	; (34 <SX1276LoRaGetSignalBandwidth+0x34>)
+  24:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:153
+    return LoRaSettings.SignalBw;
+  26:	4b03      	ldr	r3, [pc, #12]	; (34 <SX1276LoRaGetSignalBandwidth+0x34>)
+  28:	795b      	ldrb	r3, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:154
+}
+  2a:	4618      	mov	r0, r3
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetSpreadingFactor:
+
+00000000 <SX1276LoRaSetSpreadingFactor>:
+SX1276LoRaSetSpreadingFactor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:157
+
+void SX1276LoRaSetSpreadingFactor( uint8_t factor )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:159
+
+    if( factor > 12 )
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b0c      	cmp	r3, #12
+   e:	d903      	bls.n	18 <SX1276LoRaSetSpreadingFactor+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:161
+    {
+        factor = 12;
+  10:	f04f 030c 	mov.w	r3, #12
+  14:	71fb      	strb	r3, [r7, #7]
+  16:	e005      	b.n	24 <SX1276LoRaSetSpreadingFactor+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:163
+    }
+    else if( factor < 6 )
+  18:	79fb      	ldrb	r3, [r7, #7]
+  1a:	2b05      	cmp	r3, #5
+  1c:	d802      	bhi.n	24 <SX1276LoRaSetSpreadingFactor+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:165
+    {
+        factor = 6;
+  1e:	f04f 0306 	mov.w	r3, #6
+  22:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:168
+    }
+
+    if( factor == 6 )
+  24:	79fb      	ldrb	r3, [r7, #7]
+  26:	2b06      	cmp	r3, #6
+  28:	d104      	bne.n	34 <SX1276LoRaSetSpreadingFactor+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:170
+    {
+        SX1276LoRaSetNbTrigPeaks( 5 );
+  2a:	f04f 0005 	mov.w	r0, #5
+  2e:	f7ff fffe 	bl	0 <SX1276LoRaSetSpreadingFactor>
+  32:	e003      	b.n	3c <SX1276LoRaSetSpreadingFactor+0x3c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:174
+    }
+    else
+    {
+        SX1276LoRaSetNbTrigPeaks( 3 );
+  34:	f04f 0003 	mov.w	r0, #3
+  38:	f7ff fffe 	bl	0 <SX1276LoRaSetSpreadingFactor>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:177
+    }
+
+    SX1276Read( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2 );    
+  3c:	4b14      	ldr	r3, [pc, #80]	; (90 <SX1276LoRaSetSpreadingFactor+0x90>)
+  3e:	681b      	ldr	r3, [r3, #0]
+  40:	f103 031e 	add.w	r3, r3, #30
+  44:	f04f 001e 	mov.w	r0, #30
+  48:	4619      	mov	r1, r3
+  4a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:178
+    SX1276LR->RegModemConfig2 = ( SX1276LR->RegModemConfig2 & RFLR_MODEMCONFIG2_SF_MASK ) | ( factor << 4 );
+  4e:	4b10      	ldr	r3, [pc, #64]	; (90 <SX1276LoRaSetSpreadingFactor+0x90>)
+  50:	681b      	ldr	r3, [r3, #0]
+  52:	4a0f      	ldr	r2, [pc, #60]	; (90 <SX1276LoRaSetSpreadingFactor+0x90>)
+  54:	6812      	ldr	r2, [r2, #0]
+  56:	7f92      	ldrb	r2, [r2, #30]
+  58:	b2d2      	uxtb	r2, r2
+  5a:	f002 020f 	and.w	r2, r2, #15
+  5e:	b2d1      	uxtb	r1, r2
+  60:	79fa      	ldrb	r2, [r7, #7]
+  62:	ea4f 1202 	mov.w	r2, r2, lsl #4
+  66:	b2d2      	uxtb	r2, r2
+  68:	ea41 0202 	orr.w	r2, r1, r2
+  6c:	b2d2      	uxtb	r2, r2
+  6e:	b2d2      	uxtb	r2, r2
+  70:	779a      	strb	r2, [r3, #30]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:179
+    SX1276Write( REG_LR_MODEMCONFIG2, SX1276LR->RegModemConfig2 );    
+  72:	4b07      	ldr	r3, [pc, #28]	; (90 <SX1276LoRaSetSpreadingFactor+0x90>)
+  74:	681b      	ldr	r3, [r3, #0]
+  76:	7f9b      	ldrb	r3, [r3, #30]
+  78:	f04f 001e 	mov.w	r0, #30
+  7c:	4619      	mov	r1, r3
+  7e:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:180
+    LoRaSettings.SpreadingFactor = factor;
+  82:	4b04      	ldr	r3, [pc, #16]	; (94 <SX1276LoRaSetSpreadingFactor+0x94>)
+  84:	79fa      	ldrb	r2, [r7, #7]
+  86:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:181
+}
+  88:	f107 0708 	add.w	r7, r7, #8
+  8c:	46bd      	mov	sp, r7
+  8e:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276LoRaGetSpreadingFactor:
+
+00000000 <SX1276LoRaGetSpreadingFactor>:
+SX1276LoRaGetSpreadingFactor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:184
+
+uint8_t SX1276LoRaGetSpreadingFactor( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:185
+    SX1276Read( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2 );   
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <SX1276LoRaGetSpreadingFactor+0x30>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031e 	add.w	r3, r3, #30
+   c:	f04f 001e 	mov.w	r0, #30
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:186
+    LoRaSettings.SpreadingFactor = ( SX1276LR->RegModemConfig2 & ~RFLR_MODEMCONFIG2_SF_MASK ) >> 4;
+  16:	4b06      	ldr	r3, [pc, #24]	; (30 <SX1276LoRaGetSpreadingFactor+0x30>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7f9b      	ldrb	r3, [r3, #30]
+  1c:	ea4f 1323 	mov.w	r3, r3, asr #4
+  20:	b2da      	uxtb	r2, r3
+  22:	4b04      	ldr	r3, [pc, #16]	; (34 <SX1276LoRaGetSpreadingFactor+0x34>)
+  24:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:187
+    return LoRaSettings.SpreadingFactor;
+  26:	4b03      	ldr	r3, [pc, #12]	; (34 <SX1276LoRaGetSpreadingFactor+0x34>)
+  28:	799b      	ldrb	r3, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:188
+}
+  2a:	4618      	mov	r0, r3
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetErrorCoding:
+
+00000000 <SX1276LoRaSetErrorCoding>:
+SX1276LoRaSetErrorCoding():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:191
+
+void SX1276LoRaSetErrorCoding( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:192
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   a:	4b15      	ldr	r3, [pc, #84]	; (60 <SX1276LoRaSetErrorCoding+0x60>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 031d 	add.w	r3, r3, #29
+  12:	f04f 001d 	mov.w	r0, #29
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:193
+    SX1276LR->RegModemConfig1 = ( SX1276LR->RegModemConfig1 & RFLR_MODEMCONFIG1_CODINGRATE_MASK ) | ( value << 1 );
+  1c:	4b10      	ldr	r3, [pc, #64]	; (60 <SX1276LoRaSetErrorCoding+0x60>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0f      	ldr	r2, [pc, #60]	; (60 <SX1276LoRaSetErrorCoding+0x60>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7f52      	ldrb	r2, [r2, #29]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 020e 	bic.w	r2, r2, #14
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea4f 0242 	mov.w	r2, r2, lsl #1
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	775a      	strb	r2, [r3, #29]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:194
+    SX1276Write( REG_LR_MODEMCONFIG1, SX1276LR->RegModemConfig1 );
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <SX1276LoRaSetErrorCoding+0x60>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7f5b      	ldrb	r3, [r3, #29]
+  46:	f04f 001d 	mov.w	r0, #29
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:195
+    LoRaSettings.ErrorCoding = value;
+  50:	4b04      	ldr	r3, [pc, #16]	; (64 <SX1276LoRaSetErrorCoding+0x64>)
+  52:	79fa      	ldrb	r2, [r7, #7]
+  54:	71da      	strb	r2, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:196
+}
+  56:	f107 0708 	add.w	r7, r7, #8
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaGetErrorCoding:
+
+00000000 <SX1276LoRaGetErrorCoding>:
+SX1276LoRaGetErrorCoding():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:199
+
+uint8_t SX1276LoRaGetErrorCoding( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:200
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <SX1276LoRaGetErrorCoding+0x34>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031d 	add.w	r3, r3, #29
+   c:	f04f 001d 	mov.w	r0, #29
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:201
+    LoRaSettings.ErrorCoding = ( SX1276LR->RegModemConfig1 & ~RFLR_MODEMCONFIG1_CODINGRATE_MASK ) >> 1;
+  16:	4b07      	ldr	r3, [pc, #28]	; (34 <SX1276LoRaGetErrorCoding+0x34>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7f5b      	ldrb	r3, [r3, #29]
+  1c:	f023 03f1 	bic.w	r3, r3, #241	; 0xf1
+  20:	ea4f 0363 	mov.w	r3, r3, asr #1
+  24:	b2da      	uxtb	r2, r3
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <SX1276LoRaGetErrorCoding+0x38>)
+  28:	71da      	strb	r2, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:202
+    return LoRaSettings.ErrorCoding;
+  2a:	4b03      	ldr	r3, [pc, #12]	; (38 <SX1276LoRaGetErrorCoding+0x38>)
+  2c:	79db      	ldrb	r3, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:203
+}
+  2e:	4618      	mov	r0, r3
+  30:	bd80      	pop	{r7, pc}
+  32:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetPacketCrcOn:
+
+00000000 <SX1276LoRaSetPacketCrcOn>:
+SX1276LoRaSetPacketCrcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:206
+
+void SX1276LoRaSetPacketCrcOn( bool enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:207
+    SX1276Read( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2 );
+   a:	4b15      	ldr	r3, [pc, #84]	; (60 <SX1276LoRaSetPacketCrcOn+0x60>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 031e 	add.w	r3, r3, #30
+  12:	f04f 001e 	mov.w	r0, #30
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:208
+    SX1276LR->RegModemConfig2 = ( SX1276LR->RegModemConfig2 & RFLR_MODEMCONFIG2_RXPAYLOADCRC_MASK ) | ( enable << 2 );
+  1c:	4b10      	ldr	r3, [pc, #64]	; (60 <SX1276LoRaSetPacketCrcOn+0x60>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0f      	ldr	r2, [pc, #60]	; (60 <SX1276LoRaSetPacketCrcOn+0x60>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7f92      	ldrb	r2, [r2, #30]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 0204 	bic.w	r2, r2, #4
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea4f 0282 	mov.w	r2, r2, lsl #2
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	779a      	strb	r2, [r3, #30]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:209
+    SX1276Write( REG_LR_MODEMCONFIG2, SX1276LR->RegModemConfig2 );
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <SX1276LoRaSetPacketCrcOn+0x60>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7f9b      	ldrb	r3, [r3, #30]
+  46:	f04f 001e 	mov.w	r0, #30
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:210
+    LoRaSettings.CrcOn = enable;
+  50:	4b04      	ldr	r3, [pc, #16]	; (64 <SX1276LoRaSetPacketCrcOn+0x64>)
+  52:	79fa      	ldrb	r2, [r7, #7]
+  54:	721a      	strb	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:211
+}
+  56:	f107 0708 	add.w	r7, r7, #8
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetPreambleLength:
+
+00000000 <SX1276LoRaSetPreambleLength>:
+SX1276LoRaSetPreambleLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:214
+
+void SX1276LoRaSetPreambleLength( uint16_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:215
+    SX1276ReadBuffer( REG_LR_PREAMBLEMSB, &SX1276LR->RegPreambleMsb, 2 );
+   a:	4b14      	ldr	r3, [pc, #80]	; (5c <SX1276LoRaSetPreambleLength+0x5c>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0320 	add.w	r3, r3, #32
+  12:	f04f 0020 	mov.w	r0, #32
+  16:	4619      	mov	r1, r3
+  18:	f04f 0202 	mov.w	r2, #2
+  1c:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:217
+
+    SX1276LR->RegPreambleMsb = ( value >> 8 ) & 0x00FF;
+  20:	4b0e      	ldr	r3, [pc, #56]	; (5c <SX1276LoRaSetPreambleLength+0x5c>)
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	88fa      	ldrh	r2, [r7, #6]
+  26:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  2a:	b292      	uxth	r2, r2
+  2c:	b2d2      	uxtb	r2, r2
+  2e:	f883 2020 	strb.w	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:218
+    SX1276LR->RegPreambleLsb = value & 0xFF;
+  32:	4b0a      	ldr	r3, [pc, #40]	; (5c <SX1276LoRaSetPreambleLength+0x5c>)
+  34:	681b      	ldr	r3, [r3, #0]
+  36:	88fa      	ldrh	r2, [r7, #6]
+  38:	b2d2      	uxtb	r2, r2
+  3a:	f883 2021 	strb.w	r2, [r3, #33]	; 0x21
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:219
+    SX1276WriteBuffer( REG_LR_PREAMBLEMSB, &SX1276LR->RegPreambleMsb, 2 );
+  3e:	4b07      	ldr	r3, [pc, #28]	; (5c <SX1276LoRaSetPreambleLength+0x5c>)
+  40:	681b      	ldr	r3, [r3, #0]
+  42:	f103 0320 	add.w	r3, r3, #32
+  46:	f04f 0020 	mov.w	r0, #32
+  4a:	4619      	mov	r1, r3
+  4c:	f04f 0202 	mov.w	r2, #2
+  50:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:220
+}
+  54:	f107 0708 	add.w	r7, r7, #8
+  58:	46bd      	mov	sp, r7
+  5a:	bd80      	pop	{r7, pc}
+  5c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetPreambleLength:
+
+00000000 <SX1276LoRaGetPreambleLength>:
+SX1276LoRaGetPreambleLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:223
+
+uint16_t SX1276LoRaGetPreambleLength( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:224
+    SX1276ReadBuffer( REG_LR_PREAMBLEMSB, &SX1276LR->RegPreambleMsb, 2 );
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <SX1276LoRaGetPreambleLength+0x3c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0320 	add.w	r3, r3, #32
+   c:	f04f 0020 	mov.w	r0, #32
+  10:	4619      	mov	r1, r3
+  12:	f04f 0202 	mov.w	r2, #2
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:225
+    return ( ( SX1276LR->RegPreambleMsb & 0x00FF ) << 8 ) | SX1276LR->RegPreambleLsb;
+  1a:	4b08      	ldr	r3, [pc, #32]	; (3c <SX1276LoRaGetPreambleLength+0x3c>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	f893 3020 	ldrb.w	r3, [r3, #32]
+  22:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  26:	b29a      	uxth	r2, r3
+  28:	4b04      	ldr	r3, [pc, #16]	; (3c <SX1276LoRaGetPreambleLength+0x3c>)
+  2a:	681b      	ldr	r3, [r3, #0]
+  2c:	f893 3021 	ldrb.w	r3, [r3, #33]	; 0x21
+  30:	ea42 0303 	orr.w	r3, r2, r3
+  34:	b29b      	uxth	r3, r3
+  36:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:226
+}
+  38:	4618      	mov	r0, r3
+  3a:	bd80      	pop	{r7, pc}
+  3c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetPacketCrcOn:
+
+00000000 <SX1276LoRaGetPacketCrcOn>:
+SX1276LoRaGetPacketCrcOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:229
+
+bool SX1276LoRaGetPacketCrcOn( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:230
+    SX1276Read( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2 );
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <SX1276LoRaGetPacketCrcOn+0x3c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031e 	add.w	r3, r3, #30
+   c:	f04f 001e 	mov.w	r0, #30
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:231
+    LoRaSettings.CrcOn = ( SX1276LR->RegModemConfig2 & RFLR_MODEMCONFIG2_RXPAYLOADCRC_ON ) >> 1;
+  16:	4b09      	ldr	r3, [pc, #36]	; (3c <SX1276LoRaGetPacketCrcOn+0x3c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7f9b      	ldrb	r3, [r3, #30]
+  1c:	f003 0304 	and.w	r3, r3, #4
+  20:	ea4f 0363 	mov.w	r3, r3, asr #1
+  24:	2b00      	cmp	r3, #0
+  26:	bf0c      	ite	eq
+  28:	2300      	moveq	r3, #0
+  2a:	2301      	movne	r3, #1
+  2c:	b2da      	uxtb	r2, r3
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <SX1276LoRaGetPacketCrcOn+0x40>)
+  30:	721a      	strb	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:232
+    return LoRaSettings.CrcOn;
+  32:	4b03      	ldr	r3, [pc, #12]	; (40 <SX1276LoRaGetPacketCrcOn+0x40>)
+  34:	7a1b      	ldrb	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:233
+}
+  36:	4618      	mov	r0, r3
+  38:	bd80      	pop	{r7, pc}
+  3a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetImplicitHeaderOn:
+
+00000000 <SX1276LoRaSetImplicitHeaderOn>:
+SX1276LoRaSetImplicitHeaderOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:236
+
+void SX1276LoRaSetImplicitHeaderOn( bool enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:237
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   a:	4b13      	ldr	r3, [pc, #76]	; (58 <SX1276LoRaSetImplicitHeaderOn+0x58>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 031d 	add.w	r3, r3, #29
+  12:	f04f 001d 	mov.w	r0, #29
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:238
+    SX1276LR->RegModemConfig1 = ( SX1276LR->RegModemConfig1 & RFLR_MODEMCONFIG1_IMPLICITHEADER_MASK ) | ( enable );
+  1c:	4b0e      	ldr	r3, [pc, #56]	; (58 <SX1276LoRaSetImplicitHeaderOn+0x58>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0d      	ldr	r2, [pc, #52]	; (58 <SX1276LoRaSetImplicitHeaderOn+0x58>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7f52      	ldrb	r2, [r2, #29]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 0201 	bic.w	r2, r2, #1
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea41 0202 	orr.w	r2, r1, r2
+  34:	b2d2      	uxtb	r2, r2
+  36:	b2d2      	uxtb	r2, r2
+  38:	775a      	strb	r2, [r3, #29]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:239
+    SX1276Write( REG_LR_MODEMCONFIG1, SX1276LR->RegModemConfig1 );
+  3a:	4b07      	ldr	r3, [pc, #28]	; (58 <SX1276LoRaSetImplicitHeaderOn+0x58>)
+  3c:	681b      	ldr	r3, [r3, #0]
+  3e:	7f5b      	ldrb	r3, [r3, #29]
+  40:	f04f 001d 	mov.w	r0, #29
+  44:	4619      	mov	r1, r3
+  46:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:240
+    LoRaSettings.ImplicitHeaderOn = enable;
+  4a:	4b04      	ldr	r3, [pc, #16]	; (5c <SX1276LoRaSetImplicitHeaderOn+0x5c>)
+  4c:	79fa      	ldrb	r2, [r7, #7]
+  4e:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:241
+}
+  50:	f107 0708 	add.w	r7, r7, #8
+  54:	46bd      	mov	sp, r7
+  56:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276LoRaGetImplicitHeaderOn:
+
+00000000 <SX1276LoRaGetImplicitHeaderOn>:
+SX1276LoRaGetImplicitHeaderOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:244
+
+bool SX1276LoRaGetImplicitHeaderOn( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:245
+    SX1276Read( REG_LR_MODEMCONFIG1, &SX1276LR->RegModemConfig1 );
+   4:	4b0c      	ldr	r3, [pc, #48]	; (38 <SX1276LoRaGetImplicitHeaderOn+0x38>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031d 	add.w	r3, r3, #29
+   c:	f04f 001d 	mov.w	r0, #29
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:246
+    LoRaSettings.ImplicitHeaderOn = ( SX1276LR->RegModemConfig1 & RFLR_MODEMCONFIG1_IMPLICITHEADER_ON );
+  16:	4b08      	ldr	r3, [pc, #32]	; (38 <SX1276LoRaGetImplicitHeaderOn+0x38>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7f5b      	ldrb	r3, [r3, #29]
+  1c:	f003 0301 	and.w	r3, r3, #1
+  20:	2b00      	cmp	r3, #0
+  22:	bf0c      	ite	eq
+  24:	2300      	moveq	r3, #0
+  26:	2301      	movne	r3, #1
+  28:	b2da      	uxtb	r2, r3
+  2a:	4b04      	ldr	r3, [pc, #16]	; (3c <SX1276LoRaGetImplicitHeaderOn+0x3c>)
+  2c:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:247
+    return LoRaSettings.ImplicitHeaderOn;
+  2e:	4b03      	ldr	r3, [pc, #12]	; (3c <SX1276LoRaGetImplicitHeaderOn+0x3c>)
+  30:	7a5b      	ldrb	r3, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:248
+}
+  32:	4618      	mov	r0, r3
+  34:	bd80      	pop	{r7, pc}
+  36:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetRxSingleOn:
+
+00000000 <SX1276LoRaSetRxSingleOn>:
+SX1276LoRaSetRxSingleOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:251
+
+void SX1276LoRaSetRxSingleOn( bool enable )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:252
+    LoRaSettings.RxSingleOn = enable;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SX1276LoRaSetRxSingleOn+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	729a      	strb	r2, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:253
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetRxSingleOn:
+
+00000000 <SX1276LoRaGetRxSingleOn>:
+SX1276LoRaGetRxSingleOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:256
+
+bool SX1276LoRaGetRxSingleOn( void )
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:257
+    return LoRaSettings.RxSingleOn;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SX1276LoRaGetRxSingleOn+0x10>)
+   6:	7a9b      	ldrb	r3, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:258
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetFreqHopOn:
+
+00000000 <SX1276LoRaSetFreqHopOn>:
+SX1276LoRaSetFreqHopOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:261
+
+void SX1276LoRaSetFreqHopOn( bool enable )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:262
+    LoRaSettings.FreqHopOn = enable;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SX1276LoRaSetFreqHopOn+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	72da      	strb	r2, [r3, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:263
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetFreqHopOn:
+
+00000000 <SX1276LoRaGetFreqHopOn>:
+SX1276LoRaGetFreqHopOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:266
+
+bool SX1276LoRaGetFreqHopOn( void )
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:267
+    return LoRaSettings.FreqHopOn;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SX1276LoRaGetFreqHopOn+0x10>)
+   6:	7adb      	ldrb	r3, [r3, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:268
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetHopPeriod:
+
+00000000 <SX1276LoRaSetHopPeriod>:
+SX1276LoRaSetHopPeriod():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:271
+
+void SX1276LoRaSetHopPeriod( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:272
+    SX1276LR->RegHopPeriod = value;
+   a:	4b0a      	ldr	r3, [pc, #40]	; (34 <SX1276LoRaSetHopPeriod+0x34>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	79fa      	ldrb	r2, [r7, #7]
+  10:	f883 2024 	strb.w	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:273
+    SX1276Write( REG_LR_HOPPERIOD, SX1276LR->RegHopPeriod );
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <SX1276LoRaSetHopPeriod+0x34>)
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f893 3024 	ldrb.w	r3, [r3, #36]	; 0x24
+  1c:	f04f 0024 	mov.w	r0, #36	; 0x24
+  20:	4619      	mov	r1, r3
+  22:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:274
+    LoRaSettings.HopPeriod = value;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <SX1276LoRaSetHopPeriod+0x38>)
+  28:	79fa      	ldrb	r2, [r7, #7]
+  2a:	731a      	strb	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:275
+}
+  2c:	f107 0708 	add.w	r7, r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276LoRaGetHopPeriod:
+
+00000000 <SX1276LoRaGetHopPeriod>:
+SX1276LoRaGetHopPeriod():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:278
+
+uint8_t SX1276LoRaGetHopPeriod( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:279
+    SX1276Read( REG_LR_HOPPERIOD, &SX1276LR->RegHopPeriod );
+   4:	4b09      	ldr	r3, [pc, #36]	; (2c <SX1276LoRaGetHopPeriod+0x2c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0324 	add.w	r3, r3, #36	; 0x24
+   c:	f04f 0024 	mov.w	r0, #36	; 0x24
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:280
+    LoRaSettings.HopPeriod = SX1276LR->RegHopPeriod;
+  16:	4b05      	ldr	r3, [pc, #20]	; (2c <SX1276LoRaGetHopPeriod+0x2c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 2024 	ldrb.w	r2, [r3, #36]	; 0x24
+  1e:	4b04      	ldr	r3, [pc, #16]	; (30 <SX1276LoRaGetHopPeriod+0x30>)
+  20:	731a      	strb	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:281
+    return LoRaSettings.HopPeriod;
+  22:	4b03      	ldr	r3, [pc, #12]	; (30 <SX1276LoRaGetHopPeriod+0x30>)
+  24:	7b1b      	ldrb	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:282
+}
+  26:	4618      	mov	r0, r3
+  28:	bd80      	pop	{r7, pc}
+  2a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetTxPacketTimeout:
+
+00000000 <SX1276LoRaSetTxPacketTimeout>:
+SX1276LoRaSetTxPacketTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:285
+
+void SX1276LoRaSetTxPacketTimeout( uint32_t value )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:286
+    LoRaSettings.TxPacketTimeout = value;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SX1276LoRaSetTxPacketTimeout+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:287
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetTxPacketTimeout:
+
+00000000 <SX1276LoRaGetTxPacketTimeout>:
+SX1276LoRaGetTxPacketTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:290
+
+uint32_t SX1276LoRaGetTxPacketTimeout( void )
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:291
+    return LoRaSettings.TxPacketTimeout;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SX1276LoRaGetTxPacketTimeout+0x10>)
+   6:	691b      	ldr	r3, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:292
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetRxPacketTimeout:
+
+00000000 <SX1276LoRaSetRxPacketTimeout>:
+SX1276LoRaSetRxPacketTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:295
+
+void SX1276LoRaSetRxPacketTimeout( uint32_t value )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:296
+    LoRaSettings.RxPacketTimeout = value;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SX1276LoRaSetRxPacketTimeout+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:297
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetRxPacketTimeout:
+
+00000000 <SX1276LoRaGetRxPacketTimeout>:
+SX1276LoRaGetRxPacketTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:300
+
+uint32_t SX1276LoRaGetRxPacketTimeout( void )
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:301
+    return LoRaSettings.RxPacketTimeout;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SX1276LoRaGetRxPacketTimeout+0x10>)
+   6:	695b      	ldr	r3, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:302
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetPayloadLength:
+
+00000000 <SX1276LoRaSetPayloadLength>:
+SX1276LoRaSetPayloadLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:305
+
+void SX1276LoRaSetPayloadLength( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:306
+    SX1276LR->RegPayloadLength = value;
+   a:	4b0a      	ldr	r3, [pc, #40]	; (34 <SX1276LoRaSetPayloadLength+0x34>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	79fa      	ldrb	r2, [r7, #7]
+  10:	f883 2022 	strb.w	r2, [r3, #34]	; 0x22
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:307
+    SX1276Write( REG_LR_PAYLOADLENGTH, SX1276LR->RegPayloadLength );
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <SX1276LoRaSetPayloadLength+0x34>)
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	f893 3022 	ldrb.w	r3, [r3, #34]	; 0x22
+  1c:	f04f 0022 	mov.w	r0, #34	; 0x22
+  20:	4619      	mov	r1, r3
+  22:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:308
+    LoRaSettings.PayloadLength = value;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <SX1276LoRaSetPayloadLength+0x38>)
+  28:	79fa      	ldrb	r2, [r7, #7]
+  2a:	761a      	strb	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:309
+}
+  2c:	f107 0708 	add.w	r7, r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.SX1276LoRaGetPayloadLength:
+
+00000000 <SX1276LoRaGetPayloadLength>:
+SX1276LoRaGetPayloadLength():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:312
+
+uint8_t SX1276LoRaGetPayloadLength( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:313
+    SX1276Read( REG_LR_PAYLOADLENGTH, &SX1276LR->RegPayloadLength );
+   4:	4b09      	ldr	r3, [pc, #36]	; (2c <SX1276LoRaGetPayloadLength+0x2c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0322 	add.w	r3, r3, #34	; 0x22
+   c:	f04f 0022 	mov.w	r0, #34	; 0x22
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:314
+    LoRaSettings.PayloadLength = SX1276LR->RegPayloadLength;
+  16:	4b05      	ldr	r3, [pc, #20]	; (2c <SX1276LoRaGetPayloadLength+0x2c>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 2022 	ldrb.w	r2, [r3, #34]	; 0x22
+  1e:	4b04      	ldr	r3, [pc, #16]	; (30 <SX1276LoRaGetPayloadLength+0x30>)
+  20:	761a      	strb	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:315
+    return LoRaSettings.PayloadLength;
+  22:	4b03      	ldr	r3, [pc, #12]	; (30 <SX1276LoRaGetPayloadLength+0x30>)
+  24:	7e1b      	ldrb	r3, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:316
+}
+  26:	4618      	mov	r0, r3
+  28:	bd80      	pop	{r7, pc}
+  2a:	bf00      	nop
+	...
+
+Disassembly of section .text.SX1276LoRaSetPa20dBm:
+
+00000000 <SX1276LoRaSetPa20dBm>:
+SX1276LoRaSetPa20dBm():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:319
+
+void SX1276LoRaSetPa20dBm( bool enale )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:320
+    SX1276Read( REG_LR_PADAC, &SX1276LR->RegPaDac );
+   a:	4b1b      	ldr	r3, [pc, #108]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0349 	add.w	r3, r3, #73	; 0x49
+  12:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:321
+    SX1276Read( REG_LR_PACONFIG, &SX1276LR->RegPaConfig );
+  1c:	4b16      	ldr	r3, [pc, #88]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	f103 0309 	add.w	r3, r3, #9
+  24:	f04f 0009 	mov.w	r0, #9
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:323
+
+    if( ( SX1276LR->RegPaConfig & RFLR_PACONFIG_PASELECT_PABOOST ) == RFLR_PACONFIG_PASELECT_PABOOST )
+  2e:	4b12      	ldr	r3, [pc, #72]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+  30:	681b      	ldr	r3, [r3, #0]
+  32:	7a5b      	ldrb	r3, [r3, #9]
+  34:	b2db      	uxtb	r3, r3
+  36:	b25b      	sxtb	r3, r3
+  38:	2b00      	cmp	r3, #0
+  3a:	da09      	bge.n	50 <SX1276LoRaSetPa20dBm+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:325
+    {    
+        if( enale == true )
+  3c:	79fb      	ldrb	r3, [r7, #7]
+  3e:	2b00      	cmp	r3, #0
+  40:	d00c      	beq.n	5c <SX1276LoRaSetPa20dBm+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:327
+        {
+            SX1276LR->RegPaDac = 0x87;
+  42:	4b0d      	ldr	r3, [pc, #52]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+  44:	681b      	ldr	r3, [r3, #0]
+  46:	f04f 0287 	mov.w	r2, #135	; 0x87
+  4a:	f883 2049 	strb.w	r2, [r3, #73]	; 0x49
+  4e:	e005      	b.n	5c <SX1276LoRaSetPa20dBm+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:332
+        }
+    }
+    else
+    {
+        SX1276LR->RegPaDac = 0x84;
+  50:	4b09      	ldr	r3, [pc, #36]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+  52:	681b      	ldr	r3, [r3, #0]
+  54:	f04f 0284 	mov.w	r2, #132	; 0x84
+  58:	f883 2049 	strb.w	r2, [r3, #73]	; 0x49
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:334
+    }
+    SX1276Write( REG_LR_PADAC, SX1276LR->RegPaDac );
+  5c:	4b06      	ldr	r3, [pc, #24]	; (78 <SX1276LoRaSetPa20dBm+0x78>)
+  5e:	681b      	ldr	r3, [r3, #0]
+  60:	f893 3049 	ldrb.w	r3, [r3, #73]	; 0x49
+  64:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  68:	4619      	mov	r1, r3
+  6a:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:335
+}
+  6e:	f107 0708 	add.w	r7, r7, #8
+  72:	46bd      	mov	sp, r7
+  74:	bd80      	pop	{r7, pc}
+  76:	bf00      	nop
+  78:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetPa20dBm:
+
+00000000 <SX1276LoRaGetPa20dBm>:
+SX1276LoRaGetPa20dBm():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:338
+
+bool SX1276LoRaGetPa20dBm( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:339
+    SX1276Read( REG_LR_PADAC, &SX1276LR->RegPaDac );
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <SX1276LoRaGetPa20dBm+0x30>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0349 	add.w	r3, r3, #73	; 0x49
+   c:	f04f 004d 	mov.w	r0, #77	; 0x4d
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:341
+    
+    return ( ( SX1276LR->RegPaDac & 0x07 ) == 0x07 ) ? true : false;
+  16:	4b06      	ldr	r3, [pc, #24]	; (30 <SX1276LoRaGetPa20dBm+0x30>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 3049 	ldrb.w	r3, [r3, #73]	; 0x49
+  1e:	f003 0307 	and.w	r3, r3, #7
+  22:	2b07      	cmp	r3, #7
+  24:	bf14      	ite	ne
+  26:	2300      	movne	r3, #0
+  28:	2301      	moveq	r3, #1
+  2a:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:342
+}
+  2c:	4618      	mov	r0, r3
+  2e:	bd80      	pop	{r7, pc}
+  30:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetPAOutput:
+
+00000000 <SX1276LoRaSetPAOutput>:
+SX1276LoRaSetPAOutput():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:345
+
+void SX1276LoRaSetPAOutput( uint8_t outputPin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:346
+    SX1276Read( REG_LR_PACONFIG, &SX1276LR->RegPaConfig );
+   a:	4b12      	ldr	r3, [pc, #72]	; (54 <SX1276LoRaSetPAOutput+0x54>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0309 	add.w	r3, r3, #9
+  12:	f04f 0009 	mov.w	r0, #9
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:347
+    SX1276LR->RegPaConfig = (SX1276LR->RegPaConfig & RFLR_PACONFIG_PASELECT_MASK ) | outputPin;
+  1c:	4b0d      	ldr	r3, [pc, #52]	; (54 <SX1276LoRaSetPAOutput+0x54>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0c      	ldr	r2, [pc, #48]	; (54 <SX1276LoRaSetPAOutput+0x54>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7a52      	ldrb	r2, [r2, #9]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f002 027f 	and.w	r2, r2, #127	; 0x7f
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	ea41 0202 	orr.w	r2, r1, r2
+  34:	b2d2      	uxtb	r2, r2
+  36:	b2d2      	uxtb	r2, r2
+  38:	725a      	strb	r2, [r3, #9]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:348
+    SX1276Write( REG_LR_PACONFIG, SX1276LR->RegPaConfig );
+  3a:	4b06      	ldr	r3, [pc, #24]	; (54 <SX1276LoRaSetPAOutput+0x54>)
+  3c:	681b      	ldr	r3, [r3, #0]
+  3e:	7a5b      	ldrb	r3, [r3, #9]
+  40:	f04f 0009 	mov.w	r0, #9
+  44:	4619      	mov	r1, r3
+  46:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:349
+}
+  4a:	f107 0708 	add.w	r7, r7, #8
+  4e:	46bd      	mov	sp, r7
+  50:	bd80      	pop	{r7, pc}
+  52:	bf00      	nop
+  54:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetPAOutput:
+
+00000000 <SX1276LoRaGetPAOutput>:
+SX1276LoRaGetPAOutput():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:352
+
+uint8_t SX1276LoRaGetPAOutput( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:353
+    SX1276Read( REG_LR_PACONFIG, &SX1276LR->RegPaConfig );
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <SX1276LoRaGetPAOutput+0x28>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0309 	add.w	r3, r3, #9
+   c:	f04f 0009 	mov.w	r0, #9
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:354
+    return SX1276LR->RegPaConfig & ~RFLR_PACONFIG_PASELECT_MASK;
+  16:	4b04      	ldr	r3, [pc, #16]	; (28 <SX1276LoRaGetPAOutput+0x28>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7a5b      	ldrb	r3, [r3, #9]
+  1c:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+  20:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:355
+}
+  22:	4618      	mov	r0, r3
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+  28:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetPaRamp:
+
+00000000 <SX1276LoRaSetPaRamp>:
+SX1276LoRaSetPaRamp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:358
+
+void SX1276LoRaSetPaRamp( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:359
+    SX1276Read( REG_LR_PARAMP, &SX1276LR->RegPaRamp );
+   a:	4b13      	ldr	r3, [pc, #76]	; (58 <SX1276LoRaSetPaRamp+0x58>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 030a 	add.w	r3, r3, #10
+  12:	f04f 000a 	mov.w	r0, #10
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:360
+    SX1276LR->RegPaRamp = ( SX1276LR->RegPaRamp & RFLR_PARAMP_MASK ) | ( value & ~RFLR_PARAMP_MASK );
+  1c:	4b0e      	ldr	r3, [pc, #56]	; (58 <SX1276LoRaSetPaRamp+0x58>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0d      	ldr	r2, [pc, #52]	; (58 <SX1276LoRaSetPaRamp+0x58>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	7a92      	ldrb	r2, [r2, #10]
+  26:	b2d2      	uxtb	r2, r2
+  28:	f022 020f 	bic.w	r2, r2, #15
+  2c:	b2d1      	uxtb	r1, r2
+  2e:	79fa      	ldrb	r2, [r7, #7]
+  30:	f002 020f 	and.w	r2, r2, #15
+  34:	b2d2      	uxtb	r2, r2
+  36:	ea41 0202 	orr.w	r2, r1, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	729a      	strb	r2, [r3, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:361
+    SX1276Write( REG_LR_PARAMP, SX1276LR->RegPaRamp );
+  40:	4b05      	ldr	r3, [pc, #20]	; (58 <SX1276LoRaSetPaRamp+0x58>)
+  42:	681b      	ldr	r3, [r3, #0]
+  44:	7a9b      	ldrb	r3, [r3, #10]
+  46:	f04f 000a 	mov.w	r0, #10
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:362
+}
+  50:	f107 0708 	add.w	r7, r7, #8
+  54:	46bd      	mov	sp, r7
+  56:	bd80      	pop	{r7, pc}
+  58:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetPaRamp:
+
+00000000 <SX1276LoRaGetPaRamp>:
+SX1276LoRaGetPaRamp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:365
+
+uint8_t SX1276LoRaGetPaRamp( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:366
+    SX1276Read( REG_LR_PARAMP, &SX1276LR->RegPaRamp );
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <SX1276LoRaGetPaRamp+0x28>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 030a 	add.w	r3, r3, #10
+   c:	f04f 000a 	mov.w	r0, #10
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:367
+    return SX1276LR->RegPaRamp & ~RFLR_PARAMP_MASK;
+  16:	4b04      	ldr	r3, [pc, #16]	; (28 <SX1276LoRaGetPaRamp+0x28>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	7a9b      	ldrb	r3, [r3, #10]
+  1c:	f003 030f 	and.w	r3, r3, #15
+  20:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:368
+}
+  22:	4618      	mov	r0, r3
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+  28:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetSymbTimeout:
+
+00000000 <SX1276LoRaSetSymbTimeout>:
+SX1276LoRaSetSymbTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:371
+
+void SX1276LoRaSetSymbTimeout( uint16_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:372
+    SX1276ReadBuffer( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2, 2 );
+   a:	4b1a      	ldr	r3, [pc, #104]	; (74 <SX1276LoRaSetSymbTimeout+0x74>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 031e 	add.w	r3, r3, #30
+  12:	f04f 001e 	mov.w	r0, #30
+  16:	4619      	mov	r1, r3
+  18:	f04f 0202 	mov.w	r2, #2
+  1c:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:374
+
+    SX1276LR->RegModemConfig2 = ( SX1276LR->RegModemConfig2 & RFLR_MODEMCONFIG2_SYMBTIMEOUTMSB_MASK ) | ( ( value >> 8 ) & ~RFLR_MODEMCONFIG2_SYMBTIMEOUTMSB_MASK );
+  20:	4b14      	ldr	r3, [pc, #80]	; (74 <SX1276LoRaSetSymbTimeout+0x74>)
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	4a13      	ldr	r2, [pc, #76]	; (74 <SX1276LoRaSetSymbTimeout+0x74>)
+  26:	6812      	ldr	r2, [r2, #0]
+  28:	7f92      	ldrb	r2, [r2, #30]
+  2a:	b2d2      	uxtb	r2, r2
+  2c:	f022 0203 	bic.w	r2, r2, #3
+  30:	b2d1      	uxtb	r1, r2
+  32:	88fa      	ldrh	r2, [r7, #6]
+  34:	ea4f 2212 	mov.w	r2, r2, lsr #8
+  38:	b292      	uxth	r2, r2
+  3a:	b2d2      	uxtb	r2, r2
+  3c:	f002 0203 	and.w	r2, r2, #3
+  40:	b2d2      	uxtb	r2, r2
+  42:	ea41 0202 	orr.w	r2, r1, r2
+  46:	b2d2      	uxtb	r2, r2
+  48:	b2d2      	uxtb	r2, r2
+  4a:	779a      	strb	r2, [r3, #30]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:375
+    SX1276LR->RegSymbTimeoutLsb = value & 0xFF;
+  4c:	4b09      	ldr	r3, [pc, #36]	; (74 <SX1276LoRaSetSymbTimeout+0x74>)
+  4e:	681b      	ldr	r3, [r3, #0]
+  50:	88fa      	ldrh	r2, [r7, #6]
+  52:	b2d2      	uxtb	r2, r2
+  54:	77da      	strb	r2, [r3, #31]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:376
+    SX1276WriteBuffer( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2, 2 );
+  56:	4b07      	ldr	r3, [pc, #28]	; (74 <SX1276LoRaSetSymbTimeout+0x74>)
+  58:	681b      	ldr	r3, [r3, #0]
+  5a:	f103 031e 	add.w	r3, r3, #30
+  5e:	f04f 001e 	mov.w	r0, #30
+  62:	4619      	mov	r1, r3
+  64:	f04f 0202 	mov.w	r2, #2
+  68:	f7ff fffe 	bl	0 <SX1276WriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:377
+}
+  6c:	f107 0708 	add.w	r7, r7, #8
+  70:	46bd      	mov	sp, r7
+  72:	bd80      	pop	{r7, pc}
+  74:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetSymbTimeout:
+
+00000000 <SX1276LoRaGetSymbTimeout>:
+SX1276LoRaGetSymbTimeout():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:380
+
+uint16_t SX1276LoRaGetSymbTimeout( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:381
+    SX1276ReadBuffer( REG_LR_MODEMCONFIG2, &SX1276LR->RegModemConfig2, 2 );
+   4:	4b0d      	ldr	r3, [pc, #52]	; (3c <SX1276LoRaGetSymbTimeout+0x3c>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 031e 	add.w	r3, r3, #30
+   c:	f04f 001e 	mov.w	r0, #30
+  10:	4619      	mov	r1, r3
+  12:	f04f 0202 	mov.w	r2, #2
+  16:	f7ff fffe 	bl	0 <SX1276ReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:382
+    return ( ( SX1276LR->RegModemConfig2 & ~RFLR_MODEMCONFIG2_SYMBTIMEOUTMSB_MASK ) << 8 ) | SX1276LR->RegSymbTimeoutLsb;
+  1a:	4b08      	ldr	r3, [pc, #32]	; (3c <SX1276LoRaGetSymbTimeout+0x3c>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	7f9b      	ldrb	r3, [r3, #30]
+  20:	f023 03fc 	bic.w	r3, r3, #252	; 0xfc
+  24:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  28:	b29a      	uxth	r2, r3
+  2a:	4b04      	ldr	r3, [pc, #16]	; (3c <SX1276LoRaGetSymbTimeout+0x3c>)
+  2c:	681b      	ldr	r3, [r3, #0]
+  2e:	7fdb      	ldrb	r3, [r3, #31]
+  30:	ea42 0303 	orr.w	r3, r2, r3
+  34:	b29b      	uxth	r3, r3
+  36:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:383
+}
+  38:	4618      	mov	r0, r3
+  3a:	bd80      	pop	{r7, pc}
+  3c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetLowDatarateOptimize:
+
+00000000 <SX1276LoRaSetLowDatarateOptimize>:
+SX1276LoRaSetLowDatarateOptimize():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:386
+
+void SX1276LoRaSetLowDatarateOptimize( bool enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:387
+    SX1276Read( REG_LR_MODEMCONFIG3, &SX1276LR->RegModemConfig3 );
+   a:	4b15      	ldr	r3, [pc, #84]	; (60 <SX1276LoRaSetLowDatarateOptimize+0x60>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0326 	add.w	r3, r3, #38	; 0x26
+  12:	f04f 0026 	mov.w	r0, #38	; 0x26
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:388
+    SX1276LR->RegModemConfig3 = ( SX1276LR->RegModemConfig3 & RFLR_MODEMCONFIG3_LOWDATARATEOPTIMIZE_MASK ) | ( enable << 3 );
+  1c:	4b10      	ldr	r3, [pc, #64]	; (60 <SX1276LoRaSetLowDatarateOptimize+0x60>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0f      	ldr	r2, [pc, #60]	; (60 <SX1276LoRaSetLowDatarateOptimize+0x60>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f892 2026 	ldrb.w	r2, [r2, #38]	; 0x26
+  28:	b2d2      	uxtb	r2, r2
+  2a:	f022 0208 	bic.w	r2, r2, #8
+  2e:	b2d1      	uxtb	r1, r2
+  30:	79fa      	ldrb	r2, [r7, #7]
+  32:	ea4f 02c2 	mov.w	r2, r2, lsl #3
+  36:	b2d2      	uxtb	r2, r2
+  38:	ea41 0202 	orr.w	r2, r1, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	b2d2      	uxtb	r2, r2
+  40:	f883 2026 	strb.w	r2, [r3, #38]	; 0x26
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:389
+    SX1276Write( REG_LR_MODEMCONFIG3, SX1276LR->RegModemConfig3 );
+  44:	4b06      	ldr	r3, [pc, #24]	; (60 <SX1276LoRaSetLowDatarateOptimize+0x60>)
+  46:	681b      	ldr	r3, [r3, #0]
+  48:	f893 3026 	ldrb.w	r3, [r3, #38]	; 0x26
+  4c:	f04f 0026 	mov.w	r0, #38	; 0x26
+  50:	4619      	mov	r1, r3
+  52:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:390
+}
+  56:	f107 0708 	add.w	r7, r7, #8
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetLowDatarateOptimize:
+
+00000000 <SX1276LoRaGetLowDatarateOptimize>:
+SX1276LoRaGetLowDatarateOptimize():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:393
+
+bool SX1276LoRaGetLowDatarateOptimize( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:394
+    SX1276Read( REG_LR_MODEMCONFIG3, &SX1276LR->RegModemConfig3 );
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <SX1276LoRaGetLowDatarateOptimize+0x34>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0326 	add.w	r3, r3, #38	; 0x26
+   c:	f04f 0026 	mov.w	r0, #38	; 0x26
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:395
+    return ( ( SX1276LR->RegModemConfig3 & RFLR_MODEMCONFIG3_LOWDATARATEOPTIMIZE_ON ) >> 3 );
+  16:	4b07      	ldr	r3, [pc, #28]	; (34 <SX1276LoRaGetLowDatarateOptimize+0x34>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 3026 	ldrb.w	r3, [r3, #38]	; 0x26
+  1e:	f003 0308 	and.w	r3, r3, #8
+  22:	ea4f 03e3 	mov.w	r3, r3, asr #3
+  26:	2b00      	cmp	r3, #0
+  28:	bf0c      	ite	eq
+  2a:	2300      	moveq	r3, #0
+  2c:	2301      	movne	r3, #1
+  2e:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:396
+}
+  30:	4618      	mov	r0, r3
+  32:	bd80      	pop	{r7, pc}
+  34:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaSetNbTrigPeaks:
+
+00000000 <SX1276LoRaSetNbTrigPeaks>:
+SX1276LoRaSetNbTrigPeaks():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:399
+
+void SX1276LoRaSetNbTrigPeaks( uint8_t value )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:400
+    SX1276Read( 0x31, &SX1276LR->RegDetectOptimize );
+   a:	4b13      	ldr	r3, [pc, #76]	; (58 <SX1276LoRaSetNbTrigPeaks+0x58>)
+   c:	681b      	ldr	r3, [r3, #0]
+   e:	f103 0330 	add.w	r3, r3, #48	; 0x30
+  12:	f04f 0031 	mov.w	r0, #49	; 0x31
+  16:	4619      	mov	r1, r3
+  18:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:401
+    SX1276LR->RegDetectOptimize = ( SX1276LR->RegDetectOptimize & 0xF8 ) | value;
+  1c:	4b0e      	ldr	r3, [pc, #56]	; (58 <SX1276LoRaSetNbTrigPeaks+0x58>)
+  1e:	681b      	ldr	r3, [r3, #0]
+  20:	4a0d      	ldr	r2, [pc, #52]	; (58 <SX1276LoRaSetNbTrigPeaks+0x58>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f892 2030 	ldrb.w	r2, [r2, #48]	; 0x30
+  28:	b2d2      	uxtb	r2, r2
+  2a:	f022 0207 	bic.w	r2, r2, #7
+  2e:	b2d1      	uxtb	r1, r2
+  30:	79fa      	ldrb	r2, [r7, #7]
+  32:	ea41 0202 	orr.w	r2, r1, r2
+  36:	b2d2      	uxtb	r2, r2
+  38:	b2d2      	uxtb	r2, r2
+  3a:	f883 2030 	strb.w	r2, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:402
+    SX1276Write( 0x31, SX1276LR->RegDetectOptimize );
+  3e:	4b06      	ldr	r3, [pc, #24]	; (58 <SX1276LoRaSetNbTrigPeaks+0x58>)
+  40:	681b      	ldr	r3, [r3, #0]
+  42:	f893 3030 	ldrb.w	r3, [r3, #48]	; 0x30
+  46:	f04f 0031 	mov.w	r0, #49	; 0x31
+  4a:	4619      	mov	r1, r3
+  4c:	f7ff fffe 	bl	0 <SX1276Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:403
+}
+  50:	f107 0708 	add.w	r7, r7, #8
+  54:	46bd      	mov	sp, r7
+  56:	bd80      	pop	{r7, pc}
+  58:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1276LoRaGetNbTrigPeaks:
+
+00000000 <SX1276LoRaGetNbTrigPeaks>:
+SX1276LoRaGetNbTrigPeaks():
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:406
+
+uint8_t SX1276LoRaGetNbTrigPeaks( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:407
+    SX1276Read( 0x31, &SX1276LR->RegDetectOptimize );
+   4:	4b08      	ldr	r3, [pc, #32]	; (28 <SX1276LoRaGetNbTrigPeaks+0x28>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0330 	add.w	r3, r3, #48	; 0x30
+   c:	f04f 0031 	mov.w	r0, #49	; 0x31
+  10:	4619      	mov	r1, r3
+  12:	f7ff fffe 	bl	0 <SX1276Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:408
+    return ( SX1276LR->RegDetectOptimize & 0x07 );
+  16:	4b04      	ldr	r3, [pc, #16]	; (28 <SX1276LoRaGetNbTrigPeaks+0x28>)
+  18:	681b      	ldr	r3, [r3, #0]
+  1a:	f893 3030 	ldrb.w	r3, [r3, #48]	; 0x30
+  1e:	f003 0307 	and.w	r3, r3, #7
+  22:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\radio/sx1276-LoRaMisc.c:409
+}
+  24:	4618      	mov	r0, r3
+  26:	bd80      	pop	{r7, pc}
+  28:	00000000 	.word	0x00000000

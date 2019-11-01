@@ -1,0 +1,242 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1509.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\sx1509.o
+
+
+Disassembly of section .text.SX1509Reset:
+
+00000000 <SX1509Reset>:
+SX1509Reset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:10
+#define DEVICE_I2C_ADDRESS                          0x3E
+
+static uint8_t I2cDeviceAddr = DEVICE_I2C_ADDRESS;
+
+uint8_t SX1509Reset( )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:11
+    if( SX1509Write( RegReset, 0x12 ) == SX_OK )
+   4:	f04f 007d 	mov.w	r0, #125	; 0x7d
+   8:	f04f 0112 	mov.w	r1, #18
+   c:	f7ff fffe 	bl	0 <SX1509Reset>
+  10:	4603      	mov	r3, r0
+  12:	2b00      	cmp	r3, #0
+  14:	d10b      	bne.n	2e <SX1509Reset+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:13
+    {
+        if( SX1509Write( RegReset, 0x34 ) == SX_OK )
+  16:	f04f 007d 	mov.w	r0, #125	; 0x7d
+  1a:	f04f 0134 	mov.w	r1, #52	; 0x34
+  1e:	f7ff fffe 	bl	0 <SX1509Reset>
+  22:	4603      	mov	r3, r0
+  24:	2b00      	cmp	r3, #0
+  26:	d102      	bne.n	2e <SX1509Reset+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:15
+        {
+            return SX_OK;
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	e001      	b.n	32 <SX1509Reset+0x32>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:18
+        }
+    }
+    return SX_ERROR;
+  2e:	f04f 0301 	mov.w	r3, #1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:19
+}
+  32:	4618      	mov	r0, r3
+  34:	bd80      	pop	{r7, pc}
+  36:	bf00      	nop
+
+Disassembly of section .text.SX1509Write:
+
+00000000 <SX1509Write>:
+SX1509Write():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:22
+
+uint8_t SX1509Write( uint8_t addr, uint8_t data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:23
+    return SX1509WriteBuffer( addr, &data, 1 );
+   e:	79fa      	ldrb	r2, [r7, #7]
+  10:	f107 0306 	add.w	r3, r7, #6
+  14:	4610      	mov	r0, r2
+  16:	4619      	mov	r1, r3
+  18:	f04f 0201 	mov.w	r2, #1
+  1c:	f7ff fffe 	bl	0 <SX1509Write>
+  20:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:24
+}
+  22:	4618      	mov	r0, r3
+  24:	f107 0708 	add.w	r7, r7, #8
+  28:	46bd      	mov	sp, r7
+  2a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.SX1509WriteBuffer:
+
+00000000 <SX1509WriteBuffer>:
+SX1509WriteBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:27
+
+uint8_t SX1509WriteBuffer( uint8_t addr, uint8_t *data, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af02      	add	r7, sp, #8
+   6:	60b9      	str	r1, [r7, #8]
+   8:	4613      	mov	r3, r2
+   a:	4602      	mov	r2, r0
+   c:	73fa      	strb	r2, [r7, #15]
+   e:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:28
+    return I2cWriteBuffer( I2cDeviceAddr << 1, addr, data, size, I2C_ADDR_SIZE_8 );
+  10:	4b0b      	ldr	r3, [pc, #44]	; (40 <SX1509WriteBuffer+0x40>)
+  12:	781b      	ldrb	r3, [r3, #0]
+  14:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  18:	b2d9      	uxtb	r1, r3
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	b29a      	uxth	r2, r3
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	b29b      	uxth	r3, r3
+  22:	f04f 0000 	mov.w	r0, #0
+  26:	9000      	str	r0, [sp, #0]
+  28:	4608      	mov	r0, r1
+  2a:	4611      	mov	r1, r2
+  2c:	68ba      	ldr	r2, [r7, #8]
+  2e:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+  32:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:29
+}
+  34:	4618      	mov	r0, r3
+  36:	f107 0710 	add.w	r7, r7, #16
+  3a:	46bd      	mov	sp, r7
+  3c:	bd80      	pop	{r7, pc}
+  3e:	bf00      	nop
+  40:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1509Read:
+
+00000000 <SX1509Read>:
+SX1509Read():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:32
+
+uint8_t SX1509Read( uint8_t addr, uint8_t *data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:33
+    return SX1509ReadBuffer( addr, data, 1 );
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	4618      	mov	r0, r3
+  10:	6839      	ldr	r1, [r7, #0]
+  12:	f04f 0201 	mov.w	r2, #1
+  16:	f7ff fffe 	bl	0 <SX1509Read>
+  1a:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:34
+}
+  1c:	4618      	mov	r0, r3
+  1e:	f107 0708 	add.w	r7, r7, #8
+  22:	46bd      	mov	sp, r7
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+
+Disassembly of section .text.SX1509ReadBuffer:
+
+00000000 <SX1509ReadBuffer>:
+SX1509ReadBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:37
+
+uint8_t SX1509ReadBuffer( uint8_t addr, uint8_t *data, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af02      	add	r7, sp, #8
+   6:	60b9      	str	r1, [r7, #8]
+   8:	4613      	mov	r3, r2
+   a:	4602      	mov	r2, r0
+   c:	73fa      	strb	r2, [r7, #15]
+   e:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:38
+    return I2cReadBuffer( I2cDeviceAddr << 1, addr, data, size, I2C_ADDR_SIZE_8 );
+  10:	4b0b      	ldr	r3, [pc, #44]	; (40 <SX1509ReadBuffer+0x40>)
+  12:	781b      	ldrb	r3, [r3, #0]
+  14:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  18:	b2d9      	uxtb	r1, r3
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	b29a      	uxth	r2, r3
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	b29b      	uxth	r3, r3
+  22:	f04f 0000 	mov.w	r0, #0
+  26:	9000      	str	r0, [sp, #0]
+  28:	4608      	mov	r0, r1
+  2a:	4611      	mov	r1, r2
+  2c:	68ba      	ldr	r2, [r7, #8]
+  2e:	f7ff fffe 	bl	0 <I2cReadBuffer>
+  32:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:39
+}
+  34:	4618      	mov	r0, r3
+  36:	f107 0710 	add.w	r7, r7, #16
+  3a:	46bd      	mov	sp, r7
+  3c:	bd80      	pop	{r7, pc}
+  3e:	bf00      	nop
+  40:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1509SetDeviceAddr:
+
+00000000 <SX1509SetDeviceAddr>:
+SX1509SetDeviceAddr():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:42
+
+void SX1509SetDeviceAddr( uint8_t addr )
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:43
+    I2cDeviceAddr = addr;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SX1509SetDeviceAddr+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:44
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SX1509GetDeviceAddr:
+
+00000000 <SX1509GetDeviceAddr>:
+SX1509GetDeviceAddr():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:47
+
+uint8_t SX1509GetDeviceAddr( void )
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:48
+    return I2cDeviceAddr;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SX1509GetDeviceAddr+0x10>)
+   6:	781b      	ldrb	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/sx1509.c:49
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	00000000 	.word	0x00000000

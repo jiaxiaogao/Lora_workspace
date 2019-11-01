@@ -1,0 +1,3006 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_rcc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_rcc.o
+
+
+Disassembly of section .text.RCC_DeInit:
+
+00000000 <RCC_DeInit>:
+RCC_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:214
+  *            - LSI, LSE and RTC clocks 
+  * @param  None
+  * @retval None
+  */
+void RCC_DeInit(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:216
+  /* Set HSION bit */
+  RCC->CR |= (uint32_t)0x00000001;
+   4:	4b17      	ldr	r3, [pc, #92]	; (64 <RCC_DeInit+0x64>)
+   6:	4a17      	ldr	r2, [pc, #92]	; (64 <RCC_DeInit+0x64>)
+   8:	6812      	ldr	r2, [r2, #0]
+   a:	f042 0201 	orr.w	r2, r2, #1
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:219
+
+  /* Reset CFGR register */
+  RCC->CFGR = 0x00000000;
+  10:	4b14      	ldr	r3, [pc, #80]	; (64 <RCC_DeInit+0x64>)
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:222
+
+  /* Reset HSEON, CSSON, PLLON, PLLI2S and PLLSAI(STM32F42/43xxx devices) bits */
+  RCC->CR &= (uint32_t)0xEAF6FFFF;
+  18:	4a12      	ldr	r2, [pc, #72]	; (64 <RCC_DeInit+0x64>)
+  1a:	4b12      	ldr	r3, [pc, #72]	; (64 <RCC_DeInit+0x64>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	f023 53a8 	bic.w	r3, r3, #352321536	; 0x15000000
+  22:	f423 2310 	bic.w	r3, r3, #589824	; 0x90000
+  26:	6013      	str	r3, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:225
+
+  /* Reset PLLCFGR register */
+  RCC->PLLCFGR = 0x24003010;
+  28:	4b0e      	ldr	r3, [pc, #56]	; (64 <RCC_DeInit+0x64>)
+  2a:	4a0f      	ldr	r2, [pc, #60]	; (68 <RCC_DeInit+0x68>)
+  2c:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:228
+
+  /* Reset PLLI2SCFGR register */
+  RCC->PLLI2SCFGR = 0x20003000;
+  2e:	4b0d      	ldr	r3, [pc, #52]	; (64 <RCC_DeInit+0x64>)
+  30:	4a0e      	ldr	r2, [pc, #56]	; (6c <RCC_DeInit+0x6c>)
+  32:	f8c3 2084 	str.w	r2, [r3, #132]	; 0x84
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:231
+
+  /* Reset PLLSAICFGR register, only available for STM32F42/43xxx devices */
+  RCC->PLLSAICFGR = 0x24003000;
+  36:	4b0b      	ldr	r3, [pc, #44]	; (64 <RCC_DeInit+0x64>)
+  38:	4a0d      	ldr	r2, [pc, #52]	; (70 <RCC_DeInit+0x70>)
+  3a:	f8c3 2088 	str.w	r2, [r3, #136]	; 0x88
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:234
+ 
+  /* Reset HSEBYP bit */
+  RCC->CR &= (uint32_t)0xFFFBFFFF;
+  3e:	4b09      	ldr	r3, [pc, #36]	; (64 <RCC_DeInit+0x64>)
+  40:	4a08      	ldr	r2, [pc, #32]	; (64 <RCC_DeInit+0x64>)
+  42:	6812      	ldr	r2, [r2, #0]
+  44:	f422 2280 	bic.w	r2, r2, #262144	; 0x40000
+  48:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:237
+
+  /* Disable all interrupts */
+  RCC->CIR = 0x00000000;
+  4a:	4b06      	ldr	r3, [pc, #24]	; (64 <RCC_DeInit+0x64>)
+  4c:	f04f 0200 	mov.w	r2, #0
+  50:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:240
+
+  /* Disable Timers clock prescalers selection, only available for STM32F42/43xxx devices */
+  RCC->DCKCFGR = 0x00000000; 
+  52:	4b04      	ldr	r3, [pc, #16]	; (64 <RCC_DeInit+0x64>)
+  54:	f04f 0200 	mov.w	r2, #0
+  58:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:242
+
+}
+  5c:	46bd      	mov	sp, r7
+  5e:	bc80      	pop	{r7}
+  60:	4770      	bx	lr
+  62:	bf00      	nop
+  64:	40023800 	.word	0x40023800
+  68:	24003010 	.word	0x24003010
+  6c:	20003000 	.word	0x20003000
+  70:	24003000 	.word	0x24003000
+
+Disassembly of section .text.RCC_HSEConfig:
+
+00000000 <RCC_HSEConfig>:
+RCC_HSEConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:265
+  *            @arg RCC_HSE_ON: turn ON the HSE oscillator
+  *            @arg RCC_HSE_Bypass: HSE oscillator bypassed with external clock
+  * @retval None
+  */
+void RCC_HSEConfig(uint8_t RCC_HSE)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:270
+  /* Check the parameters */
+  assert_param(IS_RCC_HSE(RCC_HSE));
+
+  /* Reset HSEON and HSEBYP bits before configuring the HSE ------------------*/
+  *(__IO uint8_t *) CR_BYTE3_ADDRESS = RCC_HSE_OFF;
+   a:	4b06      	ldr	r3, [pc, #24]	; (24 <RCC_HSEConfig+0x24>)
+   c:	f04f 0200 	mov.w	r2, #0
+  10:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:273
+
+  /* Set the new HSE configuration -------------------------------------------*/
+  *(__IO uint8_t *) CR_BYTE3_ADDRESS = RCC_HSE;
+  12:	4b04      	ldr	r3, [pc, #16]	; (24 <RCC_HSEConfig+0x24>)
+  14:	79fa      	ldrb	r2, [r7, #7]
+  16:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:274
+}
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+  24:	40023802 	.word	0x40023802
+
+Disassembly of section .text.RCC_WaitForHSEStartUp:
+
+00000000 <RCC_WaitForHSEStartUp>:
+RCC_WaitForHSEStartUp():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:289
+  * @retval An ErrorStatus enumeration value:
+  *          - SUCCESS: HSE oscillator is stable and ready to use
+  *          - ERROR: HSE oscillator not yet ready
+  */
+ErrorStatus RCC_WaitForHSEStartUp(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:290
+  __IO uint32_t startupcounter = 0;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:291
+  ErrorStatus status = ERROR;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:292
+  FlagStatus hsestatus = RESET;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:296
+  /* Wait till HSE is ready and if Time out is reached exit */
+  do
+  {
+    hsestatus = RCC_GetFlagStatus(RCC_FLAG_HSERDY);
+  18:	f04f 0031 	mov.w	r0, #49	; 0x31
+  1c:	f7ff fffe 	bl	0 <RCC_WaitForHSEStartUp>
+  20:	4603      	mov	r3, r0
+  22:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:297
+    startupcounter++;
+  24:	683b      	ldr	r3, [r7, #0]
+  26:	f103 0301 	add.w	r3, r3, #1
+  2a:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:298
+  } while((startupcounter != HSE_STARTUP_TIMEOUT) && (hsestatus == RESET));
+  2c:	683b      	ldr	r3, [r7, #0]
+  2e:	f5b3 4fa0 	cmp.w	r3, #20480	; 0x5000
+  32:	d002      	beq.n	3a <RCC_WaitForHSEStartUp+0x3a>
+  34:	79bb      	ldrb	r3, [r7, #6]
+  36:	2b00      	cmp	r3, #0
+  38:	d0ee      	beq.n	18 <RCC_WaitForHSEStartUp+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:300
+
+  if (RCC_GetFlagStatus(RCC_FLAG_HSERDY) != RESET)
+  3a:	f04f 0031 	mov.w	r0, #49	; 0x31
+  3e:	f7ff fffe 	bl	0 <RCC_WaitForHSEStartUp>
+  42:	4603      	mov	r3, r0
+  44:	2b00      	cmp	r3, #0
+  46:	d003      	beq.n	50 <RCC_WaitForHSEStartUp+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:302
+  {
+    status = SUCCESS;
+  48:	f04f 0301 	mov.w	r3, #1
+  4c:	71fb      	strb	r3, [r7, #7]
+  4e:	e002      	b.n	56 <RCC_WaitForHSEStartUp+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:306
+  }
+  else
+  {
+    status = ERROR;
+  50:	f04f 0300 	mov.w	r3, #0
+  54:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:308
+  }
+  return (status);
+  56:	79fb      	ldrb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:309
+}
+  58:	4618      	mov	r0, r3
+  5a:	f107 0708 	add.w	r7, r7, #8
+  5e:	46bd      	mov	sp, r7
+  60:	bd80      	pop	{r7, pc}
+  62:	bf00      	nop
+
+Disassembly of section .text.RCC_AdjustHSICalibrationValue:
+
+00000000 <RCC_AdjustHSICalibrationValue>:
+RCC_AdjustHSICalibrationValue():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:320
+  * @param  HSICalibrationValue: specifies the calibration trimming value.
+  *         This parameter must be a number between 0 and 0x1F.
+  * @retval None
+  */
+void RCC_AdjustHSICalibrationValue(uint8_t HSICalibrationValue)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:321
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:325
+  /* Check the parameters */
+  assert_param(IS_RCC_CALIBRATION_VALUE(HSICalibrationValue));
+
+  tmpreg = RCC->CR;
+  10:	4b0a      	ldr	r3, [pc, #40]	; (3c <RCC_AdjustHSICalibrationValue+0x3c>)
+  12:	681b      	ldr	r3, [r3, #0]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:328
+
+  /* Clear HSITRIM[4:0] bits */
+  tmpreg &= ~RCC_CR_HSITRIM;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f023 03f8 	bic.w	r3, r3, #248	; 0xf8
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:331
+
+  /* Set the HSITRIM[4:0] bits according to HSICalibrationValue value */
+  tmpreg |= (uint32_t)HSICalibrationValue << 3;
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  24:	68fa      	ldr	r2, [r7, #12]
+  26:	ea42 0303 	orr.w	r3, r2, r3
+  2a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:334
+
+  /* Store the new value */
+  RCC->CR = tmpreg;
+  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <RCC_AdjustHSICalibrationValue+0x3c>)
+  2e:	68fa      	ldr	r2, [r7, #12]
+  30:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:335
+}
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_HSICmd:
+
+00000000 <RCC_HSICmd>:
+RCC_HSICmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:356
+  * @note   When the HSI is stopped, HSIRDY flag goes low after 6 HSI oscillator
+  *         clock cycles.  
+  * @retval None
+  */
+void RCC_HSICmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:360
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) CR_HSION_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_HSICmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:361
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470000 	.word	0x42470000
+
+Disassembly of section .text.RCC_LSEConfig:
+
+00000000 <RCC_LSEConfig>:
+RCC_LSEConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:381
+  *            @arg RCC_LSE_ON: turn ON the LSE oscillator
+  *            @arg RCC_LSE_Bypass: LSE oscillator bypassed with external clock
+  * @retval None
+  */
+void RCC_LSEConfig(uint8_t RCC_LSE)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:387
+  /* Check the parameters */
+  assert_param(IS_RCC_LSE(RCC_LSE));
+
+  /* Reset LSEON and LSEBYP bits before configuring the LSE ------------------*/
+  /* Reset LSEON bit */
+  *(__IO uint8_t *) BDCR_ADDRESS = RCC_LSE_OFF;
+   a:	4b0e      	ldr	r3, [pc, #56]	; (44 <RCC_LSEConfig+0x44>)
+   c:	f04f 0200 	mov.w	r2, #0
+  10:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:390
+
+  /* Reset LSEBYP bit */
+  *(__IO uint8_t *) BDCR_ADDRESS = RCC_LSE_OFF;
+  12:	4b0c      	ldr	r3, [pc, #48]	; (44 <RCC_LSEConfig+0x44>)
+  14:	f04f 0200 	mov.w	r2, #0
+  18:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:393
+
+  /* Configure LSE (RCC_LSE_OFF is already covered by the code section above) */
+  switch (RCC_LSE)
+  1a:	79fb      	ldrb	r3, [r7, #7]
+  1c:	2b01      	cmp	r3, #1
+  1e:	d002      	beq.n	26 <RCC_LSEConfig+0x26>
+  20:	2b04      	cmp	r3, #4
+  22:	d005      	beq.n	30 <RCC_LSEConfig+0x30>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:404
+    case RCC_LSE_Bypass:
+      /* Set LSEBYP and LSEON bits */
+      *(__IO uint8_t *) BDCR_ADDRESS = RCC_LSE_Bypass | RCC_LSE_ON;
+      break;
+    default:
+      break;
+  24:	e009      	b.n	3a <RCC_LSEConfig+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:397
+  /* Configure LSE (RCC_LSE_OFF is already covered by the code section above) */
+  switch (RCC_LSE)
+  {
+    case RCC_LSE_ON:
+      /* Set LSEON bit */
+      *(__IO uint8_t *) BDCR_ADDRESS = RCC_LSE_ON;
+  26:	4b07      	ldr	r3, [pc, #28]	; (44 <RCC_LSEConfig+0x44>)
+  28:	f04f 0201 	mov.w	r2, #1
+  2c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:398
+      break;
+  2e:	e004      	b.n	3a <RCC_LSEConfig+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:401
+    case RCC_LSE_Bypass:
+      /* Set LSEBYP and LSEON bits */
+      *(__IO uint8_t *) BDCR_ADDRESS = RCC_LSE_Bypass | RCC_LSE_ON;
+  30:	4b04      	ldr	r3, [pc, #16]	; (44 <RCC_LSEConfig+0x44>)
+  32:	f04f 0205 	mov.w	r2, #5
+  36:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:402
+      break;
+  38:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:406
+    default:
+      break;
+  }
+}
+  3a:	f107 070c 	add.w	r7, r7, #12
+  3e:	46bd      	mov	sp, r7
+  40:	bc80      	pop	{r7}
+  42:	4770      	bx	lr
+  44:	40023870 	.word	0x40023870
+
+Disassembly of section .text.RCC_LSICmd:
+
+00000000 <RCC_LSICmd>:
+RCC_LSICmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:421
+  * @note   When the LSI is stopped, LSIRDY flag goes low after 6 LSI oscillator
+  *         clock cycles. 
+  * @retval None
+  */
+void RCC_LSICmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:425
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) CSR_LSION_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_LSICmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:426
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470e80 	.word	0x42470e80
+
+Disassembly of section .text.RCC_PLLConfig:
+
+00000000 <RCC_PLLConfig>:
+RCC_PLLConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:464
+  *         correctly.
+  *   
+  * @retval None
+  */
+void RCC_PLLConfig(uint32_t RCC_PLLSource, uint32_t PLLM, uint32_t PLLN, uint32_t PLLP, uint32_t PLLQ)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+   c:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:472
+  assert_param(IS_RCC_PLLM_VALUE(PLLM));
+  assert_param(IS_RCC_PLLN_VALUE(PLLN));
+  assert_param(IS_RCC_PLLP_VALUE(PLLP));
+  assert_param(IS_RCC_PLLQ_VALUE(PLLQ));
+
+  RCC->PLLCFGR = PLLM | (PLLN << 6) | (((PLLP >> 1) -1) << 16) | (RCC_PLLSource) |
+   e:	4b0d      	ldr	r3, [pc, #52]	; (44 <RCC_PLLConfig+0x44>)
+  10:	687a      	ldr	r2, [r7, #4]
+  12:	ea4f 1182 	mov.w	r1, r2, lsl #6
+  16:	68ba      	ldr	r2, [r7, #8]
+  18:	4311      	orrs	r1, r2
+  1a:	683a      	ldr	r2, [r7, #0]
+  1c:	ea4f 0252 	mov.w	r2, r2, lsr #1
+  20:	f102 32ff 	add.w	r2, r2, #4294967295
+  24:	ea4f 4202 	mov.w	r2, r2, lsl #16
+  28:	4311      	orrs	r1, r2
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:473
+                 (PLLQ << 24);
+  2e:	69ba      	ldr	r2, [r7, #24]
+  30:	ea4f 6202 	mov.w	r2, r2, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:472
+  assert_param(IS_RCC_PLLM_VALUE(PLLM));
+  assert_param(IS_RCC_PLLN_VALUE(PLLN));
+  assert_param(IS_RCC_PLLP_VALUE(PLLP));
+  assert_param(IS_RCC_PLLQ_VALUE(PLLQ));
+
+  RCC->PLLCFGR = PLLM | (PLLN << 6) | (((PLLP >> 1) -1) << 16) | (RCC_PLLSource) |
+  34:	ea41 0202 	orr.w	r2, r1, r2
+  38:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:474
+                 (PLLQ << 24);
+}
+  3a:	f107 0714 	add.w	r7, r7, #20
+  3e:	46bd      	mov	sp, r7
+  40:	bc80      	pop	{r7}
+  42:	4770      	bx	lr
+  44:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_PLLCmd:
+
+00000000 <RCC_PLLCmd>:
+RCC_PLLCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:487
+  * @note   The main PLL is disabled by hardware when entering STOP and STANDBY modes.
+  * @param  NewState: new state of the main PLL. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_PLLCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:490
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  *(__IO uint32_t *) CR_PLLON_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_PLLCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:491
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470060 	.word	0x42470060
+
+Disassembly of section .text.RCC_PLLI2SConfig:
+
+00000000 <RCC_PLLI2SConfig>:
+RCC_PLLI2SConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:553
+  * @note   the PLLI2SR parameter is only available with STM32F42xxx/43xxx devices.  
+  *   
+  * @retval None
+  */
+void RCC_PLLI2SConfig(uint32_t PLLI2SN, uint32_t PLLI2SQ, uint32_t PLLI2SR)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:559
+  /* Check the parameters */
+  assert_param(IS_RCC_PLLI2SN_VALUE(PLLI2SN));
+  assert_param(IS_RCC_PLLI2SQ_VALUE(PLLI2SQ));
+  assert_param(IS_RCC_PLLI2SR_VALUE(PLLI2SR));
+
+  RCC->PLLI2SCFGR = (PLLI2SN << 6) | (PLLI2SQ << 24) | (PLLI2SR << 28);
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <RCC_PLLI2SConfig+0x34>)
+   e:	68fa      	ldr	r2, [r7, #12]
+  10:	ea4f 1182 	mov.w	r1, r2, lsl #6
+  14:	68ba      	ldr	r2, [r7, #8]
+  16:	ea4f 6202 	mov.w	r2, r2, lsl #24
+  1a:	4311      	orrs	r1, r2
+  1c:	687a      	ldr	r2, [r7, #4]
+  1e:	ea4f 7202 	mov.w	r2, r2, lsl #28
+  22:	ea41 0202 	orr.w	r2, r1, r2
+  26:	f8c3 2084 	str.w	r2, [r3, #132]	; 0x84
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:560
+}
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_PLLI2SCmd:
+
+00000000 <RCC_PLLI2SCmd>:
+RCC_PLLI2SCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:570
+  * @note   The PLLI2S is disabled by hardware when entering STOP and STANDBY modes.  
+  * @param  NewState: new state of the PLLI2S. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_PLLI2SCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:573
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  *(__IO uint32_t *) CR_PLLI2SON_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_PLLI2SCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:574
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470068 	.word	0x42470068
+
+Disassembly of section .text.RCC_PLLSAIConfig:
+
+00000000 <RCC_PLLSAIConfig>:
+RCC_PLLSAIConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:599
+  *          This parameter must be a number between 2 and 7.
+  *   
+  * @retval None
+  */
+void RCC_PLLSAIConfig(uint32_t PLLSAIN, uint32_t PLLSAIQ, uint32_t PLLSAIR)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:604
+  /* Check the parameters */
+  assert_param(IS_RCC_PLLSAIN_VALUE(PLLSAIN));
+  assert_param(IS_RCC_PLLSAIR_VALUE(PLLSAIR));
+
+  RCC->PLLSAICFGR = (PLLSAIN << 6) | (PLLSAIQ << 24) | (PLLSAIR << 28);
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <RCC_PLLSAIConfig+0x34>)
+   e:	68fa      	ldr	r2, [r7, #12]
+  10:	ea4f 1182 	mov.w	r1, r2, lsl #6
+  14:	68ba      	ldr	r2, [r7, #8]
+  16:	ea4f 6202 	mov.w	r2, r2, lsl #24
+  1a:	4311      	orrs	r1, r2
+  1c:	687a      	ldr	r2, [r7, #4]
+  1e:	ea4f 7202 	mov.w	r2, r2, lsl #28
+  22:	ea41 0202 	orr.w	r2, r1, r2
+  26:	f8c3 2088 	str.w	r2, [r3, #136]	; 0x88
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:605
+}
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_PLLSAICmd:
+
+00000000 <RCC_PLLSAICmd>:
+RCC_PLLSAICmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:617
+  * @note   The PLLSAI is disabled by hardware when entering STOP and STANDBY modes.  
+  * @param  NewState: new state of the PLLSAI. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_PLLSAICmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:620
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  *(__IO uint32_t *) CR_PLLSAION_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_PLLSAICmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:621
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470070 	.word	0x42470070
+
+Disassembly of section .text.RCC_ClockSecuritySystemCmd:
+
+00000000 <RCC_ClockSecuritySystemCmd>:
+RCC_ClockSecuritySystemCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:635
+  * @param  NewState: new state of the Clock Security System.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_ClockSecuritySystemCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:638
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  *(__IO uint32_t *) CR_CSSON_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_ClockSecuritySystemCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:639
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	4247004c 	.word	0x4247004c
+
+Disassembly of section .text.RCC_MCO1Config:
+
+00000000 <RCC_MCO1Config>:
+RCC_MCO1Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:660
+  *            @arg RCC_MCO1Div_4: division by 4 applied to MCO1 clock
+  *            @arg RCC_MCO1Div_5: division by 5 applied to MCO1 clock
+  * @retval None
+  */
+void RCC_MCO1Config(uint32_t RCC_MCO1Source, uint32_t RCC_MCO1Div)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:661
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:667
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_MCO1SOURCE(RCC_MCO1Source));
+  assert_param(IS_RCC_MCO1DIV(RCC_MCO1Div));  
+
+  tmpreg = RCC->CFGR;
+  10:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_MCO1Config+0x40>)
+  12:	689b      	ldr	r3, [r3, #8]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:670
+
+  /* Clear MCO1[1:0] and MCO1PRE[2:0] bits */
+  tmpreg &= CFGR_MCO1_RESET_MASK;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f023 63ec 	bic.w	r3, r3, #123731968	; 0x7600000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:673
+
+  /* Select MCO1 clock source and prescaler */
+  tmpreg |= RCC_MCO1Source | RCC_MCO1Div;
+  1e:	687a      	ldr	r2, [r7, #4]
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	68fa      	ldr	r2, [r7, #12]
+  28:	ea42 0303 	orr.w	r3, r2, r3
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:676
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;  
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <RCC_MCO1Config+0x40>)
+  30:	68fa      	ldr	r2, [r7, #12]
+  32:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:677
+}
+  34:	f107 0714 	add.w	r7, r7, #20
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_MCO2Config:
+
+00000000 <RCC_MCO2Config>:
+RCC_MCO2Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:698
+  *            @arg RCC_MCO2Div_4: division by 4 applied to MCO2 clock
+  *            @arg RCC_MCO2Div_5: division by 5 applied to MCO2 clock
+  * @retval None
+  */
+void RCC_MCO2Config(uint32_t RCC_MCO2Source, uint32_t RCC_MCO2Div)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:699
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:705
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_MCO2SOURCE(RCC_MCO2Source));
+  assert_param(IS_RCC_MCO2DIV(RCC_MCO2Div));
+  
+  tmpreg = RCC->CFGR;
+  10:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_MCO2Config+0x40>)
+  12:	689b      	ldr	r3, [r3, #8]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:708
+  
+  /* Clear MCO2 and MCO2PRE[2:0] bits */
+  tmpreg &= CFGR_MCO2_RESET_MASK;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f023 4378 	bic.w	r3, r3, #4160749568	; 0xf8000000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:711
+
+  /* Select MCO2 clock source and prescaler */
+  tmpreg |= RCC_MCO2Source | RCC_MCO2Div;
+  1e:	687a      	ldr	r2, [r7, #4]
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	68fa      	ldr	r2, [r7, #12]
+  28:	ea42 0303 	orr.w	r3, r2, r3
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:714
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;  
+  2e:	4b04      	ldr	r3, [pc, #16]	; (40 <RCC_MCO2Config+0x40>)
+  30:	68fa      	ldr	r2, [r7, #12]
+  32:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:715
+}
+  34:	f107 0714 	add.w	r7, r7, #20
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_SYSCLKConfig:
+
+00000000 <RCC_SYSCLKConfig>:
+RCC_SYSCLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:864
+  *            @arg RCC_SYSCLKSource_HSE:    HSE selected as system clock source
+  *            @arg RCC_SYSCLKSource_PLLCLK: PLL selected as system clock source
+  * @retval None
+  */
+void RCC_SYSCLKConfig(uint32_t RCC_SYSCLKSource)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:865
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:870
+
+  /* Check the parameters */
+  assert_param(IS_RCC_SYSCLK_SOURCE(RCC_SYSCLKSource));
+
+  tmpreg = RCC->CFGR;
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <RCC_SYSCLKConfig+0x38>)
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:873
+
+  /* Clear SW[1:0] bits */
+  tmpreg &= ~RCC_CFGR_SW;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f023 0303 	bic.w	r3, r3, #3
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:876
+
+  /* Set SW[1:0] bits according to RCC_SYSCLKSource value */
+  tmpreg |= RCC_SYSCLKSource;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	ea42 0303 	orr.w	r3, r2, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:879
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <RCC_SYSCLKConfig+0x38>)
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:880
+}
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_GetSYSCLKSource:
+
+00000000 <RCC_GetSYSCLKSource>:
+RCC_GetSYSCLKSource():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:892
+  *              - 0x00: HSI used as system clock
+  *              - 0x04: HSE used as system clock
+  *              - 0x08: PLL used as system clock
+  */
+uint8_t RCC_GetSYSCLKSource(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:893
+  return ((uint8_t)(RCC->CFGR & RCC_CFGR_SWS));
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <RCC_GetSYSCLKSource+0x18>)
+   6:	689b      	ldr	r3, [r3, #8]
+   8:	b2db      	uxtb	r3, r3
+   a:	f003 030c 	and.w	r3, r3, #12
+   e:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:894
+}
+  10:	4618      	mov	r0, r3
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_HCLKConfig:
+
+00000000 <RCC_HCLKConfig>:
+RCC_HCLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:917
+  *            @arg RCC_SYSCLK_Div256: AHB clock = SYSCLK/256
+  *            @arg RCC_SYSCLK_Div512: AHB clock = SYSCLK/512
+  * @retval None
+  */
+void RCC_HCLKConfig(uint32_t RCC_SYSCLK)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:918
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:923
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_HCLK(RCC_SYSCLK));
+
+  tmpreg = RCC->CFGR;
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <RCC_HCLKConfig+0x38>)
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:926
+
+  /* Clear HPRE[3:0] bits */
+  tmpreg &= ~RCC_CFGR_HPRE;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f023 03f0 	bic.w	r3, r3, #240	; 0xf0
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:929
+
+  /* Set HPRE[3:0] bits according to RCC_SYSCLK value */
+  tmpreg |= RCC_SYSCLK;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	ea42 0303 	orr.w	r3, r2, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:932
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <RCC_HCLKConfig+0x38>)
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:933
+}
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_PCLK1Config:
+
+00000000 <RCC_PCLK1Config>:
+RCC_PCLK1Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:949
+  *            @arg RCC_HCLK_Div8:  APB1 clock = HCLK/8
+  *            @arg RCC_HCLK_Div16: APB1 clock = HCLK/16
+  * @retval None
+  */
+void RCC_PCLK1Config(uint32_t RCC_HCLK)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:950
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:955
+
+  /* Check the parameters */
+  assert_param(IS_RCC_PCLK(RCC_HCLK));
+
+  tmpreg = RCC->CFGR;
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <RCC_PCLK1Config+0x38>)
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:958
+
+  /* Clear PPRE1[2:0] bits */
+  tmpreg &= ~RCC_CFGR_PPRE1;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f423 53e0 	bic.w	r3, r3, #7168	; 0x1c00
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:961
+
+  /* Set PPRE1[2:0] bits according to RCC_HCLK value */
+  tmpreg |= RCC_HCLK;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	ea42 0303 	orr.w	r3, r2, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:964
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;
+  26:	4b04      	ldr	r3, [pc, #16]	; (38 <RCC_PCLK1Config+0x38>)
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:965
+}
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_PCLK2Config:
+
+00000000 <RCC_PCLK2Config>:
+RCC_PCLK2Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:980
+  *            @arg RCC_HCLK_Div8:  APB2 clock = HCLK/8
+  *            @arg RCC_HCLK_Div16: APB2 clock = HCLK/16
+  * @retval None
+  */
+void RCC_PCLK2Config(uint32_t RCC_HCLK)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:981
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:986
+
+  /* Check the parameters */
+  assert_param(IS_RCC_PCLK(RCC_HCLK));
+
+  tmpreg = RCC->CFGR;
+   e:	4b0b      	ldr	r3, [pc, #44]	; (3c <RCC_PCLK2Config+0x3c>)
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:989
+
+  /* Clear PPRE2[2:0] bits */
+  tmpreg &= ~RCC_CFGR_PPRE2;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f423 4360 	bic.w	r3, r3, #57344	; 0xe000
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:992
+
+  /* Set PPRE2[2:0] bits according to RCC_HCLK value */
+  tmpreg |= RCC_HCLK << 3;
+  1c:	687b      	ldr	r3, [r7, #4]
+  1e:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  22:	68fa      	ldr	r2, [r7, #12]
+  24:	ea42 0303 	orr.w	r3, r2, r3
+  28:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:995
+
+  /* Store the new value */
+  RCC->CFGR = tmpreg;
+  2a:	4b04      	ldr	r3, [pc, #16]	; (3c <RCC_PCLK2Config+0x3c>)
+  2c:	68fa      	ldr	r2, [r7, #12]
+  2e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:996
+}
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_GetClocksFreq:
+
+00000000 <RCC_GetClocksFreq>:
+RCC_GetClocksFreq():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1032
+  *         configuration based on this function will be incorrect.
+  *    
+  * @retval None
+  */
+void RCC_GetClocksFreq(RCC_ClocksTypeDef* RCC_Clocks)
+{
+   0:	b480      	push	{r7}
+   2:	b089      	sub	sp, #36	; 0x24
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1033
+  uint32_t tmp = 0, presc = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	61bb      	str	r3, [r7, #24]
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	617b      	str	r3, [r7, #20]
+  14:	f04f 0300 	mov.w	r3, #0
+  18:	61fb      	str	r3, [r7, #28]
+  1a:	f04f 0302 	mov.w	r3, #2
+  1e:	613b      	str	r3, [r7, #16]
+  20:	f04f 0300 	mov.w	r3, #0
+  24:	60fb      	str	r3, [r7, #12]
+  26:	f04f 0302 	mov.w	r3, #2
+  2a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1036
+
+  /* Get SYSCLK source -------------------------------------------------------*/
+  tmp = RCC->CFGR & RCC_CFGR_SWS;
+  2c:	4b4f      	ldr	r3, [pc, #316]	; (16c <RCC_GetClocksFreq+0x16c>)
+  2e:	689b      	ldr	r3, [r3, #8]
+  30:	f003 030c 	and.w	r3, r3, #12
+  34:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1038
+
+  switch (tmp)
+  36:	69bb      	ldr	r3, [r7, #24]
+  38:	2b04      	cmp	r3, #4
+  3a:	d007      	beq.n	4c <RCC_GetClocksFreq+0x4c>
+  3c:	2b08      	cmp	r3, #8
+  3e:	d009      	beq.n	54 <RCC_GetClocksFreq+0x54>
+  40:	2b00      	cmp	r3, #0
+  42:	d147      	bne.n	d4 <RCC_GetClocksFreq+0xd4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1041
+  {
+    case 0x00:  /* HSI used as system clock source */
+      RCC_Clocks->SYSCLK_Frequency = HSI_VALUE;
+  44:	687b      	ldr	r3, [r7, #4]
+  46:	4a4a      	ldr	r2, [pc, #296]	; (170 <RCC_GetClocksFreq+0x170>)
+  48:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1042
+      break;
+  4a:	e047      	b.n	dc <RCC_GetClocksFreq+0xdc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1044
+    case 0x04:  /* HSE used as system clock  source */
+      RCC_Clocks->SYSCLK_Frequency = HSE_VALUE;
+  4c:	687b      	ldr	r3, [r7, #4]
+  4e:	4a49      	ldr	r2, [pc, #292]	; (174 <RCC_GetClocksFreq+0x174>)
+  50:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1045
+      break;
+  52:	e043      	b.n	dc <RCC_GetClocksFreq+0xdc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1051
+    case 0x08:  /* PLL used as system clock  source */
+
+      /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLLM) * PLLN
+         SYSCLK = PLL_VCO / PLLP
+         */    
+      pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+  54:	4b45      	ldr	r3, [pc, #276]	; (16c <RCC_GetClocksFreq+0x16c>)
+  56:	685b      	ldr	r3, [r3, #4]
+  58:	f403 0380 	and.w	r3, r3, #4194304	; 0x400000
+  5c:	ea4f 5393 	mov.w	r3, r3, lsr #22
+  60:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1052
+      pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+  62:	4b42      	ldr	r3, [pc, #264]	; (16c <RCC_GetClocksFreq+0x16c>)
+  64:	685b      	ldr	r3, [r3, #4]
+  66:	f003 033f 	and.w	r3, r3, #63	; 0x3f
+  6a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1054
+      
+      if (pllsource != 0)
+  6c:	68fb      	ldr	r3, [r7, #12]
+  6e:	2b00      	cmp	r3, #0
+  70:	d00f      	beq.n	92 <RCC_GetClocksFreq+0x92>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1057
+      {
+        /* HSE used as PLL clock source */
+        pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+  72:	4a40      	ldr	r2, [pc, #256]	; (174 <RCC_GetClocksFreq+0x174>)
+  74:	68bb      	ldr	r3, [r7, #8]
+  76:	fbb2 f2f3 	udiv	r2, r2, r3
+  7a:	4b3c      	ldr	r3, [pc, #240]	; (16c <RCC_GetClocksFreq+0x16c>)
+  7c:	6859      	ldr	r1, [r3, #4]
+  7e:	f647 73c0 	movw	r3, #32704	; 0x7fc0
+  82:	ea01 0303 	and.w	r3, r1, r3
+  86:	ea4f 1393 	mov.w	r3, r3, lsr #6
+  8a:	fb03 f302 	mul.w	r3, r3, r2
+  8e:	61fb      	str	r3, [r7, #28]
+  90:	e00e      	b.n	b0 <RCC_GetClocksFreq+0xb0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1062
+      }
+      else
+      {
+        /* HSI used as PLL clock source */
+        pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);      
+  92:	4a37      	ldr	r2, [pc, #220]	; (170 <RCC_GetClocksFreq+0x170>)
+  94:	68bb      	ldr	r3, [r7, #8]
+  96:	fbb2 f2f3 	udiv	r2, r2, r3
+  9a:	4b34      	ldr	r3, [pc, #208]	; (16c <RCC_GetClocksFreq+0x16c>)
+  9c:	6859      	ldr	r1, [r3, #4]
+  9e:	f647 73c0 	movw	r3, #32704	; 0x7fc0
+  a2:	ea01 0303 	and.w	r3, r1, r3
+  a6:	ea4f 1393 	mov.w	r3, r3, lsr #6
+  aa:	fb03 f302 	mul.w	r3, r3, r2
+  ae:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1065
+      }
+
+      pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
+  b0:	4b2e      	ldr	r3, [pc, #184]	; (16c <RCC_GetClocksFreq+0x16c>)
+  b2:	685b      	ldr	r3, [r3, #4]
+  b4:	f403 3340 	and.w	r3, r3, #196608	; 0x30000
+  b8:	ea4f 4313 	mov.w	r3, r3, lsr #16
+  bc:	f103 0301 	add.w	r3, r3, #1
+  c0:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  c4:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1066
+      RCC_Clocks->SYSCLK_Frequency = pllvco/pllp;
+  c6:	69fa      	ldr	r2, [r7, #28]
+  c8:	693b      	ldr	r3, [r7, #16]
+  ca:	fbb2 f2f3 	udiv	r2, r2, r3
+  ce:	687b      	ldr	r3, [r7, #4]
+  d0:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1067
+      break;
+  d2:	e003      	b.n	dc <RCC_GetClocksFreq+0xdc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1069
+    default:
+      RCC_Clocks->SYSCLK_Frequency = HSI_VALUE;
+  d4:	687b      	ldr	r3, [r7, #4]
+  d6:	4a26      	ldr	r2, [pc, #152]	; (170 <RCC_GetClocksFreq+0x170>)
+  d8:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1070
+      break;
+  da:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1075
+  }
+  /* Compute HCLK, PCLK1 and PCLK2 clocks frequencies ------------------------*/
+
+  /* Get HCLK prescaler */
+  tmp = RCC->CFGR & RCC_CFGR_HPRE;
+  dc:	4b23      	ldr	r3, [pc, #140]	; (16c <RCC_GetClocksFreq+0x16c>)
+  de:	689b      	ldr	r3, [r3, #8]
+  e0:	f003 03f0 	and.w	r3, r3, #240	; 0xf0
+  e4:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1076
+  tmp = tmp >> 4;
+  e6:	69bb      	ldr	r3, [r7, #24]
+  e8:	ea4f 1313 	mov.w	r3, r3, lsr #4
+  ec:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1077
+  presc = APBAHBPrescTable[tmp];
+  ee:	4a22      	ldr	r2, [pc, #136]	; (178 <RCC_GetClocksFreq+0x178>)
+  f0:	69bb      	ldr	r3, [r7, #24]
+  f2:	18d3      	adds	r3, r2, r3
+  f4:	781b      	ldrb	r3, [r3, #0]
+  f6:	b2db      	uxtb	r3, r3
+  f8:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1079
+  /* HCLK clock frequency */
+  RCC_Clocks->HCLK_Frequency = RCC_Clocks->SYSCLK_Frequency >> presc;
+  fa:	687b      	ldr	r3, [r7, #4]
+  fc:	681a      	ldr	r2, [r3, #0]
+  fe:	697b      	ldr	r3, [r7, #20]
+ 100:	fa22 f203 	lsr.w	r2, r2, r3
+ 104:	687b      	ldr	r3, [r7, #4]
+ 106:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1082
+
+  /* Get PCLK1 prescaler */
+  tmp = RCC->CFGR & RCC_CFGR_PPRE1;
+ 108:	4b18      	ldr	r3, [pc, #96]	; (16c <RCC_GetClocksFreq+0x16c>)
+ 10a:	689b      	ldr	r3, [r3, #8]
+ 10c:	f403 53e0 	and.w	r3, r3, #7168	; 0x1c00
+ 110:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1083
+  tmp = tmp >> 10;
+ 112:	69bb      	ldr	r3, [r7, #24]
+ 114:	ea4f 2393 	mov.w	r3, r3, lsr #10
+ 118:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1084
+  presc = APBAHBPrescTable[tmp];
+ 11a:	4a17      	ldr	r2, [pc, #92]	; (178 <RCC_GetClocksFreq+0x178>)
+ 11c:	69bb      	ldr	r3, [r7, #24]
+ 11e:	18d3      	adds	r3, r2, r3
+ 120:	781b      	ldrb	r3, [r3, #0]
+ 122:	b2db      	uxtb	r3, r3
+ 124:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1086
+  /* PCLK1 clock frequency */
+  RCC_Clocks->PCLK1_Frequency = RCC_Clocks->HCLK_Frequency >> presc;
+ 126:	687b      	ldr	r3, [r7, #4]
+ 128:	685a      	ldr	r2, [r3, #4]
+ 12a:	697b      	ldr	r3, [r7, #20]
+ 12c:	fa22 f203 	lsr.w	r2, r2, r3
+ 130:	687b      	ldr	r3, [r7, #4]
+ 132:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1089
+
+  /* Get PCLK2 prescaler */
+  tmp = RCC->CFGR & RCC_CFGR_PPRE2;
+ 134:	4b0d      	ldr	r3, [pc, #52]	; (16c <RCC_GetClocksFreq+0x16c>)
+ 136:	689b      	ldr	r3, [r3, #8]
+ 138:	f403 4360 	and.w	r3, r3, #57344	; 0xe000
+ 13c:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1090
+  tmp = tmp >> 13;
+ 13e:	69bb      	ldr	r3, [r7, #24]
+ 140:	ea4f 3353 	mov.w	r3, r3, lsr #13
+ 144:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1091
+  presc = APBAHBPrescTable[tmp];
+ 146:	4a0c      	ldr	r2, [pc, #48]	; (178 <RCC_GetClocksFreq+0x178>)
+ 148:	69bb      	ldr	r3, [r7, #24]
+ 14a:	18d3      	adds	r3, r2, r3
+ 14c:	781b      	ldrb	r3, [r3, #0]
+ 14e:	b2db      	uxtb	r3, r3
+ 150:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1093
+  /* PCLK2 clock frequency */
+  RCC_Clocks->PCLK2_Frequency = RCC_Clocks->HCLK_Frequency >> presc;
+ 152:	687b      	ldr	r3, [r7, #4]
+ 154:	685a      	ldr	r2, [r3, #4]
+ 156:	697b      	ldr	r3, [r7, #20]
+ 158:	fa22 f203 	lsr.w	r2, r2, r3
+ 15c:	687b      	ldr	r3, [r7, #4]
+ 15e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1094
+}
+ 160:	f107 0724 	add.w	r7, r7, #36	; 0x24
+ 164:	46bd      	mov	sp, r7
+ 166:	bc80      	pop	{r7}
+ 168:	4770      	bx	lr
+ 16a:	bf00      	nop
+ 16c:	40023800 	.word	0x40023800
+ 170:	00f42400 	.word	0x00f42400
+ 174:	017d7840 	.word	0x017d7840
+ 178:	00000000 	.word	0x00000000
+
+Disassembly of section .text.RCC_RTCCLKConfig:
+
+00000000 <RCC_RTCCLKConfig>:
+RCC_RTCCLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1157
+  *         RTC clock source).
+  *  
+  * @retval None
+  */
+void RCC_RTCCLKConfig(uint32_t RCC_RTCCLKSource)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1158
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1163
+
+  /* Check the parameters */
+  assert_param(IS_RCC_RTCCLK_SOURCE(RCC_RTCCLKSource));
+
+  if ((RCC_RTCCLKSource & 0x00000300) == 0x00000300)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	f403 7340 	and.w	r3, r3, #768	; 0x300
+  14:	f5b3 7f40 	cmp.w	r3, #768	; 0x300
+  18:	d112      	bne.n	40 <RCC_RTCCLKConfig+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1165
+  { /* If HSE is selected as RTC clock source, configure HSE division factor for RTC clock */
+    tmpreg = RCC->CFGR;
+  1a:	4b11      	ldr	r3, [pc, #68]	; (60 <RCC_RTCCLKConfig+0x60>)
+  1c:	689b      	ldr	r3, [r3, #8]
+  1e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1168
+
+    /* Clear RTCPRE[4:0] bits */
+    tmpreg &= ~RCC_CFGR_RTCPRE;
+  20:	68fb      	ldr	r3, [r7, #12]
+  22:	f423 13f8 	bic.w	r3, r3, #2031616	; 0x1f0000
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1171
+
+    /* Configure HSE division factor for RTC clock */
+    tmpreg |= (RCC_RTCCLKSource & 0xFFFFCFF);
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f023 4370 	bic.w	r3, r3, #4026531840	; 0xf0000000
+  2e:	f423 7340 	bic.w	r3, r3, #768	; 0x300
+  32:	68fa      	ldr	r2, [r7, #12]
+  34:	ea42 0303 	orr.w	r3, r2, r3
+  38:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1174
+
+    /* Store the new value */
+    RCC->CFGR = tmpreg;
+  3a:	4b09      	ldr	r3, [pc, #36]	; (60 <RCC_RTCCLKConfig+0x60>)
+  3c:	68fa      	ldr	r2, [r7, #12]
+  3e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1178
+  }
+    
+  /* Select the RTC clock source */
+  RCC->BDCR |= (RCC_RTCCLKSource & 0x00000FFF);
+  40:	4a07      	ldr	r2, [pc, #28]	; (60 <RCC_RTCCLKConfig+0x60>)
+  42:	4b07      	ldr	r3, [pc, #28]	; (60 <RCC_RTCCLKConfig+0x60>)
+  44:	6f19      	ldr	r1, [r3, #112]	; 0x70
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	ea4f 5303 	mov.w	r3, r3, lsl #20
+  4c:	ea4f 5313 	mov.w	r3, r3, lsr #20
+  50:	ea41 0303 	orr.w	r3, r1, r3
+  54:	6713      	str	r3, [r2, #112]	; 0x70
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1179
+}
+  56:	f107 0714 	add.w	r7, r7, #20
+  5a:	46bd      	mov	sp, r7
+  5c:	bc80      	pop	{r7}
+  5e:	4770      	bx	lr
+  60:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_RTCCLKCmd:
+
+00000000 <RCC_RTCCLKCmd>:
+RCC_RTCCLKCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1189
+  *         using the RCC_RTCCLKConfig function.
+  * @param  NewState: new state of the RTC clock. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_RTCCLKCmd(FunctionalState NewState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1193
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  *(__IO uint32_t *) BDCR_RTCEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_RTCCLKCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1194
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470e3c 	.word	0x42470e3c
+
+Disassembly of section .text.RCC_BackupResetCmd:
+
+00000000 <RCC_BackupResetCmd>:
+RCC_BackupResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1206
+  * @param  NewState: new state of the Backup domain reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_BackupResetCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1209
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  *(__IO uint32_t *) BDCR_BDRST_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_BackupResetCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1210
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	42470e40 	.word	0x42470e40
+
+Disassembly of section .text.RCC_I2SCLKConfig:
+
+00000000 <RCC_I2SCLKConfig>:
+RCC_I2SCLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1223
+  *            @arg RCC_I2S2CLKSource_Ext: External clock mapped on the I2S_CKIN pin
+  *                                        used as I2S clock source
+  * @retval None
+  */
+void RCC_I2SCLKConfig(uint32_t RCC_I2SCLKSource)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1227
+  /* Check the parameters */
+  assert_param(IS_RCC_I2SCLK_SOURCE(RCC_I2SCLKSource));
+
+  *(__IO uint32_t *) CFGR_I2SSRC_BB = RCC_I2SCLKSource;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <RCC_I2SCLKConfig+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1228
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	4247015c 	.word	0x4247015c
+
+Disassembly of section .text.RCC_SAIPLLI2SClkDivConfig:
+
+00000000 <RCC_SAIPLLI2SClkDivConfig>:
+RCC_SAIPLLI2SClkDivConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1244
+  *          SAI1 clock frequency = f(PLLI2S_Q) / RCC_PLLI2SDivQ 
+  *              
+  * @retval None
+  */
+void RCC_SAIPLLI2SClkDivConfig(uint32_t RCC_PLLI2SDivQ)  
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1245
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1250
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_PLLI2S_DIVQ_VALUE(RCC_PLLI2SDivQ));
+  
+  tmpreg = RCC->DCKCFGR;
+   e:	4b0c      	ldr	r3, [pc, #48]	; (40 <RCC_SAIPLLI2SClkDivConfig+0x40>)
+  10:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1253
+
+  /* Clear PLLI2SDIVQ[4:0] bits */
+  tmpreg &= ~(RCC_DCKCFGR_PLLI2SDIVQ);
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f023 031f 	bic.w	r3, r3, #31
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1256
+
+  /* Set PLLI2SDIVQ values */
+  tmpreg |= (RCC_PLLI2SDivQ - 1);
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	f103 33ff 	add.w	r3, r3, #4294967295
+  24:	68fa      	ldr	r2, [r7, #12]
+  26:	ea42 0303 	orr.w	r3, r2, r3
+  2a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1259
+
+  /* Store the new value */
+  RCC->DCKCFGR = tmpreg;
+  2c:	4b04      	ldr	r3, [pc, #16]	; (40 <RCC_SAIPLLI2SClkDivConfig+0x40>)
+  2e:	68fa      	ldr	r2, [r7, #12]
+  30:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1260
+}
+  34:	f107 0714 	add.w	r7, r7, #20
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_SAIPLLSAIClkDivConfig:
+
+00000000 <RCC_SAIPLLSAIClkDivConfig>:
+RCC_SAIPLLSAIClkDivConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1276
+  *          SAI1 clock frequency = f(PLLSAI_Q) / RCC_PLLSAIDivQ  
+  *              
+  * @retval None
+  */
+void RCC_SAIPLLSAIClkDivConfig(uint32_t RCC_PLLSAIDivQ)  
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1277
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1282
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_PLLSAI_DIVQ_VALUE(RCC_PLLSAIDivQ));
+  
+  tmpreg = RCC->DCKCFGR;
+   e:	4b0d      	ldr	r3, [pc, #52]	; (44 <RCC_SAIPLLSAIClkDivConfig+0x44>)
+  10:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1285
+
+  /* Clear PLLI2SDIVQ[4:0] and PLLSAIDIVQ[4:0] bits */
+  tmpreg &= ~(RCC_DCKCFGR_PLLSAIDIVQ);
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 53f8 	bic.w	r3, r3, #7936	; 0x1f00
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1288
+
+  /* Set PLLSAIDIVQ values */
+  tmpreg |= ((RCC_PLLSAIDivQ - 1) << 8);
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	f103 33ff 	add.w	r3, r3, #4294967295
+  24:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	ea42 0303 	orr.w	r3, r2, r3
+  2e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1291
+
+  /* Store the new value */
+  RCC->DCKCFGR = tmpreg;
+  30:	4b04      	ldr	r3, [pc, #16]	; (44 <RCC_SAIPLLSAIClkDivConfig+0x44>)
+  32:	68fa      	ldr	r2, [r7, #12]
+  34:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1292
+}
+  38:	f107 0714 	add.w	r7, r7, #20
+  3c:	46bd      	mov	sp, r7
+  3e:	bc80      	pop	{r7}
+  40:	4770      	bx	lr
+  42:	bf00      	nop
+  44:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_SAIBlockACLKConfig:
+
+00000000 <RCC_SAIBlockACLKConfig>:
+RCC_SAIBlockACLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1312
+  *            @arg RCC_SAIACLKSource_Ext: External clock mapped on the I2S_CKIN pin
+  *                                        used as SAI1 Block A clock
+  * @retval None
+  */
+void RCC_SAIBlockACLKConfig(uint32_t RCC_SAIBlockACLKSource)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1313
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1318
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_SAIACLK_SOURCE(RCC_SAIBlockACLKSource));
+  
+  tmpreg = RCC->DCKCFGR;
+   e:	4b0b      	ldr	r3, [pc, #44]	; (3c <RCC_SAIBlockACLKConfig+0x3c>)
+  10:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1321
+
+  /* Clear RCC_DCKCFGR_SAI1ASRC[1:0] bits */
+  tmpreg &= ~RCC_DCKCFGR_SAI1ASRC;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 1340 	bic.w	r3, r3, #3145728	; 0x300000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1324
+
+  /* Set SAI Block A source selection value */
+  tmpreg |= RCC_SAIBlockACLKSource;
+  1e:	68fa      	ldr	r2, [r7, #12]
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1327
+
+  /* Store the new value */
+  RCC->DCKCFGR = tmpreg;
+  28:	4b04      	ldr	r3, [pc, #16]	; (3c <RCC_SAIBlockACLKConfig+0x3c>)
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1328
+}
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_SAIBlockBCLKConfig:
+
+00000000 <RCC_SAIBlockBCLKConfig>:
+RCC_SAIBlockBCLKConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1348
+  *            @arg RCC_SAIBCLKSource_Ext: External clock mapped on the I2S_CKIN pin
+  *                                        used as SAI1 Block B clock
+  * @retval None
+  */
+void RCC_SAIBlockBCLKConfig(uint32_t RCC_SAIBlockBCLKSource)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1349
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1354
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_SAIBCLK_SOURCE(RCC_SAIBlockBCLKSource));
+  
+  tmpreg = RCC->DCKCFGR;
+   e:	4b0b      	ldr	r3, [pc, #44]	; (3c <RCC_SAIBlockBCLKConfig+0x3c>)
+  10:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1357
+
+  /* Clear RCC_DCKCFGR_SAI1BSRC[1:0] bits */
+  tmpreg &= ~RCC_DCKCFGR_SAI1BSRC;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 0340 	bic.w	r3, r3, #12582912	; 0xc00000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1360
+
+  /* Set SAI Block B source selection value */
+  tmpreg |= RCC_SAIBlockBCLKSource;
+  1e:	68fa      	ldr	r2, [r7, #12]
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1363
+
+  /* Store the new value */
+  RCC->DCKCFGR = tmpreg;
+  28:	4b04      	ldr	r3, [pc, #16]	; (3c <RCC_SAIBlockBCLKConfig+0x3c>)
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1364
+}
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_LTDCCLKDivConfig:
+
+00000000 <RCC_LTDCCLKDivConfig>:
+RCC_LTDCCLKDivConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1381
+  *          LTDC clock frequency = f(PLLSAI_R) / RCC_PLLSAIDivR  
+  *            
+  * @retval None
+  */
+void RCC_LTDCCLKDivConfig(uint32_t RCC_PLLSAIDivR)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1382
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1387
+  
+  /* Check the parameters */
+  assert_param(IS_RCC_PLLSAI_DIVR_VALUE(RCC_PLLSAIDivR));
+  
+  tmpreg = RCC->DCKCFGR;
+   e:	4b0b      	ldr	r3, [pc, #44]	; (3c <RCC_LTDCCLKDivConfig+0x3c>)
+  10:	f8d3 308c 	ldr.w	r3, [r3, #140]	; 0x8c
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1390
+
+  /* Clear PLLSAIDIVR[2:0] bits */
+  tmpreg &= ~RCC_DCKCFGR_PLLSAIDIVR;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 3340 	bic.w	r3, r3, #196608	; 0x30000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1393
+
+  /* Set PLLSAIDIVR values */
+  tmpreg |= RCC_PLLSAIDivR;
+  1e:	68fa      	ldr	r2, [r7, #12]
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1396
+
+  /* Store the new value */
+  RCC->DCKCFGR = tmpreg;
+  28:	4b04      	ldr	r3, [pc, #16]	; (3c <RCC_LTDCCLKDivConfig+0x3c>)
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	f8c3 208c 	str.w	r2, [r3, #140]	; 0x8c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1397
+}
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_TIMCLKPresConfig:
+
+00000000 <RCC_TIMCLKPresConfig>:
+RCC_TIMCLKPresConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1418
+  *                 else it is equal to [(HPRE * PPREx) / 4] if PPREx is corresponding 
+  *                 to division by 8 or more.
+  * @retval None
+  */
+void RCC_TIMCLKPresConfig(uint32_t RCC_TIMCLKPrescaler)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1422
+  /* Check the parameters */
+  assert_param(IS_RCC_TIMCLK_PRESCALER(RCC_TIMCLKPrescaler));
+
+  *(__IO uint32_t *) DCKCFGR_TIMPRE_BB = RCC_TIMCLKPrescaler;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <RCC_TIMCLKPresConfig+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1424
+  
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	424711e0 	.word	0x424711e0
+
+Disassembly of section .text.RCC_AHB1PeriphClockCmd:
+
+00000000 <RCC_AHB1PeriphClockCmd>:
+RCC_AHB1PeriphClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1461
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB1PeriphClockCmd(uint32_t RCC_AHB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1466
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB1_CLOCK_PERIPH(RCC_AHB1Periph));
+
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB1PeriphClockCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1468
+  {
+    RCC->AHB1ENR |= RCC_AHB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB1PeriphClockCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB1PeriphClockCmd+0x40>)
+  16:	6b11      	ldr	r1, [r2, #48]	; 0x30
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	631a      	str	r2, [r3, #48]	; 0x30
+  20:	e008      	b.n	34 <RCC_AHB1PeriphClockCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1472
+  }
+  else
+  {
+    RCC->AHB1ENR &= ~RCC_AHB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB1PeriphClockCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB1PeriphClockCmd+0x40>)
+  26:	6b11      	ldr	r1, [r2, #48]	; 0x30
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	631a      	str	r2, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1474
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB2PeriphClockCmd:
+
+00000000 <RCC_AHB2PeriphClockCmd>:
+RCC_AHB2PeriphClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1493
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB2PeriphClockCmd(uint32_t RCC_AHB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1498
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB2_PERIPH(RCC_AHB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB2PeriphClockCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1500
+  {
+    RCC->AHB2ENR |= RCC_AHB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB2PeriphClockCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB2PeriphClockCmd+0x40>)
+  16:	6b51      	ldr	r1, [r2, #52]	; 0x34
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	635a      	str	r2, [r3, #52]	; 0x34
+  20:	e008      	b.n	34 <RCC_AHB2PeriphClockCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1504
+  }
+  else
+  {
+    RCC->AHB2ENR &= ~RCC_AHB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB2PeriphClockCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB2PeriphClockCmd+0x40>)
+  26:	6b51      	ldr	r1, [r2, #52]	; 0x34
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	635a      	str	r2, [r3, #52]	; 0x34
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1506
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB3PeriphClockCmd:
+
+00000000 <RCC_AHB3PeriphClockCmd>:
+RCC_AHB3PeriphClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1521
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB3PeriphClockCmd(uint32_t RCC_AHB3Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1526
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB3_PERIPH(RCC_AHB3Periph));  
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB3PeriphClockCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1528
+  {
+    RCC->AHB3ENR |= RCC_AHB3Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB3PeriphClockCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB3PeriphClockCmd+0x40>)
+  16:	6b91      	ldr	r1, [r2, #56]	; 0x38
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	639a      	str	r2, [r3, #56]	; 0x38
+  20:	e008      	b.n	34 <RCC_AHB3PeriphClockCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1532
+  }
+  else
+  {
+    RCC->AHB3ENR &= ~RCC_AHB3Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB3PeriphClockCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB3PeriphClockCmd+0x40>)
+  26:	6b91      	ldr	r1, [r2, #56]	; 0x38
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1534
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB1PeriphClockCmd:
+
+00000000 <RCC_APB1PeriphClockCmd>:
+RCC_APB1PeriphClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1573
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB1PeriphClockCmd(uint32_t RCC_APB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1578
+  /* Check the parameters */
+  assert_param(IS_RCC_APB1_PERIPH(RCC_APB1Periph));  
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB1PeriphClockCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1580
+  {
+    RCC->APB1ENR |= RCC_APB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB1PeriphClockCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB1PeriphClockCmd+0x40>)
+  16:	6c11      	ldr	r1, [r2, #64]	; 0x40
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	641a      	str	r2, [r3, #64]	; 0x40
+  20:	e008      	b.n	34 <RCC_APB1PeriphClockCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1584
+  }
+  else
+  {
+    RCC->APB1ENR &= ~RCC_APB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB1PeriphClockCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB1PeriphClockCmd+0x40>)
+  26:	6c11      	ldr	r1, [r2, #64]	; 0x40
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	641a      	str	r2, [r3, #64]	; 0x40
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1586
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB2PeriphClockCmd:
+
+00000000 <RCC_APB2PeriphClockCmd>:
+RCC_APB2PeriphClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1618
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB2PeriphClockCmd(uint32_t RCC_APB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1623
+  /* Check the parameters */
+  assert_param(IS_RCC_APB2_PERIPH(RCC_APB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB2PeriphClockCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1625
+  {
+    RCC->APB2ENR |= RCC_APB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB2PeriphClockCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB2PeriphClockCmd+0x40>)
+  16:	6c51      	ldr	r1, [r2, #68]	; 0x44
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	645a      	str	r2, [r3, #68]	; 0x44
+  20:	e008      	b.n	34 <RCC_APB2PeriphClockCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1629
+  }
+  else
+  {
+    RCC->APB2ENR &= ~RCC_APB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB2PeriphClockCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB2PeriphClockCmd+0x40>)
+  26:	6c51      	ldr	r1, [r2, #68]	; 0x44
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	645a      	str	r2, [r3, #68]	; 0x44
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1631
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB1PeriphResetCmd:
+
+00000000 <RCC_AHB1PeriphResetCmd>:
+RCC_AHB1PeriphResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1660
+  * @param  NewState: new state of the specified peripheral reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB1PeriphResetCmd(uint32_t RCC_AHB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1665
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB1_RESET_PERIPH(RCC_AHB1Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB1PeriphResetCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1667
+  {
+    RCC->AHB1RSTR |= RCC_AHB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB1PeriphResetCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB1PeriphResetCmd+0x40>)
+  16:	6911      	ldr	r1, [r2, #16]
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	611a      	str	r2, [r3, #16]
+  20:	e008      	b.n	34 <RCC_AHB1PeriphResetCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1671
+  }
+  else
+  {
+    RCC->AHB1RSTR &= ~RCC_AHB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB1PeriphResetCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB1PeriphResetCmd+0x40>)
+  26:	6911      	ldr	r1, [r2, #16]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1673
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB2PeriphResetCmd:
+
+00000000 <RCC_AHB2PeriphResetCmd>:
+RCC_AHB2PeriphResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1689
+  * @param  NewState: new state of the specified peripheral reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB2PeriphResetCmd(uint32_t RCC_AHB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1694
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB2_PERIPH(RCC_AHB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB2PeriphResetCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1696
+  {
+    RCC->AHB2RSTR |= RCC_AHB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB2PeriphResetCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB2PeriphResetCmd+0x40>)
+  16:	6951      	ldr	r1, [r2, #20]
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	615a      	str	r2, [r3, #20]
+  20:	e008      	b.n	34 <RCC_AHB2PeriphResetCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1700
+  }
+  else
+  {
+    RCC->AHB2RSTR &= ~RCC_AHB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB2PeriphResetCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB2PeriphResetCmd+0x40>)
+  26:	6951      	ldr	r1, [r2, #20]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1702
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB3PeriphResetCmd:
+
+00000000 <RCC_AHB3PeriphResetCmd>:
+RCC_AHB3PeriphResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1714
+  * @param  NewState: new state of the specified peripheral reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB3PeriphResetCmd(uint32_t RCC_AHB3Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1719
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB3_PERIPH(RCC_AHB3Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB3PeriphResetCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1721
+  {
+    RCC->AHB3RSTR |= RCC_AHB3Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB3PeriphResetCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB3PeriphResetCmd+0x40>)
+  16:	6991      	ldr	r1, [r2, #24]
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	619a      	str	r2, [r3, #24]
+  20:	e008      	b.n	34 <RCC_AHB3PeriphResetCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1725
+  }
+  else
+  {
+    RCC->AHB3RSTR &= ~RCC_AHB3Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB3PeriphResetCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB3PeriphResetCmd+0x40>)
+  26:	6991      	ldr	r1, [r2, #24]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1727
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB1PeriphResetCmd:
+
+00000000 <RCC_APB1PeriphResetCmd>:
+RCC_APB1PeriphResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1763
+  * @param  NewState: new state of the specified peripheral reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB1PeriphResetCmd(uint32_t RCC_APB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1767
+  /* Check the parameters */
+  assert_param(IS_RCC_APB1_PERIPH(RCC_APB1Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB1PeriphResetCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1769
+  {
+    RCC->APB1RSTR |= RCC_APB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB1PeriphResetCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB1PeriphResetCmd+0x40>)
+  16:	6a11      	ldr	r1, [r2, #32]
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	621a      	str	r2, [r3, #32]
+  20:	e008      	b.n	34 <RCC_APB1PeriphResetCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1773
+  }
+  else
+  {
+    RCC->APB1RSTR &= ~RCC_APB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB1PeriphResetCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB1PeriphResetCmd+0x40>)
+  26:	6a11      	ldr	r1, [r2, #32]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	621a      	str	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1775
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB2PeriphResetCmd:
+
+00000000 <RCC_APB2PeriphResetCmd>:
+RCC_APB2PeriphResetCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1804
+  * @param  NewState: new state of the specified peripheral reset.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB2PeriphResetCmd(uint32_t RCC_APB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1808
+  /* Check the parameters */
+  assert_param(IS_RCC_APB2_RESET_PERIPH(RCC_APB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB2PeriphResetCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1810
+  {
+    RCC->APB2RSTR |= RCC_APB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB2PeriphResetCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB2PeriphResetCmd+0x40>)
+  16:	6a51      	ldr	r1, [r2, #36]	; 0x24
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	625a      	str	r2, [r3, #36]	; 0x24
+  20:	e008      	b.n	34 <RCC_APB2PeriphResetCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1814
+  }
+  else
+  {
+    RCC->APB2RSTR &= ~RCC_APB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB2PeriphResetCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB2PeriphResetCmd+0x40>)
+  26:	6a51      	ldr	r1, [r2, #36]	; 0x24
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1816
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB1PeriphClockLPModeCmd:
+
+00000000 <RCC_AHB1PeriphClockLPModeCmd>:
+RCC_AHB1PeriphClockLPModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1853
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB1PeriphClockLPModeCmd(uint32_t RCC_AHB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1857
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB1_LPMODE_PERIPH(RCC_AHB1Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB1PeriphClockLPModeCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1859
+  {
+    RCC->AHB1LPENR |= RCC_AHB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB1PeriphClockLPModeCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB1PeriphClockLPModeCmd+0x40>)
+  16:	6d11      	ldr	r1, [r2, #80]	; 0x50
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	651a      	str	r2, [r3, #80]	; 0x50
+  20:	e008      	b.n	34 <RCC_AHB1PeriphClockLPModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1863
+  }
+  else
+  {
+    RCC->AHB1LPENR &= ~RCC_AHB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB1PeriphClockLPModeCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB1PeriphClockLPModeCmd+0x40>)
+  26:	6d11      	ldr	r1, [r2, #80]	; 0x50
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	651a      	str	r2, [r3, #80]	; 0x50
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1865
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB2PeriphClockLPModeCmd:
+
+00000000 <RCC_AHB2PeriphClockLPModeCmd>:
+RCC_AHB2PeriphClockLPModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1885
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB2PeriphClockLPModeCmd(uint32_t RCC_AHB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1889
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB2_PERIPH(RCC_AHB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB2PeriphClockLPModeCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1891
+  {
+    RCC->AHB2LPENR |= RCC_AHB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB2PeriphClockLPModeCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB2PeriphClockLPModeCmd+0x40>)
+  16:	6d51      	ldr	r1, [r2, #84]	; 0x54
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	655a      	str	r2, [r3, #84]	; 0x54
+  20:	e008      	b.n	34 <RCC_AHB2PeriphClockLPModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1895
+  }
+  else
+  {
+    RCC->AHB2LPENR &= ~RCC_AHB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB2PeriphClockLPModeCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB2PeriphClockLPModeCmd+0x40>)
+  26:	6d51      	ldr	r1, [r2, #84]	; 0x54
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	655a      	str	r2, [r3, #84]	; 0x54
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1897
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_AHB3PeriphClockLPModeCmd:
+
+00000000 <RCC_AHB3PeriphClockLPModeCmd>:
+RCC_AHB3PeriphClockLPModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1913
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_AHB3PeriphClockLPModeCmd(uint32_t RCC_AHB3Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1917
+  /* Check the parameters */
+  assert_param(IS_RCC_AHB3_PERIPH(RCC_AHB3Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_AHB3PeriphClockLPModeCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1919
+  {
+    RCC->AHB3LPENR |= RCC_AHB3Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_AHB3PeriphClockLPModeCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_AHB3PeriphClockLPModeCmd+0x40>)
+  16:	6d91      	ldr	r1, [r2, #88]	; 0x58
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	659a      	str	r2, [r3, #88]	; 0x58
+  20:	e008      	b.n	34 <RCC_AHB3PeriphClockLPModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1923
+  }
+  else
+  {
+    RCC->AHB3LPENR &= ~RCC_AHB3Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_AHB3PeriphClockLPModeCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_AHB3PeriphClockLPModeCmd+0x40>)
+  26:	6d91      	ldr	r1, [r2, #88]	; 0x58
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	659a      	str	r2, [r3, #88]	; 0x58
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1925
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB1PeriphClockLPModeCmd:
+
+00000000 <RCC_APB1PeriphClockLPModeCmd>:
+RCC_APB1PeriphClockLPModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1965
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB1PeriphClockLPModeCmd(uint32_t RCC_APB1Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1969
+  /* Check the parameters */
+  assert_param(IS_RCC_APB1_PERIPH(RCC_APB1Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB1PeriphClockLPModeCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1971
+  {
+    RCC->APB1LPENR |= RCC_APB1Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB1PeriphClockLPModeCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB1PeriphClockLPModeCmd+0x40>)
+  16:	6e11      	ldr	r1, [r2, #96]	; 0x60
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	661a      	str	r2, [r3, #96]	; 0x60
+  20:	e008      	b.n	34 <RCC_APB1PeriphClockLPModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1975
+  }
+  else
+  {
+    RCC->APB1LPENR &= ~RCC_APB1Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB1PeriphClockLPModeCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB1PeriphClockLPModeCmd+0x40>)
+  26:	6e11      	ldr	r1, [r2, #96]	; 0x60
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	661a      	str	r2, [r3, #96]	; 0x60
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:1977
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_APB2PeriphClockLPModeCmd:
+
+00000000 <RCC_APB2PeriphClockLPModeCmd>:
+RCC_APB2PeriphClockLPModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2010
+  * @param  NewState: new state of the specified peripheral clock.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_APB2PeriphClockLPModeCmd(uint32_t RCC_APB2Periph, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2014
+  /* Check the parameters */
+  assert_param(IS_RCC_APB2_PERIPH(RCC_APB2Periph));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <RCC_APB2PeriphClockLPModeCmd+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2016
+  {
+    RCC->APB2LPENR |= RCC_APB2Periph;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <RCC_APB2PeriphClockLPModeCmd+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <RCC_APB2PeriphClockLPModeCmd+0x40>)
+  16:	6e51      	ldr	r1, [r2, #100]	; 0x64
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	665a      	str	r2, [r3, #100]	; 0x64
+  20:	e008      	b.n	34 <RCC_APB2PeriphClockLPModeCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2020
+  }
+  else
+  {
+    RCC->APB2LPENR &= ~RCC_APB2Periph;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <RCC_APB2PeriphClockLPModeCmd+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <RCC_APB2PeriphClockLPModeCmd+0x40>)
+  26:	6e51      	ldr	r1, [r2, #100]	; 0x64
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	665a      	str	r2, [r3, #100]	; 0x64
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2022
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_ITConfig:
+
+00000000 <RCC_ITConfig>:
+RCC_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2056
+  * @param  NewState: new state of the specified RCC interrupts.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void RCC_ITConfig(uint8_t RCC_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2060
+  /* Check the parameters */
+  assert_param(IS_RCC_IT(RCC_IT));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   e:	79bb      	ldrb	r3, [r7, #6]
+  10:	2b00      	cmp	r3, #0
+  12:	d009      	beq.n	28 <RCC_ITConfig+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2063
+  {
+    /* Perform Byte access to RCC_CIR[14:8] bits to enable the selected interrupts */
+    *(__IO uint8_t *) CIR_BYTE2_ADDRESS |= RCC_IT;
+  14:	4b0d      	ldr	r3, [pc, #52]	; (4c <RCC_ITConfig+0x4c>)
+  16:	4a0d      	ldr	r2, [pc, #52]	; (4c <RCC_ITConfig+0x4c>)
+  18:	7812      	ldrb	r2, [r2, #0]
+  1a:	b2d1      	uxtb	r1, r2
+  1c:	79fa      	ldrb	r2, [r7, #7]
+  1e:	ea41 0202 	orr.w	r2, r1, r2
+  22:	b2d2      	uxtb	r2, r2
+  24:	701a      	strb	r2, [r3, #0]
+  26:	e00b      	b.n	40 <RCC_ITConfig+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2068
+  }
+  else
+  {
+    /* Perform Byte access to RCC_CIR[14:8] bits to disable the selected interrupts */
+    *(__IO uint8_t *) CIR_BYTE2_ADDRESS &= (uint8_t)~RCC_IT;
+  28:	4b08      	ldr	r3, [pc, #32]	; (4c <RCC_ITConfig+0x4c>)
+  2a:	4a08      	ldr	r2, [pc, #32]	; (4c <RCC_ITConfig+0x4c>)
+  2c:	7812      	ldrb	r2, [r2, #0]
+  2e:	b2d1      	uxtb	r1, r2
+  30:	79fa      	ldrb	r2, [r7, #7]
+  32:	ea6f 0202 	mvn.w	r2, r2
+  36:	b2d2      	uxtb	r2, r2
+  38:	ea01 0202 	and.w	r2, r1, r2
+  3c:	b2d2      	uxtb	r2, r2
+  3e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2070
+  }
+}
+  40:	f107 070c 	add.w	r7, r7, #12
+  44:	46bd      	mov	sp, r7
+  46:	bc80      	pop	{r7}
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+  4c:	4002380d 	.word	0x4002380d
+
+Disassembly of section .text.RCC_GetFlagStatus:
+
+00000000 <RCC_GetFlagStatus>:
+RCC_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2093
+  *            @arg RCC_FLAG_WWDGRST: Window Watchdog reset
+  *            @arg RCC_FLAG_LPWRRST: Low Power reset
+  * @retval The new state of RCC_FLAG (SET or RESET).
+  */
+FlagStatus RCC_GetFlagStatus(uint8_t RCC_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2094
+  uint32_t tmp = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2095
+  uint32_t statusreg = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2096
+  FlagStatus bitstatus = RESET;
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	74fb      	strb	r3, [r7, #19]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2102
+
+  /* Check the parameters */
+  assert_param(IS_RCC_FLAG(RCC_FLAG));
+
+  /* Get the RCC register index */
+  tmp = RCC_FLAG >> 5;
+  1c:	79fb      	ldrb	r3, [r7, #7]
+  1e:	ea4f 1353 	mov.w	r3, r3, lsr #5
+  22:	b2db      	uxtb	r3, r3
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2103
+  if (tmp == 1)               /* The flag to check is in CR register */
+  26:	68fb      	ldr	r3, [r7, #12]
+  28:	2b01      	cmp	r3, #1
+  2a:	d103      	bne.n	34 <RCC_GetFlagStatus+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2105
+  {
+    statusreg = RCC->CR;
+  2c:	4b14      	ldr	r3, [pc, #80]	; (80 <RCC_GetFlagStatus+0x80>)
+  2e:	681b      	ldr	r3, [r3, #0]
+  30:	617b      	str	r3, [r7, #20]
+  32:	e009      	b.n	48 <RCC_GetFlagStatus+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2107
+  }
+  else if (tmp == 2)          /* The flag to check is in BDCR register */
+  34:	68fb      	ldr	r3, [r7, #12]
+  36:	2b02      	cmp	r3, #2
+  38:	d103      	bne.n	42 <RCC_GetFlagStatus+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2109
+  {
+    statusreg = RCC->BDCR;
+  3a:	4b11      	ldr	r3, [pc, #68]	; (80 <RCC_GetFlagStatus+0x80>)
+  3c:	6f1b      	ldr	r3, [r3, #112]	; 0x70
+  3e:	617b      	str	r3, [r7, #20]
+  40:	e002      	b.n	48 <RCC_GetFlagStatus+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2113
+  }
+  else                       /* The flag to check is in CSR register */
+  {
+    statusreg = RCC->CSR;
+  42:	4b0f      	ldr	r3, [pc, #60]	; (80 <RCC_GetFlagStatus+0x80>)
+  44:	6f5b      	ldr	r3, [r3, #116]	; 0x74
+  46:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2117
+  }
+
+  /* Get the flag position */
+  tmp = RCC_FLAG & FLAG_MASK;
+  48:	79fb      	ldrb	r3, [r7, #7]
+  4a:	f003 031f 	and.w	r3, r3, #31
+  4e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2118
+  if ((statusreg & ((uint32_t)1 << tmp)) != (uint32_t)RESET)
+  50:	68fb      	ldr	r3, [r7, #12]
+  52:	697a      	ldr	r2, [r7, #20]
+  54:	fa22 f303 	lsr.w	r3, r2, r3
+  58:	f003 0301 	and.w	r3, r3, #1
+  5c:	b2db      	uxtb	r3, r3
+  5e:	2b00      	cmp	r3, #0
+  60:	d003      	beq.n	6a <RCC_GetFlagStatus+0x6a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2120
+  {
+    bitstatus = SET;
+  62:	f04f 0301 	mov.w	r3, #1
+  66:	74fb      	strb	r3, [r7, #19]
+  68:	e002      	b.n	70 <RCC_GetFlagStatus+0x70>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2124
+  }
+  else
+  {
+    bitstatus = RESET;
+  6a:	f04f 0300 	mov.w	r3, #0
+  6e:	74fb      	strb	r3, [r7, #19]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2127
+  }
+  /* Return the flag status */
+  return bitstatus;
+  70:	7cfb      	ldrb	r3, [r7, #19]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2128
+}
+  72:	4618      	mov	r0, r3
+  74:	f107 071c 	add.w	r7, r7, #28
+  78:	46bd      	mov	sp, r7
+  7a:	bc80      	pop	{r7}
+  7c:	4770      	bx	lr
+  7e:	bf00      	nop
+  80:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_ClearFlag:
+
+00000000 <RCC_ClearFlag>:
+RCC_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2138
+  *         RCC_FLAG_IWDGRST, RCC_FLAG_WWDGRST, RCC_FLAG_LPWRRST
+  * @param  None
+  * @retval None
+  */
+void RCC_ClearFlag(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2140
+  /* Set RMVF bit to clear the reset flags */
+  RCC->CSR |= RCC_CSR_RMVF;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <RCC_ClearFlag+0x18>)
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <RCC_ClearFlag+0x18>)
+   8:	6f52      	ldr	r2, [r2, #116]	; 0x74
+   a:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+   e:	675a      	str	r2, [r3, #116]	; 0x74
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2141
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_GetITStatus:
+
+00000000 <RCC_GetITStatus>:
+RCC_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2158
+  *            @arg RCC_IT_PLLSAIRDY: PLLSAI clock ready interrupt (only for STM32F42xxx/43xxx devices)    
+  *            @arg RCC_IT_CSS: Clock Security System interrupt
+  * @retval The new state of RCC_IT (SET or RESET).
+  */
+ITStatus RCC_GetITStatus(uint8_t RCC_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2159
+  ITStatus bitstatus = RESET;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2165
+
+  /* Check the parameters */
+  assert_param(IS_RCC_GET_IT(RCC_IT));
+
+  /* Check the status of the specified RCC interrupt */
+  if ((RCC->CIR & RCC_IT) != (uint32_t)RESET)
+  10:	4b0a      	ldr	r3, [pc, #40]	; (3c <RCC_GetITStatus+0x3c>)
+  12:	68da      	ldr	r2, [r3, #12]
+  14:	79fb      	ldrb	r3, [r7, #7]
+  16:	ea02 0303 	and.w	r3, r2, r3
+  1a:	2b00      	cmp	r3, #0
+  1c:	d003      	beq.n	26 <RCC_GetITStatus+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2167
+  {
+    bitstatus = SET;
+  1e:	f04f 0301 	mov.w	r3, #1
+  22:	73fb      	strb	r3, [r7, #15]
+  24:	e002      	b.n	2c <RCC_GetITStatus+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2171
+  }
+  else
+  {
+    bitstatus = RESET;
+  26:	f04f 0300 	mov.w	r3, #0
+  2a:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2174
+  }
+  /* Return the RCC_IT status */
+  return  bitstatus;
+  2c:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2175
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+  3c:	40023800 	.word	0x40023800
+
+Disassembly of section .text.RCC_ClearITPendingBit:
+
+00000000 <RCC_ClearITPendingBit>:
+RCC_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2192
+  *            @arg RCC_IT_PLLSAIRDY: PLLSAI ready interrupt (only for STM32F42xxx/43xxx devices)   
+  *            @arg RCC_IT_CSS: Clock Security System interrupt
+  * @retval None
+  */
+void RCC_ClearITPendingBit(uint8_t RCC_IT)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2198
+  /* Check the parameters */
+  assert_param(IS_RCC_CLEAR_IT(RCC_IT));
+
+  /* Perform Byte access to RCC_CIR[23:16] bits to clear the selected interrupt
+     pending bits */
+  *(__IO uint8_t *) CIR_BYTE3_ADDRESS = RCC_IT;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <RCC_ClearITPendingBit+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_rcc.c:2199
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	4002380e 	.word	0x4002380e

@@ -1,0 +1,480 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\system_stm32f4xx.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\system_stm32f4xx.o
+
+
+Disassembly of section .text.SystemInit:
+
+00000000 <SystemInit>:
+SystemInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:215
+  *         SystemFrequency variable.
+  * @param  None
+  * @retval None
+  */
+void SystemInit(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:223
+    SCB->CPACR |= ((3UL << 10*2)|(3UL << 11*2));  /* set CP10 and CP11 Full Access */
+  #endif
+
+  /* Reset the RCC clock configuration to the default reset state ------------*/
+  /* Set HSION bit */
+  RCC->CR |= (uint32_t)0x00000001;
+   4:	4b12      	ldr	r3, [pc, #72]	; (50 <SystemInit+0x50>)
+   6:	4a12      	ldr	r2, [pc, #72]	; (50 <SystemInit+0x50>)
+   8:	6812      	ldr	r2, [r2, #0]
+   a:	f042 0201 	orr.w	r2, r2, #1
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:226
+
+  /* Reset CFGR register */
+  RCC->CFGR = 0x00000000;
+  10:	4b0f      	ldr	r3, [pc, #60]	; (50 <SystemInit+0x50>)
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:229
+
+  /* Reset HSEON, CSSON and PLLON bits */
+  RCC->CR &= (uint32_t)0xFEF6FFFF;
+  18:	4a0d      	ldr	r2, [pc, #52]	; (50 <SystemInit+0x50>)
+  1a:	4b0d      	ldr	r3, [pc, #52]	; (50 <SystemInit+0x50>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	f023 7384 	bic.w	r3, r3, #17301504	; 0x1080000
+  22:	f423 3380 	bic.w	r3, r3, #65536	; 0x10000
+  26:	6013      	str	r3, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:232
+
+  /* Reset PLLCFGR register */
+  RCC->PLLCFGR = 0x24003010;
+  28:	4b09      	ldr	r3, [pc, #36]	; (50 <SystemInit+0x50>)
+  2a:	4a0a      	ldr	r2, [pc, #40]	; (54 <SystemInit+0x54>)
+  2c:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:235
+
+  /* Reset HSEBYP bit */
+  RCC->CR &= (uint32_t)0xFFFBFFFF;
+  2e:	4b08      	ldr	r3, [pc, #32]	; (50 <SystemInit+0x50>)
+  30:	4a07      	ldr	r2, [pc, #28]	; (50 <SystemInit+0x50>)
+  32:	6812      	ldr	r2, [r2, #0]
+  34:	f422 2280 	bic.w	r2, r2, #262144	; 0x40000
+  38:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:238
+
+  /* Disable all interrupts */
+  RCC->CIR = 0x00000000;
+  3a:	4b05      	ldr	r3, [pc, #20]	; (50 <SystemInit+0x50>)
+  3c:	f04f 0200 	mov.w	r2, #0
+  40:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:246
+  SystemInit_ExtMemCtl(); 
+#endif /* DATA_IN_ExtSRAM */
+         
+  /* Configure the System clock source, PLL Multiplier and Divider factors, 
+     AHB/APBx prescalers and Flash settings ----------------------------------*/
+  SetSysClock();
+  42:	f7ff fffe 	bl	0 <SystemInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:252
+
+  /* Configure the Vector Table location add offset address ------------------*/
+#ifdef VECT_TAB_SRAM
+  SCB->VTOR = SRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+#else
+  SCB->VTOR = FLASH_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+  46:	4b04      	ldr	r3, [pc, #16]	; (58 <SystemInit+0x58>)
+  48:	f04f 6200 	mov.w	r2, #134217728	; 0x8000000
+  4c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:254
+#endif
+}
+  4e:	bd80      	pop	{r7, pc}
+  50:	40023800 	.word	0x40023800
+  54:	24003010 	.word	0x24003010
+  58:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.SystemCoreClockUpdate:
+
+00000000 <SystemCoreClockUpdate>:
+SystemCoreClockUpdate():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:293
+  *     
+  * @param  None
+  * @retval None
+  */
+void SystemCoreClockUpdate(void)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:294
+  uint32_t tmp = 0, pllvco = 0, pllp = 2, pllsource = 0, pllm = 2;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	613b      	str	r3, [r7, #16]
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	617b      	str	r3, [r7, #20]
+  12:	f04f 0302 	mov.w	r3, #2
+  16:	60fb      	str	r3, [r7, #12]
+  18:	f04f 0300 	mov.w	r3, #0
+  1c:	60bb      	str	r3, [r7, #8]
+  1e:	f04f 0302 	mov.w	r3, #2
+  22:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:297
+  
+  /* Get SYSCLK source -------------------------------------------------------*/
+  tmp = RCC->CFGR & RCC_CFGR_SWS;
+  24:	4b36      	ldr	r3, [pc, #216]	; (100 <SystemCoreClockUpdate+0x100>)
+  26:	689b      	ldr	r3, [r3, #8]
+  28:	f003 030c 	and.w	r3, r3, #12
+  2c:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:299
+
+  switch (tmp)
+  2e:	693b      	ldr	r3, [r7, #16]
+  30:	2b04      	cmp	r3, #4
+  32:	d007      	beq.n	44 <SystemCoreClockUpdate+0x44>
+  34:	2b08      	cmp	r3, #8
+  36:	d009      	beq.n	4c <SystemCoreClockUpdate+0x4c>
+  38:	2b00      	cmp	r3, #0
+  3a:	d147      	bne.n	cc <SystemCoreClockUpdate+0xcc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:302
+  {
+    case 0x00:  /* HSI used as system clock source */
+      SystemCoreClock = HSI_VALUE;
+  3c:	4b31      	ldr	r3, [pc, #196]	; (104 <SystemCoreClockUpdate+0x104>)
+  3e:	4a32      	ldr	r2, [pc, #200]	; (108 <SystemCoreClockUpdate+0x108>)
+  40:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:303
+      break;
+  42:	e047      	b.n	d4 <SystemCoreClockUpdate+0xd4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:305
+    case 0x04:  /* HSE used as system clock source */
+      SystemCoreClock = HSE_VALUE;
+  44:	4b2f      	ldr	r3, [pc, #188]	; (104 <SystemCoreClockUpdate+0x104>)
+  46:	4a31      	ldr	r2, [pc, #196]	; (10c <SystemCoreClockUpdate+0x10c>)
+  48:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:306
+      break;
+  4a:	e043      	b.n	d4 <SystemCoreClockUpdate+0xd4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:312
+    case 0x08:  /* PLL used as system clock source */
+
+      /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLL_M) * PLL_N
+         SYSCLK = PLL_VCO / PLL_P
+         */    
+      pllsource = (RCC->PLLCFGR & RCC_PLLCFGR_PLLSRC) >> 22;
+  4c:	4b2c      	ldr	r3, [pc, #176]	; (100 <SystemCoreClockUpdate+0x100>)
+  4e:	685b      	ldr	r3, [r3, #4]
+  50:	f403 0380 	and.w	r3, r3, #4194304	; 0x400000
+  54:	ea4f 5393 	mov.w	r3, r3, lsr #22
+  58:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:313
+      pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
+  5a:	4b29      	ldr	r3, [pc, #164]	; (100 <SystemCoreClockUpdate+0x100>)
+  5c:	685b      	ldr	r3, [r3, #4]
+  5e:	f003 033f 	and.w	r3, r3, #63	; 0x3f
+  62:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:315
+      
+      if (pllsource != 0)
+  64:	68bb      	ldr	r3, [r7, #8]
+  66:	2b00      	cmp	r3, #0
+  68:	d00f      	beq.n	8a <SystemCoreClockUpdate+0x8a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:318
+      {
+        /* HSE used as PLL clock source */
+        pllvco = (HSE_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);
+  6a:	4a28      	ldr	r2, [pc, #160]	; (10c <SystemCoreClockUpdate+0x10c>)
+  6c:	687b      	ldr	r3, [r7, #4]
+  6e:	fbb2 f2f3 	udiv	r2, r2, r3
+  72:	4b23      	ldr	r3, [pc, #140]	; (100 <SystemCoreClockUpdate+0x100>)
+  74:	6859      	ldr	r1, [r3, #4]
+  76:	f647 73c0 	movw	r3, #32704	; 0x7fc0
+  7a:	ea01 0303 	and.w	r3, r1, r3
+  7e:	ea4f 1393 	mov.w	r3, r3, lsr #6
+  82:	fb03 f302 	mul.w	r3, r3, r2
+  86:	617b      	str	r3, [r7, #20]
+  88:	e00e      	b.n	a8 <SystemCoreClockUpdate+0xa8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:323
+      }
+      else
+      {
+        /* HSI used as PLL clock source */
+        pllvco = (HSI_VALUE / pllm) * ((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> 6);      
+  8a:	4a1f      	ldr	r2, [pc, #124]	; (108 <SystemCoreClockUpdate+0x108>)
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	fbb2 f2f3 	udiv	r2, r2, r3
+  92:	4b1b      	ldr	r3, [pc, #108]	; (100 <SystemCoreClockUpdate+0x100>)
+  94:	6859      	ldr	r1, [r3, #4]
+  96:	f647 73c0 	movw	r3, #32704	; 0x7fc0
+  9a:	ea01 0303 	and.w	r3, r1, r3
+  9e:	ea4f 1393 	mov.w	r3, r3, lsr #6
+  a2:	fb03 f302 	mul.w	r3, r3, r2
+  a6:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:326
+      }
+
+      pllp = (((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >>16) + 1 ) *2;
+  a8:	4b15      	ldr	r3, [pc, #84]	; (100 <SystemCoreClockUpdate+0x100>)
+  aa:	685b      	ldr	r3, [r3, #4]
+  ac:	f403 3340 	and.w	r3, r3, #196608	; 0x30000
+  b0:	ea4f 4313 	mov.w	r3, r3, lsr #16
+  b4:	f103 0301 	add.w	r3, r3, #1
+  b8:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  bc:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:327
+      SystemCoreClock = pllvco/pllp;
+  be:	697a      	ldr	r2, [r7, #20]
+  c0:	68fb      	ldr	r3, [r7, #12]
+  c2:	fbb2 f2f3 	udiv	r2, r2, r3
+  c6:	4b0f      	ldr	r3, [pc, #60]	; (104 <SystemCoreClockUpdate+0x104>)
+  c8:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:328
+      break;
+  ca:	e003      	b.n	d4 <SystemCoreClockUpdate+0xd4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:330
+    default:
+      SystemCoreClock = HSI_VALUE;
+  cc:	4b0d      	ldr	r3, [pc, #52]	; (104 <SystemCoreClockUpdate+0x104>)
+  ce:	4a0e      	ldr	r2, [pc, #56]	; (108 <SystemCoreClockUpdate+0x108>)
+  d0:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:331
+      break;
+  d2:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:335
+  }
+  /* Compute HCLK frequency --------------------------------------------------*/
+  /* Get HCLK prescaler */
+  tmp = AHBPrescTable[((RCC->CFGR & RCC_CFGR_HPRE) >> 4)];
+  d4:	4b0a      	ldr	r3, [pc, #40]	; (100 <SystemCoreClockUpdate+0x100>)
+  d6:	689b      	ldr	r3, [r3, #8]
+  d8:	f003 03f0 	and.w	r3, r3, #240	; 0xf0
+  dc:	ea4f 1313 	mov.w	r3, r3, lsr #4
+  e0:	4a0b      	ldr	r2, [pc, #44]	; (110 <SystemCoreClockUpdate+0x110>)
+  e2:	5cd3      	ldrb	r3, [r2, r3]
+  e4:	b2db      	uxtb	r3, r3
+  e6:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:337
+  /* HCLK frequency */
+  SystemCoreClock >>= tmp;
+  e8:	4b06      	ldr	r3, [pc, #24]	; (104 <SystemCoreClockUpdate+0x104>)
+  ea:	681a      	ldr	r2, [r3, #0]
+  ec:	693b      	ldr	r3, [r7, #16]
+  ee:	fa22 f203 	lsr.w	r2, r2, r3
+  f2:	4b04      	ldr	r3, [pc, #16]	; (104 <SystemCoreClockUpdate+0x104>)
+  f4:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:338
+}
+  f6:	f107 071c 	add.w	r7, r7, #28
+  fa:	46bd      	mov	sp, r7
+  fc:	bc80      	pop	{r7}
+  fe:	4770      	bx	lr
+ 100:	40023800 	.word	0x40023800
+ 104:	00000000 	.word	0x00000000
+ 108:	00f42400 	.word	0x00f42400
+ 10c:	017d7840 	.word	0x017d7840
+ 110:	00000000 	.word	0x00000000
+
+Disassembly of section .text.SetSysClock:
+
+00000000 <SetSysClock>:
+SetSysClock():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:349
+  *         is reset to the default reset state (done in SystemInit() function).   
+  * @param  None
+  * @retval None
+  */
+static void SetSysClock(void)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:353
+/******************************************************************************/
+/*            PLL (clocked by HSE) used as System clock source                */
+/******************************************************************************/
+  __IO uint32_t StartUpCounter = 0, HSEStatus = 0;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	607b      	str	r3, [r7, #4]
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:356
+  
+  /* Enable HSE */
+  RCC->CR |= ((uint32_t)RCC_CR_HSEON);
+  12:	4b37      	ldr	r3, [pc, #220]	; (f0 <SetSysClock+0xf0>)
+  14:	4a36      	ldr	r2, [pc, #216]	; (f0 <SetSysClock+0xf0>)
+  16:	6812      	ldr	r2, [r2, #0]
+  18:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+  1c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:361
+ 
+  /* Wait till HSE is ready and if Time out is reached exit */
+  do
+  {
+    HSEStatus = RCC->CR & RCC_CR_HSERDY;
+  1e:	4b34      	ldr	r3, [pc, #208]	; (f0 <SetSysClock+0xf0>)
+  20:	681b      	ldr	r3, [r3, #0]
+  22:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
+  26:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:362
+    StartUpCounter++;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f103 0301 	add.w	r3, r3, #1
+  2e:	607b      	str	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:363
+  } while((HSEStatus == 0) && (StartUpCounter != HSE_STARTUP_TIMEOUT));
+  30:	683b      	ldr	r3, [r7, #0]
+  32:	2b00      	cmp	r3, #0
+  34:	d103      	bne.n	3e <SetSysClock+0x3e>
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	f5b3 4fa0 	cmp.w	r3, #20480	; 0x5000
+  3c:	d1ef      	bne.n	1e <SetSysClock+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:365
+
+  if ((RCC->CR & RCC_CR_HSERDY) != RESET)
+  3e:	4b2c      	ldr	r3, [pc, #176]	; (f0 <SetSysClock+0xf0>)
+  40:	681b      	ldr	r3, [r3, #0]
+  42:	f403 3300 	and.w	r3, r3, #131072	; 0x20000
+  46:	2b00      	cmp	r3, #0
+  48:	d003      	beq.n	52 <SetSysClock+0x52>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:367
+  {
+    HSEStatus = (uint32_t)0x01;
+  4a:	f04f 0301 	mov.w	r3, #1
+  4e:	603b      	str	r3, [r7, #0]
+  50:	e002      	b.n	58 <SetSysClock+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:371
+  }
+  else
+  {
+    HSEStatus = (uint32_t)0x00;
+  52:	f04f 0300 	mov.w	r3, #0
+  56:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:374
+  }
+
+  if (HSEStatus == (uint32_t)0x01)
+  58:	683b      	ldr	r3, [r7, #0]
+  5a:	2b01      	cmp	r3, #1
+  5c:	d142      	bne.n	e4 <SetSysClock+0xe4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:377
+  {
+    /* Select regulator voltage output Scale 1 mode, System frequency up to 168 MHz */
+    RCC->APB1ENR |= RCC_APB1ENR_PWREN;
+  5e:	4b24      	ldr	r3, [pc, #144]	; (f0 <SetSysClock+0xf0>)
+  60:	4a23      	ldr	r2, [pc, #140]	; (f0 <SetSysClock+0xf0>)
+  62:	6c12      	ldr	r2, [r2, #64]	; 0x40
+  64:	f042 5280 	orr.w	r2, r2, #268435456	; 0x10000000
+  68:	641a      	str	r2, [r3, #64]	; 0x40
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:378
+    PWR->CR |= PWR_CR_VOS;
+  6a:	4b22      	ldr	r3, [pc, #136]	; (f4 <SetSysClock+0xf4>)
+  6c:	4a21      	ldr	r2, [pc, #132]	; (f4 <SetSysClock+0xf4>)
+  6e:	6812      	ldr	r2, [r2, #0]
+  70:	f442 4240 	orr.w	r2, r2, #49152	; 0xc000
+  74:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:381
+
+    /* HCLK = SYSCLK / 1*/
+    RCC->CFGR |= RCC_CFGR_HPRE_DIV1;
+  76:	4b1e      	ldr	r3, [pc, #120]	; (f0 <SetSysClock+0xf0>)
+  78:	4a1d      	ldr	r2, [pc, #116]	; (f0 <SetSysClock+0xf0>)
+  7a:	6892      	ldr	r2, [r2, #8]
+  7c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:384
+      
+    /* PCLK2 = HCLK / 2*/
+    RCC->CFGR |= RCC_CFGR_PPRE2_DIV2;
+  7e:	4b1c      	ldr	r3, [pc, #112]	; (f0 <SetSysClock+0xf0>)
+  80:	4a1b      	ldr	r2, [pc, #108]	; (f0 <SetSysClock+0xf0>)
+  82:	6892      	ldr	r2, [r2, #8]
+  84:	f442 4200 	orr.w	r2, r2, #32768	; 0x8000
+  88:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:387
+    
+    /* PCLK1 = HCLK / 4*/
+    RCC->CFGR |= RCC_CFGR_PPRE1_DIV4;
+  8a:	4b19      	ldr	r3, [pc, #100]	; (f0 <SetSysClock+0xf0>)
+  8c:	4a18      	ldr	r2, [pc, #96]	; (f0 <SetSysClock+0xf0>)
+  8e:	6892      	ldr	r2, [r2, #8]
+  90:	f442 52a0 	orr.w	r2, r2, #5120	; 0x1400
+  94:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:390
+
+    /* Configure the main PLL */
+    RCC->PLLCFGR = PLL_M | (PLL_N << 6) | (((PLL_P >> 1) -1) << 16) |
+  96:	4b16      	ldr	r3, [pc, #88]	; (f0 <SetSysClock+0xf0>)
+  98:	4a17      	ldr	r2, [pc, #92]	; (f8 <SetSysClock+0xf8>)
+  9a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:394
+                   (RCC_PLLCFGR_PLLSRC_HSE) | (PLL_Q << 24);
+
+    /* Enable the main PLL */
+    RCC->CR |= RCC_CR_PLLON;
+  9c:	4b14      	ldr	r3, [pc, #80]	; (f0 <SetSysClock+0xf0>)
+  9e:	4a14      	ldr	r2, [pc, #80]	; (f0 <SetSysClock+0xf0>)
+  a0:	6812      	ldr	r2, [r2, #0]
+  a2:	f042 7280 	orr.w	r2, r2, #16777216	; 0x1000000
+  a6:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:397
+
+    /* Wait till the main PLL is ready */
+    while((RCC->CR & RCC_CR_PLLRDY) == 0)
+  a8:	bf00      	nop
+  aa:	4b11      	ldr	r3, [pc, #68]	; (f0 <SetSysClock+0xf0>)
+  ac:	681b      	ldr	r3, [r3, #0]
+  ae:	f003 7300 	and.w	r3, r3, #33554432	; 0x2000000
+  b2:	2b00      	cmp	r3, #0
+  b4:	d0f9      	beq.n	aa <SetSysClock+0xaa>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:402
+    {
+    }
+   
+    /* Configure Flash prefetch, Instruction cache, Data cache and wait state */
+    FLASH->ACR = FLASH_ACR_ICEN |FLASH_ACR_DCEN |FLASH_ACR_LATENCY_5WS;
+  b6:	4b11      	ldr	r3, [pc, #68]	; (fc <SetSysClock+0xfc>)
+  b8:	f240 6205 	movw	r2, #1541	; 0x605
+  bc:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:405
+
+    /* Select the main PLL as system clock source */
+    RCC->CFGR &= (uint32_t)((uint32_t)~(RCC_CFGR_SW));
+  be:	4b0c      	ldr	r3, [pc, #48]	; (f0 <SetSysClock+0xf0>)
+  c0:	4a0b      	ldr	r2, [pc, #44]	; (f0 <SetSysClock+0xf0>)
+  c2:	6892      	ldr	r2, [r2, #8]
+  c4:	f022 0203 	bic.w	r2, r2, #3
+  c8:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:406
+    RCC->CFGR |= RCC_CFGR_SW_PLL;
+  ca:	4b09      	ldr	r3, [pc, #36]	; (f0 <SetSysClock+0xf0>)
+  cc:	4a08      	ldr	r2, [pc, #32]	; (f0 <SetSysClock+0xf0>)
+  ce:	6892      	ldr	r2, [r2, #8]
+  d0:	f042 0202 	orr.w	r2, r2, #2
+  d4:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:409
+
+    /* Wait till the main PLL is used as system clock source */
+    while ((RCC->CFGR & (uint32_t)RCC_CFGR_SWS ) != RCC_CFGR_SWS_PLL);
+  d6:	bf00      	nop
+  d8:	4b05      	ldr	r3, [pc, #20]	; (f0 <SetSysClock+0xf0>)
+  da:	689b      	ldr	r3, [r3, #8]
+  dc:	f003 030c 	and.w	r3, r3, #12
+  e0:	2b08      	cmp	r3, #8
+  e2:	d1f9      	bne.n	d8 <SetSysClock+0xd8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\CMSIS\CM4F/system_stm32f4xx.c:418
+  else
+  { /* If HSE fails to start-up, the application will have wrong clock
+         configuration. User can add here some code to deal with this error */
+  }
+
+}
+  e4:	f107 070c 	add.w	r7, r7, #12
+  e8:	46bd      	mov	sp, r7
+  ea:	bc80      	pop	{r7}
+  ec:	4770      	bx	lr
+  ee:	bf00      	nop
+  f0:	40023800 	.word	0x40023800
+  f4:	40007000 	.word	0x40007000
+  f8:	07405419 	.word	0x07405419
+  fc:	40023c00 	.word	0x40023c00

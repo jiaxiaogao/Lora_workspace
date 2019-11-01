@@ -1,0 +1,2565 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_flash.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_flash.o
+
+
+Disassembly of section .text.FLASH_SetLatency:
+
+00000000 <FLASH_SetLatency>:
+FLASH_SetLatency():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:249
+  *       FLASH_Latency_0 and FLASH_Latency_15. 
+  *         
+  * @retval None
+  */
+void FLASH_SetLatency(uint32_t FLASH_Latency)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:254
+  /* Check the parameters */
+  assert_param(IS_FLASH_LATENCY(FLASH_Latency));
+  
+  /* Perform Byte access to FLASH_ACR[8:0] to set the Latency value */
+  *(__IO uint8_t *)ACR_BYTE0_ADDRESS = (uint8_t)FLASH_Latency;
+   8:	4b04      	ldr	r3, [pc, #16]	; (1c <FLASH_SetLatency+0x1c>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	b2d2      	uxtb	r2, r2
+   e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:255
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_PrefetchBufferCmd:
+
+00000000 <FLASH_PrefetchBufferCmd>:
+FLASH_PrefetchBufferCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:264
+  * @param  NewState: new state of the Prefetch Buffer.
+  *          This parameter  can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FLASH_PrefetchBufferCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:269
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  /* Enable or disable the Prefetch Buffer */
+  if(NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <FLASH_PrefetchBufferCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:271
+  {
+    FLASH->ACR |= FLASH_ACR_PRFTEN;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <FLASH_PrefetchBufferCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <FLASH_PrefetchBufferCmd+0x34>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f442 7280 	orr.w	r2, r2, #256	; 0x100
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <FLASH_PrefetchBufferCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:275
+  }
+  else
+  {
+    FLASH->ACR &= (~FLASH_ACR_PRFTEN);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <FLASH_PrefetchBufferCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <FLASH_PrefetchBufferCmd+0x34>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f422 7280 	bic.w	r2, r2, #256	; 0x100
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:277
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_InstructionCacheCmd:
+
+00000000 <FLASH_InstructionCacheCmd>:
+FLASH_InstructionCacheCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:286
+  * @param  NewState: new state of the Instruction Cache.
+  *          This parameter  can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FLASH_InstructionCacheCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:290
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if(NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <FLASH_InstructionCacheCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:292
+  {
+    FLASH->ACR |= FLASH_ACR_ICEN;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <FLASH_InstructionCacheCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <FLASH_InstructionCacheCmd+0x34>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f442 7200 	orr.w	r2, r2, #512	; 0x200
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <FLASH_InstructionCacheCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:296
+  }
+  else
+  {
+    FLASH->ACR &= (~FLASH_ACR_ICEN);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <FLASH_InstructionCacheCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <FLASH_InstructionCacheCmd+0x34>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f422 7200 	bic.w	r2, r2, #512	; 0x200
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:298
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_DataCacheCmd:
+
+00000000 <FLASH_DataCacheCmd>:
+FLASH_DataCacheCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:307
+  * @param  NewState: new state of the Data Cache.
+  *          This parameter  can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FLASH_DataCacheCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:311
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if(NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <FLASH_DataCacheCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:313
+  {
+    FLASH->ACR |= FLASH_ACR_DCEN;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <FLASH_DataCacheCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <FLASH_DataCacheCmd+0x34>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f442 6280 	orr.w	r2, r2, #1024	; 0x400
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e005      	b.n	2a <FLASH_DataCacheCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:317
+  }
+  else
+  {
+    FLASH->ACR &= (~FLASH_ACR_DCEN);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <FLASH_DataCacheCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <FLASH_DataCacheCmd+0x34>)
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	f422 6280 	bic.w	r2, r2, #1024	; 0x400
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:319
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_InstructionCacheReset:
+
+00000000 <FLASH_InstructionCacheReset>:
+FLASH_InstructionCacheReset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:328
+  * @note   This function must be used only when the Instruction Cache is disabled.  
+  * @param  None
+  * @retval None
+  */
+void FLASH_InstructionCacheReset(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:329
+  FLASH->ACR |= FLASH_ACR_ICRST;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_InstructionCacheReset+0x18>)
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <FLASH_InstructionCacheReset+0x18>)
+   8:	6812      	ldr	r2, [r2, #0]
+   a:	f442 6200 	orr.w	r2, r2, #2048	; 0x800
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:330
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_DataCacheReset:
+
+00000000 <FLASH_DataCacheReset>:
+FLASH_DataCacheReset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:339
+  * @note   This function must be used only when the Data Cache is disabled.  
+  * @param  None
+  * @retval None
+  */
+void FLASH_DataCacheReset(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:340
+  FLASH->ACR |= FLASH_ACR_DCRST;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_DataCacheReset+0x18>)
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <FLASH_DataCacheReset+0x18>)
+   8:	6812      	ldr	r2, [r2, #0]
+   a:	f442 5280 	orr.w	r2, r2, #4096	; 0x1000
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:341
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_Unlock:
+
+00000000 <FLASH_Unlock>:
+FLASH_Unlock():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:386
+  * @brief  Unlocks the FLASH control register access
+  * @param  None
+  * @retval None
+  */
+void FLASH_Unlock(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:387
+  if((FLASH->CR & FLASH_CR_LOCK) != RESET)
+   4:	4b06      	ldr	r3, [pc, #24]	; (20 <FLASH_Unlock+0x20>)
+   6:	691b      	ldr	r3, [r3, #16]
+   8:	2b00      	cmp	r3, #0
+   a:	da05      	bge.n	18 <FLASH_Unlock+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:390
+  {
+    /* Authorize the FLASH Registers access */
+    FLASH->KEYR = FLASH_KEY1;
+   c:	4b04      	ldr	r3, [pc, #16]	; (20 <FLASH_Unlock+0x20>)
+   e:	4a05      	ldr	r2, [pc, #20]	; (24 <FLASH_Unlock+0x24>)
+  10:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:391
+    FLASH->KEYR = FLASH_KEY2;
+  12:	4b03      	ldr	r3, [pc, #12]	; (20 <FLASH_Unlock+0x20>)
+  14:	4a04      	ldr	r2, [pc, #16]	; (28 <FLASH_Unlock+0x28>)
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:393
+  }  
+}
+  18:	46bd      	mov	sp, r7
+  1a:	bc80      	pop	{r7}
+  1c:	4770      	bx	lr
+  1e:	bf00      	nop
+  20:	40023c00 	.word	0x40023c00
+  24:	45670123 	.word	0x45670123
+  28:	cdef89ab 	.word	0xcdef89ab
+
+Disassembly of section .text.FLASH_Lock:
+
+00000000 <FLASH_Lock>:
+FLASH_Lock():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:401
+  * @brief  Locks the FLASH control register access
+  * @param  None
+  * @retval None
+  */
+void FLASH_Lock(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:403
+  /* Set the LOCK Bit to lock the FLASH Registers access */
+  FLASH->CR |= FLASH_CR_LOCK;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_Lock+0x18>)
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <FLASH_Lock+0x18>)
+   8:	6912      	ldr	r2, [r2, #16]
+   a:	f042 4200 	orr.w	r2, r2, #2147483648	; 0x80000000
+   e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:404
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_EraseSector:
+
+00000000 <FLASH_EraseSector>:
+FLASH_EraseSector():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:438
+  *       
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_EraseSector(uint32_t FLASH_Sector, uint8_t VoltageRange)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:439
+  uint32_t tmp_psize = 0x0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:440
+  FLASH_Status status = FLASH_COMPLETE;
+  12:	f04f 0309 	mov.w	r3, #9
+  16:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:446
+
+  /* Check the parameters */
+  assert_param(IS_FLASH_SECTOR(FLASH_Sector));
+  assert_param(IS_VOLTAGERANGE(VoltageRange));
+  
+  if(VoltageRange == VoltageRange_1)
+  18:	78fb      	ldrb	r3, [r7, #3]
+  1a:	2b00      	cmp	r3, #0
+  1c:	d103      	bne.n	26 <FLASH_EraseSector+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:448
+  {
+     tmp_psize = FLASH_PSIZE_BYTE;
+  1e:	f04f 0300 	mov.w	r3, #0
+  22:	60fb      	str	r3, [r7, #12]
+  24:	e010      	b.n	48 <FLASH_EraseSector+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:450
+  }
+  else if(VoltageRange == VoltageRange_2)
+  26:	78fb      	ldrb	r3, [r7, #3]
+  28:	2b01      	cmp	r3, #1
+  2a:	d103      	bne.n	34 <FLASH_EraseSector+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:452
+  {
+    tmp_psize = FLASH_PSIZE_HALF_WORD;
+  2c:	f44f 7380 	mov.w	r3, #256	; 0x100
+  30:	60fb      	str	r3, [r7, #12]
+  32:	e009      	b.n	48 <FLASH_EraseSector+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:454
+  }
+  else if(VoltageRange == VoltageRange_3)
+  34:	78fb      	ldrb	r3, [r7, #3]
+  36:	2b02      	cmp	r3, #2
+  38:	d103      	bne.n	42 <FLASH_EraseSector+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:456
+  {
+    tmp_psize = FLASH_PSIZE_WORD;
+  3a:	f44f 7300 	mov.w	r3, #512	; 0x200
+  3e:	60fb      	str	r3, [r7, #12]
+  40:	e002      	b.n	48 <FLASH_EraseSector+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:460
+  }
+  else
+  {
+    tmp_psize = FLASH_PSIZE_DOUBLE_WORD;
+  42:	f44f 7340 	mov.w	r3, #768	; 0x300
+  46:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:463
+  }
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  48:	f7ff fffe 	bl	0 <FLASH_EraseSector>
+  4c:	4603      	mov	r3, r0
+  4e:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:465
+  
+  if(status == FLASH_COMPLETE)
+  50:	7afb      	ldrb	r3, [r7, #11]
+  52:	2b09      	cmp	r3, #9
+  54:	d131      	bne.n	ba <FLASH_EraseSector+0xba>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:468
+  { 
+    /* if the previous operation is completed, proceed to erase the sector */
+    FLASH->CR &= CR_PSIZE_MASK;
+  56:	4b1c      	ldr	r3, [pc, #112]	; (c8 <FLASH_EraseSector+0xc8>)
+  58:	4a1b      	ldr	r2, [pc, #108]	; (c8 <FLASH_EraseSector+0xc8>)
+  5a:	6912      	ldr	r2, [r2, #16]
+  5c:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  60:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:469
+    FLASH->CR |= tmp_psize;
+  62:	4b19      	ldr	r3, [pc, #100]	; (c8 <FLASH_EraseSector+0xc8>)
+  64:	4a18      	ldr	r2, [pc, #96]	; (c8 <FLASH_EraseSector+0xc8>)
+  66:	6911      	ldr	r1, [r2, #16]
+  68:	68fa      	ldr	r2, [r7, #12]
+  6a:	ea41 0202 	orr.w	r2, r1, r2
+  6e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:470
+    FLASH->CR &= SECTOR_MASK;
+  70:	4b15      	ldr	r3, [pc, #84]	; (c8 <FLASH_EraseSector+0xc8>)
+  72:	4a15      	ldr	r2, [pc, #84]	; (c8 <FLASH_EraseSector+0xc8>)
+  74:	6912      	ldr	r2, [r2, #16]
+  76:	f022 02f8 	bic.w	r2, r2, #248	; 0xf8
+  7a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:471
+    FLASH->CR |= FLASH_CR_SER | FLASH_Sector;
+  7c:	4b12      	ldr	r3, [pc, #72]	; (c8 <FLASH_EraseSector+0xc8>)
+  7e:	4a12      	ldr	r2, [pc, #72]	; (c8 <FLASH_EraseSector+0xc8>)
+  80:	6911      	ldr	r1, [r2, #16]
+  82:	687a      	ldr	r2, [r7, #4]
+  84:	ea41 0202 	orr.w	r2, r1, r2
+  88:	f042 0202 	orr.w	r2, r2, #2
+  8c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:472
+    FLASH->CR |= FLASH_CR_STRT;
+  8e:	4b0e      	ldr	r3, [pc, #56]	; (c8 <FLASH_EraseSector+0xc8>)
+  90:	4a0d      	ldr	r2, [pc, #52]	; (c8 <FLASH_EraseSector+0xc8>)
+  92:	6912      	ldr	r2, [r2, #16]
+  94:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+  98:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:475
+    
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  9a:	f7ff fffe 	bl	0 <FLASH_EraseSector>
+  9e:	4603      	mov	r3, r0
+  a0:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:478
+    
+    /* if the erase operation is completed, disable the SER Bit */
+    FLASH->CR &= (~FLASH_CR_SER);
+  a2:	4b09      	ldr	r3, [pc, #36]	; (c8 <FLASH_EraseSector+0xc8>)
+  a4:	4a08      	ldr	r2, [pc, #32]	; (c8 <FLASH_EraseSector+0xc8>)
+  a6:	6912      	ldr	r2, [r2, #16]
+  a8:	f022 0202 	bic.w	r2, r2, #2
+  ac:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:479
+    FLASH->CR &= SECTOR_MASK; 
+  ae:	4b06      	ldr	r3, [pc, #24]	; (c8 <FLASH_EraseSector+0xc8>)
+  b0:	4a05      	ldr	r2, [pc, #20]	; (c8 <FLASH_EraseSector+0xc8>)
+  b2:	6912      	ldr	r2, [r2, #16]
+  b4:	f022 02f8 	bic.w	r2, r2, #248	; 0xf8
+  b8:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:482
+  }
+  /* Return the Erase Status */
+  return status;
+  ba:	7afb      	ldrb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:483
+}
+  bc:	4618      	mov	r0, r3
+  be:	f107 0710 	add.w	r7, r7, #16
+  c2:	46bd      	mov	sp, r7
+  c4:	bd80      	pop	{r7, pc}
+  c6:	bf00      	nop
+  c8:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_EraseAllSectors:
+
+00000000 <FLASH_EraseAllSectors>:
+FLASH_EraseAllSectors():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:506
+  *       
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_EraseAllSectors(uint8_t VoltageRange)
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:507
+  uint32_t tmp_psize = 0x0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:508
+  FLASH_Status status = FLASH_COMPLETE;
+  10:	f04f 0309 	mov.w	r3, #9
+  14:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:511
+  
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  16:	f7ff fffe 	bl	0 <FLASH_EraseAllSectors>
+  1a:	4603      	mov	r3, r0
+  1c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:514
+  assert_param(IS_VOLTAGERANGE(VoltageRange));
+  
+  if(VoltageRange == VoltageRange_1)
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	2b00      	cmp	r3, #0
+  22:	d103      	bne.n	2c <FLASH_EraseAllSectors+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:516
+  {
+     tmp_psize = FLASH_PSIZE_BYTE;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	60fb      	str	r3, [r7, #12]
+  2a:	e010      	b.n	4e <FLASH_EraseAllSectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:518
+  }
+  else if(VoltageRange == VoltageRange_2)
+  2c:	79fb      	ldrb	r3, [r7, #7]
+  2e:	2b01      	cmp	r3, #1
+  30:	d103      	bne.n	3a <FLASH_EraseAllSectors+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:520
+  {
+    tmp_psize = FLASH_PSIZE_HALF_WORD;
+  32:	f44f 7380 	mov.w	r3, #256	; 0x100
+  36:	60fb      	str	r3, [r7, #12]
+  38:	e009      	b.n	4e <FLASH_EraseAllSectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:522
+  }
+  else if(VoltageRange == VoltageRange_3)
+  3a:	79fb      	ldrb	r3, [r7, #7]
+  3c:	2b02      	cmp	r3, #2
+  3e:	d103      	bne.n	48 <FLASH_EraseAllSectors+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:524
+  {
+    tmp_psize = FLASH_PSIZE_WORD;
+  40:	f44f 7300 	mov.w	r3, #512	; 0x200
+  44:	60fb      	str	r3, [r7, #12]
+  46:	e002      	b.n	4e <FLASH_EraseAllSectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:528
+  }
+  else
+  {
+    tmp_psize = FLASH_PSIZE_DOUBLE_WORD;
+  48:	f44f 7340 	mov.w	r3, #768	; 0x300
+  4c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:530
+  }  
+  if(status == FLASH_COMPLETE)
+  4e:	7afb      	ldrb	r3, [r7, #11]
+  50:	2b09      	cmp	r3, #9
+  52:	d126      	bne.n	a2 <FLASH_EraseAllSectors+0xa2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:534
+  {
+    /* if the previous operation is completed, proceed to erase all sectors */
+#if defined (STM32F427_437xx) || defined (STM32F429_439xx)    
+    FLASH->CR &= CR_PSIZE_MASK;
+  54:	4b16      	ldr	r3, [pc, #88]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  56:	4a16      	ldr	r2, [pc, #88]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  58:	6912      	ldr	r2, [r2, #16]
+  5a:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  5e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:535
+    FLASH->CR |= tmp_psize;
+  60:	4b13      	ldr	r3, [pc, #76]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  62:	4a13      	ldr	r2, [pc, #76]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  64:	6911      	ldr	r1, [r2, #16]
+  66:	68fa      	ldr	r2, [r7, #12]
+  68:	ea41 0202 	orr.w	r2, r1, r2
+  6c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:536
+    FLASH->CR |= (FLASH_CR_MER1 | FLASH_CR_MER2);
+  6e:	4a10      	ldr	r2, [pc, #64]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  70:	4b0f      	ldr	r3, [pc, #60]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  72:	691b      	ldr	r3, [r3, #16]
+  74:	f443 4300 	orr.w	r3, r3, #32768	; 0x8000
+  78:	f043 0304 	orr.w	r3, r3, #4
+  7c:	6113      	str	r3, [r2, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:537
+    FLASH->CR |= FLASH_CR_STRT;
+  7e:	4b0c      	ldr	r3, [pc, #48]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  80:	4a0b      	ldr	r2, [pc, #44]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  82:	6912      	ldr	r2, [r2, #16]
+  84:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+  88:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:540
+    
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  8a:	f7ff fffe 	bl	0 <FLASH_EraseAllSectors>
+  8e:	4603      	mov	r3, r0
+  90:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:543
+
+    /* if the erase operation is completed, disable the MER Bit */
+    FLASH->CR &= ~(FLASH_CR_MER1 | FLASH_CR_MER2);
+  92:	4a07      	ldr	r2, [pc, #28]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  94:	4b06      	ldr	r3, [pc, #24]	; (b0 <FLASH_EraseAllSectors+0xb0>)
+  96:	691b      	ldr	r3, [r3, #16]
+  98:	f423 4300 	bic.w	r3, r3, #32768	; 0x8000
+  9c:	f023 0304 	bic.w	r3, r3, #4
+  a0:	6113      	str	r3, [r2, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:561
+    FLASH->CR &= (~FLASH_CR_MER);
+#endif /* STM32F40_41xxx || STM32F401xx */
+
+  }   
+  /* Return the Erase Status */
+  return status;
+  a2:	7afb      	ldrb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:562
+}
+  a4:	4618      	mov	r0, r3
+  a6:	f107 0710 	add.w	r7, r7, #16
+  aa:	46bd      	mov	sp, r7
+  ac:	bd80      	pop	{r7, pc}
+  ae:	bf00      	nop
+  b0:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_EraseAllBank1Sectors:
+
+00000000 <FLASH_EraseAllBank1Sectors>:
+FLASH_EraseAllBank1Sectors():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:587
+  *       
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_EraseAllBank1Sectors(uint8_t VoltageRange)
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:588
+  uint32_t tmp_psize = 0x0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:589
+  FLASH_Status status = FLASH_COMPLETE;
+  10:	f04f 0309 	mov.w	r3, #9
+  14:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:592
+  
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  16:	f7ff fffe 	bl	0 <FLASH_EraseAllBank1Sectors>
+  1a:	4603      	mov	r3, r0
+  1c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:595
+  assert_param(IS_VOLTAGERANGE(VoltageRange));
+  
+  if(VoltageRange == VoltageRange_1)
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	2b00      	cmp	r3, #0
+  22:	d103      	bne.n	2c <FLASH_EraseAllBank1Sectors+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:597
+  {
+     tmp_psize = FLASH_PSIZE_BYTE;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	60fb      	str	r3, [r7, #12]
+  2a:	e010      	b.n	4e <FLASH_EraseAllBank1Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:599
+  }
+  else if(VoltageRange == VoltageRange_2)
+  2c:	79fb      	ldrb	r3, [r7, #7]
+  2e:	2b01      	cmp	r3, #1
+  30:	d103      	bne.n	3a <FLASH_EraseAllBank1Sectors+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:601
+  {
+    tmp_psize = FLASH_PSIZE_HALF_WORD;
+  32:	f44f 7380 	mov.w	r3, #256	; 0x100
+  36:	60fb      	str	r3, [r7, #12]
+  38:	e009      	b.n	4e <FLASH_EraseAllBank1Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:603
+  }
+  else if(VoltageRange == VoltageRange_3)
+  3a:	79fb      	ldrb	r3, [r7, #7]
+  3c:	2b02      	cmp	r3, #2
+  3e:	d103      	bne.n	48 <FLASH_EraseAllBank1Sectors+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:605
+  {
+    tmp_psize = FLASH_PSIZE_WORD;
+  40:	f44f 7300 	mov.w	r3, #512	; 0x200
+  44:	60fb      	str	r3, [r7, #12]
+  46:	e002      	b.n	4e <FLASH_EraseAllBank1Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:609
+  }
+  else
+  {
+    tmp_psize = FLASH_PSIZE_DOUBLE_WORD;
+  48:	f44f 7340 	mov.w	r3, #768	; 0x300
+  4c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:611
+  }  
+  if(status == FLASH_COMPLETE)
+  4e:	7afb      	ldrb	r3, [r7, #11]
+  50:	2b09      	cmp	r3, #9
+  52:	d122      	bne.n	9a <FLASH_EraseAllBank1Sectors+0x9a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:614
+  {
+    /* if the previous operation is completed, proceed to erase all sectors */
+     FLASH->CR &= CR_PSIZE_MASK;
+  54:	4b14      	ldr	r3, [pc, #80]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  56:	4a14      	ldr	r2, [pc, #80]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  58:	6912      	ldr	r2, [r2, #16]
+  5a:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  5e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:615
+     FLASH->CR |= tmp_psize;
+  60:	4b11      	ldr	r3, [pc, #68]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  62:	4a11      	ldr	r2, [pc, #68]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  64:	6911      	ldr	r1, [r2, #16]
+  66:	68fa      	ldr	r2, [r7, #12]
+  68:	ea41 0202 	orr.w	r2, r1, r2
+  6c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:616
+     FLASH->CR |= FLASH_CR_MER1;
+  6e:	4b0e      	ldr	r3, [pc, #56]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  70:	4a0d      	ldr	r2, [pc, #52]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  72:	6912      	ldr	r2, [r2, #16]
+  74:	f042 0204 	orr.w	r2, r2, #4
+  78:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:617
+     FLASH->CR |= FLASH_CR_STRT;
+  7a:	4b0b      	ldr	r3, [pc, #44]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  7c:	4a0a      	ldr	r2, [pc, #40]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  7e:	6912      	ldr	r2, [r2, #16]
+  80:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+  84:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:620
+    
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  86:	f7ff fffe 	bl	0 <FLASH_EraseAllBank1Sectors>
+  8a:	4603      	mov	r3, r0
+  8c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:623
+
+    /* if the erase operation is completed, disable the MER Bit */
+    FLASH->CR &= (~FLASH_CR_MER1);
+  8e:	4b06      	ldr	r3, [pc, #24]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  90:	4a05      	ldr	r2, [pc, #20]	; (a8 <FLASH_EraseAllBank1Sectors+0xa8>)
+  92:	6912      	ldr	r2, [r2, #16]
+  94:	f022 0204 	bic.w	r2, r2, #4
+  98:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:627
+
+  }   
+  /* Return the Erase Status */
+  return status;
+  9a:	7afb      	ldrb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:628
+}
+  9c:	4618      	mov	r0, r3
+  9e:	f107 0710 	add.w	r7, r7, #16
+  a2:	46bd      	mov	sp, r7
+  a4:	bd80      	pop	{r7, pc}
+  a6:	bf00      	nop
+  a8:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_EraseAllBank2Sectors:
+
+00000000 <FLASH_EraseAllBank2Sectors>:
+FLASH_EraseAllBank2Sectors():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:654
+  *       
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_EraseAllBank2Sectors(uint8_t VoltageRange)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:655
+  uint32_t tmp_psize = 0x0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:656
+  FLASH_Status status = FLASH_COMPLETE;
+  10:	f04f 0309 	mov.w	r3, #9
+  14:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:659
+  
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  16:	f7ff fffe 	bl	0 <FLASH_EraseAllBank2Sectors>
+  1a:	4603      	mov	r3, r0
+  1c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:662
+  assert_param(IS_VOLTAGERANGE(VoltageRange));
+  
+  if(VoltageRange == VoltageRange_1)
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	2b00      	cmp	r3, #0
+  22:	d103      	bne.n	2c <FLASH_EraseAllBank2Sectors+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:664
+  {
+     tmp_psize = FLASH_PSIZE_BYTE;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	60fb      	str	r3, [r7, #12]
+  2a:	e010      	b.n	4e <FLASH_EraseAllBank2Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:666
+  }
+  else if(VoltageRange == VoltageRange_2)
+  2c:	79fb      	ldrb	r3, [r7, #7]
+  2e:	2b01      	cmp	r3, #1
+  30:	d103      	bne.n	3a <FLASH_EraseAllBank2Sectors+0x3a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:668
+  {
+    tmp_psize = FLASH_PSIZE_HALF_WORD;
+  32:	f44f 7380 	mov.w	r3, #256	; 0x100
+  36:	60fb      	str	r3, [r7, #12]
+  38:	e009      	b.n	4e <FLASH_EraseAllBank2Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:670
+  }
+  else if(VoltageRange == VoltageRange_3)
+  3a:	79fb      	ldrb	r3, [r7, #7]
+  3c:	2b02      	cmp	r3, #2
+  3e:	d103      	bne.n	48 <FLASH_EraseAllBank2Sectors+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:672
+  {
+    tmp_psize = FLASH_PSIZE_WORD;
+  40:	f44f 7300 	mov.w	r3, #512	; 0x200
+  44:	60fb      	str	r3, [r7, #12]
+  46:	e002      	b.n	4e <FLASH_EraseAllBank2Sectors+0x4e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:676
+  }
+  else
+  {
+    tmp_psize = FLASH_PSIZE_DOUBLE_WORD;
+  48:	f44f 7340 	mov.w	r3, #768	; 0x300
+  4c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:678
+  }  
+  if(status == FLASH_COMPLETE)
+  4e:	7afb      	ldrb	r3, [r7, #11]
+  50:	2b09      	cmp	r3, #9
+  52:	d122      	bne.n	9a <FLASH_EraseAllBank2Sectors+0x9a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:681
+  {
+    /* if the previous operation is completed, proceed to erase all sectors */
+     FLASH->CR &= CR_PSIZE_MASK;
+  54:	4b14      	ldr	r3, [pc, #80]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  56:	4a14      	ldr	r2, [pc, #80]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  58:	6912      	ldr	r2, [r2, #16]
+  5a:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  5e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:682
+     FLASH->CR |= tmp_psize;
+  60:	4b11      	ldr	r3, [pc, #68]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  62:	4a11      	ldr	r2, [pc, #68]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  64:	6911      	ldr	r1, [r2, #16]
+  66:	68fa      	ldr	r2, [r7, #12]
+  68:	ea41 0202 	orr.w	r2, r1, r2
+  6c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:683
+     FLASH->CR |= FLASH_CR_MER2;
+  6e:	4b0e      	ldr	r3, [pc, #56]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  70:	4a0d      	ldr	r2, [pc, #52]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  72:	6912      	ldr	r2, [r2, #16]
+  74:	f442 4200 	orr.w	r2, r2, #32768	; 0x8000
+  78:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:684
+     FLASH->CR |= FLASH_CR_STRT;
+  7a:	4b0b      	ldr	r3, [pc, #44]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  7c:	4a0a      	ldr	r2, [pc, #40]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  7e:	6912      	ldr	r2, [r2, #16]
+  80:	f442 3280 	orr.w	r2, r2, #65536	; 0x10000
+  84:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:687
+    
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  86:	f7ff fffe 	bl	0 <FLASH_EraseAllBank2Sectors>
+  8a:	4603      	mov	r3, r0
+  8c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:690
+
+    /* if the erase operation is completed, disable the MER Bit */
+    FLASH->CR &= (~FLASH_CR_MER2);
+  8e:	4b06      	ldr	r3, [pc, #24]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  90:	4a05      	ldr	r2, [pc, #20]	; (a8 <FLASH_EraseAllBank2Sectors+0xa8>)
+  92:	6912      	ldr	r2, [r2, #16]
+  94:	f422 4200 	bic.w	r2, r2, #32768	; 0x8000
+  98:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:694
+
+  }   
+  /* Return the Erase Status */
+  return status;
+  9a:	7afb      	ldrb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:695
+}
+  9c:	4618      	mov	r0, r3
+  9e:	f107 0710 	add.w	r7, r7, #16
+  a2:	46bd      	mov	sp, r7
+  a4:	bd80      	pop	{r7, pc}
+  a6:	bf00      	nop
+  a8:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_ProgramDoubleWord:
+
+00000000 <FLASH_ProgramDoubleWord>:
+FLASH_ProgramDoubleWord():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:711
+  * @param  Data: specifies the data to be programmed.
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_ProgramDoubleWord(uint32_t Address, uint64_t Data)
+{
+   0:	b086b580 	.word	0xb086b580
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	e9c7 2300 	strd	r2, r3, [r7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:712
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:718
+
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Address));
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_ProgramDoubleWord>
+  16:	4603      	mov	r3, r0
+  18:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:720
+  
+  if(status == FLASH_COMPLETE)
+  1a:	7dfb      	ldrb	r3, [r7, #23]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d120      	bne.n	62 <FLASH_ProgramDoubleWord+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:723
+  {
+    /* if the previous operation is completed, proceed to program the new data */
+    FLASH->CR &= CR_PSIZE_MASK;
+  20:	4b13      	ldr	r3, [pc, #76]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  22:	4a13      	ldr	r2, [pc, #76]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  24:	6912      	ldr	r2, [r2, #16]
+  26:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  2a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:724
+    FLASH->CR |= FLASH_PSIZE_DOUBLE_WORD;
+  2c:	4b10      	ldr	r3, [pc, #64]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  2e:	4a10      	ldr	r2, [pc, #64]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  30:	6912      	ldr	r2, [r2, #16]
+  32:	f442 7240 	orr.w	r2, r2, #768	; 0x300
+  36:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:725
+    FLASH->CR |= FLASH_CR_PG;
+  38:	4b0d      	ldr	r3, [pc, #52]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  3a:	4a0d      	ldr	r2, [pc, #52]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  3c:	6912      	ldr	r2, [r2, #16]
+  3e:	f042 0201 	orr.w	r2, r2, #1
+  42:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:727
+  
+    *(__IO uint64_t*)Address = Data;
+  44:	68f9      	ldr	r1, [r7, #12]
+  46:	e9d7 2300 	ldrd	r2, r3, [r7]
+  4a:	e9c1 2300 	strd	r2, r3, [r1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:730
+        
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  4e:	f7ff fffe 	bl	0 <FLASH_ProgramDoubleWord>
+  52:	4603      	mov	r3, r0
+  54:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:733
+
+    /* if the program operation is completed, disable the PG Bit */
+    FLASH->CR &= (~FLASH_CR_PG);
+  56:	4b06      	ldr	r3, [pc, #24]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  58:	4a05      	ldr	r2, [pc, #20]	; (70 <FLASH_ProgramDoubleWord+0x70>)
+  5a:	6912      	ldr	r2, [r2, #16]
+  5c:	f022 0201 	bic.w	r2, r2, #1
+  60:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:736
+  } 
+  /* Return the Program Status */
+  return status;
+  62:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:737
+}
+  64:	4618      	mov	r0, r3
+  66:	f107 0718 	add.w	r7, r7, #24
+  6a:	46bd      	mov	sp, r7
+  6c:	bd80      	pop	{r7, pc}
+  6e:	bf00      	nop
+  70:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_ProgramWord:
+
+00000000 <FLASH_ProgramWord>:
+FLASH_ProgramWord():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:754
+  * @param  Data: specifies the data to be programmed.
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_ProgramWord(uint32_t Address, uint32_t Data)
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:755
+  FLASH_Status status = FLASH_COMPLETE;
+   a:	f04f 0309 	mov.w	r3, #9
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:761
+
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Address));
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  10:	f7ff fffe 	bl	0 <FLASH_ProgramWord>
+  14:	4603      	mov	r3, r0
+  16:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:763
+  
+  if(status == FLASH_COMPLETE)
+  18:	7bfb      	ldrb	r3, [r7, #15]
+  1a:	2b09      	cmp	r3, #9
+  1c:	d11e      	bne.n	5c <FLASH_ProgramWord+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:766
+  {
+    /* if the previous operation is completed, proceed to program the new data */
+    FLASH->CR &= CR_PSIZE_MASK;
+  1e:	4b12      	ldr	r3, [pc, #72]	; (68 <FLASH_ProgramWord+0x68>)
+  20:	4a11      	ldr	r2, [pc, #68]	; (68 <FLASH_ProgramWord+0x68>)
+  22:	6912      	ldr	r2, [r2, #16]
+  24:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  28:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:767
+    FLASH->CR |= FLASH_PSIZE_WORD;
+  2a:	4b0f      	ldr	r3, [pc, #60]	; (68 <FLASH_ProgramWord+0x68>)
+  2c:	4a0e      	ldr	r2, [pc, #56]	; (68 <FLASH_ProgramWord+0x68>)
+  2e:	6912      	ldr	r2, [r2, #16]
+  30:	f442 7200 	orr.w	r2, r2, #512	; 0x200
+  34:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:768
+    FLASH->CR |= FLASH_CR_PG;
+  36:	4b0c      	ldr	r3, [pc, #48]	; (68 <FLASH_ProgramWord+0x68>)
+  38:	4a0b      	ldr	r2, [pc, #44]	; (68 <FLASH_ProgramWord+0x68>)
+  3a:	6912      	ldr	r2, [r2, #16]
+  3c:	f042 0201 	orr.w	r2, r2, #1
+  40:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:770
+  
+    *(__IO uint32_t*)Address = Data;
+  42:	687b      	ldr	r3, [r7, #4]
+  44:	683a      	ldr	r2, [r7, #0]
+  46:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:773
+        
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  48:	f7ff fffe 	bl	0 <FLASH_ProgramWord>
+  4c:	4603      	mov	r3, r0
+  4e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:776
+
+    /* if the program operation is completed, disable the PG Bit */
+    FLASH->CR &= (~FLASH_CR_PG);
+  50:	4b05      	ldr	r3, [pc, #20]	; (68 <FLASH_ProgramWord+0x68>)
+  52:	4a05      	ldr	r2, [pc, #20]	; (68 <FLASH_ProgramWord+0x68>)
+  54:	6912      	ldr	r2, [r2, #16]
+  56:	f022 0201 	bic.w	r2, r2, #1
+  5a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:779
+  } 
+  /* Return the Program Status */
+  return status;
+  5c:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:780
+}
+  5e:	4618      	mov	r0, r3
+  60:	f107 0710 	add.w	r7, r7, #16
+  64:	46bd      	mov	sp, r7
+  66:	bd80      	pop	{r7, pc}
+  68:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_ProgramHalfWord:
+
+00000000 <FLASH_ProgramHalfWord>:
+FLASH_ProgramHalfWord():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:796
+  * @param  Data: specifies the data to be programmed.
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_ProgramHalfWord(uint32_t Address, uint16_t Data)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:797
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:803
+
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Address));
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_ProgramHalfWord>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:805
+  
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11e      	bne.n	5e <FLASH_ProgramHalfWord+0x5e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:808
+  {
+    /* if the previous operation is completed, proceed to program the new data */
+    FLASH->CR &= CR_PSIZE_MASK;
+  20:	4b12      	ldr	r3, [pc, #72]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  22:	4a12      	ldr	r2, [pc, #72]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  24:	6912      	ldr	r2, [r2, #16]
+  26:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  2a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:809
+    FLASH->CR |= FLASH_PSIZE_HALF_WORD;
+  2c:	4b0f      	ldr	r3, [pc, #60]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  2e:	4a0f      	ldr	r2, [pc, #60]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  30:	6912      	ldr	r2, [r2, #16]
+  32:	f442 7280 	orr.w	r2, r2, #256	; 0x100
+  36:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:810
+    FLASH->CR |= FLASH_CR_PG;
+  38:	4b0c      	ldr	r3, [pc, #48]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  3a:	4a0c      	ldr	r2, [pc, #48]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  3c:	6912      	ldr	r2, [r2, #16]
+  3e:	f042 0201 	orr.w	r2, r2, #1
+  42:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:812
+  
+    *(__IO uint16_t*)Address = Data;
+  44:	687b      	ldr	r3, [r7, #4]
+  46:	887a      	ldrh	r2, [r7, #2]
+  48:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:815
+        
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  4a:	f7ff fffe 	bl	0 <FLASH_ProgramHalfWord>
+  4e:	4603      	mov	r3, r0
+  50:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:818
+
+    /* if the program operation is completed, disable the PG Bit */
+    FLASH->CR &= (~FLASH_CR_PG);
+  52:	4b06      	ldr	r3, [pc, #24]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  54:	4a05      	ldr	r2, [pc, #20]	; (6c <FLASH_ProgramHalfWord+0x6c>)
+  56:	6912      	ldr	r2, [r2, #16]
+  58:	f022 0201 	bic.w	r2, r2, #1
+  5c:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:821
+  } 
+  /* Return the Program Status */
+  return status;
+  5e:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:822
+}
+  60:	4618      	mov	r0, r3
+  62:	f107 0710 	add.w	r7, r7, #16
+  66:	46bd      	mov	sp, r7
+  68:	bd80      	pop	{r7, pc}
+  6a:	bf00      	nop
+  6c:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_ProgramByte:
+
+00000000 <FLASH_ProgramByte>:
+FLASH_ProgramByte():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:838
+  * @param  Data: specifies the data to be programmed.
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_ProgramByte(uint32_t Address, uint8_t Data)
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:839
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:845
+
+  /* Check the parameters */
+  assert_param(IS_FLASH_ADDRESS(Address));
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_ProgramByte>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:847
+  
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11c      	bne.n	5a <FLASH_ProgramByte+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:850
+  {
+    /* if the previous operation is completed, proceed to program the new data */
+    FLASH->CR &= CR_PSIZE_MASK;
+  20:	4b11      	ldr	r3, [pc, #68]	; (68 <FLASH_ProgramByte+0x68>)
+  22:	4a11      	ldr	r2, [pc, #68]	; (68 <FLASH_ProgramByte+0x68>)
+  24:	6912      	ldr	r2, [r2, #16]
+  26:	f422 7240 	bic.w	r2, r2, #768	; 0x300
+  2a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:851
+    FLASH->CR |= FLASH_PSIZE_BYTE;
+  2c:	4b0e      	ldr	r3, [pc, #56]	; (68 <FLASH_ProgramByte+0x68>)
+  2e:	4a0e      	ldr	r2, [pc, #56]	; (68 <FLASH_ProgramByte+0x68>)
+  30:	6912      	ldr	r2, [r2, #16]
+  32:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:852
+    FLASH->CR |= FLASH_CR_PG;
+  34:	4b0c      	ldr	r3, [pc, #48]	; (68 <FLASH_ProgramByte+0x68>)
+  36:	4a0c      	ldr	r2, [pc, #48]	; (68 <FLASH_ProgramByte+0x68>)
+  38:	6912      	ldr	r2, [r2, #16]
+  3a:	f042 0201 	orr.w	r2, r2, #1
+  3e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:854
+  
+    *(__IO uint8_t*)Address = Data;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	78fa      	ldrb	r2, [r7, #3]
+  44:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:857
+        
+    /* Wait for last operation to be completed */
+    status = FLASH_WaitForLastOperation();
+  46:	f7ff fffe 	bl	0 <FLASH_ProgramByte>
+  4a:	4603      	mov	r3, r0
+  4c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:860
+
+    /* if the program operation is completed, disable the PG Bit */
+    FLASH->CR &= (~FLASH_CR_PG);
+  4e:	4b06      	ldr	r3, [pc, #24]	; (68 <FLASH_ProgramByte+0x68>)
+  50:	4a05      	ldr	r2, [pc, #20]	; (68 <FLASH_ProgramByte+0x68>)
+  52:	6912      	ldr	r2, [r2, #16]
+  54:	f022 0201 	bic.w	r2, r2, #1
+  58:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:864
+  } 
+
+  /* Return the Program Status */
+  return status;
+  5a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:865
+}
+  5c:	4618      	mov	r0, r3
+  5e:	f107 0710 	add.w	r7, r7, #16
+  62:	46bd      	mov	sp, r7
+  64:	bd80      	pop	{r7, pc}
+  66:	bf00      	nop
+  68:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_OB_Unlock:
+
+00000000 <FLASH_OB_Unlock>:
+FLASH_OB_Unlock():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:937
+  * @brief  Unlocks the FLASH Option Control Registers access.
+  * @param  None
+  * @retval None
+  */
+void FLASH_OB_Unlock(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:938
+  if((FLASH->OPTCR & FLASH_OPTCR_OPTLOCK) != RESET)
+   4:	4b07      	ldr	r3, [pc, #28]	; (24 <FLASH_OB_Unlock+0x24>)
+   6:	695b      	ldr	r3, [r3, #20]
+   8:	f003 0301 	and.w	r3, r3, #1
+   c:	b2db      	uxtb	r3, r3
+   e:	2b00      	cmp	r3, #0
+  10:	d005      	beq.n	1e <FLASH_OB_Unlock+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:941
+  {
+    /* Authorizes the Option Byte register programming */
+    FLASH->OPTKEYR = FLASH_OPT_KEY1;
+  12:	4b04      	ldr	r3, [pc, #16]	; (24 <FLASH_OB_Unlock+0x24>)
+  14:	4a04      	ldr	r2, [pc, #16]	; (28 <FLASH_OB_Unlock+0x28>)
+  16:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:942
+    FLASH->OPTKEYR = FLASH_OPT_KEY2;
+  18:	4b02      	ldr	r3, [pc, #8]	; (24 <FLASH_OB_Unlock+0x24>)
+  1a:	4a04      	ldr	r2, [pc, #16]	; (2c <FLASH_OB_Unlock+0x2c>)
+  1c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:944
+  }  
+}
+  1e:	46bd      	mov	sp, r7
+  20:	bc80      	pop	{r7}
+  22:	4770      	bx	lr
+  24:	40023c00 	.word	0x40023c00
+  28:	08192a3b 	.word	0x08192a3b
+  2c:	4c5d6e7f 	.word	0x4c5d6e7f
+
+Disassembly of section .text.FLASH_OB_Lock:
+
+00000000 <FLASH_OB_Lock>:
+FLASH_OB_Lock():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:952
+  * @brief  Locks the FLASH Option Control Registers access.
+  * @param  None
+  * @retval None
+  */
+void FLASH_OB_Lock(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:954
+  /* Set the OPTLOCK Bit to lock the FLASH Option Byte Registers access */
+  FLASH->OPTCR |= FLASH_OPTCR_OPTLOCK;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_OB_Lock+0x18>)
+   6:	4a04      	ldr	r2, [pc, #16]	; (18 <FLASH_OB_Lock+0x18>)
+   8:	6952      	ldr	r2, [r2, #20]
+   a:	f042 0201 	orr.w	r2, r2, #1
+   e:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:955
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_OB_WRPConfig:
+
+00000000 <FLASH_OB_WRPConfig>:
+FLASH_OB_WRPConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:975
+  * @param  Newstate: new state of the Write Protection.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None  
+  */
+void FLASH_OB_WRPConfig(uint32_t OB_WRP, FunctionalState NewState)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:976
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:982
+  
+  /* Check the parameters */
+  assert_param(IS_OB_WRP(OB_WRP));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+    
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_OB_WRPConfig>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:984
+
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11a      	bne.n	56 <FLASH_OB_WRPConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:986
+  { 
+    if(NewState != DISABLE)
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	2b00      	cmp	r3, #0
+  24:	d00d      	beq.n	42 <FLASH_OB_WRPConfig+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:988
+    {
+      *(__IO uint16_t*)OPTCR_BYTE2_ADDRESS &= (~OB_WRP);
+  26:	4b0e      	ldr	r3, [pc, #56]	; (60 <FLASH_OB_WRPConfig+0x60>)
+  28:	4a0d      	ldr	r2, [pc, #52]	; (60 <FLASH_OB_WRPConfig+0x60>)
+  2a:	8812      	ldrh	r2, [r2, #0]
+  2c:	b291      	uxth	r1, r2
+  2e:	687a      	ldr	r2, [r7, #4]
+  30:	b292      	uxth	r2, r2
+  32:	ea6f 0202 	mvn.w	r2, r2
+  36:	b292      	uxth	r2, r2
+  38:	ea01 0202 	and.w	r2, r1, r2
+  3c:	b292      	uxth	r2, r2
+  3e:	801a      	strh	r2, [r3, #0]
+  40:	e009      	b.n	56 <FLASH_OB_WRPConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:992
+    }
+    else
+    {
+      *(__IO uint16_t*)OPTCR_BYTE2_ADDRESS |= (uint16_t)OB_WRP;
+  42:	4b07      	ldr	r3, [pc, #28]	; (60 <FLASH_OB_WRPConfig+0x60>)
+  44:	4a06      	ldr	r2, [pc, #24]	; (60 <FLASH_OB_WRPConfig+0x60>)
+  46:	8812      	ldrh	r2, [r2, #0]
+  48:	b291      	uxth	r1, r2
+  4a:	687a      	ldr	r2, [r7, #4]
+  4c:	b292      	uxth	r2, r2
+  4e:	ea41 0202 	orr.w	r2, r1, r2
+  52:	b292      	uxth	r2, r2
+  54:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:995
+    }
+  }
+}
+  56:	f107 0710 	add.w	r7, r7, #16
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	40023c16 	.word	0x40023c16
+
+Disassembly of section .text.FLASH_OB_WRP1Config:
+
+00000000 <FLASH_OB_WRP1Config>:
+FLASH_OB_WRP1Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1017
+  * @param  Newstate: new state of the Write Protection.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None  
+  */
+void FLASH_OB_WRP1Config(uint32_t OB_WRP, FunctionalState NewState)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1018
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1024
+  
+  /* Check the parameters */
+  assert_param(IS_OB_WRP(OB_WRP));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+    
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_OB_WRP1Config>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1026
+
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11a      	bne.n	56 <FLASH_OB_WRP1Config+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1028
+  { 
+    if(NewState != DISABLE)
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	2b00      	cmp	r3, #0
+  24:	d00d      	beq.n	42 <FLASH_OB_WRP1Config+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1030
+    {
+      *(__IO uint16_t*)OPTCR1_BYTE2_ADDRESS &= (~OB_WRP);
+  26:	4b0e      	ldr	r3, [pc, #56]	; (60 <FLASH_OB_WRP1Config+0x60>)
+  28:	4a0d      	ldr	r2, [pc, #52]	; (60 <FLASH_OB_WRP1Config+0x60>)
+  2a:	8812      	ldrh	r2, [r2, #0]
+  2c:	b291      	uxth	r1, r2
+  2e:	687a      	ldr	r2, [r7, #4]
+  30:	b292      	uxth	r2, r2
+  32:	ea6f 0202 	mvn.w	r2, r2
+  36:	b292      	uxth	r2, r2
+  38:	ea01 0202 	and.w	r2, r1, r2
+  3c:	b292      	uxth	r2, r2
+  3e:	801a      	strh	r2, [r3, #0]
+  40:	e009      	b.n	56 <FLASH_OB_WRP1Config+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1034
+    }
+    else
+    {
+      *(__IO uint16_t*)OPTCR1_BYTE2_ADDRESS |= (uint16_t)OB_WRP;
+  42:	4b07      	ldr	r3, [pc, #28]	; (60 <FLASH_OB_WRP1Config+0x60>)
+  44:	4a06      	ldr	r2, [pc, #24]	; (60 <FLASH_OB_WRP1Config+0x60>)
+  46:	8812      	ldrh	r2, [r2, #0]
+  48:	b291      	uxth	r1, r2
+  4a:	687a      	ldr	r2, [r7, #4]
+  4c:	b292      	uxth	r2, r2
+  4e:	ea41 0202 	orr.w	r2, r1, r2
+  52:	b292      	uxth	r2, r2
+  54:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1037
+    }
+  }
+}
+  56:	f107 0710 	add.w	r7, r7, #16
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	40023c1a 	.word	0x40023c1a
+
+Disassembly of section .text.FLASH_OB_PCROPSelectionConfig:
+
+00000000 <FLASH_OB_PCROPSelectionConfig>:
+FLASH_OB_PCROPSelectionConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1067
+  *            @arg OB_PcROP_Disable: nWRPi control the write protection of respective user sectors.
+  *            @arg OB_PcROP_Enable: nWRPi control the  read&write protection (PCROP) of respective user sectors.
+  * @retval None
+  */
+void FLASH_OB_PCROPSelectionConfig(uint8_t OB_PcROP)
+{  
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1068
+  uint8_t optiontmp = 0xFF;
+   a:	f04f 03ff 	mov.w	r3, #255	; 0xff
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1074
+      
+  /* Check the parameters */
+  assert_param(IS_OB_PCROP_SELECT(OB_PcROP));
+  
+  /* Mask SPRMOD bit */
+  optiontmp =  (uint8_t)((*(__IO uint8_t *)OPTCR_BYTE3_ADDRESS) & (uint8_t)0x7F); 
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <FLASH_OB_PCROPSelectionConfig+0x34>)
+  12:	781b      	ldrb	r3, [r3, #0]
+  14:	b2db      	uxtb	r3, r3
+  16:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  1a:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1076
+  /* Update Option Byte */
+  *(__IO uint8_t *)OPTCR_BYTE3_ADDRESS = (uint8_t)(OB_PcROP | optiontmp); 
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <FLASH_OB_PCROPSelectionConfig+0x34>)
+  1e:	79f9      	ldrb	r1, [r7, #7]
+  20:	7bfa      	ldrb	r2, [r7, #15]
+  22:	ea41 0202 	orr.w	r2, r1, r2
+  26:	b2d2      	uxtb	r2, r2
+  28:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1078
+    
+}
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40023c17 	.word	0x40023c17
+
+Disassembly of section .text.FLASH_OB_PCROPConfig:
+
+00000000 <FLASH_OB_PCROPConfig>:
+FLASH_OB_PCROPConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1097
+  * @param  Newstate: new state of the Write Protection.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None  
+  */
+void FLASH_OB_PCROPConfig(uint32_t OB_PCROP, FunctionalState NewState)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1098
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1104
+  
+  /* Check the parameters */
+  assert_param(IS_OB_PCROP(OB_PCROP));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+    
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_OB_PCROPConfig>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1106
+
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11a      	bne.n	56 <FLASH_OB_PCROPConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1108
+  { 
+    if(NewState != DISABLE)
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	2b00      	cmp	r3, #0
+  24:	d00a      	beq.n	3c <FLASH_OB_PCROPConfig+0x3c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1110
+    {
+      *(__IO uint16_t*)OPTCR_BYTE2_ADDRESS |= (uint16_t)OB_PCROP;    
+  26:	4b0e      	ldr	r3, [pc, #56]	; (60 <FLASH_OB_PCROPConfig+0x60>)
+  28:	4a0d      	ldr	r2, [pc, #52]	; (60 <FLASH_OB_PCROPConfig+0x60>)
+  2a:	8812      	ldrh	r2, [r2, #0]
+  2c:	b291      	uxth	r1, r2
+  2e:	687a      	ldr	r2, [r7, #4]
+  30:	b292      	uxth	r2, r2
+  32:	ea41 0202 	orr.w	r2, r1, r2
+  36:	b292      	uxth	r2, r2
+  38:	801a      	strh	r2, [r3, #0]
+  3a:	e00c      	b.n	56 <FLASH_OB_PCROPConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1114
+    }
+    else
+    {
+      *(__IO uint16_t*)OPTCR_BYTE2_ADDRESS &= (~OB_PCROP);
+  3c:	4b08      	ldr	r3, [pc, #32]	; (60 <FLASH_OB_PCROPConfig+0x60>)
+  3e:	4a08      	ldr	r2, [pc, #32]	; (60 <FLASH_OB_PCROPConfig+0x60>)
+  40:	8812      	ldrh	r2, [r2, #0]
+  42:	b291      	uxth	r1, r2
+  44:	687a      	ldr	r2, [r7, #4]
+  46:	b292      	uxth	r2, r2
+  48:	ea6f 0202 	mvn.w	r2, r2
+  4c:	b292      	uxth	r2, r2
+  4e:	ea01 0202 	and.w	r2, r1, r2
+  52:	b292      	uxth	r2, r2
+  54:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1117
+    }
+  }
+}
+  56:	f107 0710 	add.w	r7, r7, #16
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	40023c16 	.word	0x40023c16
+
+Disassembly of section .text.FLASH_OB_PCROP1Config:
+
+00000000 <FLASH_OB_PCROP1Config>:
+FLASH_OB_PCROP1Config():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1134
+  * @param  Newstate: new state of the Write Protection.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None  
+  */
+void FLASH_OB_PCROP1Config(uint32_t OB_PCROP, FunctionalState NewState)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1135
+  FLASH_Status status = FLASH_COMPLETE;
+   c:	f04f 0309 	mov.w	r3, #9
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1141
+  
+  /* Check the parameters */
+  assert_param(IS_OB_PCROP(OB_PCROP));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+    
+  status = FLASH_WaitForLastOperation();
+  12:	f7ff fffe 	bl	0 <FLASH_OB_PCROP1Config>
+  16:	4603      	mov	r3, r0
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1143
+
+  if(status == FLASH_COMPLETE)
+  1a:	7bfb      	ldrb	r3, [r7, #15]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d11a      	bne.n	56 <FLASH_OB_PCROP1Config+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1145
+  { 
+    if(NewState != DISABLE)
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	2b00      	cmp	r3, #0
+  24:	d00a      	beq.n	3c <FLASH_OB_PCROP1Config+0x3c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1147
+    {
+      *(__IO uint16_t*)OPTCR1_BYTE2_ADDRESS |= (uint16_t)OB_PCROP;
+  26:	4b0e      	ldr	r3, [pc, #56]	; (60 <FLASH_OB_PCROP1Config+0x60>)
+  28:	4a0d      	ldr	r2, [pc, #52]	; (60 <FLASH_OB_PCROP1Config+0x60>)
+  2a:	8812      	ldrh	r2, [r2, #0]
+  2c:	b291      	uxth	r1, r2
+  2e:	687a      	ldr	r2, [r7, #4]
+  30:	b292      	uxth	r2, r2
+  32:	ea41 0202 	orr.w	r2, r1, r2
+  36:	b292      	uxth	r2, r2
+  38:	801a      	strh	r2, [r3, #0]
+  3a:	e00c      	b.n	56 <FLASH_OB_PCROP1Config+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1151
+    }
+    else
+    {
+      *(__IO uint16_t*)OPTCR1_BYTE2_ADDRESS &= (~OB_PCROP);
+  3c:	4b08      	ldr	r3, [pc, #32]	; (60 <FLASH_OB_PCROP1Config+0x60>)
+  3e:	4a08      	ldr	r2, [pc, #32]	; (60 <FLASH_OB_PCROP1Config+0x60>)
+  40:	8812      	ldrh	r2, [r2, #0]
+  42:	b291      	uxth	r1, r2
+  44:	687a      	ldr	r2, [r7, #4]
+  46:	b292      	uxth	r2, r2
+  48:	ea6f 0202 	mvn.w	r2, r2
+  4c:	b292      	uxth	r2, r2
+  4e:	ea01 0202 	and.w	r2, r1, r2
+  52:	b292      	uxth	r2, r2
+  54:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1154
+    }
+  }
+}
+  56:	f107 0710 	add.w	r7, r7, #16
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	40023c1a 	.word	0x40023c1a
+
+Disassembly of section .text.FLASH_OB_RDPConfig:
+
+00000000 <FLASH_OB_RDPConfig>:
+FLASH_OB_RDPConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1170
+  * /!\ Warning /!\ When enabling OB_RDP level 2 it's no more possible to go back to level 1 or 0
+  *    
+  * @retval None
+  */
+void FLASH_OB_RDPConfig(uint8_t OB_RDP)
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1171
+  FLASH_Status status = FLASH_COMPLETE;
+   a:	f04f 0309 	mov.w	r3, #9
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1176
+
+  /* Check the parameters */
+  assert_param(IS_OB_RDP(OB_RDP));
+
+  status = FLASH_WaitForLastOperation();
+  10:	f7ff fffe 	bl	0 <FLASH_OB_RDPConfig>
+  14:	4603      	mov	r3, r0
+  16:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1178
+
+  if(status == FLASH_COMPLETE)
+  18:	7bfb      	ldrb	r3, [r7, #15]
+  1a:	2b09      	cmp	r3, #9
+  1c:	d102      	bne.n	24 <FLASH_OB_RDPConfig+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1180
+  {
+    *(__IO uint8_t*)OPTCR_BYTE1_ADDRESS = OB_RDP;
+  1e:	4b03      	ldr	r3, [pc, #12]	; (2c <FLASH_OB_RDPConfig+0x2c>)
+  20:	79fa      	ldrb	r2, [r7, #7]
+  22:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1183
+
+  }
+}
+  24:	f107 0710 	add.w	r7, r7, #16
+  28:	46bd      	mov	sp, r7
+  2a:	bd80      	pop	{r7, pc}
+  2c:	40023c15 	.word	0x40023c15
+
+Disassembly of section .text.FLASH_OB_UserConfig:
+
+00000000 <FLASH_OB_UserConfig>:
+FLASH_OB_UserConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1202
+  *            @arg OB_STDBY_NoRST: No reset generated when entering in STANDBY
+  *            @arg OB_STDBY_RST: Reset generated when entering in STANDBY
+  * @retval None
+  */
+void FLASH_OB_UserConfig(uint8_t OB_IWDG, uint8_t OB_STOP, uint8_t OB_STDBY)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4613      	mov	r3, r2
+   8:	4602      	mov	r2, r0
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	460a      	mov	r2, r1
+   e:	71ba      	strb	r2, [r7, #6]
+  10:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1203
+  uint8_t optiontmp = 0xFF;
+  12:	f04f 03ff 	mov.w	r3, #255	; 0xff
+  16:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1204
+  FLASH_Status status = FLASH_COMPLETE; 
+  18:	f04f 0309 	mov.w	r3, #9
+  1c:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1212
+  assert_param(IS_OB_IWDG_SOURCE(OB_IWDG));
+  assert_param(IS_OB_STOP_SOURCE(OB_STOP));
+  assert_param(IS_OB_STDBY_SOURCE(OB_STDBY));
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  1e:	f7ff fffe 	bl	0 <FLASH_OB_UserConfig>
+  22:	4603      	mov	r3, r0
+  24:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1214
+  
+  if(status == FLASH_COMPLETE)
+  26:	7bbb      	ldrb	r3, [r7, #14]
+  28:	2b09      	cmp	r3, #9
+  2a:	d114      	bne.n	56 <FLASH_OB_UserConfig+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1218
+  { 
+#if defined (STM32F427_437xx) || defined (STM32F429_439xx)     
+    /* Mask OPTLOCK, OPTSTRT, BOR_LEV and BFB2 bits */
+    optiontmp =  (uint8_t)((*(__IO uint8_t *)OPTCR_BYTE0_ADDRESS) & (uint8_t)0x1F);
+  2c:	4b0c      	ldr	r3, [pc, #48]	; (60 <FLASH_OB_UserConfig+0x60>)
+  2e:	781b      	ldrb	r3, [r3, #0]
+  30:	b2db      	uxtb	r3, r3
+  32:	f003 031f 	and.w	r3, r3, #31
+  36:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1227
+    /* Mask OPTLOCK, OPTSTRT and BOR_LEV bits */
+    optiontmp =  (uint8_t)((*(__IO uint8_t *)OPTCR_BYTE0_ADDRESS) & (uint8_t)0x0F); 
+#endif /* STM32F40_41xxx || STM32F401xx */ 
+
+    /* Update User Option Byte */
+    *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS = OB_IWDG | (uint8_t)(OB_STDBY | (uint8_t)(OB_STOP | ((uint8_t)optiontmp))); 
+  38:	4b09      	ldr	r3, [pc, #36]	; (60 <FLASH_OB_UserConfig+0x60>)
+  3a:	79b9      	ldrb	r1, [r7, #6]
+  3c:	7bfa      	ldrb	r2, [r7, #15]
+  3e:	ea41 0202 	orr.w	r2, r1, r2
+  42:	b2d1      	uxtb	r1, r2
+  44:	797a      	ldrb	r2, [r7, #5]
+  46:	ea41 0202 	orr.w	r2, r1, r2
+  4a:	b2d1      	uxtb	r1, r2
+  4c:	79fa      	ldrb	r2, [r7, #7]
+  4e:	ea41 0202 	orr.w	r2, r1, r2
+  52:	b2d2      	uxtb	r2, r2
+  54:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1229
+  }  
+}
+  56:	f107 0710 	add.w	r7, r7, #16
+  5a:	46bd      	mov	sp, r7
+  5c:	bd80      	pop	{r7, pc}
+  5e:	bf00      	nop
+  60:	40023c14 	.word	0x40023c14
+
+Disassembly of section .text.FLASH_OB_BootConfig:
+
+00000000 <FLASH_OB_BootConfig>:
+FLASH_OB_BootConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1243
+  *            @arg OB_Dual_BootEnabled: Dual Bank Boot Enable
+  *            @arg OB_Dual_BootDisabled: Dual Bank Boot Disabled
+  * @retval None
+  */
+void FLASH_OB_BootConfig(uint8_t OB_BOOT)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1248
+  /* Check the parameters */
+  assert_param(IS_OB_BOOT(OB_BOOT));
+
+  /* Set Dual Bank Boot */
+  *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS &= (~FLASH_OPTCR_BFB2);
+   a:	4b0b      	ldr	r3, [pc, #44]	; (38 <FLASH_OB_BootConfig+0x38>)
+   c:	4a0a      	ldr	r2, [pc, #40]	; (38 <FLASH_OB_BootConfig+0x38>)
+   e:	7812      	ldrb	r2, [r2, #0]
+  10:	b2d2      	uxtb	r2, r2
+  12:	f022 0210 	bic.w	r2, r2, #16
+  16:	b2d2      	uxtb	r2, r2
+  18:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1249
+  *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS |= OB_BOOT;
+  1a:	4b07      	ldr	r3, [pc, #28]	; (38 <FLASH_OB_BootConfig+0x38>)
+  1c:	4a06      	ldr	r2, [pc, #24]	; (38 <FLASH_OB_BootConfig+0x38>)
+  1e:	7812      	ldrb	r2, [r2, #0]
+  20:	b2d1      	uxtb	r1, r2
+  22:	79fa      	ldrb	r2, [r7, #7]
+  24:	ea41 0202 	orr.w	r2, r1, r2
+  28:	b2d2      	uxtb	r2, r2
+  2a:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1251
+
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40023c14 	.word	0x40023c14
+
+Disassembly of section .text.FLASH_OB_BORConfig:
+
+00000000 <FLASH_OB_BORConfig>:
+FLASH_OB_BORConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1264
+  *            @arg OB_BOR_LEVEL1: Supply voltage ranges from 2.1 to 2.4 V
+  *            @arg OB_BOR_OFF: Supply voltage ranges from 1.62 to 2.1 V
+  * @retval None
+  */
+void FLASH_OB_BORConfig(uint8_t OB_BOR)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1269
+  /* Check the parameters */
+  assert_param(IS_OB_BOR(OB_BOR));
+
+  /* Set the BOR Level */
+  *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS &= (~FLASH_OPTCR_BOR_LEV);
+   a:	4b0b      	ldr	r3, [pc, #44]	; (38 <FLASH_OB_BORConfig+0x38>)
+   c:	4a0a      	ldr	r2, [pc, #40]	; (38 <FLASH_OB_BORConfig+0x38>)
+   e:	7812      	ldrb	r2, [r2, #0]
+  10:	b2d2      	uxtb	r2, r2
+  12:	f022 020c 	bic.w	r2, r2, #12
+  16:	b2d2      	uxtb	r2, r2
+  18:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1270
+  *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS |= OB_BOR;
+  1a:	4b07      	ldr	r3, [pc, #28]	; (38 <FLASH_OB_BORConfig+0x38>)
+  1c:	4a06      	ldr	r2, [pc, #24]	; (38 <FLASH_OB_BORConfig+0x38>)
+  1e:	7812      	ldrb	r2, [r2, #0]
+  20:	b2d1      	uxtb	r1, r2
+  22:	79fa      	ldrb	r2, [r7, #7]
+  24:	ea41 0202 	orr.w	r2, r1, r2
+  28:	b2d2      	uxtb	r2, r2
+  2a:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1272
+
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	40023c14 	.word	0x40023c14
+
+Disassembly of section .text.FLASH_OB_Launch:
+
+00000000 <FLASH_OB_Launch>:
+FLASH_OB_Launch():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1281
+  * @param  None
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_OB_Launch(void)
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1282
+  FLASH_Status status = FLASH_COMPLETE;
+   6:	f04f 0309 	mov.w	r3, #9
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1285
+
+  /* Set the OPTSTRT bit in OPTCR register */
+  *(__IO uint8_t *)OPTCR_BYTE0_ADDRESS |= FLASH_OPTCR_OPTSTRT;
+   c:	4b08      	ldr	r3, [pc, #32]	; (30 <FLASH_OB_Launch+0x30>)
+   e:	4a08      	ldr	r2, [pc, #32]	; (30 <FLASH_OB_Launch+0x30>)
+  10:	7812      	ldrb	r2, [r2, #0]
+  12:	b2d2      	uxtb	r2, r2
+  14:	f042 0202 	orr.w	r2, r2, #2
+  18:	b2d2      	uxtb	r2, r2
+  1a:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1288
+
+  /* Wait for last operation to be completed */
+  status = FLASH_WaitForLastOperation();
+  1c:	f7ff fffe 	bl	0 <FLASH_OB_Launch>
+  20:	4603      	mov	r3, r0
+  22:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1290
+
+  return status;
+  24:	79fb      	ldrb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1291
+}
+  26:	4618      	mov	r0, r3
+  28:	f107 0708 	add.w	r7, r7, #8
+  2c:	46bd      	mov	sp, r7
+  2e:	bd80      	pop	{r7, pc}
+  30:	40023c14 	.word	0x40023c14
+
+Disassembly of section .text.FLASH_OB_GetUser:
+
+00000000 <FLASH_OB_GetUser>:
+FLASH_OB_GetUser():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1300
+  * @param  None
+  * @retval The FLASH User Option Bytes values: IWDG_SW(Bit0), RST_STOP(Bit1)
+  *         and RST_STDBY(Bit2).
+  */
+uint8_t FLASH_OB_GetUser(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1302
+  /* Return the User Option Byte */
+  return (uint8_t)(FLASH->OPTCR >> 5);
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_OB_GetUser+0x18>)
+   6:	695b      	ldr	r3, [r3, #20]
+   8:	ea4f 1353 	mov.w	r3, r3, lsr #5
+   c:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1303
+}
+   e:	4618      	mov	r0, r3
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_OB_GetWRP:
+
+00000000 <FLASH_OB_GetWRP>:
+FLASH_OB_GetWRP():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1311
+  * @brief  Returns the FLASH Write Protection Option Bytes value.
+  * @param  None
+  * @retval The FLASH Write Protection  Option Bytes value
+  */
+uint16_t FLASH_OB_GetWRP(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1313
+  /* Return the FLASH write protection Register value */
+  return (*(__IO uint16_t *)(OPTCR_BYTE2_ADDRESS));
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <FLASH_OB_GetWRP+0x14>)
+   6:	881b      	ldrh	r3, [r3, #0]
+   8:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1314
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40023c16 	.word	0x40023c16
+
+Disassembly of section .text.FLASH_OB_GetWRP1:
+
+00000000 <FLASH_OB_GetWRP1>:
+FLASH_OB_GetWRP1():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1325
+  *   
+  * @param  None
+  * @retval The FLASH Write Protection  Option Bytes value
+  */
+uint16_t FLASH_OB_GetWRP1(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1327
+  /* Return the FLASH write protection Register value */
+  return (*(__IO uint16_t *)(OPTCR1_BYTE2_ADDRESS));
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <FLASH_OB_GetWRP1+0x14>)
+   6:	881b      	ldrh	r3, [r3, #0]
+   8:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1328
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40023c1a 	.word	0x40023c1a
+
+Disassembly of section .text.FLASH_OB_GetPCROP:
+
+00000000 <FLASH_OB_GetPCROP>:
+FLASH_OB_GetPCROP():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1339
+  *   
+  * @param  None
+  * @retval The FLASH PC Read/Write Protection Option Bytes value
+  */
+uint16_t FLASH_OB_GetPCROP(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1341
+  /* Return the FLASH PC Read/write protection Register value */
+  return (*(__IO uint16_t *)(OPTCR_BYTE2_ADDRESS));
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <FLASH_OB_GetPCROP+0x14>)
+   6:	881b      	ldrh	r3, [r3, #0]
+   8:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1342
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40023c16 	.word	0x40023c16
+
+Disassembly of section .text.FLASH_OB_GetPCROP1:
+
+00000000 <FLASH_OB_GetPCROP1>:
+FLASH_OB_GetPCROP1():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1353
+  *     
+  * @param  None
+  * @retval The FLASH PC Read/Write Protection Option Bytes value
+  */
+uint16_t FLASH_OB_GetPCROP1(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1355
+  /* Return the FLASH write protection Register value */
+  return (*(__IO uint16_t *)(OPTCR1_BYTE2_ADDRESS));
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <FLASH_OB_GetPCROP1+0x14>)
+   6:	881b      	ldrh	r3, [r3, #0]
+   8:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1356
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40023c1a 	.word	0x40023c1a
+
+Disassembly of section .text.FLASH_OB_GetRDP:
+
+00000000 <FLASH_OB_GetRDP>:
+FLASH_OB_GetRDP():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1366
+  * @retval FLASH ReadOut Protection Status:
+  *           - SET, when OB_RDP_Level_1 or OB_RDP_Level_2 is set
+  *           - RESET, when OB_RDP_Level_0 is set
+  */
+FlagStatus FLASH_OB_GetRDP(void)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1367
+  FlagStatus readstatus = RESET;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1369
+
+  if ((*(__IO uint8_t*)(OPTCR_BYTE1_ADDRESS) != (uint8_t)OB_RDP_Level_0))
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <FLASH_OB_GetRDP+0x34>)
+   e:	781b      	ldrb	r3, [r3, #0]
+  10:	b2db      	uxtb	r3, r3
+  12:	2baa      	cmp	r3, #170	; 0xaa
+  14:	d003      	beq.n	1e <FLASH_OB_GetRDP+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1371
+  {
+    readstatus = SET;
+  16:	f04f 0301 	mov.w	r3, #1
+  1a:	71fb      	strb	r3, [r7, #7]
+  1c:	e002      	b.n	24 <FLASH_OB_GetRDP+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1375
+  }
+  else
+  {
+    readstatus = RESET;
+  1e:	f04f 0300 	mov.w	r3, #0
+  22:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1377
+  }
+  return readstatus;
+  24:	79fb      	ldrb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1378
+}
+  26:	4618      	mov	r0, r3
+  28:	f107 070c 	add.w	r7, r7, #12
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+  34:	40023c15 	.word	0x40023c15
+
+Disassembly of section .text.FLASH_OB_GetBOR:
+
+00000000 <FLASH_OB_GetBOR>:
+FLASH_OB_GetBOR():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1390
+  *           - OB_BOR_LEVEL2: Supply voltage ranges from 2.4 to 2.7 V
+  *           - OB_BOR_LEVEL1: Supply voltage ranges from 2.1 to 2.4 V
+  *           - OB_BOR_OFF   : Supply voltage ranges from 1.62 to 2.1 V  
+  */
+uint8_t FLASH_OB_GetBOR(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1392
+  /* Return the FLASH BOR level */
+  return (uint8_t)(*(__IO uint8_t *)(OPTCR_BYTE0_ADDRESS) & (uint8_t)0x0C);
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <FLASH_OB_GetBOR+0x18>)
+   6:	781b      	ldrb	r3, [r3, #0]
+   8:	b2db      	uxtb	r3, r3
+   a:	f003 030c 	and.w	r3, r3, #12
+   e:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1393
+}
+  10:	4618      	mov	r0, r3
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40023c14 	.word	0x40023c14
+
+Disassembly of section .text.FLASH_ITConfig:
+
+00000000 <FLASH_ITConfig>:
+FLASH_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1419
+  *            @arg FLASH_IT_ERR: FLASH Error Interrupt
+  *            @arg FLASH_IT_EOP: FLASH end of operation Interrupt
+  * @retval None 
+  */
+void FLASH_ITConfig(uint32_t FLASH_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1424
+  /* Check the parameters */
+  assert_param(IS_FLASH_IT(FLASH_IT)); 
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+
+  if(NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <FLASH_ITConfig+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1427
+  {
+    /* Enable the interrupt sources */
+    FLASH->CR |= FLASH_IT;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <FLASH_ITConfig+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <FLASH_ITConfig+0x40>)
+  16:	6911      	ldr	r1, [r2, #16]
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	611a      	str	r2, [r3, #16]
+  20:	e008      	b.n	34 <FLASH_ITConfig+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1432
+  }
+  else
+  {
+    /* Disable the interrupt sources */
+    FLASH->CR &= ~(uint32_t)FLASH_IT;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <FLASH_ITConfig+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <FLASH_ITConfig+0x40>)
+  26:	6911      	ldr	r1, [r2, #16]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1434
+  }
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_GetFlagStatus:
+
+00000000 <FLASH_GetFlagStatus>:
+FLASH_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1451
+  *            @arg FLASH_FLAG_RDERR: FLASH (PCROP) Read Protection error flag (STM32F42/43xxx and STM32F401xx devices) 
+  *            @arg FLASH_FLAG_BSY: FLASH Busy flag
+  * @retval The new state of FLASH_FLAG (SET or RESET).
+  */
+FlagStatus FLASH_GetFlagStatus(uint32_t FLASH_FLAG)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1452
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1456
+  /* Check the parameters */
+  assert_param(IS_FLASH_GET_FLAG(FLASH_FLAG));
+
+  if((FLASH->SR & FLASH_FLAG) != (uint32_t)RESET)
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <FLASH_GetFlagStatus+0x38>)
+  10:	68da      	ldr	r2, [r3, #12]
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <FLASH_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1458
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <FLASH_GetFlagStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1462
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1465
+  }
+  /* Return the new state of FLASH_FLAG (SET or RESET) */
+  return bitstatus; 
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1466
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_ClearFlag:
+
+00000000 <FLASH_ClearFlag>:
+FLASH_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1482
+  *            @arg FLASH_FLAG_PGSERR: FLASH Programming Sequence error flag
+  *            @arg FLASH_FLAG_RDERR: FLASH Read Protection error flag (STM32F42/43xxx and STM32F401xx devices)   
+  * @retval None
+  */
+void FLASH_ClearFlag(uint32_t FLASH_FLAG)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1487
+  /* Check the parameters */
+  assert_param(IS_FLASH_CLEAR_FLAG(FLASH_FLAG));
+  
+  /* Clear the flags */
+  FLASH->SR = FLASH_FLAG;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <FLASH_ClearFlag+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1488
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_GetStatus:
+
+00000000 <FLASH_GetStatus>:
+FLASH_GetStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1497
+  * @param  None
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_RD, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_GetStatus(void)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1498
+  FLASH_Status flashstatus = FLASH_COMPLETE;
+   6:	f04f 0309 	mov.w	r3, #9
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1500
+  
+  if((FLASH->SR & FLASH_FLAG_BSY) == FLASH_FLAG_BSY) 
+   c:	4b1d      	ldr	r3, [pc, #116]	; (84 <FLASH_GetStatus+0x84>)
+   e:	68db      	ldr	r3, [r3, #12]
+  10:	f403 3380 	and.w	r3, r3, #65536	; 0x10000
+  14:	2b00      	cmp	r3, #0
+  16:	d003      	beq.n	20 <FLASH_GetStatus+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1502
+  {
+    flashstatus = FLASH_BUSY;
+  18:	f04f 0301 	mov.w	r3, #1
+  1c:	71fb      	strb	r3, [r7, #7]
+  1e:	e02a      	b.n	76 <FLASH_GetStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1506
+  }
+  else 
+  {  
+    if((FLASH->SR & FLASH_FLAG_WRPERR) != (uint32_t)0x00)
+  20:	4b18      	ldr	r3, [pc, #96]	; (84 <FLASH_GetStatus+0x84>)
+  22:	68db      	ldr	r3, [r3, #12]
+  24:	f003 0310 	and.w	r3, r3, #16
+  28:	2b00      	cmp	r3, #0
+  2a:	d003      	beq.n	34 <FLASH_GetStatus+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1508
+    { 
+      flashstatus = FLASH_ERROR_WRP;
+  2c:	f04f 0306 	mov.w	r3, #6
+  30:	71fb      	strb	r3, [r7, #7]
+  32:	e020      	b.n	76 <FLASH_GetStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1512
+    }
+    else
+    {
+      if((FLASH->SR & FLASH_FLAG_RDERR) != (uint32_t)0x00)
+  34:	4b13      	ldr	r3, [pc, #76]	; (84 <FLASH_GetStatus+0x84>)
+  36:	68db      	ldr	r3, [r3, #12]
+  38:	f403 7380 	and.w	r3, r3, #256	; 0x100
+  3c:	2b00      	cmp	r3, #0
+  3e:	d003      	beq.n	48 <FLASH_GetStatus+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1514
+      { 
+        flashstatus = FLASH_ERROR_RD;
+  40:	f04f 0302 	mov.w	r3, #2
+  44:	71fb      	strb	r3, [r7, #7]
+  46:	e016      	b.n	76 <FLASH_GetStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1518
+      } 
+      else 
+      {
+        if((FLASH->SR & (uint32_t)0xEF) != (uint32_t)0x00)
+  48:	4b0e      	ldr	r3, [pc, #56]	; (84 <FLASH_GetStatus+0x84>)
+  4a:	68db      	ldr	r3, [r3, #12]
+  4c:	f003 03ef 	and.w	r3, r3, #239	; 0xef
+  50:	2b00      	cmp	r3, #0
+  52:	d003      	beq.n	5c <FLASH_GetStatus+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1520
+        {
+          flashstatus = FLASH_ERROR_PROGRAM; 
+  54:	f04f 0307 	mov.w	r3, #7
+  58:	71fb      	strb	r3, [r7, #7]
+  5a:	e00c      	b.n	76 <FLASH_GetStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1524
+        }
+        else
+        {
+          if((FLASH->SR & FLASH_FLAG_OPERR) != (uint32_t)0x00)
+  5c:	4b09      	ldr	r3, [pc, #36]	; (84 <FLASH_GetStatus+0x84>)
+  5e:	68db      	ldr	r3, [r3, #12]
+  60:	f003 0302 	and.w	r3, r3, #2
+  64:	2b00      	cmp	r3, #0
+  66:	d003      	beq.n	70 <FLASH_GetStatus+0x70>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1526
+          {
+            flashstatus = FLASH_ERROR_OPERATION;
+  68:	f04f 0308 	mov.w	r3, #8
+  6c:	71fb      	strb	r3, [r7, #7]
+  6e:	e002      	b.n	76 <FLASH_GetStatus+0x76>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1530
+          }
+          else
+          {
+            flashstatus = FLASH_COMPLETE;
+  70:	f04f 0309 	mov.w	r3, #9
+  74:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1537
+        }
+      }
+    }
+  }
+  /* Return the FLASH Status */
+  return flashstatus;
+  76:	79fb      	ldrb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1538
+}
+  78:	4618      	mov	r0, r3
+  7a:	f107 070c 	add.w	r7, r7, #12
+  7e:	46bd      	mov	sp, r7
+  80:	bc80      	pop	{r7}
+  82:	4770      	bx	lr
+  84:	40023c00 	.word	0x40023c00
+
+Disassembly of section .text.FLASH_WaitForLastOperation:
+
+00000000 <FLASH_WaitForLastOperation>:
+FLASH_WaitForLastOperation():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1547
+  * @param  None
+  * @retval FLASH Status: The returned value can be: FLASH_BUSY, FLASH_ERROR_PROGRAM,
+  *                       FLASH_ERROR_WRP, FLASH_ERROR_OPERATION or FLASH_COMPLETE.
+  */
+FLASH_Status FLASH_WaitForLastOperation(void)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1548
+  __IO FLASH_Status status = FLASH_COMPLETE;
+   6:	f04f 0309 	mov.w	r3, #9
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1551
+   
+  /* Check for the FLASH Status */
+  status = FLASH_GetStatus();
+   c:	f7ff fffe 	bl	0 <FLASH_WaitForLastOperation>
+  10:	4603      	mov	r3, r0
+  12:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1556
+
+  /* Wait for the FLASH operation to complete by polling on BUSY flag to be reset.
+     Even if the FLASH operation fails, the BUSY flag will be reset and an error
+     flag will be set */
+  while(status == FLASH_BUSY)
+  14:	e003      	b.n	1e <FLASH_WaitForLastOperation+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1558
+  {
+    status = FLASH_GetStatus();
+  16:	f7ff fffe 	bl	0 <FLASH_WaitForLastOperation>
+  1a:	4603      	mov	r3, r0
+  1c:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1556
+  status = FLASH_GetStatus();
+
+  /* Wait for the FLASH operation to complete by polling on BUSY flag to be reset.
+     Even if the FLASH operation fails, the BUSY flag will be reset and an error
+     flag will be set */
+  while(status == FLASH_BUSY)
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	b2db      	uxtb	r3, r3
+  22:	2b01      	cmp	r3, #1
+  24:	d0f7      	beq.n	16 <FLASH_WaitForLastOperation+0x16>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1561
+  {
+    status = FLASH_GetStatus();
+  }
+  /* Return the operation status */
+  return status;
+  26:	79fb      	ldrb	r3, [r7, #7]
+  28:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_flash.c:1562
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0708 	add.w	r7, r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
