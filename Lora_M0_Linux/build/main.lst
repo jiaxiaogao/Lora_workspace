@@ -1,0 +1,672 @@
+ARM GAS  /tmp/ccPric0i.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"main.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.SystemClock_Config,"ax",%progbits
+  20              		.align	2
+  21              		.global	SystemClock_Config
+  22              		.thumb
+  23              		.thumb_func
+  25              	SystemClock_Config:
+  26              	.LFB74:
+  27              		.file 1 "Src/main.c"
+   1:Src/main.c    **** /* USER CODE BEGIN Header */
+   2:Src/main.c    **** /**
+   3:Src/main.c    ****   ******************************************************************************
+   4:Src/main.c    ****   * @file           : main.c
+   5:Src/main.c    ****   * @brief          : Main program body
+   6:Src/main.c    ****   ******************************************************************************
+   7:Src/main.c    ****   * @attention
+   8:Src/main.c    ****   *
+   9:Src/main.c    ****   * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
+  10:Src/main.c    ****   * All rights reserved.</center></h2>
+  11:Src/main.c    ****   *
+  12:Src/main.c    ****   * This software component is licensed by ST under BSD 3-Clause license,
+  13:Src/main.c    ****   * the "License"; You may not use this file except in compliance with the
+  14:Src/main.c    ****   * License. You may obtain a copy of the License at:
+  15:Src/main.c    ****   *                        opensource.org/licenses/BSD-3-Clause
+  16:Src/main.c    ****   *
+  17:Src/main.c    ****   ******************************************************************************
+  18:Src/main.c    ****   */
+  19:Src/main.c    **** /* USER CODE END Header */
+  20:Src/main.c    **** 
+  21:Src/main.c    **** /* Includes ------------------------------------------------------------------*/
+  22:Src/main.c    **** #include "main.h"
+  23:Src/main.c    **** #include "spi.h"
+  24:Src/main.c    **** #include "usart.h"
+  25:Src/main.c    **** #include "gpio.h"
+  26:Src/main.c    **** 
+  27:Src/main.c    **** /* Private includes ----------------------------------------------------------*/
+  28:Src/main.c    **** /* USER CODE BEGIN Includes */
+  29:Src/main.c    **** #include <stdio.h>
+  30:Src/main.c    **** #include <string.h>
+  31:Src/main.c    **** 
+ARM GAS  /tmp/ccPric0i.s 			page 2
+
+
+  32:Src/main.c    **** #include "platform.h"
+  33:Src/main.c    **** #include "radio.h"
+  34:Src/main.c    **** #include "sx1276-Hal.h"
+  35:Src/main.c    **** #include "sx1276-LoRa.h"
+  36:Src/main.c    **** #include "sx1276-LoRaMisc.h"
+  37:Src/main.c    **** /* USER CODE END Includes */
+  38:Src/main.c    **** 
+  39:Src/main.c    **** /* Private typedef -----------------------------------------------------------*/
+  40:Src/main.c    **** /* USER CODE BEGIN PTD */
+  41:Src/main.c    **** 
+  42:Src/main.c    **** /* USER CODE END PTD */
+  43:Src/main.c    **** 
+  44:Src/main.c    **** /* Private define ------------------------------------------------------------*/
+  45:Src/main.c    **** /* USER CODE BEGIN PD */
+  46:Src/main.c    **** 
+  47:Src/main.c    **** /* USER CODE END PD */
+  48:Src/main.c    **** 
+  49:Src/main.c    **** /* Private macro -------------------------------------------------------------*/
+  50:Src/main.c    **** /* USER CODE BEGIN PM */
+  51:Src/main.c    **** 
+  52:Src/main.c    **** /* USER CODE END PM */
+  53:Src/main.c    **** 
+  54:Src/main.c    **** /* Private variables ---------------------------------------------------------*/
+  55:Src/main.c    **** 
+  56:Src/main.c    **** /* USER CODE BEGIN PV */
+  57:Src/main.c    **** uint8_t RegVersion = 0;
+  58:Src/main.c    **** 
+  59:Src/main.c    **** /* USER CODE END PV */
+  60:Src/main.c    **** 
+  61:Src/main.c    **** /* Private function prototypes -----------------------------------------------*/
+  62:Src/main.c    **** void SystemClock_Config(void);
+  63:Src/main.c    **** /* USER CODE BEGIN PFP */
+  64:Src/main.c    **** 
+  65:Src/main.c    **** /* USER CODE END PFP */
+  66:Src/main.c    **** 
+  67:Src/main.c    **** /* Private user code ---------------------------------------------------------*/
+  68:Src/main.c    **** /* USER CODE BEGIN 0 */
+  69:Src/main.c    **** char pTxData[] = "Hello";
+  70:Src/main.c    **** 
+  71:Src/main.c    **** 
+  72:Src/main.c    **** /* USER CODE END 0 */
+  73:Src/main.c    **** 
+  74:Src/main.c    **** /**
+  75:Src/main.c    ****   * @brief  The application entry point.
+  76:Src/main.c    ****   * @retval int
+  77:Src/main.c    ****   */
+  78:Src/main.c    **** int main(void)
+  79:Src/main.c    **** {
+  80:Src/main.c    **** 	/* USER CODE BEGIN 1 */
+  81:Src/main.c    **** 
+  82:Src/main.c    **** 	/* USER CODE END 1 */
+  83:Src/main.c    **** 	
+  84:Src/main.c    **** 
+  85:Src/main.c    **** 	/* MCU Configuration--------------------------------------------------------*/
+  86:Src/main.c    **** 
+  87:Src/main.c    **** 	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  88:Src/main.c    **** 	HAL_Init();
+ARM GAS  /tmp/ccPric0i.s 			page 3
+
+
+  89:Src/main.c    **** 
+  90:Src/main.c    **** 	/* USER CODE BEGIN Init */
+  91:Src/main.c    **** 
+  92:Src/main.c    **** 	/* USER CODE END Init */
+  93:Src/main.c    **** 
+  94:Src/main.c    **** 	/* Configure the system clock */
+  95:Src/main.c    **** 	SystemClock_Config();
+  96:Src/main.c    **** 
+  97:Src/main.c    **** 	/* USER CODE BEGIN SysInit */
+  98:Src/main.c    **** 
+  99:Src/main.c    **** 	/* USER CODE END SysInit */
+ 100:Src/main.c    **** 
+ 101:Src/main.c    **** 	/* Initialize all configured peripherals */
+ 102:Src/main.c    **** 	MX_GPIO_Init();
+ 103:Src/main.c    **** 	MX_SPI1_Init();
+ 104:Src/main.c    **** 	MX_USART1_UART_Init();
+ 105:Src/main.c    **** 	MX_USART2_UART_Init();
+ 106:Src/main.c    **** 	/* USER CODE BEGIN 2 */
+ 107:Src/main.c    **** 
+ 108:Src/main.c    **** 	/* USER CODE END 2 */
+ 109:Src/main.c    **** 
+ 110:Src/main.c    **** 	/* Infinite loop */
+ 111:Src/main.c    **** 	/* USER CODE BEGIN WHILE */
+ 112:Src/main.c    **** 
+ 113:Src/main.c    **** 	HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+ 114:Src/main.c    **** 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+ 115:Src/main.c    **** 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+ 116:Src/main.c    **** 
+ 117:Src/main.c    **** 	//lora上电复位
+ 118:Src/main.c    **** 	SX1276Read( REG_LR_VERSION, &RegVersion );
+ 119:Src/main.c    **** 	if(RegVersion != 0x12)
+ 120:Src/main.c    **** 	{
+ 121:Src/main.c    **** 		printf("get RegVersion error, RegVersion = %#x\r\n", RegVersion);
+ 122:Src/main.c    **** 	}
+ 123:Src/main.c    **** 	else
+ 124:Src/main.c    **** 	{
+ 125:Src/main.c    **** 		printf("get RegVersion success, RegVersion = %#x\r\n", RegVersion);
+ 126:Src/main.c    **** 	}
+ 127:Src/main.c    **** 	printf("SX1276ReadDio0:-- %d--\r\n", SX1276ReadDio0());
+ 128:Src/main.c    **** 	while (1)
+ 129:Src/main.c    **** 	{
+ 130:Src/main.c    **** 			
+ 131:Src/main.c    **** 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+ 132:Src/main.c    **** 			HAL_Delay(1000);
+ 133:Src/main.c    **** 			printf("Dear, Good morning！\r\n"); 
+ 134:Src/main.c    **** 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+ 135:Src/main.c    **** 			HAL_Delay(1000);
+ 136:Src/main.c    **** 			printf("爱你哦～\nmua～\r\n"); 
+ 137:Src/main.c    **** 			//HAL_UART_Transmit(&huart1, pTxData, strlen(pTxData),  1000);//正常，串口没有问题
+ 138:Src/main.c    **** 
+ 139:Src/main.c    **** 		/* USER CODE END WHILE */
+ 140:Src/main.c    **** 
+ 141:Src/main.c    **** 		/* USER CODE BEGIN 3 */
+ 142:Src/main.c    **** 	}
+ 143:Src/main.c    **** 	/* USER CODE END 3 */
+ 144:Src/main.c    **** }
+ 145:Src/main.c    **** 
+ARM GAS  /tmp/ccPric0i.s 			page 4
+
+
+ 146:Src/main.c    **** /**
+ 147:Src/main.c    ****   * @brief System Clock Configuration
+ 148:Src/main.c    ****   * @retval None
+ 149:Src/main.c    ****   */
+ 150:Src/main.c    **** void SystemClock_Config(void)
+ 151:Src/main.c    **** {
+  28              		.loc 1 151 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 72
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 30B5     		push	{r4, r5, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 12
+  35              		.cfi_offset 4, -12
+  36              		.cfi_offset 5, -8
+  37              		.cfi_offset 14, -4
+  38 0002 93B0     		sub	sp, sp, #76
+  39              	.LCFI1:
+  40              		.cfi_def_cfa_offset 88
+ 152:Src/main.c    ****   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  41              		.loc 1 152 0
+  42 0004 3422     		movs	r2, #52
+  43 0006 0021     		movs	r1, #0
+  44 0008 05A8     		add	r0, sp, #20
+  45 000a FFF7FEFF 		bl	memset
+  46              	.LVL0:
+ 153:Src/main.c    ****   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  47              		.loc 1 153 0
+  48 000e 0024     		movs	r4, #0
+  49 0010 0094     		str	r4, [sp]
+  50 0012 0194     		str	r4, [sp, #4]
+  51 0014 0294     		str	r4, [sp, #8]
+  52 0016 0394     		str	r4, [sp, #12]
+  53 0018 0494     		str	r4, [sp, #16]
+ 154:Src/main.c    **** 
+ 155:Src/main.c    ****   /** Configure the main internal regulator output voltage 
+ 156:Src/main.c    ****   */
+ 157:Src/main.c    ****   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  54              		.loc 1 157 0
+  55 001a 0E4A     		ldr	r2, .L3
+  56 001c 1368     		ldr	r3, [r2]
+  57 001e 23F4C053 		bic	r3, r3, #6144
+  58 0022 43F40063 		orr	r3, r3, #2048
+  59 0026 1360     		str	r3, [r2]
+ 158:Src/main.c    ****   /** Initializes the CPU, AHB and APB busses clocks 
+ 159:Src/main.c    ****   */
+ 160:Src/main.c    ****   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  60              		.loc 1 160 0
+  61 0028 0223     		movs	r3, #2
+  62 002a 0593     		str	r3, [sp, #20]
+ 161:Src/main.c    ****   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  63              		.loc 1 161 0
+  64 002c 0125     		movs	r5, #1
+  65 002e 0895     		str	r5, [sp, #32]
+ 162:Src/main.c    ****   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  66              		.loc 1 162 0
+  67 0030 1023     		movs	r3, #16
+ARM GAS  /tmp/ccPric0i.s 			page 5
+
+
+  68 0032 0993     		str	r3, [sp, #36]
+ 163:Src/main.c    ****   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  69              		.loc 1 163 0
+  70 0034 0E94     		str	r4, [sp, #56]
+ 164:Src/main.c    ****   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  71              		.loc 1 164 0
+  72 0036 05A8     		add	r0, sp, #20
+  73 0038 FFF7FEFF 		bl	HAL_RCC_OscConfig
+  74              	.LVL1:
+ 165:Src/main.c    ****   {
+ 166:Src/main.c    ****     Error_Handler();
+ 167:Src/main.c    ****   }
+ 168:Src/main.c    ****   /** Initializes the CPU, AHB and APB busses clocks 
+ 169:Src/main.c    ****   */
+ 170:Src/main.c    ****   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+  75              		.loc 1 170 0
+  76 003c 0F23     		movs	r3, #15
+  77 003e 0093     		str	r3, [sp]
+ 171:Src/main.c    ****                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+ 172:Src/main.c    ****   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  78              		.loc 1 172 0
+  79 0040 0195     		str	r5, [sp, #4]
+ 173:Src/main.c    ****   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  80              		.loc 1 173 0
+  81 0042 0294     		str	r4, [sp, #8]
+ 174:Src/main.c    ****   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  82              		.loc 1 174 0
+  83 0044 0394     		str	r4, [sp, #12]
+ 175:Src/main.c    ****   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+  84              		.loc 1 175 0
+  85 0046 0494     		str	r4, [sp, #16]
+ 176:Src/main.c    **** 
+ 177:Src/main.c    ****   if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  86              		.loc 1 177 0
+  87 0048 2146     		mov	r1, r4
+  88 004a 6846     		mov	r0, sp
+  89 004c FFF7FEFF 		bl	HAL_RCC_ClockConfig
+  90              	.LVL2:
+ 178:Src/main.c    ****   {
+ 179:Src/main.c    ****     Error_Handler();
+ 180:Src/main.c    ****   }
+ 181:Src/main.c    **** }
+  91              		.loc 1 181 0
+  92 0050 13B0     		add	sp, sp, #76
+  93              	.LCFI2:
+  94              		.cfi_def_cfa_offset 12
+  95              		@ sp needed
+  96 0052 30BD     		pop	{r4, r5, pc}
+  97              	.L4:
+  98              		.align	2
+  99              	.L3:
+ 100 0054 00700040 		.word	1073770496
+ 101              		.cfi_endproc
+ 102              	.LFE74:
+ 104              		.section	.text.main,"ax",%progbits
+ 105              		.align	2
+ 106              		.global	main
+ARM GAS  /tmp/ccPric0i.s 			page 6
+
+
+ 107              		.thumb
+ 108              		.thumb_func
+ 110              	main:
+ 111              	.LFB73:
+  79:Src/main.c    **** 	/* USER CODE BEGIN 1 */
+ 112              		.loc 1 79 0
+ 113              		.cfi_startproc
+ 114              		@ Volatile: function does not return.
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117 0000 08B5     		push	{r3, lr}
+ 118              	.LCFI3:
+ 119              		.cfi_def_cfa_offset 8
+ 120              		.cfi_offset 3, -8
+ 121              		.cfi_offset 14, -4
+  88:Src/main.c    **** 
+ 122              		.loc 1 88 0
+ 123 0002 FFF7FEFF 		bl	HAL_Init
+ 124              	.LVL3:
+  95:Src/main.c    **** 
+ 125              		.loc 1 95 0
+ 126 0006 FFF7FEFF 		bl	SystemClock_Config
+ 127              	.LVL4:
+ 102:Src/main.c    **** 	MX_SPI1_Init();
+ 128              		.loc 1 102 0
+ 129 000a FFF7FEFF 		bl	MX_GPIO_Init
+ 130              	.LVL5:
+ 103:Src/main.c    **** 	MX_USART1_UART_Init();
+ 131              		.loc 1 103 0
+ 132 000e FFF7FEFF 		bl	MX_SPI1_Init
+ 133              	.LVL6:
+ 104:Src/main.c    **** 	MX_USART2_UART_Init();
+ 134              		.loc 1 104 0
+ 135 0012 FFF7FEFF 		bl	MX_USART1_UART_Init
+ 136              	.LVL7:
+ 105:Src/main.c    **** 	/* USER CODE BEGIN 2 */
+ 137              		.loc 1 105 0
+ 138 0016 FFF7FEFF 		bl	MX_USART2_UART_Init
+ 139              	.LVL8:
+ 113:Src/main.c    **** 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_0, GPIO_PIN_RESET);
+ 140              		.loc 1 113 0
+ 141 001a 0022     		movs	r2, #0
+ 142 001c 4FF48051 		mov	r1, #4096
+ 143 0020 1F48     		ldr	r0, .L10
+ 144 0022 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 145              	.LVL9:
+ 114:Src/main.c    **** 	HAL_GPIO_WritePin(GPIOA, GPIO_PIN_1, GPIO_PIN_RESET);
+ 146              		.loc 1 114 0
+ 147 0026 1F4C     		ldr	r4, .L10+4
+ 148 0028 0022     		movs	r2, #0
+ 149 002a 0121     		movs	r1, #1
+ 150 002c 2046     		mov	r0, r4
+ 151 002e FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 152              	.LVL10:
+ 115:Src/main.c    **** 
+ 153              		.loc 1 115 0
+ 154 0032 0022     		movs	r2, #0
+ARM GAS  /tmp/ccPric0i.s 			page 7
+
+
+ 155 0034 0221     		movs	r1, #2
+ 156 0036 2046     		mov	r0, r4
+ 157 0038 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 158              	.LVL11:
+ 118:Src/main.c    **** 	if(RegVersion != 0x12)
+ 159              		.loc 1 118 0
+ 160 003c 1A4C     		ldr	r4, .L10+8
+ 161 003e 2146     		mov	r1, r4
+ 162 0040 4220     		movs	r0, #66
+ 163 0042 FFF7FEFF 		bl	SX1276Read
+ 164              	.LVL12:
+ 119:Src/main.c    **** 	{
+ 165              		.loc 1 119 0
+ 166 0046 2178     		ldrb	r1, [r4]	@ zero_extendqisi2
+ 167 0048 1229     		cmp	r1, #18
+ 168 004a 03D0     		beq	.L6
+ 121:Src/main.c    **** 	}
+ 169              		.loc 1 121 0
+ 170 004c 1748     		ldr	r0, .L10+12
+ 171 004e FFF7FEFF 		bl	printf
+ 172              	.LVL13:
+ 173 0052 02E0     		b	.L7
+ 174              	.L6:
+ 125:Src/main.c    **** 	}
+ 175              		.loc 1 125 0
+ 176 0054 1648     		ldr	r0, .L10+16
+ 177 0056 FFF7FEFF 		bl	printf
+ 178              	.LVL14:
+ 179              	.L7:
+ 127:Src/main.c    **** 	while (1)
+ 180              		.loc 1 127 0
+ 181 005a FFF7FEFF 		bl	SX1276ReadDio0
+ 182              	.LVL15:
+ 183 005e 0146     		mov	r1, r0
+ 184 0060 1448     		ldr	r0, .L10+20
+ 185 0062 FFF7FEFF 		bl	printf
+ 186              	.LVL16:
+ 187              	.L8:
+ 131:Src/main.c    **** 			HAL_Delay(1000);
+ 188              		.loc 1 131 0 discriminator 1
+ 189 0066 0E4C     		ldr	r4, .L10
+ 190 0068 0122     		movs	r2, #1
+ 191 006a 4FF48051 		mov	r1, #4096
+ 192 006e 2046     		mov	r0, r4
+ 193 0070 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 194              	.LVL17:
+ 132:Src/main.c    **** 			printf("Dear, Good morning！\r\n"); 
+ 195              		.loc 1 132 0 discriminator 1
+ 196 0074 4FF47A70 		mov	r0, #1000
+ 197 0078 FFF7FEFF 		bl	HAL_Delay
+ 198              	.LVL18:
+ 133:Src/main.c    **** 			HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+ 199              		.loc 1 133 0 discriminator 1
+ 200 007c 0E48     		ldr	r0, .L10+24
+ 201 007e FFF7FEFF 		bl	puts
+ 202              	.LVL19:
+ 134:Src/main.c    **** 			HAL_Delay(1000);
+ARM GAS  /tmp/ccPric0i.s 			page 8
+
+
+ 203              		.loc 1 134 0 discriminator 1
+ 204 0082 0022     		movs	r2, #0
+ 205 0084 4FF48051 		mov	r1, #4096
+ 206 0088 2046     		mov	r0, r4
+ 207 008a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 208              	.LVL20:
+ 135:Src/main.c    **** 			printf("爱你哦～\nmua～\r\n"); 
+ 209              		.loc 1 135 0 discriminator 1
+ 210 008e 4FF47A70 		mov	r0, #1000
+ 211 0092 FFF7FEFF 		bl	HAL_Delay
+ 212              	.LVL21:
+ 136:Src/main.c    **** 			//HAL_UART_Transmit(&huart1, pTxData, strlen(pTxData),  1000);//正常，串口没有问题
+ 213              		.loc 1 136 0 discriminator 1
+ 214 0096 0948     		ldr	r0, .L10+28
+ 215 0098 FFF7FEFF 		bl	puts
+ 216              	.LVL22:
+ 217 009c E3E7     		b	.L8
+ 218              	.L11:
+ 219 009e 00BF     		.align	2
+ 220              	.L10:
+ 221 00a0 00040240 		.word	1073873920
+ 222 00a4 00000240 		.word	1073872896
+ 223 00a8 00000000 		.word	.LANCHOR0
+ 224 00ac 00000000 		.word	.LC0
+ 225 00b0 2C000000 		.word	.LC1
+ 226 00b4 58000000 		.word	.LC2
+ 227 00b8 74000000 		.word	.LC3
+ 228 00bc 8C000000 		.word	.LC4
+ 229              		.cfi_endproc
+ 230              	.LFE73:
+ 232              		.section	.text._write,"ax",%progbits
+ 233              		.align	2
+ 234              		.global	_write
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	_write:
+ 239              	.LFB75:
+ 182:Src/main.c    **** 
+ 183:Src/main.c    **** /* USER CODE BEGIN 4 */
+ 184:Src/main.c    **** //printf重定向
+ 185:Src/main.c    **** /*
+ 186:Src/main.c    **** int fputc(int ch , FILE *f)
+ 187:Src/main.c    **** {
+ 188:Src/main.c    **** 	while((USART1->SR & 0x40) == 0);
+ 189:Src/main.c    **** 	USART1->DR = (uint8_t) ch;
+ 190:Src/main.c    **** 	return ch;
+ 191:Src/main.c    **** }
+ 192:Src/main.c    **** */
+ 193:Src/main.c    **** 
+ 194:Src/main.c    **** int _write (int fd, char *pBuffer, int size)  
+ 195:Src/main.c    **** {  
+ 240              		.loc 1 195 0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              		@ link register save eliminated.
+ 245              	.LVL23:
+ARM GAS  /tmp/ccPric0i.s 			page 9
+
+
+ 246 0000 30B4     		push	{r4, r5}
+ 247              	.LCFI4:
+ 248              		.cfi_def_cfa_offset 8
+ 249              		.cfi_offset 4, -8
+ 250              		.cfi_offset 5, -4
+ 251              	.LVL24:
+ 252              	.LBB2:
+ 196:Src/main.c    ****     for (int i = 0; i < size; i++)  
+ 253              		.loc 1 196 0
+ 254 0002 0024     		movs	r4, #0
+ 255 0004 08E0     		b	.L13
+ 256              	.LVL25:
+ 257              	.L14:
+ 197:Src/main.c    ****     {  
+ 198:Src/main.c    ****         while((USART1->SR&0X40)==0);//等待上一次串口数据发送完成  
+ 258              		.loc 1 198 0 discriminator 1
+ 259 0006 074B     		ldr	r3, .L16
+ 260 0008 1B68     		ldr	r3, [r3]
+ 261 000a 13F0400F 		tst	r3, #64
+ 262 000e FAD0     		beq	.L14
+ 199:Src/main.c    ****         USART1->DR = (uint8_t) pBuffer[i];       //写DR,串口1将发送数据
+ 263              		.loc 1 199 0 discriminator 2
+ 264 0010 0D5D     		ldrb	r5, [r1, r4]	@ zero_extendqisi2
+ 265 0012 044B     		ldr	r3, .L16
+ 266 0014 5D60     		str	r5, [r3, #4]
+ 196:Src/main.c    ****     for (int i = 0; i < size; i++)  
+ 267              		.loc 1 196 0 discriminator 2
+ 268 0016 0134     		adds	r4, r4, #1
+ 269              	.LVL26:
+ 270              	.L13:
+ 196:Src/main.c    ****     for (int i = 0; i < size; i++)  
+ 271              		.loc 1 196 0 is_stmt 0 discriminator 1
+ 272 0018 9442     		cmp	r4, r2
+ 273 001a F4DB     		blt	.L14
+ 274              	.LBE2:
+ 200:Src/main.c    ****     }  
+ 201:Src/main.c    ****     return size;  
+ 202:Src/main.c    **** }
+ 275              		.loc 1 202 0 is_stmt 1
+ 276 001c 1046     		mov	r0, r2
+ 277              	.LVL27:
+ 278 001e 30BC     		pop	{r4, r5}
+ 279              	.LCFI5:
+ 280              		.cfi_restore 5
+ 281              		.cfi_restore 4
+ 282              		.cfi_def_cfa_offset 0
+ 283              	.LVL28:
+ 284 0020 7047     		bx	lr
+ 285              	.L17:
+ 286 0022 00BF     		.align	2
+ 287              	.L16:
+ 288 0024 00380140 		.word	1073821696
+ 289              		.cfi_endproc
+ 290              	.LFE75:
+ 292              		.section	.text.Error_Handler,"ax",%progbits
+ 293              		.align	2
+ 294              		.global	Error_Handler
+ARM GAS  /tmp/ccPric0i.s 			page 10
+
+
+ 295              		.thumb
+ 296              		.thumb_func
+ 298              	Error_Handler:
+ 299              	.LFB76:
+ 203:Src/main.c    **** 
+ 204:Src/main.c    **** 
+ 205:Src/main.c    **** 
+ 206:Src/main.c    **** 
+ 207:Src/main.c    **** /* USER CODE END 4 */
+ 208:Src/main.c    **** 
+ 209:Src/main.c    **** /**
+ 210:Src/main.c    ****   * @brief  This function is executed in case of error occurrence.
+ 211:Src/main.c    ****   * @retval None
+ 212:Src/main.c    ****   */
+ 213:Src/main.c    **** void Error_Handler(void)
+ 214:Src/main.c    **** {
+ 300              		.loc 1 214 0
+ 301              		.cfi_startproc
+ 302              		@ args = 0, pretend = 0, frame = 0
+ 303              		@ frame_needed = 0, uses_anonymous_args = 0
+ 304              		@ link register save eliminated.
+ 305 0000 7047     		bx	lr
+ 306              		.cfi_endproc
+ 307              	.LFE76:
+ 309              		.global	pTxData
+ 310              		.global	RegVersion
+ 311 0002 00BF     		.section	.bss.RegVersion,"aw",%nobits
+ 312              		.set	.LANCHOR0,. + 0
+ 315              	RegVersion:
+ 316 0000 00       		.space	1
+ 317              		.section	.data.pTxData,"aw",%progbits
+ 318              		.align	2
+ 321              	pTxData:
+ 322 0000 48656C6C 		.ascii	"Hello\000"
+ 322      6F00
+ 323              		.section	.rodata.str1.4,"aMS",%progbits,1
+ 324              		.align	2
+ 325              	.LC0:
+ 326 0000 67657420 		.ascii	"get RegVersion error, RegVersion = %#x\015\012\000"
+ 326      52656756 
+ 326      65727369 
+ 326      6F6E2065 
+ 326      72726F72 
+ 327 0029 000000   		.space	3
+ 328              	.LC1:
+ 329 002c 67657420 		.ascii	"get RegVersion success, RegVersion = %#x\015\012\000"
+ 329      52656756 
+ 329      65727369 
+ 329      6F6E2073 
+ 329      75636365 
+ 330 0057 00       		.space	1
+ 331              	.LC2:
+ 332 0058 53583132 		.ascii	"SX1276ReadDio0:-- %d--\015\012\000"
+ 332      37365265 
+ 332      61644469 
+ 332      6F303A2D 
+ 332      2D202564 
+ARM GAS  /tmp/ccPric0i.s 			page 11
+
+
+ 333 0071 000000   		.space	3
+ 334              	.LC3:
+ 335 0074 44656172 		.ascii	"Dear, Good morning\357\274\201\015\000"
+ 335      2C20476F 
+ 335      6F64206D 
+ 335      6F726E69 
+ 335      6E67EFBC 
+ 336 008b 00       		.space	1
+ 337              	.LC4:
+ 338 008c E788B1E4 		.ascii	"\347\210\261\344\275\240\345\223\246\357\275\236\012"
+ 338      BDA0E593 
+ 338      A6EFBD9E 
+ 338      0A
+ 339 0099 6D7561EF 		.ascii	"mua\357\275\236\015\000"
+ 339      BD9E0D00 
+ 340              		.text
+ 341              	.Letext0:
+ 342              		.file 2 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/machine/_default_types.h"
+ 343              		.file 3 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/sys/_stdint.h"
+ 344              		.file 4 "Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l151xba.h"
+ 345              		.file 5 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_rcc.h"
+ 346              		.file 6 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_def.h"
+ 347              		.file 7 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio.h"
+ 348              		.file 8 "Drivers/CMSIS/Include/core_cm3.h"
+ 349              		.file 9 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h"
+ 350              		.file 10 "Inc/gpio.h"
+ 351              		.file 11 "Inc/spi.h"
+ 352              		.file 12 "Inc/usart.h"
+ 353              		.file 13 "sx1278/platform/sx12xxEiger/sx1276-Hal.h"
+ 354              		.file 14 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/stdio.h"
+ 355              		.file 15 "<built-in>"
+ARM GAS  /tmp/ccPric0i.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 main.c
+     /tmp/ccPric0i.s:20     .text.SystemClock_Config:00000000 $t
+     /tmp/ccPric0i.s:25     .text.SystemClock_Config:00000000 SystemClock_Config
+     /tmp/ccPric0i.s:100    .text.SystemClock_Config:00000054 $d
+     /tmp/ccPric0i.s:105    .text.main:00000000 $t
+     /tmp/ccPric0i.s:110    .text.main:00000000 main
+     /tmp/ccPric0i.s:221    .text.main:000000a0 $d
+     /tmp/ccPric0i.s:233    .text._write:00000000 $t
+     /tmp/ccPric0i.s:238    .text._write:00000000 _write
+     /tmp/ccPric0i.s:288    .text._write:00000024 $d
+     /tmp/ccPric0i.s:293    .text.Error_Handler:00000000 $t
+     /tmp/ccPric0i.s:298    .text.Error_Handler:00000000 Error_Handler
+     /tmp/ccPric0i.s:321    .data.pTxData:00000000 pTxData
+     /tmp/ccPric0i.s:315    .bss.RegVersion:00000000 RegVersion
+     /tmp/ccPric0i.s:316    .bss.RegVersion:00000000 $d
+     /tmp/ccPric0i.s:318    .data.pTxData:00000000 $d
+     /tmp/ccPric0i.s:324    .rodata.str1.4:00000000 $d
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+memset
+HAL_RCC_OscConfig
+HAL_RCC_ClockConfig
+HAL_Init
+MX_GPIO_Init
+MX_SPI1_Init
+MX_USART1_UART_Init
+MX_USART2_UART_Init
+HAL_GPIO_WritePin
+SX1276Read
+printf
+SX1276ReadDio0
+HAL_Delay
+puts

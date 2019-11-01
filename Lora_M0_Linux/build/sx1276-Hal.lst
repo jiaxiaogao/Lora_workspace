@@ -1,0 +1,911 @@
+ARM GAS  /tmp/ccMtWFuI.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"sx1276-Hal.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.SX1276InitIo,"ax",%progbits
+  20              		.align	2
+  21              		.global	SX1276InitIo
+  22              		.thumb
+  23              		.thumb_func
+  25              	SX1276InitIo:
+  26              	.LFB72:
+  27              		.file 1 "sx1278/platform/sx12xxEiger/sx1276-Hal.c"
+   1:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** /*
+   2:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * THE FOLLOWING FIRMWARE IS PROVIDED: (1) "AS IS" WITH NO WARRANTY; AND 
+   3:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * (2)TO ENABLE ACCESS TO CODING INFORMATION TO GUIDE AND FACILITATE CUSTOMER.
+   4:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * CONSEQUENTLY, SEMTECH SHALL NOT BE HELD LIABLE FOR ANY DIRECT, INDIRECT OR
+   5:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE CONTENT
+   6:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING INFORMATION
+   7:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+   8:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * 
+   9:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * Copyright (C) SEMTECH S.A.
+  10:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  */
+  11:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** /*! 
+  12:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * \file       sx1276-Hal.c
+  13:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * \brief      SX1276 Hardware Abstraction Layer
+  14:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  *
+  15:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * \version    2.0.B2 
+  16:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * \date       Nov 21 2012
+  17:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * \author     Miguel Luis
+  18:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  *
+  19:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * Last modified by Miguel Luis on Jun 19 2013
+  20:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  */
+  21:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include <stdint.h>
+  22:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include <stdbool.h> 
+  23:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  24:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include "platform.h"
+  25:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  26:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( USE_SX1276_RADIO )
+  27:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  28:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include "ioe.h"
+  29:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include "spi.h"
+  30:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #include "sx1276-Hal.h"
+  31:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ARM GAS  /tmp/ccMtWFuI.s 			page 2
+
+
+  32:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** /*!
+  33:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * SX1276 RESET I/O definitions
+  34:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  */
+  35:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX ) 
+  36:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_IOPORT                                GPIOG
+  37:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_PIN                                   GPIO_Pin_12
+  38:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #elif defined( STM32F429_439xx )
+  39:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_IOPORT                                GPIOG
+  40:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_PIN                                   GPIO_Pin_12
+  41:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+  42:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_IOPORT                                GPIOB
+  43:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RESET_PIN                                   GPIO_PIN_9
+  44:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+  45:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  46:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** /*!
+  47:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * SX1276 SPI NSS I/O definitions
+  48:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  */
+  49:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX )
+  50:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_IOPORT                                  GPIOA
+  51:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_PIN                                     GPIO_Pin_15
+  52:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #elif defined( STM32F429_439xx )
+  53:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_IOPORT                                  GPIOA
+  54:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_PIN                                     GPIO_Pin_4
+  55:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+  56:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_IOPORT                                  GPIOA
+  57:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define NSS_PIN                                     GPIO_PIN_15
+  58:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+  59:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  60:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** /*!
+  61:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  * SX1276 DIO pins  I/O definitions
+  62:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****  */
+  63:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX ) 
+  64:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_IOPORT                                 GPIOG
+  65:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_PIN                                    GPIO_Pin_13
+  66:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #elif defined( STM32F429_439xx )
+  67:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_IOPORT                                 GPIOG
+  68:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_PIN                                    GPIO_Pin_13
+  69:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+  70:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_IOPORT                                 GPIOC
+  71:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO0_PIN                                    GPIO_PIN_13
+  72:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+  73:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  74:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX )
+  75:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_IOPORT                                 GPIOB
+  76:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_PIN                                    GPIO_Pin_8
+  77:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #elif defined( STM32F429_439xx )
+  78:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_IOPORT                                 GPIOB
+  79:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_PIN                                    GPIO_Pin_7
+  80:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+  81:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_IOPORT                                 GPIOB
+  82:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO1_PIN                                    GPIO_PIN_0
+  83:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+  84:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  85:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX ) 
+  86:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_IOPORT                                 GPIOA
+  87:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_PIN                                    GPIO_Pin_2
+  88:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #elif defined( STM32F429_439xx )
+ARM GAS  /tmp/ccMtWFuI.s 			page 3
+
+
+  89:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_IOPORT                                 GPIOA
+  90:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_PIN                                    GPIO_Pin_2
+  91:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+  92:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_IOPORT                                 GPIOB
+  93:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define DIO2_PIN                                    GPIO_PIN_1
+  94:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+  95:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+  96:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+  97:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO3_IOPORT                                 
+  98:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO3_PIN                                    RF_DIO3_PIN
+  99:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 100:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO3_IOPORT                                 
+ 101:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO3_PIN                                    RF_DIO3_PIN
+ 102:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 103:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 104:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 105:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO4_IOPORT                                 
+ 106:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO4_PIN                                    RF_DIO4_PIN
+ 107:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 108:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO4_IOPORT                                 
+ 109:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO4_PIN                                    RF_DIO4_PIN
+ 110:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 111:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 112:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 113:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO5_IOPORT                                 
+ 114:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO5_PIN                                    RF_DIO5_PIN
+ 115:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 116:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO5_IOPORT                                 
+ 117:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #define DIO5_PIN                                    RF_DIO5_PIN
+ 118:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 119:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 120:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 121:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RXTX_IOPORT                                 
+ 122:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RXTX_PIN                                    FEM_CTX_PIN
+ 123:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #else
+ 124:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RXTX_IOPORT                                 GPIOA
+ 125:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #define RXTX_PIN                                    GPIO_PIN_8
+ 126:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** #endif
+ 127:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 128:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 129:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276InitIo( void )
+ 130:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+  28              		.loc 1 130 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE72:
+  37 0002 00BF     		.section	.text.SX1276SetReset,"ax",%progbits
+  38              		.align	2
+  39              		.global	SX1276SetReset
+  40              		.thumb
+  41              		.thumb_func
+  43              	SX1276SetReset:
+  44              	.LFB73:
+ARM GAS  /tmp/ccMtWFuI.s 			page 4
+
+
+ 131:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitTypeDef GPIO_InitStructure;
+ 132:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 133:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 134:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     RCC_AHB1PeriphClockCmd( RCC_AHB1Periph_GPIOA | RCC_AHB1Periph_GPIOB |
+ 135:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //                             RCC_AHB1Periph_GPIOG, ENABLE );
+ 136:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 137:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     RCC_APB2PeriphClockCmd( RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB |
+ 138:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //                             RCC_APB2Periph_GPIOC | RCC_APB2Periph_AFIO, ENABLE );
+ 139:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 140:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 141:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 142:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 143:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 144:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 145:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
+ 146:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 147:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+ 148:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 149:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 150:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 151:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure NSS as output
+ 152:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_WriteBit( NSS_IOPORT, NSS_PIN, Bit_SET );
+ 153:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Pin = NSS_PIN;
+ 154:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_Init( NSS_IOPORT, &GPIO_InitStructure );
+ 155:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 156:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure radio DIO as inputs
+ 157:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 158:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+ 159:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 160:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 161:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+ 162:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 163:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 164:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO0
+ 165:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Pin =  DIO0_PIN;
+ 166:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_Init( DIO0_IOPORT, &GPIO_InitStructure );
+ 167:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 168:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO1
+ 169:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Pin =  DIO1_PIN;
+ 170:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_Init( DIO1_IOPORT, &GPIO_InitStructure );
+ 171:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 172:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO2
+ 173:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitStructure.GPIO_Pin =  DIO2_PIN;
+ 174:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_Init( DIO2_IOPORT, &GPIO_InitStructure );
+ 175:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 176:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // REAMARK: DIO3/4/5 configured are connected to IO expander
+ 177:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 178:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO3 as input
+ 179:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 180:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO4 as input
+ 181:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     
+ 182:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     // Configure DIO5 as input
+ 183:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 184:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 185:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276SetReset( uint8_t state )//cubeMX在gpio中统一定义了
+ 186:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+  45              		.loc 1 186 0
+ARM GAS  /tmp/ccMtWFuI.s 			page 5
+
+
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49              		@ link register save eliminated.
+  50              	.LVL0:
+  51 0000 7047     		bx	lr
+  52              		.cfi_endproc
+  53              	.LFE73:
+  55 0002 00BF     		.section	.text.SX1276WriteBuffer,"ax",%progbits
+  56              		.align	2
+  57              		.global	SX1276WriteBuffer
+  58              		.thumb
+  59              		.thumb_func
+  61              	SX1276WriteBuffer:
+  62              	.LFB76:
+ 187:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     GPIO_InitTypeDef GPIO_InitStructure;
+ 188:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 189:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     if( state == RADIO_RESET_ON )
+ 190:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     {
+ 191:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         // Set RESET pin to 0
+ 192:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         HAL_GPIO_WritePin( RESET_IOPORT, RESET_PIN, GPIO_PIN_RESET );
+ 193:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 194:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         // Configure RESET as output
+ 195:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 196:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+ 197:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+ 198:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 199:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;
+ 200:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif        
+ 201:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 202:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Pin = RESET_PIN;
+ 203:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_Init( RESET_IOPORT, &GPIO_InitStructure );
+ 204:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     }
+ 205:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     else
+ 206:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     {
+ 207:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if FPGA == 0    
+ 208:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         // Configure RESET as input
+ 209:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+ 210:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+ 211:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 212:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+ 213:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif        
+ 214:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+ 215:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_InitStructure.GPIO_Pin =  RESET_PIN;
+ 216:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_Init( RESET_IOPORT, &GPIO_InitStructure );
+ 217:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #else
+ 218:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //         GPIO_WriteBit( RESET_IOPORT, RESET_PIN, Bit_RESET );
+ 219:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** // #endif
+ 220:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** //     }
+ 221:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 222:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 223:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276Write( uint8_t addr, uint8_t data )
+ 224:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 225:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276WriteBuffer( addr, &data, 1 );
+ 226:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 227:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 228:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276Read( uint8_t addr, uint8_t *data )
+ARM GAS  /tmp/ccMtWFuI.s 			page 6
+
+
+ 229:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 230:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276ReadBuffer( addr, data, 1 );
+ 231:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 232:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 233:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276WriteBuffer( uint8_t addr, uint8_t *buffer, uint8_t size )
+ 234:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+  63              		.loc 1 234 0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              	.LVL1:
+  68              		.loc 1 234 0
+  69 0000 70B5     		push	{r4, r5, r6, lr}
+  70              	.LCFI0:
+  71              		.cfi_def_cfa_offset 16
+  72              		.cfi_offset 4, -16
+  73              		.cfi_offset 5, -12
+  74              		.cfi_offset 6, -8
+  75              		.cfi_offset 14, -4
+  76 0002 0446     		mov	r4, r0
+  77 0004 0E46     		mov	r6, r1
+  78 0006 1546     		mov	r5, r2
+ 235:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     uint8_t i;
+ 236:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 237:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     //NSS = 0;
+ 238:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     HAL_GPIO_WritePin( NSS_IOPORT, NSS_PIN, GPIO_PIN_RESET );
+  79              		.loc 1 238 0
+  80 0008 0022     		movs	r2, #0
+  81              	.LVL2:
+  82 000a 4FF40041 		mov	r1, #32768
+  83              	.LVL3:
+  84 000e 0B48     		ldr	r0, .L7
+  85              	.LVL4:
+  86 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+  87              	.LVL5:
+ 239:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 240:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SpiInOut( addr | 0x80 );
+  88              		.loc 1 240 0
+  89 0014 44F08000 		orr	r0, r4, #128
+  90 0018 FFF7FEFF 		bl	SpiInOut
+  91              	.LVL6:
+ 241:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     for( i = 0; i < size; i++ )
+  92              		.loc 1 241 0
+  93 001c 0024     		movs	r4, #0
+  94 001e 04E0     		b	.L4
+  95              	.LVL7:
+  96              	.L5:
+ 242:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 243:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         SpiInOut( buffer[i] );
+  97              		.loc 1 243 0 discriminator 3
+  98 0020 305D     		ldrb	r0, [r6, r4]	@ zero_extendqisi2
+  99 0022 FFF7FEFF 		bl	SpiInOut
+ 100              	.LVL8:
+ 241:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     for( i = 0; i < size; i++ )
+ 101              		.loc 1 241 0 discriminator 3
+ 102 0026 0134     		adds	r4, r4, #1
+ 103              	.LVL9:
+ARM GAS  /tmp/ccMtWFuI.s 			page 7
+
+
+ 104 0028 E4B2     		uxtb	r4, r4
+ 105              	.LVL10:
+ 106              	.L4:
+ 241:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     for( i = 0; i < size; i++ )
+ 107              		.loc 1 241 0 is_stmt 0 discriminator 1
+ 108 002a AC42     		cmp	r4, r5
+ 109 002c F8D3     		bcc	.L5
+ 244:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     }
+ 245:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 246:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     //NSS = 1;
+ 247:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     HAL_GPIO_WritePin( NSS_IOPORT, NSS_PIN, GPIO_PIN_SET );
+ 110              		.loc 1 247 0 is_stmt 1
+ 111 002e 0122     		movs	r2, #1
+ 112 0030 4FF40041 		mov	r1, #32768
+ 113 0034 0148     		ldr	r0, .L7
+ 114 0036 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 115              	.LVL11:
+ 116 003a 70BD     		pop	{r4, r5, r6, pc}
+ 117              	.LVL12:
+ 118              	.L8:
+ 119              		.align	2
+ 120              	.L7:
+ 121 003c 00000240 		.word	1073872896
+ 122              		.cfi_endproc
+ 123              	.LFE76:
+ 125              		.section	.text.SX1276Write,"ax",%progbits
+ 126              		.align	2
+ 127              		.global	SX1276Write
+ 128              		.thumb
+ 129              		.thumb_func
+ 131              	SX1276Write:
+ 132              	.LFB74:
+ 224:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276WriteBuffer( addr, &data, 1 );
+ 133              		.loc 1 224 0
+ 134              		.cfi_startproc
+ 135              		@ args = 0, pretend = 0, frame = 8
+ 136              		@ frame_needed = 0, uses_anonymous_args = 0
+ 137              	.LVL13:
+ 138 0000 00B5     		push	{lr}
+ 139              	.LCFI1:
+ 140              		.cfi_def_cfa_offset 4
+ 141              		.cfi_offset 14, -4
+ 142 0002 83B0     		sub	sp, sp, #12
+ 143              	.LCFI2:
+ 144              		.cfi_def_cfa_offset 16
+ 145 0004 02AB     		add	r3, sp, #8
+ 146 0006 03F8011D 		strb	r1, [r3, #-1]!
+ 225:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 147              		.loc 1 225 0
+ 148 000a 0122     		movs	r2, #1
+ 149 000c 1946     		mov	r1, r3
+ 150              	.LVL14:
+ 151 000e FFF7FEFF 		bl	SX1276WriteBuffer
+ 152              	.LVL15:
+ 226:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 153              		.loc 1 226 0
+ 154 0012 03B0     		add	sp, sp, #12
+ARM GAS  /tmp/ccMtWFuI.s 			page 8
+
+
+ 155              	.LCFI3:
+ 156              		.cfi_def_cfa_offset 4
+ 157              		@ sp needed
+ 158 0014 5DF804FB 		ldr	pc, [sp], #4
+ 159              		.cfi_endproc
+ 160              	.LFE74:
+ 162              		.section	.text.SX1276ReadBuffer,"ax",%progbits
+ 163              		.align	2
+ 164              		.global	SX1276ReadBuffer
+ 165              		.thumb
+ 166              		.thumb_func
+ 168              	SX1276ReadBuffer:
+ 169              	.LFB77:
+ 248:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 249:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 250:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276ReadBuffer( uint8_t addr, uint8_t *buffer, uint8_t size )
+ 251:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 170              		.loc 1 251 0
+ 171              		.cfi_startproc
+ 172              		@ args = 0, pretend = 0, frame = 0
+ 173              		@ frame_needed = 0, uses_anonymous_args = 0
+ 174              	.LVL16:
+ 175 0000 70B5     		push	{r4, r5, r6, lr}
+ 176              	.LCFI4:
+ 177              		.cfi_def_cfa_offset 16
+ 178              		.cfi_offset 4, -16
+ 179              		.cfi_offset 5, -12
+ 180              		.cfi_offset 6, -8
+ 181              		.cfi_offset 14, -4
+ 182 0002 0446     		mov	r4, r0
+ 183 0004 0E46     		mov	r6, r1
+ 184 0006 1546     		mov	r5, r2
+ 252:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     uint8_t i;
+ 253:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 254:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     //NSS = 0;
+ 255:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     HAL_GPIO_WritePin( NSS_IOPORT, NSS_PIN, GPIO_PIN_RESET );
+ 185              		.loc 1 255 0
+ 186 0008 0022     		movs	r2, #0
+ 187              	.LVL17:
+ 188 000a 4FF40041 		mov	r1, #32768
+ 189              	.LVL18:
+ 190 000e 0C48     		ldr	r0, .L15
+ 191              	.LVL19:
+ 192 0010 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 193              	.LVL20:
+ 256:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 257:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SpiInOut( addr & 0x7F );
+ 194              		.loc 1 257 0
+ 195 0014 04F07F00 		and	r0, r4, #127
+ 196 0018 FFF7FEFF 		bl	SpiInOut
+ 197              	.LVL21:
+ 258:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 259:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     for( i = 0; i < size; i++ )
+ 198              		.loc 1 259 0
+ 199 001c 0024     		movs	r4, #0
+ 200 001e 05E0     		b	.L12
+ 201              	.LVL22:
+ARM GAS  /tmp/ccMtWFuI.s 			page 9
+
+
+ 202              	.L13:
+ 260:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 261:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         buffer[i] = SpiInOut( 0 );
+ 203              		.loc 1 261 0 discriminator 3
+ 204 0020 0020     		movs	r0, #0
+ 205 0022 FFF7FEFF 		bl	SpiInOut
+ 206              	.LVL23:
+ 207 0026 3055     		strb	r0, [r6, r4]
+ 259:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 208              		.loc 1 259 0 discriminator 3
+ 209 0028 0134     		adds	r4, r4, #1
+ 210              	.LVL24:
+ 211 002a E4B2     		uxtb	r4, r4
+ 212              	.LVL25:
+ 213              	.L12:
+ 259:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 214              		.loc 1 259 0 is_stmt 0 discriminator 1
+ 215 002c AC42     		cmp	r4, r5
+ 216 002e F7D3     		bcc	.L13
+ 262:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     }
+ 263:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 264:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     //NSS = 1;
+ 265:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     HAL_GPIO_WritePin( NSS_IOPORT, NSS_PIN, GPIO_PIN_SET );
+ 217              		.loc 1 265 0 is_stmt 1
+ 218 0030 0122     		movs	r2, #1
+ 219 0032 4FF40041 		mov	r1, #32768
+ 220 0036 0248     		ldr	r0, .L15
+ 221 0038 FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 222              	.LVL26:
+ 223 003c 70BD     		pop	{r4, r5, r6, pc}
+ 224              	.LVL27:
+ 225              	.L16:
+ 226 003e 00BF     		.align	2
+ 227              	.L15:
+ 228 0040 00000240 		.word	1073872896
+ 229              		.cfi_endproc
+ 230              	.LFE77:
+ 232              		.section	.text.SX1276Read,"ax",%progbits
+ 233              		.align	2
+ 234              		.global	SX1276Read
+ 235              		.thumb
+ 236              		.thumb_func
+ 238              	SX1276Read:
+ 239              	.LFB75:
+ 229:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276ReadBuffer( addr, data, 1 );
+ 240              		.loc 1 229 0
+ 241              		.cfi_startproc
+ 242              		@ args = 0, pretend = 0, frame = 0
+ 243              		@ frame_needed = 0, uses_anonymous_args = 0
+ 244              	.LVL28:
+ 245 0000 08B5     		push	{r3, lr}
+ 246              	.LCFI5:
+ 247              		.cfi_def_cfa_offset 8
+ 248              		.cfi_offset 3, -8
+ 249              		.cfi_offset 14, -4
+ 230:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 250              		.loc 1 230 0
+ARM GAS  /tmp/ccMtWFuI.s 			page 10
+
+
+ 251 0002 0122     		movs	r2, #1
+ 252 0004 FFF7FEFF 		bl	SX1276ReadBuffer
+ 253              	.LVL29:
+ 254 0008 08BD     		pop	{r3, pc}
+ 255              		.cfi_endproc
+ 256              	.LFE75:
+ 258 000a 00BF     		.section	.text.SX1276WriteFifo,"ax",%progbits
+ 259              		.align	2
+ 260              		.global	SX1276WriteFifo
+ 261              		.thumb
+ 262              		.thumb_func
+ 264              	SX1276WriteFifo:
+ 265              	.LFB78:
+ 266:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 267:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 268:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276WriteFifo( uint8_t *buffer, uint8_t size )
+ 269:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 266              		.loc 1 269 0
+ 267              		.cfi_startproc
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              	.LVL30:
+ 271 0000 08B5     		push	{r3, lr}
+ 272              	.LCFI6:
+ 273              		.cfi_def_cfa_offset 8
+ 274              		.cfi_offset 3, -8
+ 275              		.cfi_offset 14, -4
+ 270:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276WriteBuffer( 0, buffer, size );
+ 276              		.loc 1 270 0
+ 277 0002 0A46     		mov	r2, r1
+ 278 0004 0146     		mov	r1, r0
+ 279              	.LVL31:
+ 280 0006 0020     		movs	r0, #0
+ 281              	.LVL32:
+ 282 0008 FFF7FEFF 		bl	SX1276WriteBuffer
+ 283              	.LVL33:
+ 284 000c 08BD     		pop	{r3, pc}
+ 285              		.cfi_endproc
+ 286              	.LFE78:
+ 288 000e 00BF     		.section	.text.SX1276ReadFifo,"ax",%progbits
+ 289              		.align	2
+ 290              		.global	SX1276ReadFifo
+ 291              		.thumb
+ 292              		.thumb_func
+ 294              	SX1276ReadFifo:
+ 295              	.LFB79:
+ 271:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 272:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 273:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** void SX1276ReadFifo( uint8_t *buffer, uint8_t size )
+ 274:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 296              		.loc 1 274 0
+ 297              		.cfi_startproc
+ 298              		@ args = 0, pretend = 0, frame = 0
+ 299              		@ frame_needed = 0, uses_anonymous_args = 0
+ 300              	.LVL34:
+ 301 0000 08B5     		push	{r3, lr}
+ 302              	.LCFI7:
+ARM GAS  /tmp/ccMtWFuI.s 			page 11
+
+
+ 303              		.cfi_def_cfa_offset 8
+ 304              		.cfi_offset 3, -8
+ 305              		.cfi_offset 14, -4
+ 275:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     SX1276ReadBuffer( 0, buffer, size );
+ 306              		.loc 1 275 0
+ 307 0002 0A46     		mov	r2, r1
+ 308 0004 0146     		mov	r1, r0
+ 309              	.LVL35:
+ 310 0006 0020     		movs	r0, #0
+ 311              	.LVL36:
+ 312 0008 FFF7FEFF 		bl	SX1276ReadBuffer
+ 313              	.LVL37:
+ 314 000c 08BD     		pop	{r3, pc}
+ 315              		.cfi_endproc
+ 316              	.LFE79:
+ 318 000e 00BF     		.section	.text.SX1276ReadDio0,"ax",%progbits
+ 319              		.align	2
+ 320              		.global	SX1276ReadDio0
+ 321              		.thumb
+ 322              		.thumb_func
+ 324              	SX1276ReadDio0:
+ 325              	.LFB80:
+ 276:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 277:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 278:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio0( void )
+ 279:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 326              		.loc 1 279 0
+ 327              		.cfi_startproc
+ 328              		@ args = 0, pretend = 0, frame = 0
+ 329              		@ frame_needed = 0, uses_anonymous_args = 0
+ 330 0000 08B5     		push	{r3, lr}
+ 331              	.LCFI8:
+ 332              		.cfi_def_cfa_offset 8
+ 333              		.cfi_offset 3, -8
+ 334              		.cfi_offset 14, -4
+ 280:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return HAL_GPIO_ReadPin( DIO0_IOPORT, DIO0_PIN );
+ 335              		.loc 1 280 0
+ 336 0002 4FF40051 		mov	r1, #8192
+ 337 0006 0248     		ldr	r0, .L25
+ 338 0008 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 339              	.LVL38:
+ 281:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 340              		.loc 1 281 0
+ 341 000c 08BD     		pop	{r3, pc}
+ 342              	.L26:
+ 343 000e 00BF     		.align	2
+ 344              	.L25:
+ 345 0010 00080240 		.word	1073874944
+ 346              		.cfi_endproc
+ 347              	.LFE80:
+ 349              		.section	.text.SX1276ReadDio1,"ax",%progbits
+ 350              		.align	2
+ 351              		.global	SX1276ReadDio1
+ 352              		.thumb
+ 353              		.thumb_func
+ 355              	SX1276ReadDio1:
+ 356              	.LFB81:
+ARM GAS  /tmp/ccMtWFuI.s 			page 12
+
+
+ 282:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 283:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio1( void )
+ 284:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 357              		.loc 1 284 0
+ 358              		.cfi_startproc
+ 359              		@ args = 0, pretend = 0, frame = 0
+ 360              		@ frame_needed = 0, uses_anonymous_args = 0
+ 361 0000 08B5     		push	{r3, lr}
+ 362              	.LCFI9:
+ 363              		.cfi_def_cfa_offset 8
+ 364              		.cfi_offset 3, -8
+ 365              		.cfi_offset 14, -4
+ 285:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return HAL_GPIO_ReadPin( DIO1_IOPORT, DIO1_PIN );
+ 366              		.loc 1 285 0
+ 367 0002 0121     		movs	r1, #1
+ 368 0004 0148     		ldr	r0, .L29
+ 369 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 370              	.LVL39:
+ 286:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 371              		.loc 1 286 0
+ 372 000a 08BD     		pop	{r3, pc}
+ 373              	.L30:
+ 374              		.align	2
+ 375              	.L29:
+ 376 000c 00040240 		.word	1073873920
+ 377              		.cfi_endproc
+ 378              	.LFE81:
+ 380              		.section	.text.SX1276ReadDio2,"ax",%progbits
+ 381              		.align	2
+ 382              		.global	SX1276ReadDio2
+ 383              		.thumb
+ 384              		.thumb_func
+ 386              	SX1276ReadDio2:
+ 387              	.LFB82:
+ 287:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 288:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio2( void )
+ 289:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 388              		.loc 1 289 0
+ 389              		.cfi_startproc
+ 390              		@ args = 0, pretend = 0, frame = 0
+ 391              		@ frame_needed = 0, uses_anonymous_args = 0
+ 392 0000 08B5     		push	{r3, lr}
+ 393              	.LCFI10:
+ 394              		.cfi_def_cfa_offset 8
+ 395              		.cfi_offset 3, -8
+ 396              		.cfi_offset 14, -4
+ 290:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return HAL_GPIO_ReadPin( DIO2_IOPORT, DIO2_PIN );
+ 397              		.loc 1 290 0
+ 398 0002 0221     		movs	r1, #2
+ 399 0004 0148     		ldr	r0, .L33
+ 400 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 401              	.LVL40:
+ 291:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 402              		.loc 1 291 0
+ 403 000a 08BD     		pop	{r3, pc}
+ 404              	.L34:
+ 405              		.align	2
+ARM GAS  /tmp/ccMtWFuI.s 			page 13
+
+
+ 406              	.L33:
+ 407 000c 00040240 		.word	1073873920
+ 408              		.cfi_endproc
+ 409              	.LFE82:
+ 411              		.section	.text.SX1276ReadDio3,"ax",%progbits
+ 412              		.align	2
+ 413              		.global	SX1276ReadDio3
+ 414              		.thumb
+ 415              		.thumb_func
+ 417              	SX1276ReadDio3:
+ 418              	.LFB83:
+ 292:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 293:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio3( void )
+ 294:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 419              		.loc 1 294 0
+ 420              		.cfi_startproc
+ 421              		@ args = 0, pretend = 0, frame = 0
+ 422              		@ frame_needed = 0, uses_anonymous_args = 0
+ 423              		@ link register save eliminated.
+ 295:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return 1;;
+ 296:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 424              		.loc 1 296 0
+ 425 0000 0120     		movs	r0, #1
+ 426 0002 7047     		bx	lr
+ 427              		.cfi_endproc
+ 428              	.LFE83:
+ 430              		.section	.text.SX1276ReadDio4,"ax",%progbits
+ 431              		.align	2
+ 432              		.global	SX1276ReadDio4
+ 433              		.thumb
+ 434              		.thumb_func
+ 436              	SX1276ReadDio4:
+ 437              	.LFB84:
+ 297:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 298:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio4( void )
+ 299:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 438              		.loc 1 299 0
+ 439              		.cfi_startproc
+ 440              		@ args = 0, pretend = 0, frame = 0
+ 441              		@ frame_needed = 0, uses_anonymous_args = 0
+ 442              		@ link register save eliminated.
+ 300:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return 1;
+ 301:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 443              		.loc 1 301 0
+ 444 0000 0120     		movs	r0, #1
+ 445 0002 7047     		bx	lr
+ 446              		.cfi_endproc
+ 447              	.LFE84:
+ 449              		.section	.text.SX1276ReadDio5,"ax",%progbits
+ 450              		.align	2
+ 451              		.global	SX1276ReadDio5
+ 452              		.thumb
+ 453              		.thumb_func
+ 455              	SX1276ReadDio5:
+ 456              	.LFB85:
+ 302:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 303:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline uint8_t SX1276ReadDio5( void )
+ARM GAS  /tmp/ccMtWFuI.s 			page 14
+
+
+ 304:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 457              		.loc 1 304 0
+ 458              		.cfi_startproc
+ 459              		@ args = 0, pretend = 0, frame = 0
+ 460              		@ frame_needed = 0, uses_anonymous_args = 0
+ 461              		@ link register save eliminated.
+ 305:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     return 1;
+ 306:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** }
+ 462              		.loc 1 306 0
+ 463 0000 0120     		movs	r0, #1
+ 464 0002 7047     		bx	lr
+ 465              		.cfi_endproc
+ 466              	.LFE85:
+ 468              		.section	.text.SX1276WriteRxTx,"ax",%progbits
+ 469              		.align	2
+ 470              		.global	SX1276WriteRxTx
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	SX1276WriteRxTx:
+ 475              	.LFB86:
+ 307:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** 
+ 308:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** inline void SX1276WriteRxTx( uint8_t txEnable )
+ 309:sx1278/platform/sx12xxEiger/sx1276-Hal.c **** {
+ 476              		.loc 1 309 0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480              	.LVL41:
+ 481 0000 08B5     		push	{r3, lr}
+ 482              	.LCFI11:
+ 483              		.cfi_def_cfa_offset 8
+ 484              		.cfi_offset 3, -8
+ 485              		.cfi_offset 14, -4
+ 310:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     if( txEnable != 0 )
+ 486              		.loc 1 310 0
+ 487 0002 30B1     		cbz	r0, .L39
+ 311:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 312:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         IoePinOn( FEM_CTX_PIN );
+ 488              		.loc 1 312 0
+ 489 0004 0B20     		movs	r0, #11
+ 490              	.LVL42:
+ 491 0006 FFF7FEFF 		bl	IoePinOn
+ 492              	.LVL43:
+ 313:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         IoePinOff( FEM_CPS_PIN );
+ 493              		.loc 1 313 0
+ 494 000a 0A20     		movs	r0, #10
+ 495 000c FFF7FEFF 		bl	IoePinOff
+ 496              	.LVL44:
+ 497 0010 08BD     		pop	{r3, pc}
+ 498              	.LVL45:
+ 499              	.L39:
+ 314:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     }
+ 315:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     else
+ 316:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****     {
+ 317:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         IoePinOff( FEM_CTX_PIN );
+ 500              		.loc 1 317 0
+ 501 0012 0B20     		movs	r0, #11
+ARM GAS  /tmp/ccMtWFuI.s 			page 15
+
+
+ 502              	.LVL46:
+ 503 0014 FFF7FEFF 		bl	IoePinOff
+ 504              	.LVL47:
+ 318:sx1278/platform/sx12xxEiger/sx1276-Hal.c ****         IoePinOn( FEM_CPS_PIN );
+ 505              		.loc 1 318 0
+ 506 0018 0A20     		movs	r0, #10
+ 507 001a FFF7FEFF 		bl	IoePinOn
+ 508              	.LVL48:
+ 509 001e 08BD     		pop	{r3, pc}
+ 510              		.cfi_endproc
+ 511              	.LFE86:
+ 513              		.text
+ 514              	.Letext0:
+ 515              		.file 2 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/machine/_default_types.h"
+ 516              		.file 3 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/sys/_stdint.h"
+ 517              		.file 4 "Drivers/CMSIS/Device/ST/STM32L1xx/Include/stm32l151xba.h"
+ 518              		.file 5 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal_gpio.h"
+ 519              		.file 6 "sx1278/platform/sx12xxEiger/ioe.h"
+ 520              		.file 7 "sx1278/platform/sx12xxEiger/spi.h"
+ 521              		.file 8 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  /tmp/ccMtWFuI.s 			page 16
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sx1276-Hal.c
+     /tmp/ccMtWFuI.s:20     .text.SX1276InitIo:00000000 $t
+     /tmp/ccMtWFuI.s:25     .text.SX1276InitIo:00000000 SX1276InitIo
+     /tmp/ccMtWFuI.s:38     .text.SX1276SetReset:00000000 $t
+     /tmp/ccMtWFuI.s:43     .text.SX1276SetReset:00000000 SX1276SetReset
+     /tmp/ccMtWFuI.s:56     .text.SX1276WriteBuffer:00000000 $t
+     /tmp/ccMtWFuI.s:61     .text.SX1276WriteBuffer:00000000 SX1276WriteBuffer
+     /tmp/ccMtWFuI.s:121    .text.SX1276WriteBuffer:0000003c $d
+     /tmp/ccMtWFuI.s:126    .text.SX1276Write:00000000 $t
+     /tmp/ccMtWFuI.s:131    .text.SX1276Write:00000000 SX1276Write
+     /tmp/ccMtWFuI.s:163    .text.SX1276ReadBuffer:00000000 $t
+     /tmp/ccMtWFuI.s:168    .text.SX1276ReadBuffer:00000000 SX1276ReadBuffer
+     /tmp/ccMtWFuI.s:228    .text.SX1276ReadBuffer:00000040 $d
+     /tmp/ccMtWFuI.s:233    .text.SX1276Read:00000000 $t
+     /tmp/ccMtWFuI.s:238    .text.SX1276Read:00000000 SX1276Read
+     /tmp/ccMtWFuI.s:259    .text.SX1276WriteFifo:00000000 $t
+     /tmp/ccMtWFuI.s:264    .text.SX1276WriteFifo:00000000 SX1276WriteFifo
+     /tmp/ccMtWFuI.s:289    .text.SX1276ReadFifo:00000000 $t
+     /tmp/ccMtWFuI.s:294    .text.SX1276ReadFifo:00000000 SX1276ReadFifo
+     /tmp/ccMtWFuI.s:319    .text.SX1276ReadDio0:00000000 $t
+     /tmp/ccMtWFuI.s:324    .text.SX1276ReadDio0:00000000 SX1276ReadDio0
+     /tmp/ccMtWFuI.s:345    .text.SX1276ReadDio0:00000010 $d
+     /tmp/ccMtWFuI.s:350    .text.SX1276ReadDio1:00000000 $t
+     /tmp/ccMtWFuI.s:355    .text.SX1276ReadDio1:00000000 SX1276ReadDio1
+     /tmp/ccMtWFuI.s:376    .text.SX1276ReadDio1:0000000c $d
+     /tmp/ccMtWFuI.s:381    .text.SX1276ReadDio2:00000000 $t
+     /tmp/ccMtWFuI.s:386    .text.SX1276ReadDio2:00000000 SX1276ReadDio2
+     /tmp/ccMtWFuI.s:407    .text.SX1276ReadDio2:0000000c $d
+     /tmp/ccMtWFuI.s:412    .text.SX1276ReadDio3:00000000 $t
+     /tmp/ccMtWFuI.s:417    .text.SX1276ReadDio3:00000000 SX1276ReadDio3
+     /tmp/ccMtWFuI.s:431    .text.SX1276ReadDio4:00000000 $t
+     /tmp/ccMtWFuI.s:436    .text.SX1276ReadDio4:00000000 SX1276ReadDio4
+     /tmp/ccMtWFuI.s:450    .text.SX1276ReadDio5:00000000 $t
+     /tmp/ccMtWFuI.s:455    .text.SX1276ReadDio5:00000000 SX1276ReadDio5
+     /tmp/ccMtWFuI.s:469    .text.SX1276WriteRxTx:00000000 $t
+     /tmp/ccMtWFuI.s:474    .text.SX1276WriteRxTx:00000000 SX1276WriteRxTx
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+SpiInOut
+HAL_GPIO_ReadPin
+IoePinOn
+IoePinOff

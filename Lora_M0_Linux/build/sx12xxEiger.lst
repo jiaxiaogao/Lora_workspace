@@ -1,0 +1,276 @@
+ARM GAS  /tmp/ccm10cvT.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"sx12xxEiger.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.BoardInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	BoardInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	BoardInit:
+  26              	.LFB72:
+  27              		.file 1 "sx1278/platform/sx12xxEiger/sx12xxEiger.c"
+   1:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** /*
+   2:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * THE FOLLOWING FIRMWARE IS PROVIDED: (1) "AS IS" WITH NO WARRANTY; AND 
+   3:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * (2)TO ENABLE ACCESS TO CODING INFORMATION TO GUIDE AND FACILITATE CUSTOMER.
+   4:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * CONSEQUENTLY, SEMTECH SHALL NOT BE HELD LIABLE FOR ANY DIRECT, INDIRECT OR
+   5:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE CONTENT
+   6:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING INFORMATION
+   7:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+   8:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * 
+   9:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * Copyright (C) SEMTECH S.A.
+  10:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  */
+  11:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** /*! 
+  12:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * \file       sx12xxEiger.c
+  13:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * \brief        
+  14:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  *
+  15:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * \version    1.0
+  16:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * \date       Nov 21 2012
+  17:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  * \author     Miguel Luis
+  18:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****  */
+  19:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include <stdint.h> 
+  20:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "spi.h"
+  21:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "i2c.h"
+  22:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "ioe.h"
+  23:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "led.h"
+  24:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "uart.h"
+  25:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** #include "sx12xxEiger.h"
+  26:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  27:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #if( defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx ) )
+  28:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  29:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usbd_cdc_core.h"
+  30:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usbd_usr.h"
+  31:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usbd_desc.h"
+ARM GAS  /tmp/ccm10cvT.s 			page 2
+
+
+  32:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  33:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #else
+  34:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  35:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_regs.h"
+  36:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_core.h"
+  37:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_init.h"
+  38:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_pwr.h"
+  39:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_bsp.h"
+  40:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #include "usb_sil.h"
+  41:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  42:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #endif
+  43:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  44:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // System tick (1ms)
+  45:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** volatile uint32_t TickCounter = 0;
+  46:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  47:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #if( defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx ) )
+  48:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  49:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED
+  50:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //   #if defined ( __ICCARM__ ) /*!< IAR Compiler */
+  51:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     #pragma data_alignment=4   
+  52:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //   #endif
+  53:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
+  54:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****    
+  55:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // __ALIGN_BEGIN USB_OTG_CORE_HANDLE    USB_OTG_dev __ALIGN_END ;
+  56:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  57:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #else
+  58:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  59:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #endif
+  60:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  61:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** void BoardInit( void )
+  62:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** {
+  28              		.loc 1 62 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  33 0000 7047     		bx	lr
+  34              		.cfi_endproc
+  35              	.LFE72:
+  37 0002 00BF     		.section	.text.Delay,"ax",%progbits
+  38              		.align	2
+  39              		.global	Delay
+  40              		.thumb
+  41              		.thumb_func
+  43              	Delay:
+  44              	.LFB73:
+  63:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     uint8_t i;
+  64:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  65:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     /* Setup SysTick Timer for 1 us interrupts ( not too often to save power ) */
+  66:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     if( SysTick_Config( SystemCoreClock / 1000 ) )
+  67:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     { 
+  68:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         /* Capture error */ 
+  69:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         while (1);
+  70:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     }
+  71:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  72:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     // Initialize SPI
+  73:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     SpiInit( );
+ARM GAS  /tmp/ccm10cvT.s 			page 3
+
+
+  74:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+  75:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     // Initialize I2C
+  76:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     I2cInit( );
+  77:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     
+  78:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     // Initialize IO expander
+  79:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     IoeInit( );
+  80:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     
+  81:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     // Initialize LED
+  82:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     for( i = 0; i < LED_NB; i++ )
+  83:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     {
+  84:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         LedInit( ( tLed )i );
+  85:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     }
+  86:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     IoePinOn( LED_1_PIN );
+  87:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     IoePinOn( LED_2_PIN );
+  88:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     IoePinOn( LED_3_PIN );
+  89:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     
+  90:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #if( defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx ) )
+  91:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     
+  92:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //     USBD_Init( &USB_OTG_dev,
+  93:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #ifdef USE_USB_OTG_HS 
+  94:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //                USB_OTG_HS_CORE_ID,
+  95:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #else            
+  96:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //                USB_OTG_FS_CORE_ID,
+  97:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #endif  
+  98:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //                &USR_desc, 
+  99:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //                &USBD_CDC_cb, 
+ 100:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //                &USR_cb );
+ 101:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #else    
+ 102:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         /* Configure the used GPIOs*/
+ 103:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         GPIO_Configuration( );
+ 104:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         /* Additional EXTI configuration (configure both edges) */
+ 105:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         EXTI_Configuration( );
+ 106:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+ 107:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         USB_Interrupts_Config( );
+ 108:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         Set_USBClock( );
+ 109:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** //         USB_Init( );
+ 110:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** // #endif
+ 111:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** }
+ 112:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+ 113:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** void Delay ( uint32_t delay )
+ 114:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** {
+  45              		.loc 1 114 0
+  46              		.cfi_startproc
+  47              		@ args = 0, pretend = 0, frame = 0
+  48              		@ frame_needed = 0, uses_anonymous_args = 0
+  49              		@ link register save eliminated.
+  50              	.LVL0:
+ 115:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     // Wait delay ms
+ 116:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     uint32_t startTick = TickCounter;
+  51              		.loc 1 116 0
+  52 0000 034B     		ldr	r3, .L4
+  53 0002 1A68     		ldr	r2, [r3]
+  54              	.LVL1:
+  55              	.L3:
+ 117:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     while( ( TickCounter - startTick ) < delay );   
+  56              		.loc 1 117 0 discriminator 1
+  57 0004 024B     		ldr	r3, .L4
+ARM GAS  /tmp/ccm10cvT.s 			page 4
+
+
+  58 0006 1B68     		ldr	r3, [r3]
+  59 0008 9B1A     		subs	r3, r3, r2
+  60 000a 8342     		cmp	r3, r0
+  61 000c FAD3     		bcc	.L3
+ 118:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** }
+  62              		.loc 1 118 0
+  63 000e 7047     		bx	lr
+  64              	.L5:
+  65              		.align	2
+  66              	.L4:
+  67 0010 00000000 		.word	.LANCHOR0
+  68              		.cfi_endproc
+  69              	.LFE73:
+  71              		.section	.text.LongDelay,"ax",%progbits
+  72              		.align	2
+  73              		.global	LongDelay
+  74              		.thumb
+  75              		.thumb_func
+  77              	LongDelay:
+  78              	.LFB74:
+ 119:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+ 120:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** void LongDelay ( uint8_t delay )
+ 121:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** {
+  79              		.loc 1 121 0
+  80              		.cfi_startproc
+  81              		@ args = 0, pretend = 0, frame = 0
+  82              		@ frame_needed = 0, uses_anonymous_args = 0
+  83              		@ link register save eliminated.
+  84              	.LVL2:
+ 122:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     uint32_t longDelay;
+ 123:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     uint32_t startTick;
+ 124:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+ 125:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     longDelay = delay * 1000;
+  85              		.loc 1 125 0
+  86 0000 4FF47A73 		mov	r3, #1000
+  87 0004 03FB00F0 		mul	r0, r3, r0
+  88              	.LVL3:
+ 126:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** 
+ 127:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     // Wait delay s
+ 128:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     startTick = TickCounter;
+  89              		.loc 1 128 0
+  90 0008 034B     		ldr	r3, .L8
+  91 000a 1A68     		ldr	r2, [r3]
+  92              	.LVL4:
+  93              	.L7:
+ 129:sx1278/platform/sx12xxEiger/sx12xxEiger.c ****     while( ( TickCounter - startTick ) < longDelay );   
+  94              		.loc 1 129 0 discriminator 1
+  95 000c 024B     		ldr	r3, .L8
+  96 000e 1B68     		ldr	r3, [r3]
+  97 0010 9B1A     		subs	r3, r3, r2
+  98 0012 9842     		cmp	r0, r3
+  99 0014 FAD8     		bhi	.L7
+ 130:sx1278/platform/sx12xxEiger/sx12xxEiger.c **** }
+ 100              		.loc 1 130 0
+ 101 0016 7047     		bx	lr
+ 102              	.L9:
+ 103              		.align	2
+ARM GAS  /tmp/ccm10cvT.s 			page 5
+
+
+ 104              	.L8:
+ 105 0018 00000000 		.word	.LANCHOR0
+ 106              		.cfi_endproc
+ 107              	.LFE74:
+ 109              		.global	TickCounter
+ 110              		.section	.bss.TickCounter,"aw",%nobits
+ 111              		.align	2
+ 112              		.set	.LANCHOR0,. + 0
+ 115              	TickCounter:
+ 116 0000 00000000 		.space	4
+ 117              		.text
+ 118              	.Letext0:
+ 119              		.file 2 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/machine/_default_types.h"
+ 120              		.file 3 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/sys/_stdint.h"
+ 121              		.file 4 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  /tmp/ccm10cvT.s 			page 6
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sx12xxEiger.c
+     /tmp/ccm10cvT.s:20     .text.BoardInit:00000000 $t
+     /tmp/ccm10cvT.s:25     .text.BoardInit:00000000 BoardInit
+     /tmp/ccm10cvT.s:38     .text.Delay:00000000 $t
+     /tmp/ccm10cvT.s:43     .text.Delay:00000000 Delay
+     /tmp/ccm10cvT.s:67     .text.Delay:00000010 $d
+     /tmp/ccm10cvT.s:72     .text.LongDelay:00000000 $t
+     /tmp/ccm10cvT.s:77     .text.LongDelay:00000000 LongDelay
+     /tmp/ccm10cvT.s:105    .text.LongDelay:00000018 $d
+     /tmp/ccm10cvT.s:115    .bss.TickCounter:00000000 TickCounter
+     /tmp/ccm10cvT.s:111    .bss.TickCounter:00000000 $d
+                     .debug_frame:00000010 $d
+
+NO UNDEFINED SYMBOLS

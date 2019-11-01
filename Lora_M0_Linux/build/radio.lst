@@ -1,0 +1,163 @@
+ARM GAS  /tmp/ccMYZIPX.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"radio.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.RadioDriverInit,"ax",%progbits
+  20              		.align	2
+  21              		.global	RadioDriverInit
+  22              		.thumb
+  23              		.thumb_func
+  25              	RadioDriverInit:
+  26              	.LFB72:
+  27              		.file 1 "sx1278/radio/radio.c"
+   1:sx1278/radio/radio.c **** /*
+   2:sx1278/radio/radio.c ****  * THE FOLLOWING FIRMWARE IS PROVIDED: (1) "AS IS" WITH NO WARRANTY; AND 
+   3:sx1278/radio/radio.c ****  * (2)TO ENABLE ACCESS TO CODING INFORMATION TO GUIDE AND FACILITATE CUSTOMER.
+   4:sx1278/radio/radio.c ****  * CONSEQUENTLY, SEMTECH SHALL NOT BE HELD LIABLE FOR ANY DIRECT, INDIRECT OR
+   5:sx1278/radio/radio.c ****  * CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE CONTENT
+   6:sx1278/radio/radio.c ****  * OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING INFORMATION
+   7:sx1278/radio/radio.c ****  * CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+   8:sx1278/radio/radio.c ****  * 
+   9:sx1278/radio/radio.c ****  * Copyright (C) SEMTECH S.A.
+  10:sx1278/radio/radio.c ****  */
+  11:sx1278/radio/radio.c **** /*! 
+  12:sx1278/radio/radio.c ****  * \file       radio.c
+  13:sx1278/radio/radio.c ****  * \brief      Generic radio driver ( radio abstraction )
+  14:sx1278/radio/radio.c ****  *
+  15:sx1278/radio/radio.c ****  * \version    2.0.0 
+  16:sx1278/radio/radio.c ****  * \date       Nov 21 2012
+  17:sx1278/radio/radio.c ****  * \author     Miguel Luis
+  18:sx1278/radio/radio.c ****  *
+  19:sx1278/radio/radio.c ****  * Last modified by Gregory Cristian on Apr 25 2013
+  20:sx1278/radio/radio.c ****  */
+  21:sx1278/radio/radio.c **** #include "platform.h"
+  22:sx1278/radio/radio.c **** 
+  23:sx1278/radio/radio.c **** #include "radio.h"
+  24:sx1278/radio/radio.c **** 
+  25:sx1278/radio/radio.c **** #if defined( USE_SX1232_RADIO )
+  26:sx1278/radio/radio.c ****     #include "sx1232.h"
+  27:sx1278/radio/radio.c **** #elif defined( USE_SX1272_RADIO )
+  28:sx1278/radio/radio.c ****     #include "sx1272.h"
+  29:sx1278/radio/radio.c **** #elif defined( USE_SX1276_RADIO )
+  30:sx1278/radio/radio.c ****     #include "sx1276.h"
+  31:sx1278/radio/radio.c **** #else
+ARM GAS  /tmp/ccMYZIPX.s 			page 2
+
+
+  32:sx1278/radio/radio.c ****     #error "Missing define: USE_XXXXXX_RADIO (ie. USE_SX1272_RADIO)"
+  33:sx1278/radio/radio.c **** #endif    
+  34:sx1278/radio/radio.c **** 
+  35:sx1278/radio/radio.c **** tRadioDriver RadioDriver;
+  36:sx1278/radio/radio.c **** 
+  37:sx1278/radio/radio.c **** tRadioDriver* RadioDriverInit( void )
+  38:sx1278/radio/radio.c **** {
+  28              		.loc 1 38 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32              		@ link register save eliminated.
+  39:sx1278/radio/radio.c **** #if defined( USE_SX1232_RADIO )
+  40:sx1278/radio/radio.c ****     RadioDriver.Init = SX1232Init;
+  41:sx1278/radio/radio.c ****     RadioDriver.Reset = SX1232Reset;
+  42:sx1278/radio/radio.c ****     RadioDriver.StartRx = SX1232StartRx;
+  43:sx1278/radio/radio.c ****     RadioDriver.GetRxPacket = SX1232GetRxPacket;
+  44:sx1278/radio/radio.c ****     RadioDriver.SetTxPacket = SX1232SetTxPacket;
+  45:sx1278/radio/radio.c ****     RadioDriver.Process = SX1232Process;
+  46:sx1278/radio/radio.c **** #elif defined( USE_SX1272_RADIO )
+  47:sx1278/radio/radio.c ****     RadioDriver.Init = SX1272Init;
+  48:sx1278/radio/radio.c ****     RadioDriver.Reset = SX1272Reset;
+  49:sx1278/radio/radio.c ****     RadioDriver.StartRx = SX1272StartRx;
+  50:sx1278/radio/radio.c ****     RadioDriver.GetRxPacket = SX1272GetRxPacket;
+  51:sx1278/radio/radio.c ****     RadioDriver.SetTxPacket = SX1272SetTxPacket;
+  52:sx1278/radio/radio.c ****     RadioDriver.Process = SX1272Process;
+  53:sx1278/radio/radio.c **** #elif defined( USE_SX1276_RADIO )
+  54:sx1278/radio/radio.c ****     RadioDriver.Init = SX1276Init;
+  33              		.loc 1 54 0
+  34 0000 0648     		ldr	r0, .L2
+  35 0002 074B     		ldr	r3, .L2+4
+  36 0004 0360     		str	r3, [r0]
+  55:sx1278/radio/radio.c ****     RadioDriver.Reset = SX1276Reset;
+  37              		.loc 1 55 0
+  38 0006 074B     		ldr	r3, .L2+8
+  39 0008 4360     		str	r3, [r0, #4]
+  56:sx1278/radio/radio.c ****     RadioDriver.StartRx = SX1276StartRx;
+  40              		.loc 1 56 0
+  41 000a 074B     		ldr	r3, .L2+12
+  42 000c 8360     		str	r3, [r0, #8]
+  57:sx1278/radio/radio.c ****     RadioDriver.GetRxPacket = SX1276GetRxPacket;
+  43              		.loc 1 57 0
+  44 000e 074B     		ldr	r3, .L2+16
+  45 0010 C360     		str	r3, [r0, #12]
+  58:sx1278/radio/radio.c ****     RadioDriver.SetTxPacket = SX1276SetTxPacket;
+  46              		.loc 1 58 0
+  47 0012 074B     		ldr	r3, .L2+20
+  48 0014 0361     		str	r3, [r0, #16]
+  59:sx1278/radio/radio.c ****     RadioDriver.Process = SX1276Process;
+  49              		.loc 1 59 0
+  50 0016 074B     		ldr	r3, .L2+24
+  51 0018 4361     		str	r3, [r0, #20]
+  60:sx1278/radio/radio.c **** #else
+  61:sx1278/radio/radio.c ****     #error "Missing define: USE_XXXXXX_RADIO (ie. USE_SX1272_RADIO)"
+  62:sx1278/radio/radio.c **** #endif    
+  63:sx1278/radio/radio.c **** 
+  64:sx1278/radio/radio.c ****     return &RadioDriver;
+ARM GAS  /tmp/ccMYZIPX.s 			page 3
+
+
+  65:sx1278/radio/radio.c **** }
+  52              		.loc 1 65 0
+  53 001a 7047     		bx	lr
+  54              	.L3:
+  55              		.align	2
+  56              	.L2:
+  57 001c 00000000 		.word	RadioDriver
+  58 0020 00000000 		.word	SX1276Init
+  59 0024 00000000 		.word	SX1276Reset
+  60 0028 00000000 		.word	SX1276StartRx
+  61 002c 00000000 		.word	SX1276GetRxPacket
+  62 0030 00000000 		.word	SX1276SetTxPacket
+  63 0034 00000000 		.word	SX1276Process
+  64              		.cfi_endproc
+  65              	.LFE72:
+  67              		.comm	RadioDriver,24,4
+  68              		.text
+  69              	.Letext0:
+  70              		.file 2 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/machine/_default_types.h"
+  71              		.file 3 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/sys/_stdint.h"
+  72              		.file 4 "sx1278/radio/radio.h"
+  73              		.file 5 "Drivers/CMSIS/Include/core_cm3.h"
+ARM GAS  /tmp/ccMYZIPX.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 radio.c
+     /tmp/ccMYZIPX.s:20     .text.RadioDriverInit:00000000 $t
+     /tmp/ccMYZIPX.s:25     .text.RadioDriverInit:00000000 RadioDriverInit
+     /tmp/ccMYZIPX.s:57     .text.RadioDriverInit:0000001c $d
+                            *COM*:00000018 RadioDriver
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+SX1276Init
+SX1276Reset
+SX1276StartRx
+SX1276GetRxPacket
+SX1276SetTxPacket
+SX1276Process

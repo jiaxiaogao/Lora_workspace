@@ -1,0 +1,2628 @@
+ARM GAS  /tmp/ccVU9461.s 			page 1
+
+
+   1              		.syntax unified
+   2              		.cpu cortex-m3
+   3              		.fpu softvfp
+   4              		.eabi_attribute 20, 1
+   5              		.eabi_attribute 21, 1
+   6              		.eabi_attribute 23, 3
+   7              		.eabi_attribute 24, 1
+   8              		.eabi_attribute 25, 1
+   9              		.eabi_attribute 26, 1
+  10              		.eabi_attribute 30, 1
+  11              		.eabi_attribute 34, 1
+  12              		.eabi_attribute 18, 4
+  13              		.thumb
+  14              		.syntax unified
+  15              		.file	"sx1276-LoRa.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.SX1276LoRaSetDefaults,"ax",%progbits
+  20              		.align	2
+  21              		.global	SX1276LoRaSetDefaults
+  22              		.thumb
+  23              		.thumb_func
+  25              	SX1276LoRaSetDefaults:
+  26              	.LFB73:
+  27              		.file 1 "sx1278/radio/sx1276-LoRa.c"
+   1:sx1278/radio/sx1276-LoRa.c **** /*
+   2:sx1278/radio/sx1276-LoRa.c ****  * THE FOLLOWING FIRMWARE IS PROVIDED: (1) "AS IS" WITH NO WARRANTY; AND 
+   3:sx1278/radio/sx1276-LoRa.c ****  * (2)TO ENABLE ACCESS TO CODING INFORMATION TO GUIDE AND FACILITATE CUSTOMER.
+   4:sx1278/radio/sx1276-LoRa.c ****  * CONSEQUENTLY, SEMTECH SHALL NOT BE HELD LIABLE FOR ANY DIRECT, INDIRECT OR
+   5:sx1278/radio/sx1276-LoRa.c ****  * CONSEQUENTIAL DAMAGES WITH RESPECT TO ANY CLAIMS ARISING FROM THE CONTENT
+   6:sx1278/radio/sx1276-LoRa.c ****  * OF SUCH FIRMWARE AND/OR THE USE MADE BY CUSTOMERS OF THE CODING INFORMATION
+   7:sx1278/radio/sx1276-LoRa.c ****  * CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
+   8:sx1278/radio/sx1276-LoRa.c ****  * 
+   9:sx1278/radio/sx1276-LoRa.c ****  * Copyright (C) SEMTECH S.A.
+  10:sx1278/radio/sx1276-LoRa.c ****  */
+  11:sx1278/radio/sx1276-LoRa.c **** /*! 
+  12:sx1278/radio/sx1276-LoRa.c ****  * \file       sx1276-LoRa.c
+  13:sx1278/radio/sx1276-LoRa.c ****  * \brief      SX1276 RF chip driver mode LoRa
+  14:sx1278/radio/sx1276-LoRa.c ****  *
+  15:sx1278/radio/sx1276-LoRa.c ****  * \version    2.0.0 
+  16:sx1278/radio/sx1276-LoRa.c ****  * \date       May 6 2013
+  17:sx1278/radio/sx1276-LoRa.c ****  * \author     Gregory Cristian
+  18:sx1278/radio/sx1276-LoRa.c ****  *
+  19:sx1278/radio/sx1276-LoRa.c ****  * Last modified by Miguel Luis on Jun 19 2013
+  20:sx1278/radio/sx1276-LoRa.c ****  */
+  21:sx1278/radio/sx1276-LoRa.c **** #include <string.h>
+  22:sx1278/radio/sx1276-LoRa.c **** 
+  23:sx1278/radio/sx1276-LoRa.c **** #include "platform.h"
+  24:sx1278/radio/sx1276-LoRa.c **** 
+  25:sx1278/radio/sx1276-LoRa.c **** #if defined( USE_SX1276_RADIO )
+  26:sx1278/radio/sx1276-LoRa.c **** 
+  27:sx1278/radio/sx1276-LoRa.c **** #include "radio.h"
+  28:sx1278/radio/sx1276-LoRa.c **** 
+  29:sx1278/radio/sx1276-LoRa.c **** #include "sx1276-Hal.h"
+  30:sx1278/radio/sx1276-LoRa.c **** #include "sx1276.h"
+  31:sx1278/radio/sx1276-LoRa.c **** 
+ARM GAS  /tmp/ccVU9461.s 			page 2
+
+
+  32:sx1278/radio/sx1276-LoRa.c **** #include "sx1276-LoRaMisc.h"
+  33:sx1278/radio/sx1276-LoRa.c **** #include "sx1276-LoRa.h"
+  34:sx1278/radio/sx1276-LoRa.c **** 
+  35:sx1278/radio/sx1276-LoRa.c **** /*!
+  36:sx1278/radio/sx1276-LoRa.c ****  * Constant values need to compute the RSSI value
+  37:sx1278/radio/sx1276-LoRa.c ****  */
+  38:sx1278/radio/sx1276-LoRa.c **** #define RSSI_OFFSET_LF                              -164.0
+  39:sx1278/radio/sx1276-LoRa.c **** #define RSSI_OFFSET_HF                              -157.0
+  40:sx1278/radio/sx1276-LoRa.c **** 
+  41:sx1278/radio/sx1276-LoRa.c **** /*!
+  42:sx1278/radio/sx1276-LoRa.c ****  * Frequency hopping frequencies table
+  43:sx1278/radio/sx1276-LoRa.c ****  */
+  44:sx1278/radio/sx1276-LoRa.c **** const int32_t HoppingFrequencies[] =
+  45:sx1278/radio/sx1276-LoRa.c **** {
+  46:sx1278/radio/sx1276-LoRa.c ****     916500000,
+  47:sx1278/radio/sx1276-LoRa.c ****     923500000,
+  48:sx1278/radio/sx1276-LoRa.c ****     906500000,
+  49:sx1278/radio/sx1276-LoRa.c ****     917500000,
+  50:sx1278/radio/sx1276-LoRa.c ****     917500000,
+  51:sx1278/radio/sx1276-LoRa.c ****     909000000,
+  52:sx1278/radio/sx1276-LoRa.c ****     903000000,
+  53:sx1278/radio/sx1276-LoRa.c ****     916000000,
+  54:sx1278/radio/sx1276-LoRa.c ****     912500000,
+  55:sx1278/radio/sx1276-LoRa.c ****     926000000,
+  56:sx1278/radio/sx1276-LoRa.c ****     925000000,
+  57:sx1278/radio/sx1276-LoRa.c ****     909500000,
+  58:sx1278/radio/sx1276-LoRa.c ****     913000000,
+  59:sx1278/radio/sx1276-LoRa.c ****     918500000,
+  60:sx1278/radio/sx1276-LoRa.c ****     918500000,
+  61:sx1278/radio/sx1276-LoRa.c ****     902500000,
+  62:sx1278/radio/sx1276-LoRa.c ****     911500000,
+  63:sx1278/radio/sx1276-LoRa.c ****     926500000,
+  64:sx1278/radio/sx1276-LoRa.c ****     902500000,
+  65:sx1278/radio/sx1276-LoRa.c ****     922000000,
+  66:sx1278/radio/sx1276-LoRa.c ****     924000000,
+  67:sx1278/radio/sx1276-LoRa.c ****     903500000,
+  68:sx1278/radio/sx1276-LoRa.c ****     913000000,
+  69:sx1278/radio/sx1276-LoRa.c ****     922000000,
+  70:sx1278/radio/sx1276-LoRa.c ****     926000000,
+  71:sx1278/radio/sx1276-LoRa.c ****     910000000,
+  72:sx1278/radio/sx1276-LoRa.c ****     920000000,
+  73:sx1278/radio/sx1276-LoRa.c ****     922500000,
+  74:sx1278/radio/sx1276-LoRa.c ****     911000000,
+  75:sx1278/radio/sx1276-LoRa.c ****     922000000,
+  76:sx1278/radio/sx1276-LoRa.c ****     909500000,
+  77:sx1278/radio/sx1276-LoRa.c ****     926000000,
+  78:sx1278/radio/sx1276-LoRa.c ****     922000000,
+  79:sx1278/radio/sx1276-LoRa.c ****     918000000,
+  80:sx1278/radio/sx1276-LoRa.c ****     925500000,
+  81:sx1278/radio/sx1276-LoRa.c ****     908000000,
+  82:sx1278/radio/sx1276-LoRa.c ****     917500000,
+  83:sx1278/radio/sx1276-LoRa.c ****     926500000,
+  84:sx1278/radio/sx1276-LoRa.c ****     908500000,
+  85:sx1278/radio/sx1276-LoRa.c ****     916000000,
+  86:sx1278/radio/sx1276-LoRa.c ****     905500000,
+  87:sx1278/radio/sx1276-LoRa.c ****     916000000,
+  88:sx1278/radio/sx1276-LoRa.c ****     903000000,
+ARM GAS  /tmp/ccVU9461.s 			page 3
+
+
+  89:sx1278/radio/sx1276-LoRa.c ****     905000000,
+  90:sx1278/radio/sx1276-LoRa.c ****     915000000,
+  91:sx1278/radio/sx1276-LoRa.c ****     913000000,
+  92:sx1278/radio/sx1276-LoRa.c ****     907000000,
+  93:sx1278/radio/sx1276-LoRa.c ****     910000000,
+  94:sx1278/radio/sx1276-LoRa.c ****     926500000,
+  95:sx1278/radio/sx1276-LoRa.c ****     925500000,
+  96:sx1278/radio/sx1276-LoRa.c ****     911000000,
+  97:sx1278/radio/sx1276-LoRa.c **** };
+  98:sx1278/radio/sx1276-LoRa.c **** 
+  99:sx1278/radio/sx1276-LoRa.c **** // Default settings
+ 100:sx1278/radio/sx1276-LoRa.c **** tLoRaSettings LoRaSettings =       //设置LoRa参数
+ 101:sx1278/radio/sx1276-LoRa.c **** {
+ 102:sx1278/radio/sx1276-LoRa.c ****     870000000,        // RFFrequency
+ 103:sx1278/radio/sx1276-LoRa.c ****     20,               // Power
+ 104:sx1278/radio/sx1276-LoRa.c ****     9,                // SignalBw [0: 7.8kHz, 1: 10.4 kHz, 2: 15.6 kHz, 3: 20.8 kHz, 4: 31.2 kHz,
+ 105:sx1278/radio/sx1276-LoRa.c ****                       // 5: 41.6 kHz, 6: 62.5 kHz, 7: 125 kHz, 8: 250 kHz, 9: 500 kHz, other: Reser
+ 106:sx1278/radio/sx1276-LoRa.c ****     7,                // SpreadingFactor [6: 64, 7: 128, 8: 256, 9: 512, 10: 1024, 11: 2048, 12: 40
+ 107:sx1278/radio/sx1276-LoRa.c ****     2,                // ErrorCoding [1: 4/5, 2: 4/6, 3: 4/7, 4: 4/8]
+ 108:sx1278/radio/sx1276-LoRa.c ****     true,             // CrcOn [0: OFF, 1: ON]
+ 109:sx1278/radio/sx1276-LoRa.c ****     false,            // ImplicitHeaderOn [0: OFF, 1: ON]
+ 110:sx1278/radio/sx1276-LoRa.c ****     1,                // RxSingleOn [0: Continuous, 1 Single]
+ 111:sx1278/radio/sx1276-LoRa.c ****     0,                // FreqHopOn [0: OFF, 1: ON]
+ 112:sx1278/radio/sx1276-LoRa.c ****     4,                // HopPeriod Hops every frequency hopping period symbols
+ 113:sx1278/radio/sx1276-LoRa.c ****     100,              // TxPacketTimeout
+ 114:sx1278/radio/sx1276-LoRa.c ****     100,              // RxPacketTimeout
+ 115:sx1278/radio/sx1276-LoRa.c ****     128,              // PayloadLength (used for implicit header mode)
+ 116:sx1278/radio/sx1276-LoRa.c **** };
+ 117:sx1278/radio/sx1276-LoRa.c **** 
+ 118:sx1278/radio/sx1276-LoRa.c **** /*!
+ 119:sx1278/radio/sx1276-LoRa.c ****  * SX1276 LoRa registers variable
+ 120:sx1278/radio/sx1276-LoRa.c ****  */
+ 121:sx1278/radio/sx1276-LoRa.c **** tSX1276LR* SX1276LR;
+ 122:sx1278/radio/sx1276-LoRa.c **** 
+ 123:sx1278/radio/sx1276-LoRa.c **** /*!
+ 124:sx1278/radio/sx1276-LoRa.c ****  * Local RF buffer for communication support
+ 125:sx1278/radio/sx1276-LoRa.c ****  */
+ 126:sx1278/radio/sx1276-LoRa.c **** static uint8_t RFBuffer[RF_BUFFER_SIZE];
+ 127:sx1278/radio/sx1276-LoRa.c **** 
+ 128:sx1278/radio/sx1276-LoRa.c **** /*!
+ 129:sx1278/radio/sx1276-LoRa.c ****  * RF state machine variable
+ 130:sx1278/radio/sx1276-LoRa.c ****  */
+ 131:sx1278/radio/sx1276-LoRa.c **** static uint8_t RFLRState = RFLR_STATE_IDLE;
+ 132:sx1278/radio/sx1276-LoRa.c **** 
+ 133:sx1278/radio/sx1276-LoRa.c **** /*!
+ 134:sx1278/radio/sx1276-LoRa.c ****  * Rx management support variables
+ 135:sx1278/radio/sx1276-LoRa.c ****  */
+ 136:sx1278/radio/sx1276-LoRa.c **** static uint16_t RxPacketSize = 0;
+ 137:sx1278/radio/sx1276-LoRa.c **** static int8_t RxPacketSnrEstimate;
+ 138:sx1278/radio/sx1276-LoRa.c **** static double RxPacketRssiValue;
+ 139:sx1278/radio/sx1276-LoRa.c **** static uint8_t RxGain = 1;
+ 140:sx1278/radio/sx1276-LoRa.c **** static uint32_t RxTimeoutTimer = 0;
+ 141:sx1278/radio/sx1276-LoRa.c **** /*!
+ 142:sx1278/radio/sx1276-LoRa.c ****  * PacketTimeout Stores the Rx window time value for packet reception
+ 143:sx1278/radio/sx1276-LoRa.c ****  */
+ 144:sx1278/radio/sx1276-LoRa.c **** static uint32_t PacketTimeout;
+ 145:sx1278/radio/sx1276-LoRa.c **** 
+ARM GAS  /tmp/ccVU9461.s 			page 4
+
+
+ 146:sx1278/radio/sx1276-LoRa.c **** /*!
+ 147:sx1278/radio/sx1276-LoRa.c ****  * Tx management support variables
+ 148:sx1278/radio/sx1276-LoRa.c ****  */
+ 149:sx1278/radio/sx1276-LoRa.c **** static uint16_t TxPacketSize = 0;
+ 150:sx1278/radio/sx1276-LoRa.c **** 
+ 151:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaInit( void )
+ 152:sx1278/radio/sx1276-LoRa.c **** {
+ 153:sx1278/radio/sx1276-LoRa.c ****     RFLRState = RFLR_STATE_IDLE;
+ 154:sx1278/radio/sx1276-LoRa.c **** 
+ 155:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetDefaults( );
+ 156:sx1278/radio/sx1276-LoRa.c ****     
+ 157:sx1278/radio/sx1276-LoRa.c ****     SX1276ReadBuffer( REG_LR_OPMODE, SX1276Regs + 1, 0x70 - 1 );
+ 158:sx1278/radio/sx1276-LoRa.c ****     
+ 159:sx1278/radio/sx1276-LoRa.c ****     SX1276LR->RegLna = RFLR_LNA_GAIN_G1;
+ 160:sx1278/radio/sx1276-LoRa.c **** 
+ 161:sx1278/radio/sx1276-LoRa.c ****     SX1276WriteBuffer( REG_LR_OPMODE, SX1276Regs + 1, 0x70 - 1 );
+ 162:sx1278/radio/sx1276-LoRa.c **** 
+ 163:sx1278/radio/sx1276-LoRa.c ****     // set the RF settings 
+ 164:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetRFFrequency( LoRaSettings.RFFrequency );
+ 165:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSpreadingFactor( LoRaSettings.SpreadingFactor ); // SF6 only operates in implicit 
+ 166:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetErrorCoding( LoRaSettings.ErrorCoding );
+ 167:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetPacketCrcOn( LoRaSettings.CrcOn );
+ 168:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSignalBandwidth( LoRaSettings.SignalBw );
+ 169:sx1278/radio/sx1276-LoRa.c **** 
+ 170:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetImplicitHeaderOn( LoRaSettings.ImplicitHeaderOn );
+ 171:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSymbTimeout( 0x3FF );
+ 172:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetPayloadLength( LoRaSettings.PayloadLength );
+ 173:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetLowDatarateOptimize( true );
+ 174:sx1278/radio/sx1276-LoRa.c **** 
+ 175:sx1278/radio/sx1276-LoRa.c **** #if( ( MODULE_SX1276RF1IAS == 1 ) || ( MODULE_SX1276RF1KAS == 1 ) )
+ 176:sx1278/radio/sx1276-LoRa.c ****     if( LoRaSettings.RFFrequency > 860000000 )
+ 177:sx1278/radio/sx1276-LoRa.c ****     {
+ 178:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPAOutput( RFLR_PACONFIG_PASELECT_RFO );
+ 179:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( false );
+ 180:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 14;
+ 181:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 182:sx1278/radio/sx1276-LoRa.c ****     }
+ 183:sx1278/radio/sx1276-LoRa.c ****     else
+ 184:sx1278/radio/sx1276-LoRa.c ****     {
+ 185:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPAOutput( RFLR_PACONFIG_PASELECT_PABOOST );
+ 186:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( true );
+ 187:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 20;
+ 188:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 189:sx1278/radio/sx1276-LoRa.c ****     } 
+ 190:sx1278/radio/sx1276-LoRa.c **** #elif( MODULE_SX1276RF1JAS == 1 )
+ 191:sx1278/radio/sx1276-LoRa.c ****     if( LoRaSettings.RFFrequency > 860000000 )
+ 192:sx1278/radio/sx1276-LoRa.c ****     {
+ 193:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPAOutput( RFLR_PACONFIG_PASELECT_PABOOST );
+ 194:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( true );
+ 195:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 20;
+ 196:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 197:sx1278/radio/sx1276-LoRa.c ****     }
+ 198:sx1278/radio/sx1276-LoRa.c ****     else
+ 199:sx1278/radio/sx1276-LoRa.c ****     {
+ 200:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPAOutput( RFLR_PACONFIG_PASELECT_RFO );
+ 201:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( false );
+ 202:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 14;
+ARM GAS  /tmp/ccVU9461.s 			page 5
+
+
+ 203:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 204:sx1278/radio/sx1276-LoRa.c ****     } 
+ 205:sx1278/radio/sx1276-LoRa.c **** #endif
+ 206:sx1278/radio/sx1276-LoRa.c **** 
+ 207:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY );
+ 208:sx1278/radio/sx1276-LoRa.c **** }
+ 209:sx1278/radio/sx1276-LoRa.c **** 
+ 210:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaSetDefaults( void )
+ 211:sx1278/radio/sx1276-LoRa.c **** {
+  28              		.loc 1 211 0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 0
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 08B5     		push	{r3, lr}
+  33              	.LCFI0:
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+ 212:sx1278/radio/sx1276-LoRa.c ****     // REMARK: See SX1276 datasheet for modified default values.
+ 213:sx1278/radio/sx1276-LoRa.c **** 
+ 214:sx1278/radio/sx1276-LoRa.c ****     SX1276Read( REG_LR_VERSION, &SX1276LR->RegVersion );
+  37              		.loc 1 214 0
+  38 0002 034B     		ldr	r3, .L3
+  39 0004 1968     		ldr	r1, [r3]
+  40 0006 3F31     		adds	r1, r1, #63
+  41 0008 4220     		movs	r0, #66
+  42 000a FFF7FEFF 		bl	SX1276Read
+  43              	.LVL0:
+  44 000e 08BD     		pop	{r3, pc}
+  45              	.L4:
+  46              		.align	2
+  47              	.L3:
+  48 0010 00000000 		.word	SX1276LR
+  49              		.cfi_endproc
+  50              	.LFE73:
+  52              		.section	.text.SX1276LoRaReset,"ax",%progbits
+  53              		.align	2
+  54              		.global	SX1276LoRaReset
+  55              		.thumb
+  56              		.thumb_func
+  58              	SX1276LoRaReset:
+  59              	.LFB74:
+ 215:sx1278/radio/sx1276-LoRa.c **** }
+ 216:sx1278/radio/sx1276-LoRa.c **** 
+ 217:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaReset( void )
+ 218:sx1278/radio/sx1276-LoRa.c **** {
+  60              		.loc 1 218 0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 0
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64 0000 10B5     		push	{r4, lr}
+  65              	.LCFI1:
+  66              		.cfi_def_cfa_offset 8
+  67              		.cfi_offset 4, -8
+  68              		.cfi_offset 14, -4
+ 219:sx1278/radio/sx1276-LoRa.c ****     SX1276SetReset( RADIO_RESET_ON );
+  69              		.loc 1 219 0
+ARM GAS  /tmp/ccVU9461.s 			page 6
+
+
+  70 0002 0120     		movs	r0, #1
+  71 0004 FFF7FEFF 		bl	SX1276SetReset
+  72              	.LVL1:
+ 220:sx1278/radio/sx1276-LoRa.c ****     
+ 221:sx1278/radio/sx1276-LoRa.c ****     // Wait 1ms
+ 222:sx1278/radio/sx1276-LoRa.c ****     uint32_t startTick = GET_TICK_COUNT( );
+  73              		.loc 1 222 0
+  74 0008 FFF7FEFF 		bl	HAL_GetTick
+  75              	.LVL2:
+  76 000c 0446     		mov	r4, r0
+  77              	.LVL3:
+  78              	.L6:
+ 223:sx1278/radio/sx1276-LoRa.c ****     while( ( GET_TICK_COUNT( ) - startTick ) < TICK_RATE_MS( 1 ) );    
+  79              		.loc 1 223 0 discriminator 1
+  80 000e FFF7FEFF 		bl	HAL_GetTick
+  81              	.LVL4:
+  82 0012 8442     		cmp	r4, r0
+  83 0014 FBD0     		beq	.L6
+ 224:sx1278/radio/sx1276-LoRa.c **** 
+ 225:sx1278/radio/sx1276-LoRa.c ****     SX1276SetReset( RADIO_RESET_OFF );
+  84              		.loc 1 225 0
+  85 0016 0020     		movs	r0, #0
+  86 0018 FFF7FEFF 		bl	SX1276SetReset
+  87              	.LVL5:
+ 226:sx1278/radio/sx1276-LoRa.c ****     
+ 227:sx1278/radio/sx1276-LoRa.c ****     // Wait 6ms
+ 228:sx1278/radio/sx1276-LoRa.c ****     startTick = GET_TICK_COUNT( );
+  88              		.loc 1 228 0
+  89 001c FFF7FEFF 		bl	HAL_GetTick
+  90              	.LVL6:
+  91 0020 0446     		mov	r4, r0
+  92              	.LVL7:
+  93              	.L7:
+ 229:sx1278/radio/sx1276-LoRa.c ****     while( ( GET_TICK_COUNT( ) - startTick ) < TICK_RATE_MS( 6 ) );    
+  94              		.loc 1 229 0 discriminator 1
+  95 0022 FFF7FEFF 		bl	HAL_GetTick
+  96              	.LVL8:
+  97 0026 001B     		subs	r0, r0, r4
+  98 0028 0528     		cmp	r0, #5
+  99 002a FAD9     		bls	.L7
+ 230:sx1278/radio/sx1276-LoRa.c **** }
+ 100              		.loc 1 230 0
+ 101 002c 10BD     		pop	{r4, pc}
+ 102              		.cfi_endproc
+ 103              	.LFE74:
+ 105 002e 00BF     		.section	.text.SX1276LoRaSetOpMode,"ax",%progbits
+ 106              		.align	2
+ 107              		.global	SX1276LoRaSetOpMode
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	SX1276LoRaSetOpMode:
+ 112              	.LFB75:
+ 231:sx1278/radio/sx1276-LoRa.c **** 
+ 232:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaSetOpMode( uint8_t opMode )
+ 233:sx1278/radio/sx1276-LoRa.c **** {
+ 113              		.loc 1 233 0
+ 114              		.cfi_startproc
+ARM GAS  /tmp/ccVU9461.s 			page 7
+
+
+ 115              		@ args = 0, pretend = 0, frame = 0
+ 116              		@ frame_needed = 0, uses_anonymous_args = 0
+ 117              	.LVL9:
+ 234:sx1278/radio/sx1276-LoRa.c ****     static uint8_t opModePrev = RFLR_OPMODE_STANDBY;
+ 235:sx1278/radio/sx1276-LoRa.c ****     static bool antennaSwitchTxOnPrev = true;
+ 236:sx1278/radio/sx1276-LoRa.c ****     bool antennaSwitchTxOn = false;
+ 237:sx1278/radio/sx1276-LoRa.c **** 
+ 238:sx1278/radio/sx1276-LoRa.c ****     opModePrev = SX1276LR->RegOpMode & ~RFLR_OPMODE_MASK;
+ 118              		.loc 1 238 0
+ 119 0000 124B     		ldr	r3, .L16
+ 120 0002 1B68     		ldr	r3, [r3]
+ 121 0004 5B78     		ldrb	r3, [r3, #1]	@ zero_extendqisi2
+ 122 0006 03F00703 		and	r3, r3, #7
+ 239:sx1278/radio/sx1276-LoRa.c **** 
+ 240:sx1278/radio/sx1276-LoRa.c ****     if( opMode != opModePrev )
+ 123              		.loc 1 240 0
+ 124 000a 8342     		cmp	r3, r0
+ 125 000c 1CD0     		beq	.L15
+ 233:sx1278/radio/sx1276-LoRa.c ****     static uint8_t opModePrev = RFLR_OPMODE_STANDBY;
+ 126              		.loc 1 233 0
+ 127 000e 10B5     		push	{r4, lr}
+ 128              	.LCFI2:
+ 129              		.cfi_def_cfa_offset 8
+ 130              		.cfi_offset 4, -8
+ 131              		.cfi_offset 14, -4
+ 241:sx1278/radio/sx1276-LoRa.c ****     {
+ 242:sx1278/radio/sx1276-LoRa.c ****         if( opMode == RFLR_OPMODE_TRANSMITTER )
+ 132              		.loc 1 242 0
+ 133 0010 0328     		cmp	r0, #3
+ 134 0012 01D1     		bne	.L13
+ 243:sx1278/radio/sx1276-LoRa.c ****         {
+ 244:sx1278/radio/sx1276-LoRa.c ****             antennaSwitchTxOn = true;
+ 135              		.loc 1 244 0
+ 136 0014 0123     		movs	r3, #1
+ 137 0016 00E0     		b	.L11
+ 138              	.L13:
+ 245:sx1278/radio/sx1276-LoRa.c ****         }
+ 246:sx1278/radio/sx1276-LoRa.c ****         else
+ 247:sx1278/radio/sx1276-LoRa.c ****         {
+ 248:sx1278/radio/sx1276-LoRa.c ****             antennaSwitchTxOn = false;
+ 139              		.loc 1 248 0
+ 140 0018 0023     		movs	r3, #0
+ 141              	.L11:
+ 142 001a 0446     		mov	r4, r0
+ 143              	.LVL10:
+ 249:sx1278/radio/sx1276-LoRa.c ****         }
+ 250:sx1278/radio/sx1276-LoRa.c ****         if( antennaSwitchTxOn != antennaSwitchTxOnPrev )
+ 144              		.loc 1 250 0
+ 145 001c 0C4A     		ldr	r2, .L16+4
+ 146 001e 1278     		ldrb	r2, [r2]	@ zero_extendqisi2
+ 147 0020 9342     		cmp	r3, r2
+ 148 0022 04D0     		beq	.L12
+ 251:sx1278/radio/sx1276-LoRa.c ****         {
+ 252:sx1278/radio/sx1276-LoRa.c ****             antennaSwitchTxOnPrev = antennaSwitchTxOn;
+ 149              		.loc 1 252 0
+ 150 0024 0A4A     		ldr	r2, .L16+4
+ 151 0026 1370     		strb	r3, [r2]
+ARM GAS  /tmp/ccVU9461.s 			page 8
+
+
+ 253:sx1278/radio/sx1276-LoRa.c ****             RXTX( antennaSwitchTxOn ); // Antenna switch control
+ 152              		.loc 1 253 0
+ 153 0028 1846     		mov	r0, r3
+ 154              	.LVL11:
+ 155 002a FFF7FEFF 		bl	SX1276WriteRxTx
+ 156              	.LVL12:
+ 157              	.L12:
+ 254:sx1278/radio/sx1276-LoRa.c ****         }
+ 255:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegOpMode = ( SX1276LR->RegOpMode & RFLR_OPMODE_MASK ) | opMode;
+ 158              		.loc 1 255 0
+ 159 002e 074B     		ldr	r3, .L16
+ 160 0030 1A68     		ldr	r2, [r3]
+ 161 0032 5078     		ldrb	r0, [r2, #1]	@ zero_extendqisi2
+ 162 0034 20F00700 		bic	r0, r0, #7
+ 163 0038 2043     		orrs	r0, r0, r4
+ 164 003a 5070     		strb	r0, [r2, #1]
+ 256:sx1278/radio/sx1276-LoRa.c **** 
+ 257:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_OPMODE, SX1276LR->RegOpMode );        
+ 165              		.loc 1 257 0
+ 166 003c 1B68     		ldr	r3, [r3]
+ 167 003e 5978     		ldrb	r1, [r3, #1]	@ zero_extendqisi2
+ 168 0040 0120     		movs	r0, #1
+ 169 0042 FFF7FEFF 		bl	SX1276Write
+ 170              	.LVL13:
+ 171 0046 10BD     		pop	{r4, pc}
+ 172              	.LVL14:
+ 173              	.L15:
+ 174              	.LCFI3:
+ 175              		.cfi_def_cfa_offset 0
+ 176              		.cfi_restore 4
+ 177              		.cfi_restore 14
+ 178 0048 7047     		bx	lr
+ 179              	.L17:
+ 180 004a 00BF     		.align	2
+ 181              	.L16:
+ 182 004c 00000000 		.word	SX1276LR
+ 183 0050 00000000 		.word	.LANCHOR0
+ 184              		.cfi_endproc
+ 185              	.LFE75:
+ 187              		.section	.text.SX1276LoRaInit,"ax",%progbits
+ 188              		.align	2
+ 189              		.global	SX1276LoRaInit
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	SX1276LoRaInit:
+ 194              	.LFB72:
+ 152:sx1278/radio/sx1276-LoRa.c ****     RFLRState = RFLR_STATE_IDLE;
+ 195              		.loc 1 152 0
+ 196              		.cfi_startproc
+ 197              		@ args = 0, pretend = 0, frame = 0
+ 198              		@ frame_needed = 0, uses_anonymous_args = 0
+ 199 0000 10B5     		push	{r4, lr}
+ 200              	.LCFI4:
+ 201              		.cfi_def_cfa_offset 8
+ 202              		.cfi_offset 4, -8
+ 203              		.cfi_offset 14, -4
+ 153:sx1278/radio/sx1276-LoRa.c **** 
+ARM GAS  /tmp/ccVU9461.s 			page 9
+
+
+ 204              		.loc 1 153 0
+ 205 0002 0022     		movs	r2, #0
+ 206 0004 264B     		ldr	r3, .L22
+ 207 0006 1A70     		strb	r2, [r3]
+ 155:sx1278/radio/sx1276-LoRa.c ****     
+ 208              		.loc 1 155 0
+ 209 0008 FFF7FEFF 		bl	SX1276LoRaSetDefaults
+ 210              	.LVL15:
+ 157:sx1278/radio/sx1276-LoRa.c ****     
+ 211              		.loc 1 157 0
+ 212 000c 254C     		ldr	r4, .L22+4
+ 213 000e 6F22     		movs	r2, #111
+ 214 0010 2146     		mov	r1, r4
+ 215 0012 0120     		movs	r0, #1
+ 216 0014 FFF7FEFF 		bl	SX1276ReadBuffer
+ 217              	.LVL16:
+ 159:sx1278/radio/sx1276-LoRa.c **** 
+ 218              		.loc 1 159 0
+ 219 0018 234B     		ldr	r3, .L22+8
+ 220 001a 1B68     		ldr	r3, [r3]
+ 221 001c 2022     		movs	r2, #32
+ 222 001e 1A73     		strb	r2, [r3, #12]
+ 161:sx1278/radio/sx1276-LoRa.c **** 
+ 223              		.loc 1 161 0
+ 224 0020 6F22     		movs	r2, #111
+ 225 0022 2146     		mov	r1, r4
+ 226 0024 0120     		movs	r0, #1
+ 227 0026 FFF7FEFF 		bl	SX1276WriteBuffer
+ 228              	.LVL17:
+ 164:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSpreadingFactor( LoRaSettings.SpreadingFactor ); // SF6 only operates in implicit 
+ 229              		.loc 1 164 0
+ 230 002a 204C     		ldr	r4, .L22+12
+ 231 002c 2068     		ldr	r0, [r4]
+ 232 002e FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 233              	.LVL18:
+ 165:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetErrorCoding( LoRaSettings.ErrorCoding );
+ 234              		.loc 1 165 0
+ 235 0032 A079     		ldrb	r0, [r4, #6]	@ zero_extendqisi2
+ 236 0034 FFF7FEFF 		bl	SX1276LoRaSetSpreadingFactor
+ 237              	.LVL19:
+ 166:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetPacketCrcOn( LoRaSettings.CrcOn );
+ 238              		.loc 1 166 0
+ 239 0038 E079     		ldrb	r0, [r4, #7]	@ zero_extendqisi2
+ 240 003a FFF7FEFF 		bl	SX1276LoRaSetErrorCoding
+ 241              	.LVL20:
+ 167:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSignalBandwidth( LoRaSettings.SignalBw );
+ 242              		.loc 1 167 0
+ 243 003e 207A     		ldrb	r0, [r4, #8]	@ zero_extendqisi2
+ 244 0040 FFF7FEFF 		bl	SX1276LoRaSetPacketCrcOn
+ 245              	.LVL21:
+ 168:sx1278/radio/sx1276-LoRa.c **** 
+ 246              		.loc 1 168 0
+ 247 0044 6079     		ldrb	r0, [r4, #5]	@ zero_extendqisi2
+ 248 0046 FFF7FEFF 		bl	SX1276LoRaSetSignalBandwidth
+ 249              	.LVL22:
+ 170:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetSymbTimeout( 0x3FF );
+ 250              		.loc 1 170 0
+ARM GAS  /tmp/ccVU9461.s 			page 10
+
+
+ 251 004a 607A     		ldrb	r0, [r4, #9]	@ zero_extendqisi2
+ 252 004c FFF7FEFF 		bl	SX1276LoRaSetImplicitHeaderOn
+ 253              	.LVL23:
+ 171:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetPayloadLength( LoRaSettings.PayloadLength );
+ 254              		.loc 1 171 0
+ 255 0050 40F2FF30 		movw	r0, #1023
+ 256 0054 FFF7FEFF 		bl	SX1276LoRaSetSymbTimeout
+ 257              	.LVL24:
+ 172:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetLowDatarateOptimize( true );
+ 258              		.loc 1 172 0
+ 259 0058 207E     		ldrb	r0, [r4, #24]	@ zero_extendqisi2
+ 260 005a FFF7FEFF 		bl	SX1276LoRaSetPayloadLength
+ 261              	.LVL25:
+ 173:sx1278/radio/sx1276-LoRa.c **** 
+ 262              		.loc 1 173 0
+ 263 005e 0120     		movs	r0, #1
+ 264 0060 FFF7FEFF 		bl	SX1276LoRaSetLowDatarateOptimize
+ 265              	.LVL26:
+ 176:sx1278/radio/sx1276-LoRa.c ****     {
+ 266              		.loc 1 176 0
+ 267 0064 2268     		ldr	r2, [r4]
+ 268 0066 124B     		ldr	r3, .L22+16
+ 269 0068 9A42     		cmp	r2, r3
+ 270 006a 0AD9     		bls	.L19
+ 178:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( false );
+ 271              		.loc 1 178 0
+ 272 006c 0020     		movs	r0, #0
+ 273 006e FFF7FEFF 		bl	SX1276LoRaSetPAOutput
+ 274              	.LVL27:
+ 179:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 14;
+ 275              		.loc 1 179 0
+ 276 0072 0020     		movs	r0, #0
+ 277 0074 FFF7FEFF 		bl	SX1276LoRaSetPa20dBm
+ 278              	.LVL28:
+ 180:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 279              		.loc 1 180 0
+ 280 0078 0E20     		movs	r0, #14
+ 281 007a 2071     		strb	r0, [r4, #4]
+ 181:sx1278/radio/sx1276-LoRa.c ****     }
+ 282              		.loc 1 181 0
+ 283 007c FFF7FEFF 		bl	SX1276LoRaSetRFPower
+ 284              	.LVL29:
+ 285 0080 0AE0     		b	.L20
+ 286              	.L19:
+ 185:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetPa20dBm( true );
+ 287              		.loc 1 185 0
+ 288 0082 8020     		movs	r0, #128
+ 289 0084 FFF7FEFF 		bl	SX1276LoRaSetPAOutput
+ 290              	.LVL30:
+ 186:sx1278/radio/sx1276-LoRa.c ****         LoRaSettings.Power = 20;
+ 291              		.loc 1 186 0
+ 292 0088 0120     		movs	r0, #1
+ 293 008a FFF7FEFF 		bl	SX1276LoRaSetPa20dBm
+ 294              	.LVL31:
+ 187:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetRFPower( LoRaSettings.Power );
+ 295              		.loc 1 187 0
+ 296 008e 1420     		movs	r0, #20
+ARM GAS  /tmp/ccVU9461.s 			page 11
+
+
+ 297 0090 064B     		ldr	r3, .L22+12
+ 298 0092 1871     		strb	r0, [r3, #4]
+ 188:sx1278/radio/sx1276-LoRa.c ****     } 
+ 299              		.loc 1 188 0
+ 300 0094 FFF7FEFF 		bl	SX1276LoRaSetRFPower
+ 301              	.LVL32:
+ 302              	.L20:
+ 207:sx1278/radio/sx1276-LoRa.c **** }
+ 303              		.loc 1 207 0
+ 304 0098 0120     		movs	r0, #1
+ 305 009a FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 306              	.LVL33:
+ 307 009e 10BD     		pop	{r4, pc}
+ 308              	.L23:
+ 309              		.align	2
+ 310              	.L22:
+ 311 00a0 00000000 		.word	.LANCHOR1
+ 312 00a4 01000000 		.word	SX1276Regs+1
+ 313 00a8 00000000 		.word	SX1276LR
+ 314 00ac 00000000 		.word	.LANCHOR2
+ 315 00b0 008F4233 		.word	860000000
+ 316              		.cfi_endproc
+ 317              	.LFE72:
+ 319              		.section	.text.SX1276LoRaGetOpMode,"ax",%progbits
+ 320              		.align	2
+ 321              		.global	SX1276LoRaGetOpMode
+ 322              		.thumb
+ 323              		.thumb_func
+ 325              	SX1276LoRaGetOpMode:
+ 326              	.LFB76:
+ 258:sx1278/radio/sx1276-LoRa.c ****     }
+ 259:sx1278/radio/sx1276-LoRa.c **** }
+ 260:sx1278/radio/sx1276-LoRa.c **** 
+ 261:sx1278/radio/sx1276-LoRa.c **** uint8_t SX1276LoRaGetOpMode( void )
+ 262:sx1278/radio/sx1276-LoRa.c **** {
+ 327              		.loc 1 262 0
+ 328              		.cfi_startproc
+ 329              		@ args = 0, pretend = 0, frame = 0
+ 330              		@ frame_needed = 0, uses_anonymous_args = 0
+ 331 0000 10B5     		push	{r4, lr}
+ 332              	.LCFI5:
+ 333              		.cfi_def_cfa_offset 8
+ 334              		.cfi_offset 4, -8
+ 335              		.cfi_offset 14, -4
+ 263:sx1278/radio/sx1276-LoRa.c ****     SX1276Read( REG_LR_OPMODE, &SX1276LR->RegOpMode );
+ 336              		.loc 1 263 0
+ 337 0002 054C     		ldr	r4, .L26
+ 338 0004 2168     		ldr	r1, [r4]
+ 339 0006 0131     		adds	r1, r1, #1
+ 340 0008 0120     		movs	r0, #1
+ 341 000a FFF7FEFF 		bl	SX1276Read
+ 342              	.LVL34:
+ 264:sx1278/radio/sx1276-LoRa.c ****     
+ 265:sx1278/radio/sx1276-LoRa.c ****     return SX1276LR->RegOpMode & ~RFLR_OPMODE_MASK;
+ 343              		.loc 1 265 0
+ 344 000e 2368     		ldr	r3, [r4]
+ 345 0010 5878     		ldrb	r0, [r3, #1]	@ zero_extendqisi2
+ARM GAS  /tmp/ccVU9461.s 			page 12
+
+
+ 266:sx1278/radio/sx1276-LoRa.c **** }
+ 346              		.loc 1 266 0
+ 347 0012 00F00700 		and	r0, r0, #7
+ 348 0016 10BD     		pop	{r4, pc}
+ 349              	.L27:
+ 350              		.align	2
+ 351              	.L26:
+ 352 0018 00000000 		.word	SX1276LR
+ 353              		.cfi_endproc
+ 354              	.LFE76:
+ 356              		.section	.text.SX1276LoRaReadRxGain,"ax",%progbits
+ 357              		.align	2
+ 358              		.global	SX1276LoRaReadRxGain
+ 359              		.thumb
+ 360              		.thumb_func
+ 362              	SX1276LoRaReadRxGain:
+ 363              	.LFB77:
+ 267:sx1278/radio/sx1276-LoRa.c **** 
+ 268:sx1278/radio/sx1276-LoRa.c **** uint8_t SX1276LoRaReadRxGain( void )
+ 269:sx1278/radio/sx1276-LoRa.c **** {
+ 364              		.loc 1 269 0
+ 365              		.cfi_startproc
+ 366              		@ args = 0, pretend = 0, frame = 0
+ 367              		@ frame_needed = 0, uses_anonymous_args = 0
+ 368 0000 10B5     		push	{r4, lr}
+ 369              	.LCFI6:
+ 370              		.cfi_def_cfa_offset 8
+ 371              		.cfi_offset 4, -8
+ 372              		.cfi_offset 14, -4
+ 270:sx1278/radio/sx1276-LoRa.c ****     SX1276Read( REG_LR_LNA, &SX1276LR->RegLna );
+ 373              		.loc 1 270 0
+ 374 0002 054C     		ldr	r4, .L30
+ 375 0004 2168     		ldr	r1, [r4]
+ 376 0006 0C31     		adds	r1, r1, #12
+ 377 0008 0C20     		movs	r0, #12
+ 378 000a FFF7FEFF 		bl	SX1276Read
+ 379              	.LVL35:
+ 271:sx1278/radio/sx1276-LoRa.c ****     return( SX1276LR->RegLna >> 5 ) & 0x07;
+ 380              		.loc 1 271 0
+ 381 000e 2368     		ldr	r3, [r4]
+ 382 0010 187B     		ldrb	r0, [r3, #12]	@ zero_extendqisi2
+ 272:sx1278/radio/sx1276-LoRa.c **** }
+ 383              		.loc 1 272 0
+ 384 0012 4009     		lsrs	r0, r0, #5
+ 385 0014 10BD     		pop	{r4, pc}
+ 386              	.L31:
+ 387 0016 00BF     		.align	2
+ 388              	.L30:
+ 389 0018 00000000 		.word	SX1276LR
+ 390              		.cfi_endproc
+ 391              	.LFE77:
+ 393              		.global	__aeabi_ui2d
+ 394              		.global	__aeabi_dsub
+ 395              		.section	.text.SX1276LoRaReadRssi,"ax",%progbits
+ 396              		.align	2
+ 397              		.global	SX1276LoRaReadRssi
+ 398              		.thumb
+ARM GAS  /tmp/ccVU9461.s 			page 13
+
+
+ 399              		.thumb_func
+ 401              	SX1276LoRaReadRssi:
+ 402              	.LFB78:
+ 273:sx1278/radio/sx1276-LoRa.c **** 
+ 274:sx1278/radio/sx1276-LoRa.c **** double SX1276LoRaReadRssi( void )
+ 275:sx1278/radio/sx1276-LoRa.c **** {
+ 403              		.loc 1 275 0
+ 404              		.cfi_startproc
+ 405              		@ args = 0, pretend = 0, frame = 0
+ 406              		@ frame_needed = 0, uses_anonymous_args = 0
+ 407 0000 08B5     		push	{r3, lr}
+ 408              	.LCFI7:
+ 409              		.cfi_def_cfa_offset 8
+ 410              		.cfi_offset 3, -8
+ 411              		.cfi_offset 14, -4
+ 276:sx1278/radio/sx1276-LoRa.c ****     // Reads the RSSI value
+ 277:sx1278/radio/sx1276-LoRa.c ****     SX1276Read( REG_LR_RSSIVALUE, &SX1276LR->RegRssiValue );
+ 412              		.loc 1 277 0
+ 413 0002 134B     		ldr	r3, .L36+8
+ 414 0004 1968     		ldr	r1, [r3]
+ 415 0006 1B31     		adds	r1, r1, #27
+ 416 0008 1B20     		movs	r0, #27
+ 417 000a FFF7FEFF 		bl	SX1276Read
+ 418              	.LVL36:
+ 278:sx1278/radio/sx1276-LoRa.c **** 
+ 279:sx1278/radio/sx1276-LoRa.c ****     if( LoRaSettings.RFFrequency < 860000000 )  // LF
+ 419              		.loc 1 279 0
+ 420 000e 114B     		ldr	r3, .L36+12
+ 421 0010 1A68     		ldr	r2, [r3]
+ 422 0012 114B     		ldr	r3, .L36+16
+ 423 0014 9A42     		cmp	r2, r3
+ 424 0016 09D8     		bhi	.L33
+ 280:sx1278/radio/sx1276-LoRa.c ****     {
+ 281:sx1278/radio/sx1276-LoRa.c ****         return RSSI_OFFSET_LF + ( double )SX1276LR->RegRssiValue;
+ 425              		.loc 1 281 0
+ 426 0018 0D4B     		ldr	r3, .L36+8
+ 427 001a 1B68     		ldr	r3, [r3]
+ 428 001c D87E     		ldrb	r0, [r3, #27]	@ zero_extendqisi2
+ 429 001e FFF7FEFF 		bl	__aeabi_ui2d
+ 430              	.LVL37:
+ 431 0022 0022     		movs	r2, #0
+ 432 0024 0D4B     		ldr	r3, .L36+20
+ 433 0026 FFF7FEFF 		bl	__aeabi_dsub
+ 434              	.LVL38:
+ 435 002a 08BD     		pop	{r3, pc}
+ 436              	.L33:
+ 282:sx1278/radio/sx1276-LoRa.c ****     }
+ 283:sx1278/radio/sx1276-LoRa.c ****     else
+ 284:sx1278/radio/sx1276-LoRa.c ****     {
+ 285:sx1278/radio/sx1276-LoRa.c ****         return RSSI_OFFSET_HF + ( double )SX1276LR->RegRssiValue;
+ 437              		.loc 1 285 0
+ 438 002c 084B     		ldr	r3, .L36+8
+ 439 002e 1B68     		ldr	r3, [r3]
+ 440 0030 D87E     		ldrb	r0, [r3, #27]	@ zero_extendqisi2
+ 441 0032 FFF7FEFF 		bl	__aeabi_ui2d
+ 442              	.LVL39:
+ 443 0036 04A3     		adr	r3, .L36
+ARM GAS  /tmp/ccVU9461.s 			page 14
+
+
+ 444 0038 D3E90023 		ldrd	r2, [r3]
+ 445 003c FFF7FEFF 		bl	__aeabi_dsub
+ 446              	.LVL40:
+ 286:sx1278/radio/sx1276-LoRa.c ****     }
+ 287:sx1278/radio/sx1276-LoRa.c **** }
+ 447              		.loc 1 287 0
+ 448 0040 08BD     		pop	{r3, pc}
+ 449              	.L37:
+ 450 0042 00BFAFF3 		.align	3
+ 450      0080
+ 451              	.L36:
+ 452 0048 00000000 		.word	0
+ 453 004c 00A06340 		.word	1080270848
+ 454 0050 00000000 		.word	SX1276LR
+ 455 0054 00000000 		.word	.LANCHOR2
+ 456 0058 FF8E4233 		.word	859999999
+ 457 005c 00806440 		.word	1080328192
+ 458              		.cfi_endproc
+ 459              	.LFE78:
+ 461              		.section	.text.SX1276LoRaGetPacketRxGain,"ax",%progbits
+ 462              		.align	2
+ 463              		.global	SX1276LoRaGetPacketRxGain
+ 464              		.thumb
+ 465              		.thumb_func
+ 467              	SX1276LoRaGetPacketRxGain:
+ 468              	.LFB79:
+ 288:sx1278/radio/sx1276-LoRa.c **** 
+ 289:sx1278/radio/sx1276-LoRa.c **** uint8_t SX1276LoRaGetPacketRxGain( void )
+ 290:sx1278/radio/sx1276-LoRa.c **** {
+ 469              		.loc 1 290 0
+ 470              		.cfi_startproc
+ 471              		@ args = 0, pretend = 0, frame = 0
+ 472              		@ frame_needed = 0, uses_anonymous_args = 0
+ 473              		@ link register save eliminated.
+ 291:sx1278/radio/sx1276-LoRa.c ****     return RxGain;
+ 292:sx1278/radio/sx1276-LoRa.c **** }
+ 474              		.loc 1 292 0
+ 475 0000 014B     		ldr	r3, .L39
+ 476 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 477 0004 7047     		bx	lr
+ 478              	.L40:
+ 479 0006 00BF     		.align	2
+ 480              	.L39:
+ 481 0008 00000000 		.word	.LANCHOR3
+ 482              		.cfi_endproc
+ 483              	.LFE79:
+ 485              		.section	.text.SX1276LoRaGetPacketSnr,"ax",%progbits
+ 486              		.align	2
+ 487              		.global	SX1276LoRaGetPacketSnr
+ 488              		.thumb
+ 489              		.thumb_func
+ 491              	SX1276LoRaGetPacketSnr:
+ 492              	.LFB80:
+ 293:sx1278/radio/sx1276-LoRa.c **** 
+ 294:sx1278/radio/sx1276-LoRa.c **** int8_t SX1276LoRaGetPacketSnr( void )
+ 295:sx1278/radio/sx1276-LoRa.c **** {
+ 493              		.loc 1 295 0
+ARM GAS  /tmp/ccVU9461.s 			page 15
+
+
+ 494              		.cfi_startproc
+ 495              		@ args = 0, pretend = 0, frame = 0
+ 496              		@ frame_needed = 0, uses_anonymous_args = 0
+ 497              		@ link register save eliminated.
+ 296:sx1278/radio/sx1276-LoRa.c ****     return RxPacketSnrEstimate;
+ 297:sx1278/radio/sx1276-LoRa.c **** }
+ 498              		.loc 1 297 0
+ 499 0000 014B     		ldr	r3, .L42
+ 500 0002 93F90000 		ldrsb	r0, [r3]
+ 501 0006 7047     		bx	lr
+ 502              	.L43:
+ 503              		.align	2
+ 504              	.L42:
+ 505 0008 00000000 		.word	.LANCHOR4
+ 506              		.cfi_endproc
+ 507              	.LFE80:
+ 509              		.section	.text.SX1276LoRaGetPacketRssi,"ax",%progbits
+ 510              		.align	2
+ 511              		.global	SX1276LoRaGetPacketRssi
+ 512              		.thumb
+ 513              		.thumb_func
+ 515              	SX1276LoRaGetPacketRssi:
+ 516              	.LFB81:
+ 298:sx1278/radio/sx1276-LoRa.c **** 
+ 299:sx1278/radio/sx1276-LoRa.c **** double SX1276LoRaGetPacketRssi( void )
+ 300:sx1278/radio/sx1276-LoRa.c **** {
+ 517              		.loc 1 300 0
+ 518              		.cfi_startproc
+ 519              		@ args = 0, pretend = 0, frame = 0
+ 520              		@ frame_needed = 0, uses_anonymous_args = 0
+ 521              		@ link register save eliminated.
+ 301:sx1278/radio/sx1276-LoRa.c ****     return RxPacketRssiValue;
+ 302:sx1278/radio/sx1276-LoRa.c **** }
+ 522              		.loc 1 302 0
+ 523 0000 014B     		ldr	r3, .L45
+ 524 0002 D3E90001 		ldrd	r0, [r3]
+ 525 0006 7047     		bx	lr
+ 526              	.L46:
+ 527              		.align	2
+ 528              	.L45:
+ 529 0008 00000000 		.word	.LANCHOR5
+ 530              		.cfi_endproc
+ 531              	.LFE81:
+ 533              		.section	.text.SX1276LoRaGetRxPacket,"ax",%progbits
+ 534              		.align	2
+ 535              		.global	SX1276LoRaGetRxPacket
+ 536              		.thumb
+ 537              		.thumb_func
+ 539              	SX1276LoRaGetRxPacket:
+ 540              	.LFB83:
+ 303:sx1278/radio/sx1276-LoRa.c **** 
+ 304:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaStartRx( void )
+ 305:sx1278/radio/sx1276-LoRa.c **** {
+ 306:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetRFState( RFLR_STATE_RX_INIT );
+ 307:sx1278/radio/sx1276-LoRa.c **** }
+ 308:sx1278/radio/sx1276-LoRa.c **** 
+ 309:sx1278/radio/sx1276-LoRa.c **** //获取接收到的数据包。参数一：数据；参数二：数据的长度
+ARM GAS  /tmp/ccVU9461.s 			page 16
+
+
+ 310:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaGetRxPacket( void *buffer, uint16_t *size )
+ 311:sx1278/radio/sx1276-LoRa.c **** {
+ 541              		.loc 1 311 0
+ 542              		.cfi_startproc
+ 543              		@ args = 0, pretend = 0, frame = 0
+ 544              		@ frame_needed = 0, uses_anonymous_args = 0
+ 545              	.LVL41:
+ 546 0000 08B5     		push	{r3, lr}
+ 547              	.LCFI8:
+ 548              		.cfi_def_cfa_offset 8
+ 549              		.cfi_offset 3, -8
+ 550              		.cfi_offset 14, -4
+ 312:sx1278/radio/sx1276-LoRa.c ****     *size = RxPacketSize;
+ 551              		.loc 1 312 0
+ 552 0002 044B     		ldr	r3, .L49
+ 553 0004 1A88     		ldrh	r2, [r3]
+ 554 0006 0A80     		strh	r2, [r1]	@ movhi
+ 313:sx1278/radio/sx1276-LoRa.c ****     RxPacketSize = 0;
+ 555              		.loc 1 313 0
+ 556 0008 0021     		movs	r1, #0
+ 557              	.LVL42:
+ 558 000a 1980     		strh	r1, [r3]	@ movhi
+ 314:sx1278/radio/sx1276-LoRa.c ****     memcpy( ( void * )buffer, ( void * )RFBuffer, ( size_t )*size );
+ 559              		.loc 1 314 0
+ 560 000c 0249     		ldr	r1, .L49+4
+ 561 000e FFF7FEFF 		bl	memcpy
+ 562              	.LVL43:
+ 563 0012 08BD     		pop	{r3, pc}
+ 564              	.L50:
+ 565              		.align	2
+ 566              	.L49:
+ 567 0014 00000000 		.word	.LANCHOR6
+ 568 0018 00000000 		.word	.LANCHOR7
+ 569              		.cfi_endproc
+ 570              	.LFE83:
+ 572              		.section	.text.SX1276LoRaSetTxPacket,"ax",%progbits
+ 573              		.align	2
+ 574              		.global	SX1276LoRaSetTxPacket
+ 575              		.thumb
+ 576              		.thumb_func
+ 578              	SX1276LoRaSetTxPacket:
+ 579              	.LFB84:
+ 315:sx1278/radio/sx1276-LoRa.c **** }
+ 316:sx1278/radio/sx1276-LoRa.c **** 
+ 317:sx1278/radio/sx1276-LoRa.c **** //发送数据包。
+ 318:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaSetTxPacket( const void *buffer, uint16_t size ) //
+ 319:sx1278/radio/sx1276-LoRa.c **** {
+ 580              		.loc 1 319 0
+ 581              		.cfi_startproc
+ 582              		@ args = 0, pretend = 0, frame = 0
+ 583              		@ frame_needed = 0, uses_anonymous_args = 0
+ 584              	.LVL44:
+ 585 0000 08B5     		push	{r3, lr}
+ 586              	.LCFI9:
+ 587              		.cfi_def_cfa_offset 8
+ 588              		.cfi_offset 3, -8
+ 589              		.cfi_offset 14, -4
+ARM GAS  /tmp/ccVU9461.s 			page 17
+
+
+ 590 0002 0A46     		mov	r2, r1
+ 320:sx1278/radio/sx1276-LoRa.c ****     TxPacketSize = size;
+ 591              		.loc 1 320 0
+ 592 0004 044B     		ldr	r3, .L53
+ 593 0006 1980     		strh	r1, [r3]	@ movhi
+ 321:sx1278/radio/sx1276-LoRa.c ****     memcpy( ( void * )RFBuffer, buffer, ( size_t )TxPacketSize ); 
+ 594              		.loc 1 321 0
+ 595 0008 0146     		mov	r1, r0
+ 596              	.LVL45:
+ 597 000a 0448     		ldr	r0, .L53+4
+ 598              	.LVL46:
+ 599 000c FFF7FEFF 		bl	memcpy
+ 600              	.LVL47:
+ 322:sx1278/radio/sx1276-LoRa.c **** 
+ 323:sx1278/radio/sx1276-LoRa.c ****     RFLRState = RFLR_STATE_TX_INIT;
+ 601              		.loc 1 323 0
+ 602 0010 0522     		movs	r2, #5
+ 603 0012 034B     		ldr	r3, .L53+8
+ 604 0014 1A70     		strb	r2, [r3]
+ 605 0016 08BD     		pop	{r3, pc}
+ 606              	.L54:
+ 607              		.align	2
+ 608              	.L53:
+ 609 0018 00000000 		.word	.LANCHOR8
+ 610 001c 00000000 		.word	.LANCHOR7
+ 611 0020 00000000 		.word	.LANCHOR1
+ 612              		.cfi_endproc
+ 613              	.LFE84:
+ 615              		.section	.text.SX1276LoRaGetRFState,"ax",%progbits
+ 616              		.align	2
+ 617              		.global	SX1276LoRaGetRFState
+ 618              		.thumb
+ 619              		.thumb_func
+ 621              	SX1276LoRaGetRFState:
+ 622              	.LFB85:
+ 324:sx1278/radio/sx1276-LoRa.c **** }
+ 325:sx1278/radio/sx1276-LoRa.c **** 
+ 326:sx1278/radio/sx1276-LoRa.c **** uint8_t SX1276LoRaGetRFState( void )
+ 327:sx1278/radio/sx1276-LoRa.c **** {
+ 623              		.loc 1 327 0
+ 624              		.cfi_startproc
+ 625              		@ args = 0, pretend = 0, frame = 0
+ 626              		@ frame_needed = 0, uses_anonymous_args = 0
+ 627              		@ link register save eliminated.
+ 328:sx1278/radio/sx1276-LoRa.c ****     return RFLRState;
+ 329:sx1278/radio/sx1276-LoRa.c **** }
+ 628              		.loc 1 329 0
+ 629 0000 014B     		ldr	r3, .L56
+ 630 0002 1878     		ldrb	r0, [r3]	@ zero_extendqisi2
+ 631 0004 7047     		bx	lr
+ 632              	.L57:
+ 633 0006 00BF     		.align	2
+ 634              	.L56:
+ 635 0008 00000000 		.word	.LANCHOR1
+ 636              		.cfi_endproc
+ 637              	.LFE85:
+ 639              		.section	.text.SX1276LoRaSetRFState,"ax",%progbits
+ARM GAS  /tmp/ccVU9461.s 			page 18
+
+
+ 640              		.align	2
+ 641              		.global	SX1276LoRaSetRFState
+ 642              		.thumb
+ 643              		.thumb_func
+ 645              	SX1276LoRaSetRFState:
+ 646              	.LFB86:
+ 330:sx1278/radio/sx1276-LoRa.c **** 
+ 331:sx1278/radio/sx1276-LoRa.c **** void SX1276LoRaSetRFState( uint8_t state )
+ 332:sx1278/radio/sx1276-LoRa.c **** {
+ 647              		.loc 1 332 0
+ 648              		.cfi_startproc
+ 649              		@ args = 0, pretend = 0, frame = 0
+ 650              		@ frame_needed = 0, uses_anonymous_args = 0
+ 651              		@ link register save eliminated.
+ 652              	.LVL48:
+ 333:sx1278/radio/sx1276-LoRa.c ****     RFLRState = state;
+ 653              		.loc 1 333 0
+ 654 0000 014B     		ldr	r3, .L59
+ 655 0002 1870     		strb	r0, [r3]
+ 656 0004 7047     		bx	lr
+ 657              	.L60:
+ 658 0006 00BF     		.align	2
+ 659              	.L59:
+ 660 0008 00000000 		.word	.LANCHOR1
+ 661              		.cfi_endproc
+ 662              	.LFE86:
+ 664              		.section	.text.SX1276LoRaStartRx,"ax",%progbits
+ 665              		.align	2
+ 666              		.global	SX1276LoRaStartRx
+ 667              		.thumb
+ 668              		.thumb_func
+ 670              	SX1276LoRaStartRx:
+ 671              	.LFB82:
+ 305:sx1278/radio/sx1276-LoRa.c ****     SX1276LoRaSetRFState( RFLR_STATE_RX_INIT );
+ 672              		.loc 1 305 0
+ 673              		.cfi_startproc
+ 674              		@ args = 0, pretend = 0, frame = 0
+ 675              		@ frame_needed = 0, uses_anonymous_args = 0
+ 676 0000 08B5     		push	{r3, lr}
+ 677              	.LCFI10:
+ 678              		.cfi_def_cfa_offset 8
+ 679              		.cfi_offset 3, -8
+ 680              		.cfi_offset 14, -4
+ 306:sx1278/radio/sx1276-LoRa.c **** }
+ 681              		.loc 1 306 0
+ 682 0002 0120     		movs	r0, #1
+ 683 0004 FFF7FEFF 		bl	SX1276LoRaSetRFState
+ 684              	.LVL49:
+ 685 0008 08BD     		pop	{r3, pc}
+ 686              		.cfi_endproc
+ 687              	.LFE82:
+ 689              		.global	__aeabi_i2d
+ 690              		.global	__aeabi_dadd
+ 691              		.global	__aeabi_dmul
+ 692 000a 00BF     		.section	.text.SX1276LoRaProcess,"ax",%progbits
+ 693              		.align	2
+ 694              		.global	SX1276LoRaProcess
+ARM GAS  /tmp/ccVU9461.s 			page 19
+
+
+ 695              		.thumb
+ 696              		.thumb_func
+ 698              	SX1276LoRaProcess:
+ 699              	.LFB87:
+ 334:sx1278/radio/sx1276-LoRa.c **** }
+ 335:sx1278/radio/sx1276-LoRa.c **** 
+ 336:sx1278/radio/sx1276-LoRa.c **** /*!
+ 337:sx1278/radio/sx1276-LoRa.c ****  * \brief Process the LoRa modem Rx and Tx state machines depending on the
+ 338:sx1278/radio/sx1276-LoRa.c ****  *        SX1276 operating mode.
+ 339:sx1278/radio/sx1276-LoRa.c ****  *
+ 340:sx1278/radio/sx1276-LoRa.c ****  * \retval rfState Current RF state [RF_IDLE, RF_BUSY, 
+ 341:sx1278/radio/sx1276-LoRa.c ****  *                                   RF_RX_DONE, RF_RX_TIMEOUT,
+ 342:sx1278/radio/sx1276-LoRa.c ****  *                                   RF_TX_DONE, RF_TX_TIMEOUT]
+ 343:sx1278/radio/sx1276-LoRa.c ****  */
+ 344:sx1278/radio/sx1276-LoRa.c **** uint32_t SX1276LoRaProcess( void )   //事件任务处理函数，里面有多种工作模式：接
+ 345:sx1278/radio/sx1276-LoRa.c **** {
+ 700              		.loc 1 345 0
+ 701              		.cfi_startproc
+ 702              		@ args = 0, pretend = 0, frame = 8
+ 703              		@ frame_needed = 0, uses_anonymous_args = 0
+ 704 0000 D0B5     		push	{r4, r6, r7, lr}
+ 705              	.LCFI11:
+ 706              		.cfi_def_cfa_offset 16
+ 707              		.cfi_offset 4, -16
+ 708              		.cfi_offset 6, -12
+ 709              		.cfi_offset 7, -8
+ 710              		.cfi_offset 14, -4
+ 711 0002 82B0     		sub	sp, sp, #8
+ 712              	.LCFI12:
+ 713              		.cfi_def_cfa_offset 24
+ 714              	.LVL50:
+ 346:sx1278/radio/sx1276-LoRa.c ****     uint32_t result = RF_BUSY;
+ 347:sx1278/radio/sx1276-LoRa.c ****     
+ 348:sx1278/radio/sx1276-LoRa.c ****     switch( RFLRState )
+ 715              		.loc 1 348 0
+ 716 0004 A84B     		ldr	r3, .L107+16
+ 717 0006 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 718 0008 013B     		subs	r3, r3, #1
+ 719 000a 092B     		cmp	r3, #9
+ 720 000c 00F29D82 		bhi	.L101
+ 721 0010 DFE813F0 		tbh	[pc, r3, lsl #1]
+ 722              	.L66:
+ 723 0014 0A00     		.2byte	(.L65-.L66)/2
+ 724 0016 6600     		.2byte	(.L67-.L66)/2
+ 725 0018 BD00     		.2byte	(.L68-.L66)/2
+ 726 001a D401     		.2byte	(.L69-.L66)/2
+ 727 001c D901     		.2byte	(.L70-.L66)/2
+ 728 001e 3502     		.2byte	(.L71-.L66)/2
+ 729 0020 5C02     		.2byte	(.L72-.L66)/2
+ 730 0022 9B02     		.2byte	(.L101-.L66)/2
+ 731 0024 6402     		.2byte	(.L73-.L66)/2
+ 732 0026 8102     		.2byte	(.L74-.L66)/2
+ 733              		.p2align 1
+ 734              	.L65:
+ 349:sx1278/radio/sx1276-LoRa.c ****     {
+ 350:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_IDLE:
+ 351:sx1278/radio/sx1276-LoRa.c ****         break;
+ARM GAS  /tmp/ccVU9461.s 			page 20
+
+
+ 352:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_RX_INIT:
+ 353:sx1278/radio/sx1276-LoRa.c ****         
+ 354:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY );
+ 735              		.loc 1 354 0
+ 736 0028 0120     		movs	r0, #1
+ 737 002a FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 738              	.LVL51:
+ 355:sx1278/radio/sx1276-LoRa.c **** 
+ 356:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegIrqFlagsMask = RFLR_IRQFLAGS_RXTIMEOUT |
+ 739              		.loc 1 356 0
+ 740 002e 9F4B     		ldr	r3, .L107+20
+ 741 0030 1B68     		ldr	r3, [r3]
+ 742 0032 9D21     		movs	r1, #157
+ 743 0034 5974     		strb	r1, [r3, #17]
+ 357:sx1278/radio/sx1276-LoRa.c ****                                     //RFLR_IRQFLAGS_RXDONE |
+ 358:sx1278/radio/sx1276-LoRa.c ****                                     //RFLR_IRQFLAGS_PAYLOADCRCERROR |
+ 359:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_VALIDHEADER |
+ 360:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_TXDONE |
+ 361:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_CADDONE |
+ 362:sx1278/radio/sx1276-LoRa.c ****                                     //RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL |
+ 363:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_CADDETECTED;
+ 364:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_IRQFLAGSMASK, SX1276LR->RegIrqFlagsMask );
+ 744              		.loc 1 364 0
+ 745 0036 1120     		movs	r0, #17
+ 746 0038 FFF7FEFF 		bl	SX1276Write
+ 747              	.LVL52:
+ 365:sx1278/radio/sx1276-LoRa.c **** 
+ 366:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.FreqHopOn == true )
+ 748              		.loc 1 366 0
+ 749 003c 9C4B     		ldr	r3, .L107+24
+ 750 003e DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 751 0040 9BB1     		cbz	r3, .L75
+ 367:sx1278/radio/sx1276-LoRa.c ****         {
+ 368:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegHopPeriod = LoRaSettings.HopPeriod;
+ 752              		.loc 1 368 0
+ 753 0042 9A4C     		ldr	r4, .L107+20
+ 754 0044 2168     		ldr	r1, [r4]
+ 755 0046 9A4B     		ldr	r3, .L107+24
+ 756 0048 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 757 004a 81F82430 		strb	r3, [r1, #36]
+ 369:sx1278/radio/sx1276-LoRa.c **** 
+ 370:sx1278/radio/sx1276-LoRa.c ****             SX1276Read( REG_LR_HOPCHANNEL, &SX1276LR->RegHopChannel );
+ 758              		.loc 1 370 0
+ 759 004e 1C31     		adds	r1, r1, #28
+ 760 0050 1C20     		movs	r0, #28
+ 761 0052 FFF7FEFF 		bl	SX1276Read
+ 762              	.LVL53:
+ 371:sx1278/radio/sx1276-LoRa.c ****             SX1276LoRaSetRFFrequency( HoppingFrequencies[SX1276LR->RegHopChannel & RFLR_HOPCHANNEL_
+ 763              		.loc 1 371 0
+ 764 0056 2368     		ldr	r3, [r4]
+ 765 0058 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 766 005a 03F03F03 		and	r3, r3, #63
+ 767 005e 954A     		ldr	r2, .L107+28
+ 768 0060 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 769 0064 FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 770              	.LVL54:
+ 771 0068 04E0     		b	.L76
+ARM GAS  /tmp/ccVU9461.s 			page 21
+
+
+ 772              	.L75:
+ 372:sx1278/radio/sx1276-LoRa.c ****         }
+ 373:sx1278/radio/sx1276-LoRa.c ****         else
+ 374:sx1278/radio/sx1276-LoRa.c ****         {
+ 375:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegHopPeriod = 255;
+ 773              		.loc 1 375 0
+ 774 006a 904B     		ldr	r3, .L107+20
+ 775 006c 1B68     		ldr	r3, [r3]
+ 776 006e FF22     		movs	r2, #255
+ 777 0070 83F82420 		strb	r2, [r3, #36]
+ 778              	.L76:
+ 376:sx1278/radio/sx1276-LoRa.c ****         }
+ 377:sx1278/radio/sx1276-LoRa.c ****         
+ 378:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_HOPPERIOD, SX1276LR->RegHopPeriod );
+ 779              		.loc 1 378 0
+ 780 0074 8D4C     		ldr	r4, .L107+20
+ 781 0076 2368     		ldr	r3, [r4]
+ 782 0078 93F82410 		ldrb	r1, [r3, #36]	@ zero_extendqisi2
+ 783 007c 2420     		movs	r0, #36
+ 784 007e FFF7FEFF 		bl	SX1276Write
+ 785              	.LVL55:
+ 379:sx1278/radio/sx1276-LoRa.c ****                 
+ 380:sx1278/radio/sx1276-LoRa.c ****                                     // RxDone                    RxTimeout                   FhssCh
+ 381:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping1 = RFLR_DIOMAPPING1_DIO0_00 | RFLR_DIOMAPPING1_DIO1_00 | RFLR_DIOMA
+ 786              		.loc 1 381 0
+ 787 0082 2168     		ldr	r1, [r4]
+ 788 0084 0023     		movs	r3, #0
+ 789 0086 81F83D30 		strb	r3, [r1, #61]
+ 382:sx1278/radio/sx1276-LoRa.c ****                                     // CadDetected               ModeReady
+ 383:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping2 = RFLR_DIOMAPPING2_DIO4_00 | RFLR_DIOMAPPING2_DIO5_00;
+ 790              		.loc 1 383 0
+ 791 008a 81F83E30 		strb	r3, [r1, #62]
+ 384:sx1278/radio/sx1276-LoRa.c ****         SX1276WriteBuffer( REG_LR_DIOMAPPING1, &SX1276LR->RegDioMapping1, 2 );
+ 792              		.loc 1 384 0
+ 793 008e 0222     		movs	r2, #2
+ 794 0090 3D31     		adds	r1, r1, #61
+ 795 0092 4020     		movs	r0, #64
+ 796 0094 FFF7FEFF 		bl	SX1276WriteBuffer
+ 797              	.LVL56:
+ 385:sx1278/radio/sx1276-LoRa.c ****     
+ 386:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.RxSingleOn == true ) // Rx single mode
+ 798              		.loc 1 386 0
+ 799 0098 854B     		ldr	r3, .L107+24
+ 800 009a 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 801 009c 1BB1     		cbz	r3, .L77
+ 387:sx1278/radio/sx1276-LoRa.c ****         {
+ 388:sx1278/radio/sx1276-LoRa.c **** 
+ 389:sx1278/radio/sx1276-LoRa.c ****             SX1276LoRaSetOpMode( RFLR_OPMODE_RECEIVER_SINGLE );
+ 802              		.loc 1 389 0
+ 803 009e 0620     		movs	r0, #6
+ 804 00a0 FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 805              	.LVL57:
+ 806 00a4 09E0     		b	.L78
+ 807              	.L77:
+ 390:sx1278/radio/sx1276-LoRa.c ****         }
+ 391:sx1278/radio/sx1276-LoRa.c ****         else // Rx continuous mode
+ 392:sx1278/radio/sx1276-LoRa.c ****         {
+ARM GAS  /tmp/ccVU9461.s 			page 22
+
+
+ 393:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegFifoAddrPtr = SX1276LR->RegFifoRxBaseAddr;
+ 808              		.loc 1 393 0
+ 809 00a6 814B     		ldr	r3, .L107+20
+ 810 00a8 1B68     		ldr	r3, [r3]
+ 811 00aa D97B     		ldrb	r1, [r3, #15]	@ zero_extendqisi2
+ 812 00ac 5973     		strb	r1, [r3, #13]
+ 394:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_FIFOADDRPTR, SX1276LR->RegFifoAddrPtr );
+ 813              		.loc 1 394 0
+ 814 00ae 0D20     		movs	r0, #13
+ 815 00b0 FFF7FEFF 		bl	SX1276Write
+ 816              	.LVL58:
+ 395:sx1278/radio/sx1276-LoRa.c ****             
+ 396:sx1278/radio/sx1276-LoRa.c ****             SX1276LoRaSetOpMode( RFLR_OPMODE_RECEIVER );
+ 817              		.loc 1 396 0
+ 818 00b4 0520     		movs	r0, #5
+ 819 00b6 FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 820              	.LVL59:
+ 821              	.L78:
+ 397:sx1278/radio/sx1276-LoRa.c ****         }
+ 398:sx1278/radio/sx1276-LoRa.c ****         
+ 399:sx1278/radio/sx1276-LoRa.c ****         memset( RFBuffer, 0, ( size_t )RF_BUFFER_SIZE );
+ 822              		.loc 1 399 0
+ 823 00ba 4FF48072 		mov	r2, #256
+ 824 00be 0021     		movs	r1, #0
+ 825 00c0 7D48     		ldr	r0, .L107+32
+ 826 00c2 FFF7FEFF 		bl	memset
+ 827              	.LVL60:
+ 400:sx1278/radio/sx1276-LoRa.c **** 
+ 401:sx1278/radio/sx1276-LoRa.c ****         PacketTimeout = LoRaSettings.RxPacketTimeout;
+ 828              		.loc 1 401 0
+ 829 00c6 7A4B     		ldr	r3, .L107+24
+ 830 00c8 5A69     		ldr	r2, [r3, #20]
+ 831 00ca 7C4B     		ldr	r3, .L107+36
+ 832 00cc 1A60     		str	r2, [r3]
+ 402:sx1278/radio/sx1276-LoRa.c ****         RxTimeoutTimer = GET_TICK_COUNT( );
+ 833              		.loc 1 402 0
+ 834 00ce FFF7FEFF 		bl	HAL_GetTick
+ 835              	.LVL61:
+ 836 00d2 7B4B     		ldr	r3, .L107+40
+ 837 00d4 1860     		str	r0, [r3]
+ 403:sx1278/radio/sx1276-LoRa.c ****         RFLRState = RFLR_STATE_RX_RUNNING;
+ 838              		.loc 1 403 0
+ 839 00d6 0222     		movs	r2, #2
+ 840 00d8 734B     		ldr	r3, .L107+16
+ 841 00da 1A70     		strb	r2, [r3]
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 842              		.loc 1 346 0
+ 843 00dc 0120     		movs	r0, #1
+ 404:sx1278/radio/sx1276-LoRa.c ****         break;
+ 844              		.loc 1 404 0
+ 845 00de 3DE2     		b	.L64
+ 846              	.L67:
+ 405:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_RX_RUNNING:
+ 406:sx1278/radio/sx1276-LoRa.c ****         
+ 407:sx1278/radio/sx1276-LoRa.c ****         if( DIO0 == 1 ) // RxDone
+ 847              		.loc 1 407 0
+ 848 00e0 FFF7FEFF 		bl	SX1276ReadDio0
+ARM GAS  /tmp/ccVU9461.s 			page 23
+
+
+ 849              	.LVL62:
+ 850 00e4 0128     		cmp	r0, #1
+ 851 00e6 1CD1     		bne	.L79
+ 408:sx1278/radio/sx1276-LoRa.c ****         {
+ 409:sx1278/radio/sx1276-LoRa.c ****             RxTimeoutTimer = GET_TICK_COUNT( );
+ 852              		.loc 1 409 0
+ 853 00e8 FFF7FEFF 		bl	HAL_GetTick
+ 854              	.LVL63:
+ 855 00ec 744B     		ldr	r3, .L107+40
+ 856 00ee 1860     		str	r0, [r3]
+ 410:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.FreqHopOn == true )
+ 857              		.loc 1 410 0
+ 858 00f0 6F4B     		ldr	r3, .L107+24
+ 859 00f2 DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 860 00f4 73B1     		cbz	r3, .L80
+ 411:sx1278/radio/sx1276-LoRa.c ****             {
+ 412:sx1278/radio/sx1276-LoRa.c ****                 SX1276Read( REG_LR_HOPCHANNEL, &SX1276LR->RegHopChannel );
+ 861              		.loc 1 412 0
+ 862 00f6 6D4C     		ldr	r4, .L107+20
+ 863 00f8 2168     		ldr	r1, [r4]
+ 864 00fa 1C31     		adds	r1, r1, #28
+ 865 00fc 1C20     		movs	r0, #28
+ 866 00fe FFF7FEFF 		bl	SX1276Read
+ 867              	.LVL64:
+ 413:sx1278/radio/sx1276-LoRa.c ****                 SX1276LoRaSetRFFrequency( HoppingFrequencies[SX1276LR->RegHopChannel & RFLR_HOPCHAN
+ 868              		.loc 1 413 0
+ 869 0102 2368     		ldr	r3, [r4]
+ 870 0104 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 871 0106 03F03F03 		and	r3, r3, #63
+ 872 010a 6A4A     		ldr	r2, .L107+28
+ 873 010c 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 874 0110 FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 875              	.LVL65:
+ 876              	.L80:
+ 414:sx1278/radio/sx1276-LoRa.c ****             }
+ 415:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 416:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_RXDONE  );
+ 877              		.loc 1 416 0
+ 878 0114 4021     		movs	r1, #64
+ 879 0116 1220     		movs	r0, #18
+ 880 0118 FFF7FEFF 		bl	SX1276Write
+ 881              	.LVL66:
+ 417:sx1278/radio/sx1276-LoRa.c ****             RFLRState = RFLR_STATE_RX_DONE;
+ 882              		.loc 1 417 0
+ 883 011c 0322     		movs	r2, #3
+ 884 011e 624B     		ldr	r3, .L107+16
+ 885 0120 1A70     		strb	r2, [r3]
+ 886              	.L79:
+ 418:sx1278/radio/sx1276-LoRa.c ****         }
+ 419:sx1278/radio/sx1276-LoRa.c ****         if( DIO2 == 1 ) // FHSS Changed Channel
+ 887              		.loc 1 419 0
+ 888 0122 FFF7FEFF 		bl	SX1276ReadDio2
+ 889              	.LVL67:
+ 890 0126 0128     		cmp	r0, #1
+ 891 0128 1DD1     		bne	.L81
+ 420:sx1278/radio/sx1276-LoRa.c ****         {
+ 421:sx1278/radio/sx1276-LoRa.c ****             RxTimeoutTimer = GET_TICK_COUNT( );
+ARM GAS  /tmp/ccVU9461.s 			page 24
+
+
+ 892              		.loc 1 421 0
+ 893 012a FFF7FEFF 		bl	HAL_GetTick
+ 894              	.LVL68:
+ 895 012e 644B     		ldr	r3, .L107+40
+ 896 0130 1860     		str	r0, [r3]
+ 422:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.FreqHopOn == true )
+ 897              		.loc 1 422 0
+ 898 0132 5F4B     		ldr	r3, .L107+24
+ 899 0134 DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 900 0136 73B1     		cbz	r3, .L82
+ 423:sx1278/radio/sx1276-LoRa.c ****             {
+ 424:sx1278/radio/sx1276-LoRa.c ****                 SX1276Read( REG_LR_HOPCHANNEL, &SX1276LR->RegHopChannel );
+ 901              		.loc 1 424 0
+ 902 0138 5C4C     		ldr	r4, .L107+20
+ 903 013a 2168     		ldr	r1, [r4]
+ 904 013c 1C31     		adds	r1, r1, #28
+ 905 013e 1C20     		movs	r0, #28
+ 906 0140 FFF7FEFF 		bl	SX1276Read
+ 907              	.LVL69:
+ 425:sx1278/radio/sx1276-LoRa.c ****                 SX1276LoRaSetRFFrequency( HoppingFrequencies[SX1276LR->RegHopChannel & RFLR_HOPCHAN
+ 908              		.loc 1 425 0
+ 909 0144 2368     		ldr	r3, [r4]
+ 910 0146 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 911 0148 03F03F03 		and	r3, r3, #63
+ 912 014c 594A     		ldr	r2, .L107+28
+ 913 014e 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 914 0152 FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 915              	.LVL70:
+ 916              	.L82:
+ 426:sx1278/radio/sx1276-LoRa.c ****             }
+ 427:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 428:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL );
+ 917              		.loc 1 428 0
+ 918 0156 0221     		movs	r1, #2
+ 919 0158 1220     		movs	r0, #18
+ 920 015a FFF7FEFF 		bl	SX1276Write
+ 921              	.LVL71:
+ 429:sx1278/radio/sx1276-LoRa.c ****             // Debug
+ 430:sx1278/radio/sx1276-LoRa.c ****             RxGain = SX1276LoRaReadRxGain( );
+ 922              		.loc 1 430 0
+ 923 015e FFF7FEFF 		bl	SX1276LoRaReadRxGain
+ 924              	.LVL72:
+ 925 0162 584B     		ldr	r3, .L107+44
+ 926 0164 1870     		strb	r0, [r3]
+ 927              	.L81:
+ 431:sx1278/radio/sx1276-LoRa.c ****         }
+ 432:sx1278/radio/sx1276-LoRa.c **** 
+ 433:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.RxSingleOn == true ) // Rx single mode
+ 928              		.loc 1 433 0
+ 929 0166 524B     		ldr	r3, .L107+24
+ 930 0168 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 931 016a 002B     		cmp	r3, #0
+ 932 016c 00F0EF81 		beq	.L102
+ 434:sx1278/radio/sx1276-LoRa.c ****         {
+ 435:sx1278/radio/sx1276-LoRa.c ****             if( ( GET_TICK_COUNT( ) - RxTimeoutTimer ) > PacketTimeout )
+ 933              		.loc 1 435 0
+ 934 0170 FFF7FEFF 		bl	HAL_GetTick
+ARM GAS  /tmp/ccVU9461.s 			page 25
+
+
+ 935              	.LVL73:
+ 936 0174 524B     		ldr	r3, .L107+40
+ 937 0176 1B68     		ldr	r3, [r3]
+ 938 0178 C01A     		subs	r0, r0, r3
+ 939 017a 504B     		ldr	r3, .L107+36
+ 940 017c 1B68     		ldr	r3, [r3]
+ 941 017e 9842     		cmp	r0, r3
+ 942 0180 40F2E781 		bls	.L103
+ 436:sx1278/radio/sx1276-LoRa.c ****             {
+ 437:sx1278/radio/sx1276-LoRa.c ****                 RFLRState = RFLR_STATE_RX_TIMEOUT;
+ 943              		.loc 1 437 0
+ 944 0184 0422     		movs	r2, #4
+ 945 0186 484B     		ldr	r3, .L107+16
+ 946 0188 1A70     		strb	r2, [r3]
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 947              		.loc 1 346 0
+ 948 018a 0120     		movs	r0, #1
+ 949 018c E6E1     		b	.L64
+ 950              	.L68:
+ 438:sx1278/radio/sx1276-LoRa.c ****             }
+ 439:sx1278/radio/sx1276-LoRa.c ****         }
+ 440:sx1278/radio/sx1276-LoRa.c ****         break;
+ 441:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_RX_DONE:
+ 442:sx1278/radio/sx1276-LoRa.c ****         SX1276Read( REG_LR_IRQFLAGS, &SX1276LR->RegIrqFlags );
+ 951              		.loc 1 442 0
+ 952 018e 474C     		ldr	r4, .L107+20
+ 953 0190 2168     		ldr	r1, [r4]
+ 954 0192 1231     		adds	r1, r1, #18
+ 955 0194 1220     		movs	r0, #18
+ 956 0196 FFF7FEFF 		bl	SX1276Read
+ 957              	.LVL74:
+ 443:sx1278/radio/sx1276-LoRa.c ****         if( ( SX1276LR->RegIrqFlags & RFLR_IRQFLAGS_PAYLOADCRCERROR ) == RFLR_IRQFLAGS_PAYLOADCRCER
+ 958              		.loc 1 443 0
+ 959 019a 2368     		ldr	r3, [r4]
+ 960 019c 9B7C     		ldrb	r3, [r3, #18]	@ zero_extendqisi2
+ 961 019e 13F0200F 		tst	r3, #32
+ 962 01a2 0FD0     		beq	.L83
+ 444:sx1278/radio/sx1276-LoRa.c ****         {
+ 445:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 446:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_PAYLOADCRCERROR  );
+ 963              		.loc 1 446 0
+ 964 01a4 2021     		movs	r1, #32
+ 965 01a6 1220     		movs	r0, #18
+ 966 01a8 FFF7FEFF 		bl	SX1276Write
+ 967              	.LVL75:
+ 447:sx1278/radio/sx1276-LoRa.c ****             
+ 448:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.RxSingleOn == true ) // Rx single mode
+ 968              		.loc 1 448 0
+ 969 01ac 404B     		ldr	r3, .L107+24
+ 970 01ae 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 971 01b0 1BB1     		cbz	r3, .L84
+ 449:sx1278/radio/sx1276-LoRa.c ****             {
+ 450:sx1278/radio/sx1276-LoRa.c ****                 RFLRState = RFLR_STATE_RX_INIT;
+ 972              		.loc 1 450 0
+ 973 01b2 0120     		movs	r0, #1
+ 974 01b4 3C4B     		ldr	r3, .L107+16
+ 975 01b6 1870     		strb	r0, [r3]
+ARM GAS  /tmp/ccVU9461.s 			page 26
+
+
+ 976 01b8 D0E1     		b	.L64
+ 977              	.L84:
+ 451:sx1278/radio/sx1276-LoRa.c ****             }
+ 452:sx1278/radio/sx1276-LoRa.c ****             else
+ 453:sx1278/radio/sx1276-LoRa.c ****             {
+ 454:sx1278/radio/sx1276-LoRa.c ****                 RFLRState = RFLR_STATE_RX_RUNNING;
+ 978              		.loc 1 454 0
+ 979 01ba 0222     		movs	r2, #2
+ 980 01bc 3A4B     		ldr	r3, .L107+16
+ 981 01be 1A70     		strb	r2, [r3]
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 982              		.loc 1 346 0
+ 983 01c0 0120     		movs	r0, #1
+ 984 01c2 CBE1     		b	.L64
+ 985              	.L83:
+ 986              	.LBB2:
+ 455:sx1278/radio/sx1276-LoRa.c ****             }
+ 456:sx1278/radio/sx1276-LoRa.c ****             break;
+ 457:sx1278/radio/sx1276-LoRa.c ****         }
+ 458:sx1278/radio/sx1276-LoRa.c ****         
+ 459:sx1278/radio/sx1276-LoRa.c ****         {
+ 460:sx1278/radio/sx1276-LoRa.c ****             uint8_t rxSnrEstimate;
+ 461:sx1278/radio/sx1276-LoRa.c ****             SX1276Read( REG_LR_PKTSNRVALUE, &rxSnrEstimate );
+ 987              		.loc 1 461 0
+ 988 01c4 0DF10701 		add	r1, sp, #7
+ 989 01c8 1920     		movs	r0, #25
+ 990 01ca FFF7FEFF 		bl	SX1276Read
+ 991              	.LVL76:
+ 462:sx1278/radio/sx1276-LoRa.c ****             if( rxSnrEstimate & 0x80 ) // The SNR sign bit is 1
+ 992              		.loc 1 462 0
+ 993 01ce 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 994 01d2 13F0800F 		tst	r3, #128
+ 995 01d6 06D0     		beq	.L85
+ 463:sx1278/radio/sx1276-LoRa.c ****             {
+ 464:sx1278/radio/sx1276-LoRa.c ****                 // Invert and divide by 4
+ 465:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSnrEstimate = ( ( ~rxSnrEstimate + 1 ) & 0xFF ) >> 2;
+ 996              		.loc 1 465 0
+ 997 01d8 5B42     		negs	r3, r3
+ 998 01da C3F38503 		ubfx	r3, r3, #2, #6
+ 466:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSnrEstimate = -RxPacketSnrEstimate;
+ 999              		.loc 1 466 0
+ 1000 01de 5B42     		negs	r3, r3
+ 1001 01e0 394A     		ldr	r2, .L107+48
+ 1002 01e2 1370     		strb	r3, [r2]
+ 1003 01e4 02E0     		b	.L86
+ 1004              	.L85:
+ 467:sx1278/radio/sx1276-LoRa.c ****             }
+ 468:sx1278/radio/sx1276-LoRa.c ****             else
+ 469:sx1278/radio/sx1276-LoRa.c ****             {
+ 470:sx1278/radio/sx1276-LoRa.c ****                 // Divide by 4
+ 471:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSnrEstimate = ( rxSnrEstimate & 0xFF ) >> 2;
+ 1005              		.loc 1 471 0
+ 1006 01e6 9B08     		lsrs	r3, r3, #2
+ 1007 01e8 374A     		ldr	r2, .L107+48
+ 1008 01ea 1370     		strb	r3, [r2]
+ 1009              	.L86:
+ 1010              	.LBE2:
+ARM GAS  /tmp/ccVU9461.s 			page 27
+
+
+ 472:sx1278/radio/sx1276-LoRa.c ****             }
+ 473:sx1278/radio/sx1276-LoRa.c ****         }
+ 474:sx1278/radio/sx1276-LoRa.c ****         
+ 475:sx1278/radio/sx1276-LoRa.c ****         SX1276Read( REG_LR_PKTRSSIVALUE, &SX1276LR->RegPktRssiValue );
+ 1011              		.loc 1 475 0
+ 1012 01ec 2F4B     		ldr	r3, .L107+20
+ 1013 01ee 1968     		ldr	r1, [r3]
+ 1014 01f0 1A31     		adds	r1, r1, #26
+ 1015 01f2 1A20     		movs	r0, #26
+ 1016 01f4 FFF7FEFF 		bl	SX1276Read
+ 1017              	.LVL77:
+ 476:sx1278/radio/sx1276-LoRa.c ****     
+ 477:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.RFFrequency < 860000000 )  // LF
+ 1018              		.loc 1 477 0
+ 1019 01f8 2D4B     		ldr	r3, .L107+24
+ 1020 01fa 1A68     		ldr	r2, [r3]
+ 1021 01fc 334B     		ldr	r3, .L107+52
+ 1022 01fe 9A42     		cmp	r2, r3
+ 1023 0200 2CD8     		bhi	.L87
+ 478:sx1278/radio/sx1276-LoRa.c ****         {    
+ 479:sx1278/radio/sx1276-LoRa.c ****             if( RxPacketSnrEstimate < 0 )
+ 1024              		.loc 1 479 0
+ 1025 0202 314B     		ldr	r3, .L107+48
+ 1026 0204 93F90040 		ldrsb	r4, [r3]
+ 1027 0208 002C     		cmp	r4, #0
+ 1028 020a 15DA     		bge	.L88
+ 480:sx1278/radio/sx1276-LoRa.c ****             {
+ 481:sx1278/radio/sx1276-LoRa.c ****                 RxPacketRssiValue = RSSI_OFFSET_LF + ( ( double )SX1276LR->RegPktRssiValue ) + RxPa
+ 1029              		.loc 1 481 0
+ 1030 020c 274B     		ldr	r3, .L107+20
+ 1031 020e 1B68     		ldr	r3, [r3]
+ 1032 0210 987E     		ldrb	r0, [r3, #26]	@ zero_extendqisi2
+ 1033 0212 FFF7FEFF 		bl	__aeabi_ui2d
+ 1034              	.LVL78:
+ 1035 0216 0022     		movs	r2, #0
+ 1036 0218 2D4B     		ldr	r3, .L107+56
+ 1037 021a FFF7FEFF 		bl	__aeabi_dsub
+ 1038              	.LVL79:
+ 1039 021e 0646     		mov	r6, r0
+ 1040 0220 0F46     		mov	r7, r1
+ 1041 0222 2046     		mov	r0, r4
+ 1042 0224 FFF7FEFF 		bl	__aeabi_i2d
+ 1043              	.LVL80:
+ 1044 0228 3246     		mov	r2, r6
+ 1045 022a 3B46     		mov	r3, r7
+ 1046 022c FFF7FEFF 		bl	__aeabi_dadd
+ 1047              	.LVL81:
+ 1048 0230 284B     		ldr	r3, .L107+60
+ 1049 0232 C3E90001 		strd	r0, [r3]
+ 1050 0236 61E0     		b	.L89
+ 1051              	.L88:
+ 482:sx1278/radio/sx1276-LoRa.c ****             }
+ 483:sx1278/radio/sx1276-LoRa.c ****             else
+ 484:sx1278/radio/sx1276-LoRa.c ****             {
+ 485:sx1278/radio/sx1276-LoRa.c ****                 RxPacketRssiValue = RSSI_OFFSET_LF + ( 1.0666 * ( ( double )SX1276LR->RegPktRssiVal
+ 1052              		.loc 1 485 0
+ 1053 0238 1C4B     		ldr	r3, .L107+20
+ARM GAS  /tmp/ccVU9461.s 			page 28
+
+
+ 1054 023a 1B68     		ldr	r3, [r3]
+ 1055 023c 987E     		ldrb	r0, [r3, #26]	@ zero_extendqisi2
+ 1056 023e FFF7FEFF 		bl	__aeabi_ui2d
+ 1057              	.LVL82:
+ 1058 0242 15A3     		adr	r3, .L107
+ 1059 0244 D3E90023 		ldrd	r2, [r3]
+ 1060 0248 FFF7FEFF 		bl	__aeabi_dmul
+ 1061              	.LVL83:
+ 1062 024c 0022     		movs	r2, #0
+ 1063 024e 204B     		ldr	r3, .L107+56
+ 1064 0250 FFF7FEFF 		bl	__aeabi_dsub
+ 1065              	.LVL84:
+ 1066 0254 1F4B     		ldr	r3, .L107+60
+ 1067 0256 C3E90001 		strd	r0, [r3]
+ 1068 025a 4FE0     		b	.L89
+ 1069              	.L87:
+ 486:sx1278/radio/sx1276-LoRa.c ****             }
+ 487:sx1278/radio/sx1276-LoRa.c ****         }
+ 488:sx1278/radio/sx1276-LoRa.c ****         else                                        // HF
+ 489:sx1278/radio/sx1276-LoRa.c ****         {    
+ 490:sx1278/radio/sx1276-LoRa.c ****             if( RxPacketSnrEstimate < 0 )
+ 1070              		.loc 1 490 0
+ 1071 025c 1A4B     		ldr	r3, .L107+48
+ 1072 025e 93F90040 		ldrsb	r4, [r3]
+ 1073 0262 002C     		cmp	r4, #0
+ 1074 0264 38DA     		bge	.L90
+ 491:sx1278/radio/sx1276-LoRa.c ****             {
+ 492:sx1278/radio/sx1276-LoRa.c ****                 RxPacketRssiValue = RSSI_OFFSET_HF + ( ( double )SX1276LR->RegPktRssiValue ) + RxPa
+ 1075              		.loc 1 492 0
+ 1076 0266 114B     		ldr	r3, .L107+20
+ 1077 0268 1B68     		ldr	r3, [r3]
+ 1078 026a 987E     		ldrb	r0, [r3, #26]	@ zero_extendqisi2
+ 1079 026c FFF7FEFF 		bl	__aeabi_ui2d
+ 1080              	.LVL85:
+ 1081 0270 0BA3     		adr	r3, .L107+8
+ 1082 0272 D3E90023 		ldrd	r2, [r3]
+ 1083 0276 FFF7FEFF 		bl	__aeabi_dsub
+ 1084              	.LVL86:
+ 1085 027a 0646     		mov	r6, r0
+ 1086 027c 0F46     		mov	r7, r1
+ 1087 027e 2046     		mov	r0, r4
+ 1088 0280 FFF7FEFF 		bl	__aeabi_i2d
+ 1089              	.LVL87:
+ 1090 0284 3246     		mov	r2, r6
+ 1091 0286 3B46     		mov	r3, r7
+ 1092 0288 FFF7FEFF 		bl	__aeabi_dadd
+ 1093              	.LVL88:
+ 1094 028c 114B     		ldr	r3, .L107+60
+ 1095 028e C3E90001 		strd	r0, [r3]
+ 1096 0292 33E0     		b	.L89
+ 1097              	.L108:
+ 1098 0294 AFF30080 		.align	3
+ 1099              	.L107:
+ 1100 0298 1B9E5E29 		.word	694066715
+ 1101 029c CB10F13F 		.word	1072763083
+ 1102 02a0 00000000 		.word	0
+ 1103 02a4 00A06340 		.word	1080270848
+ARM GAS  /tmp/ccVU9461.s 			page 29
+
+
+ 1104 02a8 00000000 		.word	.LANCHOR1
+ 1105 02ac 00000000 		.word	SX1276LR
+ 1106 02b0 00000000 		.word	.LANCHOR2
+ 1107 02b4 00000000 		.word	.LANCHOR9
+ 1108 02b8 00000000 		.word	.LANCHOR7
+ 1109 02bc 00000000 		.word	.LANCHOR10
+ 1110 02c0 00000000 		.word	.LANCHOR11
+ 1111 02c4 00000000 		.word	.LANCHOR3
+ 1112 02c8 00000000 		.word	.LANCHOR4
+ 1113 02cc FF8E4233 		.word	859999999
+ 1114 02d0 00806440 		.word	1080328192
+ 1115 02d4 00000000 		.word	.LANCHOR5
+ 1116              	.L90:
+ 493:sx1278/radio/sx1276-LoRa.c ****             }
+ 494:sx1278/radio/sx1276-LoRa.c ****             else
+ 495:sx1278/radio/sx1276-LoRa.c ****             {    
+ 496:sx1278/radio/sx1276-LoRa.c ****                 RxPacketRssiValue = RSSI_OFFSET_HF + ( 1.0666 * ( ( double )SX1276LR->RegPktRssiVal
+ 1117              		.loc 1 496 0
+ 1118 02d8 A54B     		ldr	r3, .L109+16
+ 1119 02da 1B68     		ldr	r3, [r3]
+ 1120 02dc 987E     		ldrb	r0, [r3, #26]	@ zero_extendqisi2
+ 1121 02de FFF7FEFF 		bl	__aeabi_ui2d
+ 1122              	.LVL89:
+ 1123 02e2 9FA3     		adr	r3, .L109
+ 1124 02e4 D3E90023 		ldrd	r2, [r3]
+ 1125 02e8 FFF7FEFF 		bl	__aeabi_dmul
+ 1126              	.LVL90:
+ 1127 02ec 9EA3     		adr	r3, .L109+8
+ 1128 02ee D3E90023 		ldrd	r2, [r3]
+ 1129 02f2 FFF7FEFF 		bl	__aeabi_dsub
+ 1130              	.LVL91:
+ 1131 02f6 9F4B     		ldr	r3, .L109+20
+ 1132 02f8 C3E90001 		strd	r0, [r3]
+ 1133              	.L89:
+ 497:sx1278/radio/sx1276-LoRa.c ****             }
+ 498:sx1278/radio/sx1276-LoRa.c ****         }
+ 499:sx1278/radio/sx1276-LoRa.c **** 
+ 500:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.RxSingleOn == true ) // Rx single mode
+ 1134              		.loc 1 500 0
+ 1135 02fc 9E4B     		ldr	r3, .L109+24
+ 1136 02fe 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1137 0300 0BB3     		cbz	r3, .L91
+ 501:sx1278/radio/sx1276-LoRa.c ****         {
+ 502:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegFifoAddrPtr = SX1276LR->RegFifoRxBaseAddr;
+ 1138              		.loc 1 502 0
+ 1139 0302 9B4B     		ldr	r3, .L109+16
+ 1140 0304 1B68     		ldr	r3, [r3]
+ 1141 0306 D97B     		ldrb	r1, [r3, #15]	@ zero_extendqisi2
+ 1142 0308 5973     		strb	r1, [r3, #13]
+ 503:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_FIFOADDRPTR, SX1276LR->RegFifoAddrPtr );
+ 1143              		.loc 1 503 0
+ 1144 030a 0D20     		movs	r0, #13
+ 1145 030c FFF7FEFF 		bl	SX1276Write
+ 1146              	.LVL92:
+ 504:sx1278/radio/sx1276-LoRa.c **** 
+ 505:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.ImplicitHeaderOn == true )
+ 1147              		.loc 1 505 0
+ARM GAS  /tmp/ccVU9461.s 			page 30
+
+
+ 1148 0310 994B     		ldr	r3, .L109+24
+ 1149 0312 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 1150 0314 4BB1     		cbz	r3, .L92
+ 506:sx1278/radio/sx1276-LoRa.c ****             {
+ 507:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSize = SX1276LR->RegPayloadLength;
+ 1151              		.loc 1 507 0
+ 1152 0316 964B     		ldr	r3, .L109+16
+ 1153 0318 1B68     		ldr	r3, [r3]
+ 1154 031a 93F82210 		ldrb	r1, [r3, #34]	@ zero_extendqisi2
+ 1155 031e 974B     		ldr	r3, .L109+28
+ 1156 0320 1980     		strh	r1, [r3]	@ movhi
+ 508:sx1278/radio/sx1276-LoRa.c ****                 SX1276ReadFifo( RFBuffer, SX1276LR->RegPayloadLength );
+ 1157              		.loc 1 508 0
+ 1158 0322 9748     		ldr	r0, .L109+32
+ 1159 0324 FFF7FEFF 		bl	SX1276ReadFifo
+ 1160              	.LVL93:
+ 1161 0328 3CE0     		b	.L93
+ 1162              	.L92:
+ 509:sx1278/radio/sx1276-LoRa.c ****             }
+ 510:sx1278/radio/sx1276-LoRa.c ****             else
+ 511:sx1278/radio/sx1276-LoRa.c ****             {
+ 512:sx1278/radio/sx1276-LoRa.c ****                 SX1276Read( REG_LR_NBRXBYTES, &SX1276LR->RegNbRxBytes );
+ 1163              		.loc 1 512 0
+ 1164 032a 914C     		ldr	r4, .L109+16
+ 1165 032c 2168     		ldr	r1, [r4]
+ 1166 032e 1331     		adds	r1, r1, #19
+ 1167 0330 1320     		movs	r0, #19
+ 1168 0332 FFF7FEFF 		bl	SX1276Read
+ 1169              	.LVL94:
+ 513:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSize = SX1276LR->RegNbRxBytes;
+ 1170              		.loc 1 513 0
+ 1171 0336 2368     		ldr	r3, [r4]
+ 1172 0338 D97C     		ldrb	r1, [r3, #19]	@ zero_extendqisi2
+ 1173 033a 904B     		ldr	r3, .L109+28
+ 1174 033c 1980     		strh	r1, [r3]	@ movhi
+ 514:sx1278/radio/sx1276-LoRa.c ****                 SX1276ReadFifo( RFBuffer, SX1276LR->RegNbRxBytes );
+ 1175              		.loc 1 514 0
+ 1176 033e 9048     		ldr	r0, .L109+32
+ 1177 0340 FFF7FEFF 		bl	SX1276ReadFifo
+ 1178              	.LVL95:
+ 1179 0344 2EE0     		b	.L93
+ 1180              	.L91:
+ 515:sx1278/radio/sx1276-LoRa.c ****             }
+ 516:sx1278/radio/sx1276-LoRa.c ****         }
+ 517:sx1278/radio/sx1276-LoRa.c ****         else // Rx continuous mode
+ 518:sx1278/radio/sx1276-LoRa.c ****         {
+ 519:sx1278/radio/sx1276-LoRa.c ****             SX1276Read( REG_LR_FIFORXCURRENTADDR, &SX1276LR->RegFifoRxCurrentAddr );
+ 1181              		.loc 1 519 0
+ 1182 0346 8A4B     		ldr	r3, .L109+16
+ 1183 0348 1968     		ldr	r1, [r3]
+ 1184 034a 1031     		adds	r1, r1, #16
+ 1185 034c 1020     		movs	r0, #16
+ 1186 034e FFF7FEFF 		bl	SX1276Read
+ 1187              	.LVL96:
+ 520:sx1278/radio/sx1276-LoRa.c **** 
+ 521:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.ImplicitHeaderOn == true )
+ 1188              		.loc 1 521 0
+ARM GAS  /tmp/ccVU9461.s 			page 31
+
+
+ 1189 0352 894B     		ldr	r3, .L109+24
+ 1190 0354 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 1191 0356 8BB1     		cbz	r3, .L94
+ 522:sx1278/radio/sx1276-LoRa.c ****             {
+ 523:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSize = SX1276LR->RegPayloadLength;
+ 1192              		.loc 1 523 0
+ 1193 0358 854C     		ldr	r4, .L109+16
+ 1194 035a 2368     		ldr	r3, [r4]
+ 1195 035c 93F82210 		ldrb	r1, [r3, #34]	@ zero_extendqisi2
+ 1196 0360 864A     		ldr	r2, .L109+28
+ 1197 0362 1180     		strh	r1, [r2]	@ movhi
+ 524:sx1278/radio/sx1276-LoRa.c ****                 SX1276LR->RegFifoAddrPtr = SX1276LR->RegFifoRxCurrentAddr;
+ 1198              		.loc 1 524 0
+ 1199 0364 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 1200 0366 5973     		strb	r1, [r3, #13]
+ 525:sx1278/radio/sx1276-LoRa.c ****                 SX1276Write( REG_LR_FIFOADDRPTR, SX1276LR->RegFifoAddrPtr );
+ 1201              		.loc 1 525 0
+ 1202 0368 0D20     		movs	r0, #13
+ 1203 036a FFF7FEFF 		bl	SX1276Write
+ 1204              	.LVL97:
+ 526:sx1278/radio/sx1276-LoRa.c ****                 SX1276ReadFifo( RFBuffer, SX1276LR->RegPayloadLength );
+ 1205              		.loc 1 526 0
+ 1206 036e 2368     		ldr	r3, [r4]
+ 1207 0370 93F82210 		ldrb	r1, [r3, #34]	@ zero_extendqisi2
+ 1208 0374 8248     		ldr	r0, .L109+32
+ 1209 0376 FFF7FEFF 		bl	SX1276ReadFifo
+ 1210              	.LVL98:
+ 1211 037a 13E0     		b	.L93
+ 1212              	.L94:
+ 527:sx1278/radio/sx1276-LoRa.c ****             }
+ 528:sx1278/radio/sx1276-LoRa.c ****             else
+ 529:sx1278/radio/sx1276-LoRa.c ****             {
+ 530:sx1278/radio/sx1276-LoRa.c ****                 SX1276Read( REG_LR_NBRXBYTES, &SX1276LR->RegNbRxBytes );
+ 1213              		.loc 1 530 0
+ 1214 037c 7C4C     		ldr	r4, .L109+16
+ 1215 037e 2168     		ldr	r1, [r4]
+ 1216 0380 1331     		adds	r1, r1, #19
+ 1217 0382 1320     		movs	r0, #19
+ 1218 0384 FFF7FEFF 		bl	SX1276Read
+ 1219              	.LVL99:
+ 531:sx1278/radio/sx1276-LoRa.c ****                 RxPacketSize = SX1276LR->RegNbRxBytes;
+ 1220              		.loc 1 531 0
+ 1221 0388 2368     		ldr	r3, [r4]
+ 1222 038a D97C     		ldrb	r1, [r3, #19]	@ zero_extendqisi2
+ 1223 038c 7B4A     		ldr	r2, .L109+28
+ 1224 038e 1180     		strh	r1, [r2]	@ movhi
+ 532:sx1278/radio/sx1276-LoRa.c ****                 SX1276LR->RegFifoAddrPtr = SX1276LR->RegFifoRxCurrentAddr;
+ 1225              		.loc 1 532 0
+ 1226 0390 197C     		ldrb	r1, [r3, #16]	@ zero_extendqisi2
+ 1227 0392 5973     		strb	r1, [r3, #13]
+ 533:sx1278/radio/sx1276-LoRa.c ****                 SX1276Write( REG_LR_FIFOADDRPTR, SX1276LR->RegFifoAddrPtr );
+ 1228              		.loc 1 533 0
+ 1229 0394 0D20     		movs	r0, #13
+ 1230 0396 FFF7FEFF 		bl	SX1276Write
+ 1231              	.LVL100:
+ 534:sx1278/radio/sx1276-LoRa.c ****                 SX1276ReadFifo( RFBuffer, SX1276LR->RegNbRxBytes );
+ 1232              		.loc 1 534 0
+ARM GAS  /tmp/ccVU9461.s 			page 32
+
+
+ 1233 039a 2368     		ldr	r3, [r4]
+ 1234 039c D97C     		ldrb	r1, [r3, #19]	@ zero_extendqisi2
+ 1235 039e 7848     		ldr	r0, .L109+32
+ 1236 03a0 FFF7FEFF 		bl	SX1276ReadFifo
+ 1237              	.LVL101:
+ 1238              	.L93:
+ 535:sx1278/radio/sx1276-LoRa.c ****             }
+ 536:sx1278/radio/sx1276-LoRa.c ****         }
+ 537:sx1278/radio/sx1276-LoRa.c ****         
+ 538:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.RxSingleOn == true ) // Rx single mode
+ 1239              		.loc 1 538 0
+ 1240 03a4 744B     		ldr	r3, .L109+24
+ 1241 03a6 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1242 03a8 23B1     		cbz	r3, .L95
+ 539:sx1278/radio/sx1276-LoRa.c ****         {
+ 540:sx1278/radio/sx1276-LoRa.c ****             RFLRState = RFLR_STATE_RX_INIT;
+ 1243              		.loc 1 540 0
+ 1244 03aa 0122     		movs	r2, #1
+ 1245 03ac 754B     		ldr	r3, .L109+36
+ 1246 03ae 1A70     		strb	r2, [r3]
+ 541:sx1278/radio/sx1276-LoRa.c ****         }
+ 542:sx1278/radio/sx1276-LoRa.c ****         else // Rx continuous mode
+ 543:sx1278/radio/sx1276-LoRa.c ****         {
+ 544:sx1278/radio/sx1276-LoRa.c ****             RFLRState = RFLR_STATE_RX_RUNNING;
+ 545:sx1278/radio/sx1276-LoRa.c ****         }
+ 546:sx1278/radio/sx1276-LoRa.c ****         result = RF_RX_DONE;
+ 1247              		.loc 1 546 0
+ 1248 03b0 0220     		movs	r0, #2
+ 1249 03b2 D3E0     		b	.L64
+ 1250              	.L95:
+ 544:sx1278/radio/sx1276-LoRa.c ****         }
+ 1251              		.loc 1 544 0
+ 1252 03b4 0220     		movs	r0, #2
+ 1253 03b6 734B     		ldr	r3, .L109+36
+ 1254 03b8 1870     		strb	r0, [r3]
+ 1255 03ba CFE0     		b	.L64
+ 1256              	.L69:
+ 547:sx1278/radio/sx1276-LoRa.c ****         break;
+ 548:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_RX_TIMEOUT:
+ 549:sx1278/radio/sx1276-LoRa.c ****         RFLRState = RFLR_STATE_RX_INIT;
+ 1257              		.loc 1 549 0
+ 1258 03bc 0122     		movs	r2, #1
+ 1259 03be 714B     		ldr	r3, .L109+36
+ 1260 03c0 1A70     		strb	r2, [r3]
+ 1261              	.LVL102:
+ 550:sx1278/radio/sx1276-LoRa.c ****         result = RF_RX_TIMEOUT;
+ 1262              		.loc 1 550 0
+ 1263 03c2 0320     		movs	r0, #3
+ 551:sx1278/radio/sx1276-LoRa.c ****         break;
+ 1264              		.loc 1 551 0
+ 1265 03c4 CAE0     		b	.L64
+ 1266              	.LVL103:
+ 1267              	.L70:
+ 552:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_TX_INIT:
+ 553:sx1278/radio/sx1276-LoRa.c **** 
+ 554:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY );
+ 1268              		.loc 1 554 0
+ARM GAS  /tmp/ccVU9461.s 			page 33
+
+
+ 1269 03c6 0120     		movs	r0, #1
+ 1270 03c8 FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 1271              	.LVL104:
+ 555:sx1278/radio/sx1276-LoRa.c **** 
+ 556:sx1278/radio/sx1276-LoRa.c ****         if( LoRaSettings.FreqHopOn == true )
+ 1272              		.loc 1 556 0
+ 1273 03cc 6A4B     		ldr	r3, .L109+24
+ 1274 03ce DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 1275 03d0 ABB1     		cbz	r3, .L96
+ 557:sx1278/radio/sx1276-LoRa.c ****         {
+ 558:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegIrqFlagsMask = RFLR_IRQFLAGS_RXTIMEOUT |
+ 1276              		.loc 1 558 0
+ 1277 03d2 674C     		ldr	r4, .L109+16
+ 1278 03d4 2168     		ldr	r1, [r4]
+ 1279 03d6 F523     		movs	r3, #245
+ 1280 03d8 4B74     		strb	r3, [r1, #17]
+ 559:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_RXDONE |
+ 560:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_PAYLOADCRCERROR |
+ 561:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_VALIDHEADER |
+ 562:sx1278/radio/sx1276-LoRa.c ****                                         //RFLR_IRQFLAGS_TXDONE |
+ 563:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_CADDONE |
+ 564:sx1278/radio/sx1276-LoRa.c ****                                         //RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL |
+ 565:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_CADDETECTED;
+ 566:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegHopPeriod = LoRaSettings.HopPeriod;
+ 1281              		.loc 1 566 0
+ 1282 03da 674B     		ldr	r3, .L109+24
+ 1283 03dc 1B7B     		ldrb	r3, [r3, #12]	@ zero_extendqisi2
+ 1284 03de 81F82430 		strb	r3, [r1, #36]
+ 567:sx1278/radio/sx1276-LoRa.c **** 
+ 568:sx1278/radio/sx1276-LoRa.c ****             SX1276Read( REG_LR_HOPCHANNEL, &SX1276LR->RegHopChannel );
+ 1285              		.loc 1 568 0
+ 1286 03e2 1C31     		adds	r1, r1, #28
+ 1287 03e4 1C20     		movs	r0, #28
+ 1288 03e6 FFF7FEFF 		bl	SX1276Read
+ 1289              	.LVL105:
+ 569:sx1278/radio/sx1276-LoRa.c ****             SX1276LoRaSetRFFrequency( HoppingFrequencies[SX1276LR->RegHopChannel & RFLR_HOPCHANNEL_
+ 1290              		.loc 1 569 0
+ 1291 03ea 2368     		ldr	r3, [r4]
+ 1292 03ec 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 1293 03ee 03F03F03 		and	r3, r3, #63
+ 1294 03f2 654A     		ldr	r2, .L109+40
+ 1295 03f4 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 1296 03f8 FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 1297              	.LVL106:
+ 1298 03fc 06E0     		b	.L97
+ 1299              	.L96:
+ 570:sx1278/radio/sx1276-LoRa.c ****         }
+ 571:sx1278/radio/sx1276-LoRa.c ****         else
+ 572:sx1278/radio/sx1276-LoRa.c ****         {
+ 573:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegIrqFlagsMask = RFLR_IRQFLAGS_RXTIMEOUT |
+ 1300              		.loc 1 573 0
+ 1301 03fe 5C4B     		ldr	r3, .L109+16
+ 1302 0400 1B68     		ldr	r3, [r3]
+ 1303 0402 F722     		movs	r2, #247
+ 1304 0404 5A74     		strb	r2, [r3, #17]
+ 574:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_RXDONE |
+ 575:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_PAYLOADCRCERROR |
+ARM GAS  /tmp/ccVU9461.s 			page 34
+
+
+ 576:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_VALIDHEADER |
+ 577:sx1278/radio/sx1276-LoRa.c ****                                         //RFLR_IRQFLAGS_TXDONE |
+ 578:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_CADDONE |
+ 579:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL |
+ 580:sx1278/radio/sx1276-LoRa.c ****                                         RFLR_IRQFLAGS_CADDETECTED;
+ 581:sx1278/radio/sx1276-LoRa.c ****             SX1276LR->RegHopPeriod = 0;
+ 1305              		.loc 1 581 0
+ 1306 0406 0022     		movs	r2, #0
+ 1307 0408 83F82420 		strb	r2, [r3, #36]
+ 1308              	.L97:
+ 582:sx1278/radio/sx1276-LoRa.c ****         }
+ 583:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_HOPPERIOD, SX1276LR->RegHopPeriod );
+ 1309              		.loc 1 583 0
+ 1310 040c 584C     		ldr	r4, .L109+16
+ 1311 040e 2368     		ldr	r3, [r4]
+ 1312 0410 93F82410 		ldrb	r1, [r3, #36]	@ zero_extendqisi2
+ 1313 0414 2420     		movs	r0, #36
+ 1314 0416 FFF7FEFF 		bl	SX1276Write
+ 1315              	.LVL107:
+ 584:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_IRQFLAGSMASK, SX1276LR->RegIrqFlagsMask );
+ 1316              		.loc 1 584 0
+ 1317 041a 2368     		ldr	r3, [r4]
+ 1318 041c 597C     		ldrb	r1, [r3, #17]	@ zero_extendqisi2
+ 1319 041e 1120     		movs	r0, #17
+ 1320 0420 FFF7FEFF 		bl	SX1276Write
+ 1321              	.LVL108:
+ 585:sx1278/radio/sx1276-LoRa.c **** 
+ 586:sx1278/radio/sx1276-LoRa.c ****         // Initializes the payload size
+ 587:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegPayloadLength = TxPacketSize;
+ 1322              		.loc 1 587 0
+ 1323 0424 2368     		ldr	r3, [r4]
+ 1324 0426 594A     		ldr	r2, .L109+44
+ 1325 0428 1178     		ldrb	r1, [r2]	@ zero_extendqisi2
+ 1326 042a 83F82210 		strb	r1, [r3, #34]
+ 588:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_PAYLOADLENGTH, SX1276LR->RegPayloadLength );
+ 1327              		.loc 1 588 0
+ 1328 042e 2220     		movs	r0, #34
+ 1329 0430 FFF7FEFF 		bl	SX1276Write
+ 1330              	.LVL109:
+ 589:sx1278/radio/sx1276-LoRa.c ****         
+ 590:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegFifoTxBaseAddr = 0x00; // Full buffer used for Tx
+ 1331              		.loc 1 590 0
+ 1332 0434 2368     		ldr	r3, [r4]
+ 1333 0436 0021     		movs	r1, #0
+ 1334 0438 9973     		strb	r1, [r3, #14]
+ 591:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_FIFOTXBASEADDR, SX1276LR->RegFifoTxBaseAddr );
+ 1335              		.loc 1 591 0
+ 1336 043a 0E20     		movs	r0, #14
+ 1337 043c FFF7FEFF 		bl	SX1276Write
+ 1338              	.LVL110:
+ 592:sx1278/radio/sx1276-LoRa.c **** 
+ 593:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegFifoAddrPtr = SX1276LR->RegFifoTxBaseAddr;
+ 1339              		.loc 1 593 0
+ 1340 0440 2368     		ldr	r3, [r4]
+ 1341 0442 997B     		ldrb	r1, [r3, #14]	@ zero_extendqisi2
+ 1342 0444 5973     		strb	r1, [r3, #13]
+ 594:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_FIFOADDRPTR, SX1276LR->RegFifoAddrPtr );
+ARM GAS  /tmp/ccVU9461.s 			page 35
+
+
+ 1343              		.loc 1 594 0
+ 1344 0446 0D20     		movs	r0, #13
+ 1345 0448 FFF7FEFF 		bl	SX1276Write
+ 1346              	.LVL111:
+ 595:sx1278/radio/sx1276-LoRa.c ****         
+ 596:sx1278/radio/sx1276-LoRa.c ****         // Write payload buffer to LORA modem
+ 597:sx1278/radio/sx1276-LoRa.c ****         SX1276WriteFifo( RFBuffer, SX1276LR->RegPayloadLength );
+ 1347              		.loc 1 597 0
+ 1348 044c 2368     		ldr	r3, [r4]
+ 1349 044e 93F82210 		ldrb	r1, [r3, #34]	@ zero_extendqisi2
+ 1350 0452 4B48     		ldr	r0, .L109+32
+ 1351 0454 FFF7FEFF 		bl	SX1276WriteFifo
+ 1352              	.LVL112:
+ 598:sx1278/radio/sx1276-LoRa.c ****                                         // TxDone               RxTimeout                   FhssCha
+ 599:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping1 = RFLR_DIOMAPPING1_DIO0_01 | RFLR_DIOMAPPING1_DIO1_00 | RFLR_DIOMA
+ 1353              		.loc 1 599 0
+ 1354 0458 2168     		ldr	r1, [r4]
+ 1355 045a 4123     		movs	r3, #65
+ 1356 045c 81F83D30 		strb	r3, [r1, #61]
+ 600:sx1278/radio/sx1276-LoRa.c ****                                         // PllLock              Mode Ready
+ 601:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping2 = RFLR_DIOMAPPING2_DIO4_01 | RFLR_DIOMAPPING2_DIO5_00;
+ 1357              		.loc 1 601 0
+ 1358 0460 4020     		movs	r0, #64
+ 1359 0462 81F83E00 		strb	r0, [r1, #62]
+ 602:sx1278/radio/sx1276-LoRa.c ****         SX1276WriteBuffer( REG_LR_DIOMAPPING1, &SX1276LR->RegDioMapping1, 2 );
+ 1360              		.loc 1 602 0
+ 1361 0466 0222     		movs	r2, #2
+ 1362 0468 3D31     		adds	r1, r1, #61
+ 1363 046a FFF7FEFF 		bl	SX1276WriteBuffer
+ 1364              	.LVL113:
+ 603:sx1278/radio/sx1276-LoRa.c **** 
+ 604:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_TRANSMITTER );
+ 1365              		.loc 1 604 0
+ 1366 046e 0320     		movs	r0, #3
+ 1367 0470 FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 1368              	.LVL114:
+ 605:sx1278/radio/sx1276-LoRa.c **** 
+ 606:sx1278/radio/sx1276-LoRa.c ****         RFLRState = RFLR_STATE_TX_RUNNING;
+ 1369              		.loc 1 606 0
+ 1370 0474 0622     		movs	r2, #6
+ 1371 0476 434B     		ldr	r3, .L109+36
+ 1372 0478 1A70     		strb	r2, [r3]
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 1373              		.loc 1 346 0
+ 1374 047a 0120     		movs	r0, #1
+ 607:sx1278/radio/sx1276-LoRa.c ****         break;
+ 1375              		.loc 1 607 0
+ 1376 047c 6EE0     		b	.L64
+ 1377              	.L71:
+ 608:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_TX_RUNNING:
+ 609:sx1278/radio/sx1276-LoRa.c ****         if( DIO0 == 1 ) // TxDone
+ 1378              		.loc 1 609 0
+ 1379 047e FFF7FEFF 		bl	SX1276ReadDio0
+ 1380              	.LVL115:
+ 1381 0482 0128     		cmp	r0, #1
+ 1382 0484 06D1     		bne	.L98
+ 610:sx1278/radio/sx1276-LoRa.c ****         {
+ARM GAS  /tmp/ccVU9461.s 			page 36
+
+
+ 611:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 612:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_TXDONE  );
+ 1383              		.loc 1 612 0
+ 1384 0486 0821     		movs	r1, #8
+ 1385 0488 1220     		movs	r0, #18
+ 1386 048a FFF7FEFF 		bl	SX1276Write
+ 1387              	.LVL116:
+ 613:sx1278/radio/sx1276-LoRa.c ****             RFLRState = RFLR_STATE_TX_DONE;   
+ 1388              		.loc 1 613 0
+ 1389 048e 0722     		movs	r2, #7
+ 1390 0490 3C4B     		ldr	r3, .L109+36
+ 1391 0492 1A70     		strb	r2, [r3]
+ 1392              	.L98:
+ 614:sx1278/radio/sx1276-LoRa.c ****         }
+ 615:sx1278/radio/sx1276-LoRa.c ****         if( DIO2 == 1 ) // FHSS Changed Channel
+ 1393              		.loc 1 615 0
+ 1394 0494 FFF7FEFF 		bl	SX1276ReadDio2
+ 1395              	.LVL117:
+ 1396 0498 0128     		cmp	r0, #1
+ 1397 049a 5CD1     		bne	.L104
+ 616:sx1278/radio/sx1276-LoRa.c ****         {
+ 617:sx1278/radio/sx1276-LoRa.c ****             if( LoRaSettings.FreqHopOn == true )
+ 1398              		.loc 1 617 0
+ 1399 049c 364B     		ldr	r3, .L109+24
+ 1400 049e DB7A     		ldrb	r3, [r3, #11]	@ zero_extendqisi2
+ 1401 04a0 73B1     		cbz	r3, .L99
+ 618:sx1278/radio/sx1276-LoRa.c ****             {
+ 619:sx1278/radio/sx1276-LoRa.c ****                 SX1276Read( REG_LR_HOPCHANNEL, &SX1276LR->RegHopChannel );
+ 1402              		.loc 1 619 0
+ 1403 04a2 334C     		ldr	r4, .L109+16
+ 1404 04a4 2168     		ldr	r1, [r4]
+ 1405 04a6 1C31     		adds	r1, r1, #28
+ 1406 04a8 1C20     		movs	r0, #28
+ 1407 04aa FFF7FEFF 		bl	SX1276Read
+ 1408              	.LVL118:
+ 620:sx1278/radio/sx1276-LoRa.c ****                 SX1276LoRaSetRFFrequency( HoppingFrequencies[SX1276LR->RegHopChannel & RFLR_HOPCHAN
+ 1409              		.loc 1 620 0
+ 1410 04ae 2368     		ldr	r3, [r4]
+ 1411 04b0 1B7F     		ldrb	r3, [r3, #28]	@ zero_extendqisi2
+ 1412 04b2 03F03F03 		and	r3, r3, #63
+ 1413 04b6 344A     		ldr	r2, .L109+40
+ 1414 04b8 52F82300 		ldr	r0, [r2, r3, lsl #2]
+ 1415 04bc FFF7FEFF 		bl	SX1276LoRaSetRFFrequency
+ 1416              	.LVL119:
+ 1417              	.L99:
+ 621:sx1278/radio/sx1276-LoRa.c ****             }
+ 622:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 623:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL );
+ 1418              		.loc 1 623 0
+ 1419 04c0 0221     		movs	r1, #2
+ 1420 04c2 1220     		movs	r0, #18
+ 1421 04c4 FFF7FEFF 		bl	SX1276Write
+ 1422              	.LVL120:
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 1423              		.loc 1 346 0
+ 1424 04c8 0120     		movs	r0, #1
+ 1425 04ca 47E0     		b	.L64
+ARM GAS  /tmp/ccVU9461.s 			page 37
+
+
+ 1426              	.L72:
+ 624:sx1278/radio/sx1276-LoRa.c ****         }
+ 625:sx1278/radio/sx1276-LoRa.c ****         break;
+ 626:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_TX_DONE:
+ 627:sx1278/radio/sx1276-LoRa.c ****         // optimize the power consumption by switching off the transmitter as soon as the packet ha
+ 628:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY );
+ 1427              		.loc 1 628 0
+ 1428 04cc 0120     		movs	r0, #1
+ 1429 04ce FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 1430              	.LVL121:
+ 629:sx1278/radio/sx1276-LoRa.c **** 
+ 630:sx1278/radio/sx1276-LoRa.c ****         RFLRState = RFLR_STATE_IDLE;
+ 1431              		.loc 1 630 0
+ 1432 04d2 0022     		movs	r2, #0
+ 1433 04d4 2B4B     		ldr	r3, .L109+36
+ 1434 04d6 1A70     		strb	r2, [r3]
+ 1435              	.LVL122:
+ 631:sx1278/radio/sx1276-LoRa.c ****         result = RF_TX_DONE;
+ 1436              		.loc 1 631 0
+ 1437 04d8 0420     		movs	r0, #4
+ 632:sx1278/radio/sx1276-LoRa.c ****         break;
+ 1438              		.loc 1 632 0
+ 1439 04da 3FE0     		b	.L64
+ 1440              	.LVL123:
+ 1441              	.L73:
+ 633:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_CAD_INIT:    
+ 634:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY );
+ 1442              		.loc 1 634 0
+ 1443 04dc 0120     		movs	r0, #1
+ 1444 04de FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 1445              	.LVL124:
+ 635:sx1278/radio/sx1276-LoRa.c ****     
+ 636:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegIrqFlagsMask = RFLR_IRQFLAGS_RXTIMEOUT |
+ 1446              		.loc 1 636 0
+ 1447 04e2 234C     		ldr	r4, .L109+16
+ 1448 04e4 2368     		ldr	r3, [r4]
+ 1449 04e6 FA21     		movs	r1, #250
+ 1450 04e8 5974     		strb	r1, [r3, #17]
+ 637:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_RXDONE |
+ 638:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_PAYLOADCRCERROR |
+ 639:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_VALIDHEADER |
+ 640:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_TXDONE |
+ 641:sx1278/radio/sx1276-LoRa.c ****                                     //RFLR_IRQFLAGS_CADDONE |
+ 642:sx1278/radio/sx1276-LoRa.c ****                                     RFLR_IRQFLAGS_FHSSCHANGEDCHANNEL; // |
+ 643:sx1278/radio/sx1276-LoRa.c ****                                     //RFLR_IRQFLAGS_CADDETECTED;
+ 644:sx1278/radio/sx1276-LoRa.c ****         SX1276Write( REG_LR_IRQFLAGSMASK, SX1276LR->RegIrqFlagsMask );
+ 1451              		.loc 1 644 0
+ 1452 04ea 1120     		movs	r0, #17
+ 1453 04ec FFF7FEFF 		bl	SX1276Write
+ 1454              	.LVL125:
+ 645:sx1278/radio/sx1276-LoRa.c ****            
+ 646:sx1278/radio/sx1276-LoRa.c ****                                     // RxDone                   RxTimeout                   FhssCha
+ 647:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping1 = RFLR_DIOMAPPING1_DIO0_00 | RFLR_DIOMAPPING1_DIO1_00 | RFLR_DIOMA
+ 1455              		.loc 1 647 0
+ 1456 04f0 2168     		ldr	r1, [r4]
+ 1457 04f2 0023     		movs	r3, #0
+ 1458 04f4 81F83D30 		strb	r3, [r1, #61]
+ARM GAS  /tmp/ccVU9461.s 			page 38
+
+
+ 648:sx1278/radio/sx1276-LoRa.c ****                                     // CAD Detected              ModeReady
+ 649:sx1278/radio/sx1276-LoRa.c ****         SX1276LR->RegDioMapping2 = RFLR_DIOMAPPING2_DIO4_00 | RFLR_DIOMAPPING2_DIO5_00;
+ 1459              		.loc 1 649 0
+ 1460 04f8 81F83E30 		strb	r3, [r1, #62]
+ 650:sx1278/radio/sx1276-LoRa.c ****         SX1276WriteBuffer( REG_LR_DIOMAPPING1, &SX1276LR->RegDioMapping1, 2 );
+ 1461              		.loc 1 650 0
+ 1462 04fc 0222     		movs	r2, #2
+ 1463 04fe 3D31     		adds	r1, r1, #61
+ 1464 0500 4020     		movs	r0, #64
+ 1465 0502 FFF7FEFF 		bl	SX1276WriteBuffer
+ 1466              	.LVL126:
+ 651:sx1278/radio/sx1276-LoRa.c ****             
+ 652:sx1278/radio/sx1276-LoRa.c ****         SX1276LoRaSetOpMode( RFLR_OPMODE_CAD );
+ 1467              		.loc 1 652 0
+ 1468 0506 0720     		movs	r0, #7
+ 1469 0508 FFF7FEFF 		bl	SX1276LoRaSetOpMode
+ 1470              	.LVL127:
+ 653:sx1278/radio/sx1276-LoRa.c ****         RFLRState = RFLR_STATE_CAD_RUNNING;
+ 1471              		.loc 1 653 0
+ 1472 050c 0A22     		movs	r2, #10
+ 1473 050e 1D4B     		ldr	r3, .L109+36
+ 1474 0510 1A70     		strb	r2, [r3]
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 1475              		.loc 1 346 0
+ 1476 0512 0120     		movs	r0, #1
+ 654:sx1278/radio/sx1276-LoRa.c ****         break;
+ 1477              		.loc 1 654 0
+ 1478 0514 22E0     		b	.L64
+ 1479              	.L74:
+ 655:sx1278/radio/sx1276-LoRa.c ****     case RFLR_STATE_CAD_RUNNING:
+ 656:sx1278/radio/sx1276-LoRa.c ****         if( DIO3 == 1 ) //CAD Done interrupt
+ 1480              		.loc 1 656 0
+ 1481 0516 FFF7FEFF 		bl	SX1276ReadDio3
+ 1482              	.LVL128:
+ 1483 051a 0128     		cmp	r0, #1
+ 1484 051c 1DD1     		bne	.L105
+ 657:sx1278/radio/sx1276-LoRa.c ****         { 
+ 658:sx1278/radio/sx1276-LoRa.c ****             // Clear Irq
+ 659:sx1278/radio/sx1276-LoRa.c ****             SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_CADDONE  );
+ 1485              		.loc 1 659 0
+ 1486 051e 0421     		movs	r1, #4
+ 1487 0520 1220     		movs	r0, #18
+ 1488 0522 FFF7FEFF 		bl	SX1276Write
+ 1489              	.LVL129:
+ 660:sx1278/radio/sx1276-LoRa.c ****             if( DIO4 == 1 ) // CAD Detected interrupt
+ 1490              		.loc 1 660 0
+ 1491 0526 FFF7FEFF 		bl	SX1276ReadDio4
+ 1492              	.LVL130:
+ 1493 052a 0128     		cmp	r0, #1
+ 1494 052c 08D1     		bne	.L100
+ 661:sx1278/radio/sx1276-LoRa.c ****             {
+ 662:sx1278/radio/sx1276-LoRa.c ****                 // Clear Irq
+ 663:sx1278/radio/sx1276-LoRa.c ****                 SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_CADDETECTED  );
+ 1495              		.loc 1 663 0
+ 1496 052e 0121     		movs	r1, #1
+ 1497 0530 1220     		movs	r0, #18
+ 1498 0532 FFF7FEFF 		bl	SX1276Write
+ARM GAS  /tmp/ccVU9461.s 			page 39
+
+
+ 1499              	.LVL131:
+ 664:sx1278/radio/sx1276-LoRa.c ****                 // CAD detected, we have a LoRa preamble
+ 665:sx1278/radio/sx1276-LoRa.c ****                 RFLRState = RFLR_STATE_RX_INIT;
+ 1500              		.loc 1 665 0
+ 1501 0536 0122     		movs	r2, #1
+ 1502 0538 124B     		ldr	r3, .L109+36
+ 1503 053a 1A70     		strb	r2, [r3]
+ 1504              	.LVL132:
+ 666:sx1278/radio/sx1276-LoRa.c ****                 result = RF_CHANNEL_ACTIVITY_DETECTED;
+ 1505              		.loc 1 666 0
+ 1506 053c 0820     		movs	r0, #8
+ 1507 053e 0DE0     		b	.L64
+ 1508              	.LVL133:
+ 1509              	.L100:
+ 667:sx1278/radio/sx1276-LoRa.c ****             } 
+ 668:sx1278/radio/sx1276-LoRa.c ****             else
+ 669:sx1278/radio/sx1276-LoRa.c ****             {    
+ 670:sx1278/radio/sx1276-LoRa.c ****                 // The device goes in Standby Mode automatically    
+ 671:sx1278/radio/sx1276-LoRa.c ****                 RFLRState = RFLR_STATE_IDLE;
+ 1510              		.loc 1 671 0
+ 1511 0540 0022     		movs	r2, #0
+ 1512 0542 104B     		ldr	r3, .L109+36
+ 1513 0544 1A70     		strb	r2, [r3]
+ 1514              	.LVL134:
+ 672:sx1278/radio/sx1276-LoRa.c ****                 result = RF_CHANNEL_EMPTY;
+ 1515              		.loc 1 672 0
+ 1516 0546 0720     		movs	r0, #7
+ 1517 0548 08E0     		b	.L64
+ 1518              	.LVL135:
+ 1519              	.L101:
+ 346:sx1278/radio/sx1276-LoRa.c ****     
+ 1520              		.loc 1 346 0
+ 1521 054a 0120     		movs	r0, #1
+ 1522 054c 06E0     		b	.L64
+ 1523              	.L102:
+ 1524 054e 0120     		movs	r0, #1
+ 1525 0550 04E0     		b	.L64
+ 1526              	.L103:
+ 1527 0552 0120     		movs	r0, #1
+ 1528 0554 02E0     		b	.L64
+ 1529              	.L104:
+ 1530 0556 0120     		movs	r0, #1
+ 1531 0558 00E0     		b	.L64
+ 1532              	.L105:
+ 1533 055a 0120     		movs	r0, #1
+ 1534              	.LVL136:
+ 1535              	.L64:
+ 673:sx1278/radio/sx1276-LoRa.c ****             }
+ 674:sx1278/radio/sx1276-LoRa.c ****         }   
+ 675:sx1278/radio/sx1276-LoRa.c ****         break;
+ 676:sx1278/radio/sx1276-LoRa.c ****     
+ 677:sx1278/radio/sx1276-LoRa.c ****     default:
+ 678:sx1278/radio/sx1276-LoRa.c ****         break;
+ 679:sx1278/radio/sx1276-LoRa.c ****     } 
+ 680:sx1278/radio/sx1276-LoRa.c ****     return result;
+ 681:sx1278/radio/sx1276-LoRa.c **** }
+ 1536              		.loc 1 681 0
+ARM GAS  /tmp/ccVU9461.s 			page 40
+
+
+ 1537 055c 02B0     		add	sp, sp, #8
+ 1538              	.LCFI13:
+ 1539              		.cfi_def_cfa_offset 16
+ 1540              		@ sp needed
+ 1541 055e D0BD     		pop	{r4, r6, r7, pc}
+ 1542              	.L110:
+ 1543              		.align	3
+ 1544              	.L109:
+ 1545 0560 1B9E5E29 		.word	694066715
+ 1546 0564 CB10F13F 		.word	1072763083
+ 1547 0568 00000000 		.word	0
+ 1548 056c 00A06340 		.word	1080270848
+ 1549 0570 00000000 		.word	SX1276LR
+ 1550 0574 00000000 		.word	.LANCHOR5
+ 1551 0578 00000000 		.word	.LANCHOR2
+ 1552 057c 00000000 		.word	.LANCHOR6
+ 1553 0580 00000000 		.word	.LANCHOR7
+ 1554 0584 00000000 		.word	.LANCHOR1
+ 1555 0588 00000000 		.word	.LANCHOR9
+ 1556 058c 00000000 		.word	.LANCHOR8
+ 1557              		.cfi_endproc
+ 1558              	.LFE87:
+ 1560              		.comm	SX1276LR,4,4
+ 1561              		.global	LoRaSettings
+ 1562              		.global	HoppingFrequencies
+ 1563              		.section	.bss.RFBuffer,"aw",%nobits
+ 1564              		.align	2
+ 1565              		.set	.LANCHOR7,. + 0
+ 1568              	RFBuffer:
+ 1569 0000 00000000 		.space	256
+ 1569      00000000 
+ 1569      00000000 
+ 1569      00000000 
+ 1569      00000000 
+ 1570              		.section	.bss.PacketTimeout,"aw",%nobits
+ 1571              		.align	2
+ 1572              		.set	.LANCHOR10,. + 0
+ 1575              	PacketTimeout:
+ 1576 0000 00000000 		.space	4
+ 1577              		.section	.bss.RxPacketSnrEstimate,"aw",%nobits
+ 1578              		.set	.LANCHOR4,. + 0
+ 1581              	RxPacketSnrEstimate:
+ 1582 0000 00       		.space	1
+ 1583              		.section	.bss.RxPacketSize,"aw",%nobits
+ 1584              		.align	1
+ 1585              		.set	.LANCHOR6,. + 0
+ 1588              	RxPacketSize:
+ 1589 0000 0000     		.space	2
+ 1590              		.section	.data.RxGain,"aw",%progbits
+ 1591              		.set	.LANCHOR3,. + 0
+ 1594              	RxGain:
+ 1595 0000 01       		.byte	1
+ 1596              		.section	.data.antennaSwitchTxOnPrev.6563,"aw",%progbits
+ 1597              		.set	.LANCHOR0,. + 0
+ 1600              	antennaSwitchTxOnPrev.6563:
+ 1601 0000 01       		.byte	1
+ 1602              		.section	.bss.TxPacketSize,"aw",%nobits
+ARM GAS  /tmp/ccVU9461.s 			page 41
+
+
+ 1603              		.align	1
+ 1604              		.set	.LANCHOR8,. + 0
+ 1607              	TxPacketSize:
+ 1608 0000 0000     		.space	2
+ 1609              		.section	.data.LoRaSettings,"aw",%progbits
+ 1610              		.align	2
+ 1611              		.set	.LANCHOR2,. + 0
+ 1614              	LoRaSettings:
+ 1615 0000 8025DB33 		.word	870000000
+ 1616 0004 14       		.byte	20
+ 1617 0005 09       		.byte	9
+ 1618 0006 07       		.byte	7
+ 1619 0007 02       		.byte	2
+ 1620 0008 01       		.byte	1
+ 1621 0009 00       		.byte	0
+ 1622 000a 01       		.byte	1
+ 1623 000b 00       		.byte	0
+ 1624 000c 04       		.byte	4
+ 1625 000d 000000   		.space	3
+ 1626 0010 64000000 		.word	100
+ 1627 0014 64000000 		.word	100
+ 1628 0018 80       		.byte	-128
+ 1629 0019 000000   		.space	3
+ 1630              		.section	.bss.RFLRState,"aw",%nobits
+ 1631              		.set	.LANCHOR1,. + 0
+ 1634              	RFLRState:
+ 1635 0000 00       		.space	1
+ 1636              		.section	.bss.RxTimeoutTimer,"aw",%nobits
+ 1637              		.align	2
+ 1638              		.set	.LANCHOR11,. + 0
+ 1641              	RxTimeoutTimer:
+ 1642 0000 00000000 		.space	4
+ 1643              		.section	.rodata.HoppingFrequencies,"a",%progbits
+ 1644              		.align	2
+ 1645              		.set	.LANCHOR9,. + 0
+ 1648              	HoppingFrequencies:
+ 1649 0000 20AEA036 		.word	916500000
+ 1650 0004 E07D0B37 		.word	923500000
+ 1651 0008 A0170836 		.word	906500000
+ 1652 000c 60F0AF36 		.word	917500000
+ 1653 0010 60F0AF36 		.word	917500000
+ 1654 0014 403D2E36 		.word	909000000
+ 1655 0018 C0AFD235 		.word	903000000
+ 1656 001c 000D9936 		.word	916000000
+ 1657 0020 20A56336 		.word	912500000
+ 1658 0024 80A33137 		.word	926000000
+ 1659 0028 40612237 		.word	925000000
+ 1660 002c 60DE3536 		.word	909500000
+ 1661 0030 40466B36 		.word	913000000
+ 1662 0034 A032BF36 		.word	918500000
+ 1663 0038 A032BF36 		.word	918500000
+ 1664 003c A00ECB35 		.word	902500000
+ 1665 0040 E0625436 		.word	911500000
+ 1666 0044 A0443937 		.word	926500000
+ 1667 0048 A00ECB35 		.word	902500000
+ 1668 004c 809AF436 		.word	922000000
+ 1669 0050 001F1337 		.word	924000000
+ARM GAS  /tmp/ccVU9461.s 			page 42
+
+
+ 1670 0054 E050DA35 		.word	903500000
+ 1671 0058 40466B36 		.word	913000000
+ 1672 005c 809AF436 		.word	922000000
+ 1673 0060 80A33137 		.word	926000000
+ 1674 0064 807F3D36 		.word	910000000
+ 1675 0068 0016D636 		.word	920000000
+ 1676 006c A03BFC36 		.word	922500000
+ 1677 0070 C0C14C36 		.word	911000000
+ 1678 0074 809AF436 		.word	922000000
+ 1679 0078 60DE3536 		.word	909500000
+ 1680 007c 80A33137 		.word	926000000
+ 1681 0080 809AF436 		.word	922000000
+ 1682 0084 8091B736 		.word	918000000
+ 1683 0088 60022A37 		.word	925500000
+ 1684 008c 00FB1E36 		.word	908000000
+ 1685 0090 60F0AF36 		.word	917500000
+ 1686 0094 A0443937 		.word	926500000
+ 1687 0098 209C2636 		.word	908500000
+ 1688 009c 000D9936 		.word	916000000
+ 1689 00a0 60D5F835 		.word	905500000
+ 1690 00a4 000D9936 		.word	916000000
+ 1691 00a8 C0AFD235 		.word	903000000
+ 1692 00ac 4034F135 		.word	905000000
+ 1693 00b0 C0CA8936 		.word	915000000
+ 1694 00b4 40466B36 		.word	913000000
+ 1695 00b8 C0B80F36 		.word	907000000
+ 1696 00bc 807F3D36 		.word	910000000
+ 1697 00c0 A0443937 		.word	926500000
+ 1698 00c4 60022A37 		.word	925500000
+ 1699 00c8 C0C14C36 		.word	911000000
+ 1700              		.section	.bss.RxPacketRssiValue,"aw",%nobits
+ 1701              		.align	3
+ 1702              		.set	.LANCHOR5,. + 0
+ 1705              	RxPacketRssiValue:
+ 1706 0000 00000000 		.space	8
+ 1706      00000000 
+ 1707              		.text
+ 1708              	.Letext0:
+ 1709              		.file 2 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/lib/gcc/arm-none-eabi/5.4.1/include/stddef.h"
+ 1710              		.file 3 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/machine/_default_types.h"
+ 1711              		.file 4 "/usr/bin/gcc-arm-none-eabi-5_4-2016q3/arm-none-eabi/include/sys/_stdint.h"
+ 1712              		.file 5 "sx1278/radio/radio.h"
+ 1713              		.file 6 "sx1278/platform/sx12xxEiger/sx1276-Hal.h"
+ 1714              		.file 7 "sx1278/radio/sx1276-LoRa.h"
+ 1715              		.file 8 "Drivers/CMSIS/Include/core_cm3.h"
+ 1716              		.file 9 "sx1278/radio/sx1276.h"
+ 1717              		.file 10 "Drivers/STM32L1xx_HAL_Driver/Inc/stm32l1xx_hal.h"
+ 1718              		.file 11 "sx1278/radio/sx1276-LoRaMisc.h"
+ARM GAS  /tmp/ccVU9461.s 			page 43
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 sx1276-LoRa.c
+     /tmp/ccVU9461.s:20     .text.SX1276LoRaSetDefaults:00000000 $t
+     /tmp/ccVU9461.s:25     .text.SX1276LoRaSetDefaults:00000000 SX1276LoRaSetDefaults
+     /tmp/ccVU9461.s:48     .text.SX1276LoRaSetDefaults:00000010 $d
+                            *COM*:00000004 SX1276LR
+     /tmp/ccVU9461.s:53     .text.SX1276LoRaReset:00000000 $t
+     /tmp/ccVU9461.s:58     .text.SX1276LoRaReset:00000000 SX1276LoRaReset
+     /tmp/ccVU9461.s:106    .text.SX1276LoRaSetOpMode:00000000 $t
+     /tmp/ccVU9461.s:111    .text.SX1276LoRaSetOpMode:00000000 SX1276LoRaSetOpMode
+     /tmp/ccVU9461.s:182    .text.SX1276LoRaSetOpMode:0000004c $d
+     /tmp/ccVU9461.s:188    .text.SX1276LoRaInit:00000000 $t
+     /tmp/ccVU9461.s:193    .text.SX1276LoRaInit:00000000 SX1276LoRaInit
+     /tmp/ccVU9461.s:311    .text.SX1276LoRaInit:000000a0 $d
+     /tmp/ccVU9461.s:320    .text.SX1276LoRaGetOpMode:00000000 $t
+     /tmp/ccVU9461.s:325    .text.SX1276LoRaGetOpMode:00000000 SX1276LoRaGetOpMode
+     /tmp/ccVU9461.s:352    .text.SX1276LoRaGetOpMode:00000018 $d
+     /tmp/ccVU9461.s:357    .text.SX1276LoRaReadRxGain:00000000 $t
+     /tmp/ccVU9461.s:362    .text.SX1276LoRaReadRxGain:00000000 SX1276LoRaReadRxGain
+     /tmp/ccVU9461.s:389    .text.SX1276LoRaReadRxGain:00000018 $d
+     /tmp/ccVU9461.s:396    .text.SX1276LoRaReadRssi:00000000 $t
+     /tmp/ccVU9461.s:401    .text.SX1276LoRaReadRssi:00000000 SX1276LoRaReadRssi
+     /tmp/ccVU9461.s:452    .text.SX1276LoRaReadRssi:00000048 $d
+     /tmp/ccVU9461.s:462    .text.SX1276LoRaGetPacketRxGain:00000000 $t
+     /tmp/ccVU9461.s:467    .text.SX1276LoRaGetPacketRxGain:00000000 SX1276LoRaGetPacketRxGain
+     /tmp/ccVU9461.s:481    .text.SX1276LoRaGetPacketRxGain:00000008 $d
+     /tmp/ccVU9461.s:486    .text.SX1276LoRaGetPacketSnr:00000000 $t
+     /tmp/ccVU9461.s:491    .text.SX1276LoRaGetPacketSnr:00000000 SX1276LoRaGetPacketSnr
+     /tmp/ccVU9461.s:505    .text.SX1276LoRaGetPacketSnr:00000008 $d
+     /tmp/ccVU9461.s:510    .text.SX1276LoRaGetPacketRssi:00000000 $t
+     /tmp/ccVU9461.s:515    .text.SX1276LoRaGetPacketRssi:00000000 SX1276LoRaGetPacketRssi
+     /tmp/ccVU9461.s:529    .text.SX1276LoRaGetPacketRssi:00000008 $d
+     /tmp/ccVU9461.s:534    .text.SX1276LoRaGetRxPacket:00000000 $t
+     /tmp/ccVU9461.s:539    .text.SX1276LoRaGetRxPacket:00000000 SX1276LoRaGetRxPacket
+     /tmp/ccVU9461.s:567    .text.SX1276LoRaGetRxPacket:00000014 $d
+     /tmp/ccVU9461.s:573    .text.SX1276LoRaSetTxPacket:00000000 $t
+     /tmp/ccVU9461.s:578    .text.SX1276LoRaSetTxPacket:00000000 SX1276LoRaSetTxPacket
+     /tmp/ccVU9461.s:609    .text.SX1276LoRaSetTxPacket:00000018 $d
+     /tmp/ccVU9461.s:616    .text.SX1276LoRaGetRFState:00000000 $t
+     /tmp/ccVU9461.s:621    .text.SX1276LoRaGetRFState:00000000 SX1276LoRaGetRFState
+     /tmp/ccVU9461.s:635    .text.SX1276LoRaGetRFState:00000008 $d
+     /tmp/ccVU9461.s:640    .text.SX1276LoRaSetRFState:00000000 $t
+     /tmp/ccVU9461.s:645    .text.SX1276LoRaSetRFState:00000000 SX1276LoRaSetRFState
+     /tmp/ccVU9461.s:660    .text.SX1276LoRaSetRFState:00000008 $d
+     /tmp/ccVU9461.s:665    .text.SX1276LoRaStartRx:00000000 $t
+     /tmp/ccVU9461.s:670    .text.SX1276LoRaStartRx:00000000 SX1276LoRaStartRx
+     /tmp/ccVU9461.s:693    .text.SX1276LoRaProcess:00000000 $t
+     /tmp/ccVU9461.s:698    .text.SX1276LoRaProcess:00000000 SX1276LoRaProcess
+     /tmp/ccVU9461.s:723    .text.SX1276LoRaProcess:00000014 $d
+     /tmp/ccVU9461.s:733    .text.SX1276LoRaProcess:00000028 $t
+     /tmp/ccVU9461.s:1100   .text.SX1276LoRaProcess:00000298 $d
+     /tmp/ccVU9461.s:1118   .text.SX1276LoRaProcess:000002d8 $t
+     /tmp/ccVU9461.s:1545   .text.SX1276LoRaProcess:00000560 $d
+     /tmp/ccVU9461.s:1614   .data.LoRaSettings:00000000 LoRaSettings
+     /tmp/ccVU9461.s:1648   .rodata.HoppingFrequencies:00000000 HoppingFrequencies
+     /tmp/ccVU9461.s:1564   .bss.RFBuffer:00000000 $d
+     /tmp/ccVU9461.s:1568   .bss.RFBuffer:00000000 RFBuffer
+ARM GAS  /tmp/ccVU9461.s 			page 44
+
+
+     /tmp/ccVU9461.s:1571   .bss.PacketTimeout:00000000 $d
+     /tmp/ccVU9461.s:1575   .bss.PacketTimeout:00000000 PacketTimeout
+     /tmp/ccVU9461.s:1581   .bss.RxPacketSnrEstimate:00000000 RxPacketSnrEstimate
+     /tmp/ccVU9461.s:1582   .bss.RxPacketSnrEstimate:00000000 $d
+     /tmp/ccVU9461.s:1584   .bss.RxPacketSize:00000000 $d
+     /tmp/ccVU9461.s:1588   .bss.RxPacketSize:00000000 RxPacketSize
+     /tmp/ccVU9461.s:1594   .data.RxGain:00000000 RxGain
+     /tmp/ccVU9461.s:1600   .data.antennaSwitchTxOnPrev.6563:00000000 antennaSwitchTxOnPrev.6563
+     /tmp/ccVU9461.s:1603   .bss.TxPacketSize:00000000 $d
+     /tmp/ccVU9461.s:1607   .bss.TxPacketSize:00000000 TxPacketSize
+     /tmp/ccVU9461.s:1610   .data.LoRaSettings:00000000 $d
+     /tmp/ccVU9461.s:1634   .bss.RFLRState:00000000 RFLRState
+     /tmp/ccVU9461.s:1635   .bss.RFLRState:00000000 $d
+     /tmp/ccVU9461.s:1637   .bss.RxTimeoutTimer:00000000 $d
+     /tmp/ccVU9461.s:1641   .bss.RxTimeoutTimer:00000000 RxTimeoutTimer
+     /tmp/ccVU9461.s:1644   .rodata.HoppingFrequencies:00000000 $d
+     /tmp/ccVU9461.s:1701   .bss.RxPacketRssiValue:00000000 $d
+     /tmp/ccVU9461.s:1705   .bss.RxPacketRssiValue:00000000 RxPacketRssiValue
+                     .debug_frame:00000010 $d
+
+UNDEFINED SYMBOLS
+SX1276Read
+SX1276SetReset
+HAL_GetTick
+SX1276WriteRxTx
+SX1276Write
+SX1276ReadBuffer
+SX1276WriteBuffer
+SX1276LoRaSetRFFrequency
+SX1276LoRaSetSpreadingFactor
+SX1276LoRaSetErrorCoding
+SX1276LoRaSetPacketCrcOn
+SX1276LoRaSetSignalBandwidth
+SX1276LoRaSetImplicitHeaderOn
+SX1276LoRaSetSymbTimeout
+SX1276LoRaSetPayloadLength
+SX1276LoRaSetLowDatarateOptimize
+SX1276LoRaSetPAOutput
+SX1276LoRaSetPa20dBm
+SX1276LoRaSetRFPower
+SX1276Regs
+__aeabi_ui2d
+__aeabi_dsub
+memcpy
+__aeabi_i2d
+__aeabi_dadd
+__aeabi_dmul
+memset
+SX1276ReadDio0
+SX1276ReadDio2
+SX1276ReadFifo
+SX1276WriteFifo
+SX1276ReadDio3
+SX1276ReadDio4

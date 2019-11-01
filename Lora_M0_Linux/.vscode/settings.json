@@ -1,0 +1,15 @@
+{
+	"files.associations": {
+		"main.h": "c",
+		"stm32l1xx_hal.h": "c",
+		"usart.h": "c",
+		"stm32l1xx_hal_conf.h": "c",
+		"stm32l1xx_hal_uart.h": "c",
+		"fcntl.h": "c",
+		"errno.h": "c",
+		"spi.h": "c",
+		"sx1276-hal.h": "c",
+		"ioe.h": "c",
+		"platform.h": "c"
+	}
+}
