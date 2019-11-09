@@ -1,0 +1,611 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\ioe.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\ioe.o
+
+
+Disassembly of section .text.IoePinWrite:
+
+00000000 <IoePinWrite>:
+IoePinWrite():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:84
+    };
+                    
+uint8_t IoePortValue[4];
+
+static void IoePinWrite( uint8_t port, uint8_t pin, uint8_t enable )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4613      	mov	r3, r2
+   8:	4602      	mov	r2, r0
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	460a      	mov	r2, r1
+   e:	71ba      	strb	r2, [r7, #6]
+  10:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:85
+    uint8_t data = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:87
+
+    SX1509Read( port, &data );
+  18:	79fa      	ldrb	r2, [r7, #7]
+  1a:	f107 030f 	add.w	r3, r7, #15
+  1e:	4610      	mov	r0, r2
+  20:	4619      	mov	r1, r3
+  22:	f7ff fffe 	bl	0 <SX1509Read>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:88
+    if( enable == 1 )
+  26:	797b      	ldrb	r3, [r7, #5]
+  28:	2b01      	cmp	r3, #1
+  2a:	d10a      	bne.n	42 <IoePinWrite+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:90
+    {
+        SX1509Write( port, data | pin );
+  2c:	7bfa      	ldrb	r2, [r7, #15]
+  2e:	79bb      	ldrb	r3, [r7, #6]
+  30:	ea42 0303 	orr.w	r3, r2, r3
+  34:	b2db      	uxtb	r3, r3
+  36:	79fa      	ldrb	r2, [r7, #7]
+  38:	4610      	mov	r0, r2
+  3a:	4619      	mov	r1, r3
+  3c:	f7ff fffe 	bl	0 <SX1509Write>
+  40:	e00e      	b.n	60 <IoePinWrite+0x60>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:94
+    }
+    else
+    {
+        SX1509Write( port, data & ( ~pin ) );
+  42:	79bb      	ldrb	r3, [r7, #6]
+  44:	ea6f 0303 	mvn.w	r3, r3
+  48:	b2da      	uxtb	r2, r3
+  4a:	7bfb      	ldrb	r3, [r7, #15]
+  4c:	b2db      	uxtb	r3, r3
+  4e:	ea02 0303 	and.w	r3, r2, r3
+  52:	b2db      	uxtb	r3, r3
+  54:	b2db      	uxtb	r3, r3
+  56:	79fa      	ldrb	r2, [r7, #7]
+  58:	4610      	mov	r0, r2
+  5a:	4619      	mov	r1, r3
+  5c:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:96
+    }
+}
+  60:	f107 0710 	add.w	r7, r7, #16
+  64:	46bd      	mov	sp, r7
+  66:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.IoePinRead:
+
+00000000 <IoePinRead>:
+IoePinRead():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:99
+
+static uint8_t IoePinRead( uint8_t port, uint8_t pin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:100
+    uint8_t data = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:101
+    uint8_t trial = 10;
+  14:	f04f 030a 	mov.w	r3, #10
+  18:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:103
+
+    while( trial-- )
+  1a:	e00c      	b.n	36 <IoePinRead+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:105
+    {
+        if( SX1509Read( port, &data ) == SX_OK )
+  1c:	79fa      	ldrb	r2, [r7, #7]
+  1e:	f107 030e 	add.w	r3, r7, #14
+  22:	4610      	mov	r0, r2
+  24:	4619      	mov	r1, r3
+  26:	f7ff fffe 	bl	0 <SX1509Read>
+  2a:	4603      	mov	r3, r0
+  2c:	2b00      	cmp	r3, #0
+  2e:	d102      	bne.n	36 <IoePinRead+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:107
+        {
+            trial = 0;
+  30:	f04f 0300 	mov.w	r3, #0
+  34:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:103
+static uint8_t IoePinRead( uint8_t port, uint8_t pin )
+{
+    uint8_t data = 0;
+    uint8_t trial = 10;
+
+    while( trial-- )
+  36:	7bfb      	ldrb	r3, [r7, #15]
+  38:	2b00      	cmp	r3, #0
+  3a:	bf0c      	ite	eq
+  3c:	2300      	moveq	r3, #0
+  3e:	2301      	movne	r3, #1
+  40:	b2db      	uxtb	r3, r3
+  42:	7bfa      	ldrb	r2, [r7, #15]
+  44:	f102 32ff 	add.w	r2, r2, #4294967295
+  48:	73fa      	strb	r2, [r7, #15]
+  4a:	2b00      	cmp	r3, #0
+  4c:	d1e6      	bne.n	1c <IoePinRead+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:110
+        if( SX1509Read( port, &data ) == SX_OK )
+        {
+            trial = 0;
+        }
+    }
+    return ( ( data & pin ) == pin ) ? 1 : 0;
+  4e:	7bba      	ldrb	r2, [r7, #14]
+  50:	79bb      	ldrb	r3, [r7, #6]
+  52:	ea02 0303 	and.w	r3, r2, r3
+  56:	b2db      	uxtb	r3, r3
+  58:	79ba      	ldrb	r2, [r7, #6]
+  5a:	429a      	cmp	r2, r3
+  5c:	bf14      	ite	ne
+  5e:	2300      	movne	r3, #0
+  60:	2301      	moveq	r3, #1
+  62:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:111
+}
+  64:	4618      	mov	r0, r3
+  66:	f107 0710 	add.w	r7, r7, #16
+  6a:	46bd      	mov	sp, r7
+  6c:	bd80      	pop	{r7, pc}
+  6e:	bf00      	nop
+
+Disassembly of section .text.IoePinOn:
+
+00000000 <IoePinOn>:
+IoePinOn():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:114
+
+void IoePinOn( tIoePin pin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:115
+    if( pin > 15 )
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b0f      	cmp	r3, #15
+   e:	d903      	bls.n	18 <IoePinOn+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:117
+    {
+        SX1509SetDeviceAddr( 0x3F );
+  10:	f04f 003f 	mov.w	r0, #63	; 0x3f
+  14:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:120
+    }
+    
+    IoePinWrite( IoePinPort[pin], IoePin[pin], 1 );
+  18:	79fb      	ldrb	r3, [r7, #7]
+  1a:	4a0b      	ldr	r2, [pc, #44]	; (48 <IoePinOn+0x48>)
+  1c:	5cd2      	ldrb	r2, [r2, r3]
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	490a      	ldr	r1, [pc, #40]	; (4c <IoePinOn+0x4c>)
+  22:	5ccb      	ldrb	r3, [r1, r3]
+  24:	4610      	mov	r0, r2
+  26:	4619      	mov	r1, r3
+  28:	f04f 0201 	mov.w	r2, #1
+  2c:	f7ff fffe 	bl	0 <IoePinOn>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:122
+
+    if( pin > 15 )
+  30:	79fb      	ldrb	r3, [r7, #7]
+  32:	2b0f      	cmp	r3, #15
+  34:	d903      	bls.n	3e <IoePinOn+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:124
+    {
+        SX1509SetDeviceAddr( 0x3E );
+  36:	f04f 003e 	mov.w	r0, #62	; 0x3e
+  3a:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:126
+    }
+}
+  3e:	f107 0708 	add.w	r7, r7, #8
+  42:	46bd      	mov	sp, r7
+  44:	bd80      	pop	{r7, pc}
+  46:	bf00      	nop
+	...
+
+Disassembly of section .text.IoePinOff:
+
+00000000 <IoePinOff>:
+IoePinOff():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:129
+
+void IoePinOff( tIoePin pin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:130
+    if( pin > 15 )
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b0f      	cmp	r3, #15
+   e:	d903      	bls.n	18 <IoePinOff+0x18>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:132
+    {
+        SX1509SetDeviceAddr( 0x3F );
+  10:	f04f 003f 	mov.w	r0, #63	; 0x3f
+  14:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:135
+    }
+
+    IoePinWrite( IoePinPort[pin], IoePin[pin], 0 );
+  18:	79fb      	ldrb	r3, [r7, #7]
+  1a:	4a0b      	ldr	r2, [pc, #44]	; (48 <IoePinOff+0x48>)
+  1c:	5cd2      	ldrb	r2, [r2, r3]
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	490a      	ldr	r1, [pc, #40]	; (4c <IoePinOff+0x4c>)
+  22:	5ccb      	ldrb	r3, [r1, r3]
+  24:	4610      	mov	r0, r2
+  26:	4619      	mov	r1, r3
+  28:	f04f 0200 	mov.w	r2, #0
+  2c:	f7ff fffe 	bl	0 <IoePinOff>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:137
+
+    if( pin > 15 )
+  30:	79fb      	ldrb	r3, [r7, #7]
+  32:	2b0f      	cmp	r3, #15
+  34:	d903      	bls.n	3e <IoePinOff+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:139
+    {
+        SX1509SetDeviceAddr( 0x3E );
+  36:	f04f 003e 	mov.w	r0, #62	; 0x3e
+  3a:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:141
+    }
+}
+  3e:	f107 0708 	add.w	r7, r7, #8
+  42:	46bd      	mov	sp, r7
+  44:	bd80      	pop	{r7, pc}
+  46:	bf00      	nop
+	...
+
+Disassembly of section .text.IoePinToggle:
+
+00000000 <IoePinToggle>:
+IoePinToggle():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:144
+
+void IoePinToggle( tIoePin pin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:145
+    uint8_t pinValue = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:147
+    
+    if( pin > 15 )
+  10:	79fb      	ldrb	r3, [r7, #7]
+  12:	2b0f      	cmp	r3, #15
+  14:	d903      	bls.n	1e <IoePinToggle+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:149
+    {
+        SX1509SetDeviceAddr( 0x3F );
+  16:	f04f 003f 	mov.w	r0, #63	; 0x3f
+  1a:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:152
+    }
+
+    pinValue = IoePinRead( IoePinPort[pin], IoePin[pin] );
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	4a12      	ldr	r2, [pc, #72]	; (6c <IoePinToggle+0x6c>)
+  22:	5cd2      	ldrb	r2, [r2, r3]
+  24:	79fb      	ldrb	r3, [r7, #7]
+  26:	4912      	ldr	r1, [pc, #72]	; (70 <IoePinToggle+0x70>)
+  28:	5ccb      	ldrb	r3, [r1, r3]
+  2a:	4610      	mov	r0, r2
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <IoePinToggle>
+  32:	4603      	mov	r3, r0
+  34:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:153
+    pinValue ^= 1;
+  36:	7bfb      	ldrb	r3, [r7, #15]
+  38:	f083 0301 	eor.w	r3, r3, #1
+  3c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:154
+    IoePinWrite( IoePinPort[pin], IoePin[pin], pinValue );
+  3e:	79fb      	ldrb	r3, [r7, #7]
+  40:	4a0a      	ldr	r2, [pc, #40]	; (6c <IoePinToggle+0x6c>)
+  42:	5cd1      	ldrb	r1, [r2, r3]
+  44:	79fb      	ldrb	r3, [r7, #7]
+  46:	4a0a      	ldr	r2, [pc, #40]	; (70 <IoePinToggle+0x70>)
+  48:	5cd2      	ldrb	r2, [r2, r3]
+  4a:	7bfb      	ldrb	r3, [r7, #15]
+  4c:	4608      	mov	r0, r1
+  4e:	4611      	mov	r1, r2
+  50:	461a      	mov	r2, r3
+  52:	f7ff fffe 	bl	0 <IoePinToggle>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:156
+    
+    if( pin > 15 )
+  56:	79fb      	ldrb	r3, [r7, #7]
+  58:	2b0f      	cmp	r3, #15
+  5a:	d903      	bls.n	64 <IoePinToggle+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:158
+    {
+        SX1509SetDeviceAddr( 0x3E );
+  5c:	f04f 003e 	mov.w	r0, #62	; 0x3e
+  60:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:160
+    }
+}
+  64:	f107 0710 	add.w	r7, r7, #16
+  68:	46bd      	mov	sp, r7
+  6a:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.IoePinGet:
+
+00000000 <IoePinGet>:
+IoePinGet():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:163
+
+uint8_t IoePinGet( tIoePin pin )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:164
+    uint8_t pinValue = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:166
+
+    if( pin > 15 )
+  10:	79fb      	ldrb	r3, [r7, #7]
+  12:	2b0f      	cmp	r3, #15
+  14:	d903      	bls.n	1e <IoePinGet+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:168
+    {
+        SX1509SetDeviceAddr( 0x3F );
+  16:	f04f 003f 	mov.w	r0, #63	; 0x3f
+  1a:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:171
+    }
+
+    pinValue = IoePinRead( IoePinPort[pin], IoePin[pin] );
+  1e:	79fb      	ldrb	r3, [r7, #7]
+  20:	4a0b      	ldr	r2, [pc, #44]	; (50 <IoePinGet+0x50>)
+  22:	5cd2      	ldrb	r2, [r2, r3]
+  24:	79fb      	ldrb	r3, [r7, #7]
+  26:	490b      	ldr	r1, [pc, #44]	; (54 <IoePinGet+0x54>)
+  28:	5ccb      	ldrb	r3, [r1, r3]
+  2a:	4610      	mov	r0, r2
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <IoePinGet>
+  32:	4603      	mov	r3, r0
+  34:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:182
+    //    case RegDataB:
+    //        pinValue = ( IoePortValue[1] & IoePin[pin] ) == IoePin[pin];
+    //        break;
+    //}
+    
+    if( pin > 15 )
+  36:	79fb      	ldrb	r3, [r7, #7]
+  38:	2b0f      	cmp	r3, #15
+  3a:	d903      	bls.n	44 <IoePinGet+0x44>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:184
+    {
+        SX1509SetDeviceAddr( 0x3E );
+  3c:	f04f 003e 	mov.w	r0, #62	; 0x3e
+  40:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:187
+    }
+
+    return pinValue;
+  44:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:188
+}
+  46:	4618      	mov	r0, r3
+  48:	f107 0710 	add.w	r7, r7, #16
+  4c:	46bd      	mov	sp, r7
+  4e:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.IoeInit:
+
+00000000 <IoeInit>:
+IoeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:191
+
+void IoeInit( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:195
+    //-------------------------------------------------------------------------
+    // Main IO expander initialization
+    //-------------------------------------------------------------------------
+    SX1509SetDeviceAddr( 0x3E );
+   4:	f04f 003e 	mov.w	r0, #62	; 0x3e
+   8:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:196
+    SX1509Reset( );
+   c:	f7ff fffe 	bl	0 <SX1509Reset>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:198
+
+    SX1509Write( RegClock, 0x40 );
+  10:	f04f 001e 	mov.w	r0, #30
+  14:	f04f 0140 	mov.w	r1, #64	; 0x40
+  18:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:202
+
+    // SHDN1 SHDN0 SIOEI READY RXTX  DIO5  DIO4  DIO3
+    //  OUT   OUT   IN    IN    IN    IN    IN    IN
+    SX1509Write( RegDirA, 0x3F );
+  1c:	f04f 000f 	mov.w	r0, #15
+  20:	f04f 013f 	mov.w	r1, #63	; 0x3f
+  24:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:206
+    
+    // N/A   N/A   N/A   SPARE CTX   CPS   CSD   ANT_S
+    //  IN    IN    IN    IN    OUT   OUT   OUT   OUT
+    SX1509Write( RegDirB, 0xF0 );
+  28:	f04f 000e 	mov.w	r0, #14
+  2c:	f04f 01f0 	mov.w	r1, #240	; 0xf0
+  30:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:213
+#if defined( USE_FEM_BOARD )
+    SX1509Write( RegOpenDrainB, 0x0F );
+    //SX1509Write( RegInputDisableB, 0x0F );
+#endif
+
+    SX1509Write( RegSenseHighA, 0x0F );
+  34:	f04f 0016 	mov.w	r0, #22
+  38:	f04f 010f 	mov.w	r1, #15
+  3c:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:214
+    SX1509Write( RegSenseLowA, 0xFF );
+  40:	f04f 0017 	mov.w	r0, #23
+  44:	f04f 01ff 	mov.w	r1, #255	; 0xff
+  48:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:216
+
+    SX1509Write( RegSenseHighB, 0x00 );
+  4c:	f04f 0014 	mov.w	r0, #20
+  50:	f04f 0100 	mov.w	r1, #0
+  54:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:217
+    SX1509Write( RegSenseLowB, 0x00 );
+  58:	f04f 0015 	mov.w	r0, #21
+  5c:	f04f 0100 	mov.w	r1, #0
+  60:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:219
+    
+    SX1509Write( RegInterruptMaskA, 0xC4 );
+  64:	f04f 0013 	mov.w	r0, #19
+  68:	f04f 01c4 	mov.w	r1, #196	; 0xc4
+  6c:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:220
+    SX1509Write( RegInterruptMaskB, 0xFF );
+  70:	f04f 0012 	mov.w	r0, #18
+  74:	f04f 01ff 	mov.w	r1, #255	; 0xff
+  78:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:222
+
+    SX1509Write( RegDataA, 0x00 );
+  7c:	f04f 0011 	mov.w	r0, #17
+  80:	f04f 0100 	mov.w	r1, #0
+  84:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:223
+    SX1509Write( RegDataB, 0xEF );
+  88:	f04f 0010 	mov.w	r0, #16
+  8c:	f04f 01ef 	mov.w	r1, #239	; 0xef
+  90:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:228
+
+    //-------------------------------------------------------------------------
+    // Secondary IO expander initialization
+    //-------------------------------------------------------------------------
+    SX1509SetDeviceAddr( 0x3F );
+  94:	f04f 003f 	mov.w	r0, #63	; 0x3f
+  98:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:229
+    SX1509Reset( );
+  9c:	f7ff fffe 	bl	0 <SX1509Reset>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:231
+
+    SX1509Write( RegClock, 0x40 );
+  a0:	f04f 001e 	mov.w	r0, #30
+  a4:	f04f 0140 	mov.w	r1, #64	; 0x40
+  a8:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:235
+
+    // N/A   N/A   N/A   N/A   ALERT LED3  LED2  LED1
+    //  IN    IN    IN    IN    IN    OUT   OUT   OUT
+    SX1509Write( RegDirA, 0xF8 );
+  ac:	f04f 000f 	mov.w	r0, #15
+  b0:	f04f 01f8 	mov.w	r1, #248	; 0xf8
+  b4:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:236
+    SX1509Write( RegOpenDrainA, 0x07 );
+  b8:	f04f 000b 	mov.w	r0, #11
+  bc:	f04f 0107 	mov.w	r1, #7
+  c0:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:241
+    //SX1509Write( RegInputDisableA, 0x07 );
+    
+    // GPIO7 GPIO6 GPIO5 GPIO4 GPIO3 GPIO2 GPIO1 GPIO0
+    //  IN    IN    IN    IN    IN    IN    IN    IN  
+    SX1509Write( RegDirB, 0xFF );
+  c4:	f04f 000e 	mov.w	r0, #14
+  c8:	f04f 01ff 	mov.w	r1, #255	; 0xff
+  cc:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:243
+
+    SX1509Write( RegSenseHighA, 0x00 );
+  d0:	f04f 0016 	mov.w	r0, #22
+  d4:	f04f 0100 	mov.w	r1, #0
+  d8:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:244
+    SX1509Write( RegSenseLowA, 0xC0 );
+  dc:	f04f 0017 	mov.w	r0, #23
+  e0:	f04f 01c0 	mov.w	r1, #192	; 0xc0
+  e4:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:246
+
+    SX1509Write( RegSenseHighB, 0x00 );
+  e8:	f04f 0014 	mov.w	r0, #20
+  ec:	f04f 0100 	mov.w	r1, #0
+  f0:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:247
+    SX1509Write( RegSenseLowB, 0x00 );
+  f4:	f04f 0015 	mov.w	r0, #21
+  f8:	f04f 0100 	mov.w	r1, #0
+  fc:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:249
+    
+    SX1509Write( RegInterruptMaskA, 0xF7 );
+ 100:	f04f 0013 	mov.w	r0, #19
+ 104:	f04f 01f7 	mov.w	r1, #247	; 0xf7
+ 108:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:250
+    SX1509Write( RegInterruptMaskB, 0xFF );
+ 10c:	f04f 0012 	mov.w	r0, #18
+ 110:	f04f 01ff 	mov.w	r1, #255	; 0xff
+ 114:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:252
+
+    SX1509Write( RegDataA, 0x07 );
+ 118:	f04f 0011 	mov.w	r0, #17
+ 11c:	f04f 0107 	mov.w	r1, #7
+ 120:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:253
+    SX1509Write( RegDataB, 0x00 );
+ 124:	f04f 0010 	mov.w	r0, #16
+ 128:	f04f 0100 	mov.w	r1, #0
+ 12c:	f7ff fffe 	bl	0 <SX1509Write>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:255
+
+    SX1509SetDeviceAddr( 0x3E );
+ 130:	f04f 003e 	mov.w	r0, #62	; 0x3e
+ 134:	f7ff fffe 	bl	0 <SX1509SetDeviceAddr>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/ioe.c:256
+}
+ 138:	bd80      	pop	{r7, pc}
+ 13a:	bf00      	nop

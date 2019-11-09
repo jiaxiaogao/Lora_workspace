@@ -1,0 +1,1282 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_sdio.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_sdio.o
+
+
+Disassembly of section .text.SDIO_DeInit:
+
+00000000 <SDIO_DeInit>:
+SDIO_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:267
+  * @brief  Deinitializes the SDIO peripheral registers to their default reset values.
+  * @param  None
+  * @retval None
+  */
+void SDIO_DeInit(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:268
+  RCC_APB2PeriphResetCmd(RCC_APB2Periph_SDIO, ENABLE);
+   4:	f44f 6000 	mov.w	r0, #2048	; 0x800
+   8:	f04f 0101 	mov.w	r1, #1
+   c:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:269
+  RCC_APB2PeriphResetCmd(RCC_APB2Periph_SDIO, DISABLE);
+  10:	f44f 6000 	mov.w	r0, #2048	; 0x800
+  14:	f04f 0100 	mov.w	r1, #0
+  18:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:270
+}
+  1c:	bd80      	pop	{r7, pc}
+  1e:	bf00      	nop
+
+Disassembly of section .text.SDIO_Init:
+
+00000000 <SDIO_Init>:
+SDIO_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:280
+  * @param  SDIO_InitStruct : pointer to a SDIO_InitTypeDef structure 
+  *         that contains the configuration information for the SDIO peripheral.
+  * @retval None
+  */
+void SDIO_Init(SDIO_InitTypeDef* SDIO_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:281
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:292
+  assert_param(IS_SDIO_BUS_WIDE(SDIO_InitStruct->SDIO_BusWide));
+  assert_param(IS_SDIO_HARDWARE_FLOW_CONTROL(SDIO_InitStruct->SDIO_HardwareFlowControl)); 
+   
+/*---------------------------- SDIO CLKCR Configuration ------------------------*/  
+  /* Get the SDIO CLKCR value */
+  tmpreg = SDIO->CLKCR;
+   e:	4b14      	ldr	r3, [pc, #80]	; (60 <SDIO_Init+0x60>)
+  10:	685b      	ldr	r3, [r3, #4]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:295
+  
+  /* Clear CLKDIV, PWRSAV, BYPASS, WIDBUS, NEGEDGE, HWFC_EN bits */
+  tmpreg &= CLKCR_CLEAR_MASK;
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	f423 43fc 	bic.w	r3, r3, #32256	; 0x7e00
+  1a:	f023 03ff 	bic.w	r3, r3, #255	; 0xff
+  1e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:303
+  /* Set PWRSAV bit according to SDIO_ClockPowerSave value */
+  /* Set BYPASS bit according to SDIO_ClockBypass value */
+  /* Set WIDBUS bits according to SDIO_BusWide value */
+  /* Set NEGEDGE bits according to SDIO_ClockEdge value */
+  /* Set HWFC_EN bits according to SDIO_HardwareFlowControl value */
+  tmpreg |= (SDIO_InitStruct->SDIO_ClockDiv  | SDIO_InitStruct->SDIO_ClockPowerSave |
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	7d1b      	ldrb	r3, [r3, #20]
+  24:	461a      	mov	r2, r3
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	689b      	ldr	r3, [r3, #8]
+  2a:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:304
+             SDIO_InitStruct->SDIO_ClockBypass | SDIO_InitStruct->SDIO_BusWide |
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	685b      	ldr	r3, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:303
+  /* Set PWRSAV bit according to SDIO_ClockPowerSave value */
+  /* Set BYPASS bit according to SDIO_ClockBypass value */
+  /* Set WIDBUS bits according to SDIO_BusWide value */
+  /* Set NEGEDGE bits according to SDIO_ClockEdge value */
+  /* Set HWFC_EN bits according to SDIO_HardwareFlowControl value */
+  tmpreg |= (SDIO_InitStruct->SDIO_ClockDiv  | SDIO_InitStruct->SDIO_ClockPowerSave |
+  30:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:304
+             SDIO_InitStruct->SDIO_ClockBypass | SDIO_InitStruct->SDIO_BusWide |
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	68db      	ldr	r3, [r3, #12]
+  36:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:305
+             SDIO_InitStruct->SDIO_ClockEdge | SDIO_InitStruct->SDIO_HardwareFlowControl); 
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:304
+  /* Set BYPASS bit according to SDIO_ClockBypass value */
+  /* Set WIDBUS bits according to SDIO_BusWide value */
+  /* Set NEGEDGE bits according to SDIO_ClockEdge value */
+  /* Set HWFC_EN bits according to SDIO_HardwareFlowControl value */
+  tmpreg |= (SDIO_InitStruct->SDIO_ClockDiv  | SDIO_InitStruct->SDIO_ClockPowerSave |
+             SDIO_InitStruct->SDIO_ClockBypass | SDIO_InitStruct->SDIO_BusWide |
+  3c:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:305
+             SDIO_InitStruct->SDIO_ClockEdge | SDIO_InitStruct->SDIO_HardwareFlowControl); 
+  3e:	687b      	ldr	r3, [r7, #4]
+  40:	691b      	ldr	r3, [r3, #16]
+  42:	ea42 0303 	orr.w	r3, r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:303
+  /* Set PWRSAV bit according to SDIO_ClockPowerSave value */
+  /* Set BYPASS bit according to SDIO_ClockBypass value */
+  /* Set WIDBUS bits according to SDIO_BusWide value */
+  /* Set NEGEDGE bits according to SDIO_ClockEdge value */
+  /* Set HWFC_EN bits according to SDIO_HardwareFlowControl value */
+  tmpreg |= (SDIO_InitStruct->SDIO_ClockDiv  | SDIO_InitStruct->SDIO_ClockPowerSave |
+  46:	68fa      	ldr	r2, [r7, #12]
+  48:	ea42 0303 	orr.w	r3, r2, r3
+  4c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:308
+             SDIO_InitStruct->SDIO_ClockBypass | SDIO_InitStruct->SDIO_BusWide |
+             SDIO_InitStruct->SDIO_ClockEdge | SDIO_InitStruct->SDIO_HardwareFlowControl); 
+  
+  /* Write to SDIO CLKCR */
+  SDIO->CLKCR = tmpreg;
+  4e:	4b04      	ldr	r3, [pc, #16]	; (60 <SDIO_Init+0x60>)
+  50:	68fa      	ldr	r2, [r7, #12]
+  52:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:309
+}
+  54:	f107 0714 	add.w	r7, r7, #20
+  58:	46bd      	mov	sp, r7
+  5a:	bc80      	pop	{r7}
+  5c:	4770      	bx	lr
+  5e:	bf00      	nop
+  60:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_StructInit:
+
+00000000 <SDIO_StructInit>:
+SDIO_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:318
+  * @param  SDIO_InitStruct: pointer to an SDIO_InitTypeDef structure which 
+  *         will be initialized.
+  * @retval None
+  */
+void SDIO_StructInit(SDIO_InitTypeDef* SDIO_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:320
+  /* SDIO_InitStruct members default value */
+  SDIO_InitStruct->SDIO_ClockDiv = 0x00;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	751a      	strb	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:321
+  SDIO_InitStruct->SDIO_ClockEdge = SDIO_ClockEdge_Rising;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:322
+  SDIO_InitStruct->SDIO_ClockBypass = SDIO_ClockBypass_Disable;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:323
+  SDIO_InitStruct->SDIO_ClockPowerSave = SDIO_ClockPowerSave_Disable;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:324
+  SDIO_InitStruct->SDIO_BusWide = SDIO_BusWide_1b;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:325
+  SDIO_InitStruct->SDIO_HardwareFlowControl = SDIO_HardwareFlowControl_Disable;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:326
+}
+  38:	f107 070c 	add.w	r7, r7, #12
+  3c:	46bd      	mov	sp, r7
+  3e:	bc80      	pop	{r7}
+  40:	4770      	bx	lr
+  42:	bf00      	nop
+
+Disassembly of section .text.SDIO_ClockCmd:
+
+00000000 <SDIO_ClockCmd>:
+SDIO_ClockCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:335
+  * @param  NewState: new state of the SDIO Clock. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_ClockCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:339
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CLKCR_CLKEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_ClockCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:340
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422580a0 	.word	0x422580a0
+
+Disassembly of section .text.SDIO_SetPowerState:
+
+00000000 <SDIO_SetPowerState>:
+SDIO_SetPowerState():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:351
+  *            @arg SDIO_PowerState_OFF: SDIO Power OFF
+  *            @arg SDIO_PowerState_ON: SDIO Power ON
+  * @retval None
+  */
+void SDIO_SetPowerState(uint32_t SDIO_PowerState)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:355
+  /* Check the parameters */
+  assert_param(IS_SDIO_POWER_STATE(SDIO_PowerState));
+  
+  SDIO->POWER = SDIO_PowerState;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SDIO_SetPowerState+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:356
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_GetPowerState:
+
+00000000 <SDIO_GetPowerState>:
+SDIO_GetPowerState():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:368
+  *            - 0x00: Power OFF
+  *            - 0x02: Power UP
+  *            - 0x03: Power ON 
+  */
+uint32_t SDIO_GetPowerState(void)
+{
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:369
+  return (SDIO->POWER & (~PWR_PWRCTRL_MASK));
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <SDIO_GetPowerState+0x14>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f003 0303 	and.w	r3, r3, #3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:370
+}
+   c:	4618      	mov	r0, r3
+   e:	46bd      	mov	sp, r7
+  10:	bc80      	pop	{r7}
+  12:	4770      	bx	lr
+  14:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_SendCommand:
+
+00000000 <SDIO_SendCommand>:
+SDIO_SendCommand():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:400
+  *         structure that contains the configuration information for the SDIO 
+  *         command.
+  * @retval None
+  */
+void SDIO_SendCommand(SDIO_CmdInitTypeDef *SDIO_CmdInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:401
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:411
+  assert_param(IS_SDIO_WAIT(SDIO_CmdInitStruct->SDIO_Wait));
+  assert_param(IS_SDIO_CPSM(SDIO_CmdInitStruct->SDIO_CPSM));
+  
+/*---------------------------- SDIO ARG Configuration ------------------------*/
+  /* Set the SDIO Argument value */
+  SDIO->ARG = SDIO_CmdInitStruct->SDIO_Argument;
+   e:	4b12      	ldr	r3, [pc, #72]	; (58 <SDIO_SendCommand+0x58>)
+  10:	687a      	ldr	r2, [r7, #4]
+  12:	6812      	ldr	r2, [r2, #0]
+  14:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:415
+  
+/*---------------------------- SDIO CMD Configuration ------------------------*/  
+  /* Get the SDIO CMD value */
+  tmpreg = SDIO->CMD;
+  16:	4b10      	ldr	r3, [pc, #64]	; (58 <SDIO_SendCommand+0x58>)
+  18:	68db      	ldr	r3, [r3, #12]
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:417
+  /* Clear CMDINDEX, WAITRESP, WAITINT, WAITPEND, CPSMEN bits */
+  tmpreg &= CMD_CLEAR_MASK;
+  1c:	68fb      	ldr	r3, [r7, #12]
+  1e:	f423 63fe 	bic.w	r3, r3, #2032	; 0x7f0
+  22:	f023 030f 	bic.w	r3, r3, #15
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:422
+  /* Set CMDINDEX bits according to SDIO_CmdIndex value */
+  /* Set WAITRESP bits according to SDIO_Response value */
+  /* Set WAITINT and WAITPEND bits according to SDIO_Wait value */
+  /* Set CPSMEN bits according to SDIO_CPSM value */
+  tmpreg |= (uint32_t)SDIO_CmdInitStruct->SDIO_CmdIndex | SDIO_CmdInitStruct->SDIO_Response
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	685a      	ldr	r2, [r3, #4]
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	689b      	ldr	r3, [r3, #8]
+  30:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:423
+           | SDIO_CmdInitStruct->SDIO_Wait | SDIO_CmdInitStruct->SDIO_CPSM;
+  32:	687b      	ldr	r3, [r7, #4]
+  34:	68db      	ldr	r3, [r3, #12]
+  36:	431a      	orrs	r2, r3
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	691b      	ldr	r3, [r3, #16]
+  3c:	ea42 0303 	orr.w	r3, r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:422
+  tmpreg &= CMD_CLEAR_MASK;
+  /* Set CMDINDEX bits according to SDIO_CmdIndex value */
+  /* Set WAITRESP bits according to SDIO_Response value */
+  /* Set WAITINT and WAITPEND bits according to SDIO_Wait value */
+  /* Set CPSMEN bits according to SDIO_CPSM value */
+  tmpreg |= (uint32_t)SDIO_CmdInitStruct->SDIO_CmdIndex | SDIO_CmdInitStruct->SDIO_Response
+  40:	68fa      	ldr	r2, [r7, #12]
+  42:	ea42 0303 	orr.w	r3, r2, r3
+  46:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:426
+           | SDIO_CmdInitStruct->SDIO_Wait | SDIO_CmdInitStruct->SDIO_CPSM;
+  
+  /* Write to SDIO CMD */
+  SDIO->CMD = tmpreg;
+  48:	4b03      	ldr	r3, [pc, #12]	; (58 <SDIO_SendCommand+0x58>)
+  4a:	68fa      	ldr	r2, [r7, #12]
+  4c:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:427
+}
+  4e:	f107 0714 	add.w	r7, r7, #20
+  52:	46bd      	mov	sp, r7
+  54:	bc80      	pop	{r7}
+  56:	4770      	bx	lr
+  58:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_CmdStructInit:
+
+00000000 <SDIO_CmdStructInit>:
+SDIO_CmdStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:436
+  * @param  SDIO_CmdInitStruct: pointer to an SDIO_CmdInitTypeDef 
+  *         structure which will be initialized.
+  * @retval None
+  */
+void SDIO_CmdStructInit(SDIO_CmdInitTypeDef* SDIO_CmdInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:438
+  /* SDIO_CmdInitStruct members default value */
+  SDIO_CmdInitStruct->SDIO_Argument = 0x00;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:439
+  SDIO_CmdInitStruct->SDIO_CmdIndex = 0x00;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:440
+  SDIO_CmdInitStruct->SDIO_Response = SDIO_Response_No;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:441
+  SDIO_CmdInitStruct->SDIO_Wait = SDIO_Wait_No;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:442
+  SDIO_CmdInitStruct->SDIO_CPSM = SDIO_CPSM_Disable;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:443
+}
+  30:	f107 070c 	add.w	r7, r7, #12
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+
+Disassembly of section .text.SDIO_GetCommandResponse:
+
+00000000 <SDIO_GetCommandResponse>:
+SDIO_GetCommandResponse():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:451
+  * @brief  Returns command index of last command for which response received.
+  * @param  None
+  * @retval Returns the command index of the last command response received.
+  */
+uint8_t SDIO_GetCommandResponse(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:452
+  return (uint8_t)(SDIO->RESPCMD);
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <SDIO_GetCommandResponse+0x14>)
+   6:	691b      	ldr	r3, [r3, #16]
+   8:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:453
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_GetResponse:
+
+00000000 <SDIO_GetResponse>:
+SDIO_GetResponse():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:466
+  *            @arg SDIO_RESP3: Response Register 3
+  *            @arg SDIO_RESP4: Response Register 4
+  * @retval The Corresponding response register value.
+  */
+uint32_t SDIO_GetResponse(uint32_t SDIO_RESP)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:467
+  __IO uint32_t tmp = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:472
+
+  /* Check the parameters */
+  assert_param(IS_SDIO_RESP(SDIO_RESP));
+
+  tmp = SDIO_RESP_ADDR + SDIO_RESP;
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	4b05      	ldr	r3, [pc, #20]	; (28 <SDIO_GetResponse+0x28>)
+  12:	18d3      	adds	r3, r2, r3
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:474
+  
+  return (*(__IO uint32_t *) tmp); 
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:475
+}
+  1a:	4618      	mov	r0, r3
+  1c:	f107 0714 	add.w	r7, r7, #20
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+  28:	40012c14 	.word	0x40012c14
+
+Disassembly of section .text.SDIO_DataConfig:
+
+00000000 <SDIO_DataConfig>:
+SDIO_DataConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:504
+  * @param  SDIO_DataInitStruct : pointer to a SDIO_DataInitTypeDef structure 
+  *         that contains the configuration information for the SDIO command.
+  * @retval None
+  */
+void SDIO_DataConfig(SDIO_DataInitTypeDef* SDIO_DataInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:505
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:516
+  assert_param(IS_SDIO_TRANSFER_MODE(SDIO_DataInitStruct->SDIO_TransferMode));
+  assert_param(IS_SDIO_DPSM(SDIO_DataInitStruct->SDIO_DPSM));
+
+/*---------------------------- SDIO DTIMER Configuration ---------------------*/
+  /* Set the SDIO Data TimeOut value */
+  SDIO->DTIMER = SDIO_DataInitStruct->SDIO_DataTimeOut;
+   e:	4b13      	ldr	r3, [pc, #76]	; (5c <SDIO_DataConfig+0x5c>)
+  10:	687a      	ldr	r2, [r7, #4]
+  12:	6812      	ldr	r2, [r2, #0]
+  14:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:520
+
+/*---------------------------- SDIO DLEN Configuration -----------------------*/
+  /* Set the SDIO DataLength value */
+  SDIO->DLEN = SDIO_DataInitStruct->SDIO_DataLength;
+  16:	4b11      	ldr	r3, [pc, #68]	; (5c <SDIO_DataConfig+0x5c>)
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	6852      	ldr	r2, [r2, #4]
+  1c:	629a      	str	r2, [r3, #40]	; 0x28
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:524
+
+/*---------------------------- SDIO DCTRL Configuration ----------------------*/  
+  /* Get the SDIO DCTRL value */
+  tmpreg = SDIO->DCTRL;
+  1e:	4b0f      	ldr	r3, [pc, #60]	; (5c <SDIO_DataConfig+0x5c>)
+  20:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+  22:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:526
+  /* Clear DEN, DTMODE, DTDIR and DBCKSIZE bits */
+  tmpreg &= DCTRL_CLEAR_MASK;
+  24:	68fb      	ldr	r3, [r7, #12]
+  26:	f023 03f7 	bic.w	r3, r3, #247	; 0xf7
+  2a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:531
+  /* Set DEN bit according to SDIO_DPSM value */
+  /* Set DTMODE bit according to SDIO_TransferMode value */
+  /* Set DTDIR bit according to SDIO_TransferDir value */
+  /* Set DBCKSIZE bits according to SDIO_DataBlockSize value */
+  tmpreg |= (uint32_t)SDIO_DataInitStruct->SDIO_DataBlockSize | SDIO_DataInitStruct->SDIO_TransferDir
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	689a      	ldr	r2, [r3, #8]
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	68db      	ldr	r3, [r3, #12]
+  34:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:532
+           | SDIO_DataInitStruct->SDIO_TransferMode | SDIO_DataInitStruct->SDIO_DPSM;
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	691b      	ldr	r3, [r3, #16]
+  3a:	431a      	orrs	r2, r3
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	695b      	ldr	r3, [r3, #20]
+  40:	ea42 0303 	orr.w	r3, r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:531
+  tmpreg &= DCTRL_CLEAR_MASK;
+  /* Set DEN bit according to SDIO_DPSM value */
+  /* Set DTMODE bit according to SDIO_TransferMode value */
+  /* Set DTDIR bit according to SDIO_TransferDir value */
+  /* Set DBCKSIZE bits according to SDIO_DataBlockSize value */
+  tmpreg |= (uint32_t)SDIO_DataInitStruct->SDIO_DataBlockSize | SDIO_DataInitStruct->SDIO_TransferDir
+  44:	68fa      	ldr	r2, [r7, #12]
+  46:	ea42 0303 	orr.w	r3, r2, r3
+  4a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:535
+           | SDIO_DataInitStruct->SDIO_TransferMode | SDIO_DataInitStruct->SDIO_DPSM;
+
+  /* Write to SDIO DCTRL */
+  SDIO->DCTRL = tmpreg;
+  4c:	4b03      	ldr	r3, [pc, #12]	; (5c <SDIO_DataConfig+0x5c>)
+  4e:	68fa      	ldr	r2, [r7, #12]
+  50:	62da      	str	r2, [r3, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:536
+}
+  52:	f107 0714 	add.w	r7, r7, #20
+  56:	46bd      	mov	sp, r7
+  58:	bc80      	pop	{r7}
+  5a:	4770      	bx	lr
+  5c:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_DataStructInit:
+
+00000000 <SDIO_DataStructInit>:
+SDIO_DataStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:545
+  * @param  SDIO_DataInitStruct: pointer to an SDIO_DataInitTypeDef structure 
+  *         which will be initialized.
+  * @retval None
+  */
+void SDIO_DataStructInit(SDIO_DataInitTypeDef* SDIO_DataInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:547
+  /* SDIO_DataInitStruct members default value */
+  SDIO_DataInitStruct->SDIO_DataTimeOut = 0xFFFFFFFF;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 32ff 	mov.w	r2, #4294967295
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:548
+  SDIO_DataInitStruct->SDIO_DataLength = 0x00;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:549
+  SDIO_DataInitStruct->SDIO_DataBlockSize = SDIO_DataBlockSize_1b;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:550
+  SDIO_DataInitStruct->SDIO_TransferDir = SDIO_TransferDir_ToCard;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:551
+  SDIO_DataInitStruct->SDIO_TransferMode = SDIO_TransferMode_Block;  
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:552
+  SDIO_DataInitStruct->SDIO_DPSM = SDIO_DPSM_Disable;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:553
+}
+  38:	f107 070c 	add.w	r7, r7, #12
+  3c:	46bd      	mov	sp, r7
+  3e:	bc80      	pop	{r7}
+  40:	4770      	bx	lr
+  42:	bf00      	nop
+
+Disassembly of section .text.SDIO_GetDataCounter:
+
+00000000 <SDIO_GetDataCounter>:
+SDIO_GetDataCounter():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:561
+  * @brief  Returns number of remaining data bytes to be transferred.
+  * @param  None
+  * @retval Number of remaining data bytes to be transferred
+  */
+uint32_t SDIO_GetDataCounter(void)
+{ 
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:562
+  return SDIO->DCOUNT;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SDIO_GetDataCounter+0x10>)
+   6:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:563
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_ReadData:
+
+00000000 <SDIO_ReadData>:
+SDIO_ReadData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:571
+  * @brief  Read one data word from Rx FIFO.
+  * @param  None
+  * @retval Data received
+  */
+uint32_t SDIO_ReadData(void)
+{ 
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:572
+  return SDIO->FIFO;
+   4:	4b03      	ldr	r3, [pc, #12]	; (14 <SDIO_ReadData+0x14>)
+   6:	f8d3 3080 	ldr.w	r3, [r3, #128]	; 0x80
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:573
+}
+   a:	4618      	mov	r0, r3
+   c:	46bd      	mov	sp, r7
+   e:	bc80      	pop	{r7}
+  10:	4770      	bx	lr
+  12:	bf00      	nop
+  14:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_WriteData:
+
+00000000 <SDIO_WriteData>:
+SDIO_WriteData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:581
+  * @brief  Write one data word to Tx FIFO.
+  * @param  Data: 32-bit data word to write.
+  * @retval None
+  */
+void SDIO_WriteData(uint32_t Data)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:582
+  SDIO->FIFO = Data;
+   8:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_WriteData+0x1c>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	f8c3 2080 	str.w	r2, [r3, #128]	; 0x80
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:583
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_GetFIFOCount:
+
+00000000 <SDIO_GetFIFOCount>:
+SDIO_GetFIFOCount():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:591
+  * @brief  Returns the number of words left to be written to or read from FIFO.	
+  * @param  None
+  * @retval Remaining number of words.
+  */
+uint32_t SDIO_GetFIFOCount(void)
+{ 
+   0:	af00b480 	.word	0xaf00b480
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:592
+  return SDIO->FIFOCNT;
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <SDIO_GetFIFOCount+0x10>)
+   6:	6c9b      	ldr	r3, [r3, #72]	; 0x48
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:593
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_StartSDIOReadWait:
+
+00000000 <SDIO_StartSDIOReadWait>:
+SDIO_StartSDIOReadWait():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:620
+  * @param  NewState: new state of the Start SDIO Read Wait operation. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_StartSDIOReadWait(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:624
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) DCTRL_RWSTART_BB = (uint32_t) NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_StartSDIOReadWait+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:625
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422585a0 	.word	0x422585a0
+
+Disassembly of section .text.SDIO_StopSDIOReadWait:
+
+00000000 <SDIO_StopSDIOReadWait>:
+SDIO_StopSDIOReadWait():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:634
+  * @param  NewState: new state of the Stop SDIO Read Wait operation. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_StopSDIOReadWait(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:638
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) DCTRL_RWSTOP_BB = (uint32_t) NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_StopSDIOReadWait+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:639
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422585a4 	.word	0x422585a4
+
+Disassembly of section .text.SDIO_SetSDIOReadWaitMode:
+
+00000000 <SDIO_SetSDIOReadWaitMode>:
+SDIO_SetSDIOReadWaitMode():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:650
+  *            @arg SDIO_ReadWaitMode_CLK: Read Wait control by stopping SDIOCLK
+  *            @arg SDIO_ReadWaitMode_DATA2: Read Wait control using SDIO_DATA2
+  * @retval None
+  */
+void SDIO_SetSDIOReadWaitMode(uint32_t SDIO_ReadWaitMode)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:654
+  /* Check the parameters */
+  assert_param(IS_SDIO_READWAIT_MODE(SDIO_ReadWaitMode));
+  
+  *(__IO uint32_t *) DCTRL_RWMOD_BB = SDIO_ReadWaitMode;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SDIO_SetSDIOReadWaitMode+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:655
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	422585a8 	.word	0x422585a8
+
+Disassembly of section .text.SDIO_SetSDIOOperation:
+
+00000000 <SDIO_SetSDIOOperation>:
+SDIO_SetSDIOOperation():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:664
+  * @param  NewState: new state of SDIO specific operation. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_SetSDIOOperation(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:668
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) DCTRL_SDIOEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_SetSDIOOperation+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:669
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422585ac 	.word	0x422585ac
+
+Disassembly of section .text.SDIO_SendSDIOSuspendCmd:
+
+00000000 <SDIO_SendSDIOSuspendCmd>:
+SDIO_SendSDIOSuspendCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:678
+  * @param  NewState: new state of the SD I/O Mode suspend command.
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_SendSDIOSuspendCmd(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:682
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CMD_SDIOSUSPEND_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_SendSDIOSuspendCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:683
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422581ac 	.word	0x422581ac
+
+Disassembly of section .text.SDIO_CommandCompletionCmd:
+
+00000000 <SDIO_CommandCompletionCmd>:
+SDIO_CommandCompletionCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:710
+  * @param  NewState: new state of command completion signal. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_CommandCompletionCmd(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:714
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CMD_ENCMDCOMPL_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_CommandCompletionCmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:715
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422581b0 	.word	0x422581b0
+
+Disassembly of section .text.SDIO_CEATAITCmd:
+
+00000000 <SDIO_CEATAITCmd>:
+SDIO_CEATAITCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:724
+  * @param  NewState: new state of CE-ATA interrupt. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_CEATAITCmd(FunctionalState NewState)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:728
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CMD_NIEN_BB = (uint32_t)((~((uint32_t)NewState)) & ((uint32_t)0x1));
+   a:	4b07      	ldr	r3, [pc, #28]	; (28 <SDIO_CEATAITCmd+0x28>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	f002 0201 	and.w	r2, r2, #1
+  12:	2a00      	cmp	r2, #0
+  14:	bf14      	ite	ne
+  16:	2200      	movne	r2, #0
+  18:	2201      	moveq	r2, #1
+  1a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:729
+}
+  1c:	f107 070c 	add.w	r7, r7, #12
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+  28:	422581b4 	.word	0x422581b4
+
+Disassembly of section .text.SDIO_SendCEATACmd:
+
+00000000 <SDIO_SendCEATACmd>:
+SDIO_SendCEATACmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:738
+  * @param  NewState: new state of CE-ATA command. 
+  *         This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_SendCEATACmd(FunctionalState NewState)
+{ 
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:742
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) CMD_ATACMD_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_SendCEATACmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:743
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	422581b8 	.word	0x422581b8
+
+Disassembly of section .text.SDIO_DMACmd:
+
+00000000 <SDIO_DMACmd>:
+SDIO_DMACmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:770
+  * @param  NewState: new state of the selected SDIO DMA request.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void SDIO_DMACmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:774
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  *(__IO uint32_t *) DCTRL_DMAEN_BB = (uint32_t)NewState;
+   a:	4b04      	ldr	r3, [pc, #16]	; (1c <SDIO_DMACmd+0x1c>)
+   c:	79fa      	ldrb	r2, [r7, #7]
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:775
+}
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+  1c:	4225858c 	.word	0x4225858c
+
+Disassembly of section .text.SDIO_ITConfig:
+
+00000000 <SDIO_ITConfig>:
+SDIO_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:828
+  * @param  NewState: new state of the specified SDIO interrupts.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None 
+  */
+void SDIO_ITConfig(uint32_t SDIO_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:833
+  /* Check the parameters */
+  assert_param(IS_SDIO_IT(SDIO_IT));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d007      	beq.n	22 <SDIO_ITConfig+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:836
+  {
+    /* Enable the SDIO interrupts */
+    SDIO->MASK |= SDIO_IT;
+  12:	4b0b      	ldr	r3, [pc, #44]	; (40 <SDIO_ITConfig+0x40>)
+  14:	4a0a      	ldr	r2, [pc, #40]	; (40 <SDIO_ITConfig+0x40>)
+  16:	6bd1      	ldr	r1, [r2, #60]	; 0x3c
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	ea41 0202 	orr.w	r2, r1, r2
+  1e:	63da      	str	r2, [r3, #60]	; 0x3c
+  20:	e008      	b.n	34 <SDIO_ITConfig+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:841
+  }
+  else
+  {
+    /* Disable the SDIO interrupts */
+    SDIO->MASK &= ~SDIO_IT;
+  22:	4b07      	ldr	r3, [pc, #28]	; (40 <SDIO_ITConfig+0x40>)
+  24:	4a06      	ldr	r2, [pc, #24]	; (40 <SDIO_ITConfig+0x40>)
+  26:	6bd1      	ldr	r1, [r2, #60]	; 0x3c
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	ea6f 0202 	mvn.w	r2, r2
+  2e:	ea01 0202 	and.w	r2, r1, r2
+  32:	63da      	str	r2, [r3, #60]	; 0x3c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:843
+  } 
+}
+  34:	f107 070c 	add.w	r7, r7, #12
+  38:	46bd      	mov	sp, r7
+  3a:	bc80      	pop	{r7}
+  3c:	4770      	bx	lr
+  3e:	bf00      	nop
+  40:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_GetFlagStatus:
+
+00000000 <SDIO_GetFlagStatus>:
+SDIO_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:876
+  *            @arg SDIO_FLAG_SDIOIT:   SD I/O interrupt received
+  *            @arg SDIO_FLAG_CEATAEND: CE-ATA command completion signal received for CMD61
+  * @retval The new state of SDIO_FLAG (SET or RESET).
+  */
+FlagStatus SDIO_GetFlagStatus(uint32_t SDIO_FLAG)
+{ 
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:877
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:882
+  
+  /* Check the parameters */
+  assert_param(IS_SDIO_FLAG(SDIO_FLAG));
+  
+  if ((SDIO->STA & SDIO_FLAG) != (uint32_t)RESET)
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <SDIO_GetFlagStatus+0x38>)
+  10:	6b5a      	ldr	r2, [r3, #52]	; 0x34
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <SDIO_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:884
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <SDIO_GetFlagStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:888
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:890
+  }
+  return bitstatus;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:891
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_ClearFlag:
+
+00000000 <SDIO_ClearFlag>:
+SDIO_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:913
+  *            @arg SDIO_FLAG_SDIOIT:   SD I/O interrupt received
+  *            @arg SDIO_FLAG_CEATAEND: CE-ATA command completion signal received for CMD61
+  * @retval None
+  */
+void SDIO_ClearFlag(uint32_t SDIO_FLAG)
+{ 
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:917
+  /* Check the parameters */
+  assert_param(IS_SDIO_CLEAR_FLAG(SDIO_FLAG));
+   
+  SDIO->ICR = SDIO_FLAG;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SDIO_ClearFlag+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:918
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_GetITStatus:
+
+00000000 <SDIO_GetITStatus>:
+SDIO_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:952
+  *            @arg SDIO_IT_SDIOIT:   SD I/O interrupt received interrupt
+  *            @arg SDIO_IT_CEATAEND: CE-ATA command completion signal received for CMD61 interrupt
+  * @retval The new state of SDIO_IT (SET or RESET).
+  */
+ITStatus SDIO_GetITStatus(uint32_t SDIO_IT)
+{ 
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:953
+  ITStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:957
+  
+  /* Check the parameters */
+  assert_param(IS_SDIO_GET_IT(SDIO_IT));
+  if ((SDIO->STA & SDIO_IT) != (uint32_t)RESET)  
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <SDIO_GetITStatus+0x38>)
+  10:	6b5a      	ldr	r2, [r3, #52]	; 0x34
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <SDIO_GetITStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:959
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <SDIO_GetITStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:963
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:965
+  }
+  return bitstatus;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:966
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40012c00 	.word	0x40012c00
+
+Disassembly of section .text.SDIO_ClearITPendingBit:
+
+00000000 <SDIO_ClearITPendingBit>:
+SDIO_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:988
+  *            @arg SDIO_IT_SDIOIT:   SD I/O interrupt received interrupt
+  *            @arg SDIO_IT_CEATAEND: CE-ATA command completion signal received for CMD61
+  * @retval None
+  */
+void SDIO_ClearITPendingBit(uint32_t SDIO_IT)
+{ 
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:992
+  /* Check the parameters */
+  assert_param(IS_SDIO_CLEAR_IT(SDIO_IT));
+   
+  SDIO->ICR = SDIO_IT;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <SDIO_ClearITPendingBit+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_sdio.c:993
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40012c00 	.word	0x40012c00

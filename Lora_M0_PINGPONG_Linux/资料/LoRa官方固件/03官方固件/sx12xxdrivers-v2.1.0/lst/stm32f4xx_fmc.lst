@@ -1,0 +1,3555 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_fmc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_fmc.o
+
+
+Disassembly of section .text.FMC_NORSRAMDeInit:
+
+00000000 <FMC_NORSRAMDeInit>:
+FMC_NORSRAMDeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:131
+  *            @arg FMC_Bank1_NORSRAM3: FMC Bank1 NOR/SRAM3 
+  *            @arg FMC_Bank1_NORSRAM4: FMC Bank1 NOR/SRAM4 
+  * @retval None
+  */
+void FMC_NORSRAMDeInit(uint32_t FMC_Bank)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:136
+  /* Check the parameter */
+  assert_param(IS_FMC_NORSRAM_BANK(FMC_Bank));
+  
+  /* FMC_Bank1_NORSRAM1 */
+  if(FMC_Bank == FMC_Bank1_NORSRAM1)
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	2b00      	cmp	r3, #0
+   c:	d107      	bne.n	1e <FMC_NORSRAMDeInit+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:138
+  {
+    FMC_Bank1->BTCR[FMC_Bank] = 0x000030DB;    
+   e:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  12:	687a      	ldr	r2, [r7, #4]
+  14:	f243 01db 	movw	r1, #12507	; 0x30db
+  18:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+  1c:	e006      	b.n	2c <FMC_NORSRAMDeInit+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:143
+  }
+  /* FMC_Bank1_NORSRAM2,  FMC_Bank1_NORSRAM3 or FMC_Bank1_NORSRAM4 */
+  else
+  {   
+    FMC_Bank1->BTCR[FMC_Bank] = 0x000030D2; 
+  1e:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  22:	687a      	ldr	r2, [r7, #4]
+  24:	f243 01d2 	movw	r1, #12498	; 0x30d2
+  28:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:145
+  }
+  FMC_Bank1->BTCR[FMC_Bank + 1] = 0x0FFFFFFF;
+  2c:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  30:	687a      	ldr	r2, [r7, #4]
+  32:	f102 0201 	add.w	r2, r2, #1
+  36:	f06f 4170 	mvn.w	r1, #4026531840	; 0xf0000000
+  3a:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:146
+  FMC_Bank1E->BWTR[FMC_Bank] = 0x0FFFFFFF;  
+  3e:	4b05      	ldr	r3, [pc, #20]	; (54 <FMC_NORSRAMDeInit+0x54>)
+  40:	687a      	ldr	r2, [r7, #4]
+  42:	f06f 4170 	mvn.w	r1, #4026531840	; 0xf0000000
+  46:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:147
+}
+  4a:	f107 070c 	add.w	r7, r7, #12
+  4e:	46bd      	mov	sp, r7
+  50:	bc80      	pop	{r7}
+  52:	4770      	bx	lr
+  54:	a0000104 	.word	0xa0000104
+
+Disassembly of section .text.FMC_NORSRAMInit:
+
+00000000 <FMC_NORSRAMInit>:
+FMC_NORSRAMInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:158
+  *         that contains the configuration information for the FMC NOR/SRAM 
+  *         specified Banks.                       
+  * @retval None
+  */
+void FMC_NORSRAMInit(FMC_NORSRAMInitTypeDef* FMC_NORSRAMInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:159
+  uint32_t tmpr = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:185
+  assert_param(IS_FMC_CLK_DIV(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision));
+  assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency));
+  assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode)); 
+  
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+   e:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  12:	687a      	ldr	r2, [r7, #4]
+  14:	6812      	ldr	r2, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:186
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+  16:	6879      	ldr	r1, [r7, #4]
+  18:	6848      	ldr	r0, [r1, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:187
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+  1a:	6879      	ldr	r1, [r7, #4]
+  1c:	6889      	ldr	r1, [r1, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:186
+  assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency));
+  assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode)); 
+  
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+  1e:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:188
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+  20:	6879      	ldr	r1, [r7, #4]
+  22:	68c9      	ldr	r1, [r1, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:187
+  assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode)); 
+  
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+  24:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:189
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+  26:	6879      	ldr	r1, [r7, #4]
+  28:	6909      	ldr	r1, [r1, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:188
+  
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+  2a:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:190
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+  2c:	6879      	ldr	r1, [r7, #4]
+  2e:	6949      	ldr	r1, [r1, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:189
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+  30:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:191
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+  32:	6879      	ldr	r1, [r7, #4]
+  34:	6989      	ldr	r1, [r1, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:190
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+  36:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:192
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+  38:	6879      	ldr	r1, [r7, #4]
+  3a:	69c9      	ldr	r1, [r1, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:191
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_DataAddressMux |
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+  3c:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:193
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+  3e:	6879      	ldr	r1, [r7, #4]
+  40:	6a09      	ldr	r1, [r1, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:192
+            FMC_NORSRAMInitStruct->FMC_MemoryType |
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+  42:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:194
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+  44:	6879      	ldr	r1, [r7, #4]
+  46:	6a49      	ldr	r1, [r1, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:193
+            FMC_NORSRAMInitStruct->FMC_MemoryDataWidth |
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+  48:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:195
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+            FMC_NORSRAMInitStruct->FMC_ExtendedMode |
+  4a:	6879      	ldr	r1, [r7, #4]
+  4c:	6a89      	ldr	r1, [r1, #40]	; 0x28
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:194
+            FMC_NORSRAMInitStruct->FMC_BurstAccessMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+  4e:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:196
+            FMC_NORSRAMInitStruct->FMC_ExtendedMode |
+            FMC_NORSRAMInitStruct->FMC_AsynchronousWait |
+  50:	6879      	ldr	r1, [r7, #4]
+  52:	6ac9      	ldr	r1, [r1, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:195
+            FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity |
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+            FMC_NORSRAMInitStruct->FMC_ExtendedMode |
+  54:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:197
+            FMC_NORSRAMInitStruct->FMC_AsynchronousWait |
+            FMC_NORSRAMInitStruct->FMC_WriteBurst |
+  56:	6879      	ldr	r1, [r7, #4]
+  58:	6b09      	ldr	r1, [r1, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:196
+            FMC_NORSRAMInitStruct->FMC_WrapMode |
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+            FMC_NORSRAMInitStruct->FMC_ExtendedMode |
+            FMC_NORSRAMInitStruct->FMC_AsynchronousWait |
+  5a:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:198
+            FMC_NORSRAMInitStruct->FMC_WriteBurst |
+            FMC_NORSRAMInitStruct->FMC_ContinousClock;
+  5c:	6879      	ldr	r1, [r7, #4]
+  5e:	6b49      	ldr	r1, [r1, #52]	; 0x34
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:197
+            FMC_NORSRAMInitStruct->FMC_WaitSignalActive |
+            FMC_NORSRAMInitStruct->FMC_WriteOperation |
+            FMC_NORSRAMInitStruct->FMC_WaitSignal |
+            FMC_NORSRAMInitStruct->FMC_ExtendedMode |
+            FMC_NORSRAMInitStruct->FMC_AsynchronousWait |
+            FMC_NORSRAMInitStruct->FMC_WriteBurst |
+  60:	ea40 0101 	orr.w	r1, r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:185
+  assert_param(IS_FMC_CLK_DIV(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision));
+  assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency));
+  assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode)); 
+  
+  /* NOR/SRAM Bank control register configuration */ 
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+  64:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:201
+            FMC_NORSRAMInitStruct->FMC_AsynchronousWait |
+            FMC_NORSRAMInitStruct->FMC_WriteBurst |
+            FMC_NORSRAMInitStruct->FMC_ContinousClock;
+
+            
+  if(FMC_NORSRAMInitStruct->FMC_MemoryType == FMC_MemoryType_NOR)
+  68:	687b      	ldr	r3, [r7, #4]
+  6a:	689b      	ldr	r3, [r3, #8]
+  6c:	2b08      	cmp	r3, #8
+  6e:	d10d      	bne.n	8c <FMC_NORSRAMInit+0x8c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:203
+  {
+    FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank] |= (uint32_t)BCR_FACCEN_SET;
+  70:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  74:	687a      	ldr	r2, [r7, #4]
+  76:	6812      	ldr	r2, [r2, #0]
+  78:	f04f 4120 	mov.w	r1, #2684354560	; 0xa0000000
+  7c:	6878      	ldr	r0, [r7, #4]
+  7e:	6800      	ldr	r0, [r0, #0]
+  80:	f851 1020 	ldr.w	r1, [r1, r0, lsl #2]
+  84:	f041 0140 	orr.w	r1, r1, #64	; 0x40
+  88:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:207
+  }
+
+  /* Configure Continuous clock feature when bank2..4 is used */
+  if((FMC_NORSRAMInitStruct->FMC_ContinousClock == FMC_CClock_SyncAsync) && (FMC_NORSRAMInitStruct->FMC_Bank != FMC_Bank1_NORSRAM1))
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	6b5b      	ldr	r3, [r3, #52]	; 0x34
+  90:	f5b3 1f80 	cmp.w	r3, #1048576	; 0x100000
+  94:	d128      	bne.n	e8 <FMC_NORSRAMInit+0xe8>
+  96:	687b      	ldr	r3, [r7, #4]
+  98:	681b      	ldr	r3, [r3, #0]
+  9a:	2b00      	cmp	r3, #0
+  9c:	d024      	beq.n	e8 <FMC_NORSRAMInit+0xe8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:209
+  {
+    tmpr = (uint32_t)((FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1+1]) & ~(((uint32_t)0x0F) << 20));    
+  9e:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  a2:	685b      	ldr	r3, [r3, #4]
+  a4:	f423 0370 	bic.w	r3, r3, #15728640	; 0xf00000
+  a8:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:211
+    
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1]  |= FMC_NORSRAMInitStruct->FMC_ContinousClock;
+  aa:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  ae:	f04f 4220 	mov.w	r2, #2684354560	; 0xa0000000
+  b2:	6811      	ldr	r1, [r2, #0]
+  b4:	687a      	ldr	r2, [r7, #4]
+  b6:	6b52      	ldr	r2, [r2, #52]	; 0x34
+  b8:	ea41 0202 	orr.w	r2, r1, r2
+  bc:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:212
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1]  |= FMC_BurstAccessMode_Enable;
+  be:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  c2:	f04f 4220 	mov.w	r2, #2684354560	; 0xa0000000
+  c6:	6812      	ldr	r2, [r2, #0]
+  c8:	f442 7280 	orr.w	r2, r2, #256	; 0x100
+  cc:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:213
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1+1] = (uint32_t)(tmpr | (((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision)-1) << 20));
+  ce:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  d2:	687a      	ldr	r2, [r7, #4]
+  d4:	6b92      	ldr	r2, [r2, #56]	; 0x38
+  d6:	6912      	ldr	r2, [r2, #16]
+  d8:	f102 32ff 	add.w	r2, r2, #4294967295
+  dc:	ea4f 5102 	mov.w	r1, r2, lsl #20
+  e0:	68fa      	ldr	r2, [r7, #12]
+  e2:	ea41 0202 	orr.w	r2, r1, r2
+  e6:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:217
+  }
+  
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+  e8:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  ec:	687a      	ldr	r2, [r7, #4]
+  ee:	6812      	ldr	r2, [r2, #0]
+  f0:	f102 0201 	add.w	r2, r2, #1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:218
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+  f4:	6879      	ldr	r1, [r7, #4]
+  f6:	6b89      	ldr	r1, [r1, #56]	; 0x38
+  f8:	6808      	ldr	r0, [r1, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:219
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+  fa:	6879      	ldr	r1, [r7, #4]
+  fc:	6b89      	ldr	r1, [r1, #56]	; 0x38
+  fe:	6849      	ldr	r1, [r1, #4]
+ 100:	ea4f 1101 	mov.w	r1, r1, lsl #4
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:218
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1+1] = (uint32_t)(tmpr | (((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision)-1) << 20));
+  }
+  
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+ 104:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:220
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+ 106:	6879      	ldr	r1, [r7, #4]
+ 108:	6b89      	ldr	r1, [r1, #56]	; 0x38
+ 10a:	6889      	ldr	r1, [r1, #8]
+ 10c:	ea4f 2101 	mov.w	r1, r1, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:219
+  }
+  
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+ 110:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:221
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration << 16) |
+ 112:	6879      	ldr	r1, [r7, #4]
+ 114:	6b89      	ldr	r1, [r1, #56]	; 0x38
+ 116:	68c9      	ldr	r1, [r1, #12]
+ 118:	ea4f 4101 	mov.w	r1, r1, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:220
+  
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+ 11c:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:222
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration << 16) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision) << 20) |
+ 11e:	6879      	ldr	r1, [r7, #4]
+ 120:	6b89      	ldr	r1, [r1, #56]	; 0x38
+ 122:	6909      	ldr	r1, [r1, #16]
+ 124:	ea4f 5101 	mov.w	r1, r1, lsl #20
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:221
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration << 16) |
+ 128:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:223
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision) << 20) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency) << 24) |
+ 12a:	6879      	ldr	r1, [r7, #4]
+ 12c:	6b89      	ldr	r1, [r1, #56]	; 0x38
+ 12e:	6949      	ldr	r1, [r1, #20]
+ 130:	ea4f 6101 	mov.w	r1, r1, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:222
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration << 16) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision) << 20) |
+ 134:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:224
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency) << 24) |
+             FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode;
+ 136:	6879      	ldr	r1, [r7, #4]
+ 138:	6b89      	ldr	r1, [r1, #56]	; 0x38
+ 13a:	6989      	ldr	r1, [r1, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:223
+            (uint32_t)FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime << 4) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime << 8) |
+            (FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration << 16) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision) << 20) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency) << 24) |
+ 13c:	ea40 0101 	orr.w	r1, r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:217
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1]  |= FMC_BurstAccessMode_Enable;
+    FMC_Bank1->BTCR[FMC_Bank1_NORSRAM1+1] = (uint32_t)(tmpr | (((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision)-1) << 20));
+  }
+  
+  /* NOR/SRAM Bank timing register configuration */
+  FMC_Bank1->BTCR[FMC_NORSRAMInitStruct->FMC_Bank+1] =   
+ 140:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:227
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision) << 20) |
+            ((FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency) << 24) |
+             FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode;
+     
+  /* NOR/SRAM Bank timing register for write configuration, if extended mode is used */
+  if(FMC_NORSRAMInitStruct->FMC_ExtendedMode == FMC_ExtendedMode_Enable)
+ 144:	687b      	ldr	r3, [r7, #4]
+ 146:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 148:	f5b3 4f80 	cmp.w	r3, #16384	; 0x4000
+ 14c:	d125      	bne.n	19a <FMC_NORSRAMInit+0x19a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:236
+    assert_param(IS_FMC_DATASETUP_TIME(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime));
+    assert_param(IS_FMC_CLK_DIV(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision));
+    assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency));
+    assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode));
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+ 14e:	4b19      	ldr	r3, [pc, #100]	; (1b4 <FMC_NORSRAMInit+0x1b4>)
+ 150:	687a      	ldr	r2, [r7, #4]
+ 152:	6812      	ldr	r2, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:237
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+ 154:	6879      	ldr	r1, [r7, #4]
+ 156:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 158:	6808      	ldr	r0, [r1, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:238
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+ 15a:	6879      	ldr	r1, [r7, #4]
+ 15c:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 15e:	6849      	ldr	r1, [r1, #4]
+ 160:	ea4f 1101 	mov.w	r1, r1, lsl #4
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:237
+    assert_param(IS_FMC_CLK_DIV(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision));
+    assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency));
+    assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode));
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+ 164:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:239
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime << 8) |
+ 166:	6879      	ldr	r1, [r7, #4]
+ 168:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 16a:	6889      	ldr	r1, [r1, #8]
+ 16c:	ea4f 2101 	mov.w	r1, r1, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:238
+    assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency));
+    assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode));
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+ 170:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:240
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime << 8) |
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision) << 20) |
+ 172:	6879      	ldr	r1, [r7, #4]
+ 174:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 176:	6909      	ldr	r1, [r1, #16]
+ 178:	ea4f 5101 	mov.w	r1, r1, lsl #20
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:239
+    assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode));
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime << 8) |
+ 17c:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:241
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision) << 20) |
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency) << 24) |
+ 17e:	6879      	ldr	r1, [r7, #4]
+ 180:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 182:	6949      	ldr	r1, [r1, #20]
+ 184:	ea4f 6101 	mov.w	r1, r1, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:240
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime << 8) |
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision) << 20) |
+ 188:	4308      	orrs	r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:242
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency) << 24) |
+               FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode;
+ 18a:	6879      	ldr	r1, [r7, #4]
+ 18c:	6bc9      	ldr	r1, [r1, #60]	; 0x3c
+ 18e:	6989      	ldr	r1, [r1, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:241
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+               (uint32_t)FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime |
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime << 4 )|
+               (FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime << 8) |
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision) << 20) |
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency) << 24) |
+ 190:	ea40 0101 	orr.w	r1, r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:236
+    assert_param(IS_FMC_DATASETUP_TIME(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime));
+    assert_param(IS_FMC_CLK_DIV(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision));
+    assert_param(IS_FMC_DATA_LATENCY(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency));
+    assert_param(IS_FMC_ACCESS_MODE(FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode));
+    
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] =   
+ 194:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+ 198:	e006      	b.n	1a8 <FMC_NORSRAMInit+0x1a8>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:246
+               ((FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency) << 24) |
+               FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode;
+  }
+  else
+  {
+    FMC_Bank1E->BWTR[FMC_NORSRAMInitStruct->FMC_Bank] = 0x0FFFFFFF;
+ 19a:	4b06      	ldr	r3, [pc, #24]	; (1b4 <FMC_NORSRAMInit+0x1b4>)
+ 19c:	687a      	ldr	r2, [r7, #4]
+ 19e:	6812      	ldr	r2, [r2, #0]
+ 1a0:	f06f 4170 	mvn.w	r1, #4026531840	; 0xf0000000
+ 1a4:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:249
+  }
+  
+}
+ 1a8:	f107 0714 	add.w	r7, r7, #20
+ 1ac:	46bd      	mov	sp, r7
+ 1ae:	bc80      	pop	{r7}
+ 1b0:	4770      	bx	lr
+ 1b2:	bf00      	nop
+ 1b4:	a0000104 	.word	0xa0000104
+
+Disassembly of section .text.FMC_NORSRAMStructInit:
+
+00000000 <FMC_NORSRAMStructInit>:
+FMC_NORSRAMStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:258
+  * @param  FMC_NORSRAMInitStruct: pointer to a FMC_NORSRAMInitTypeDef structure 
+  *         which will be initialized.
+  * @retval None
+  */
+void FMC_NORSRAMStructInit(FMC_NORSRAMInitTypeDef* FMC_NORSRAMInitStruct)
+{  
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:260
+  /* Reset NOR/SRAM Init structure parameters values */
+  FMC_NORSRAMInitStruct->FMC_Bank = FMC_Bank1_NORSRAM1;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:261
+  FMC_NORSRAMInitStruct->FMC_DataAddressMux = FMC_DataAddressMux_Enable;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0202 	mov.w	r2, #2
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:262
+  FMC_NORSRAMInitStruct->FMC_MemoryType = FMC_MemoryType_SRAM;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:263
+  FMC_NORSRAMInitStruct->FMC_MemoryDataWidth = FMC_NORSRAM_MemoryDataWidth_16b;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0210 	mov.w	r2, #16
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:264
+  FMC_NORSRAMInitStruct->FMC_BurstAccessMode = FMC_BurstAccessMode_Disable;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:265
+  FMC_NORSRAMInitStruct->FMC_AsynchronousWait = FMC_AsynchronousWait_Disable;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	62da      	str	r2, [r3, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:266
+  FMC_NORSRAMInitStruct->FMC_WaitSignalPolarity = FMC_WaitSignalPolarity_Low;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f04f 0200 	mov.w	r2, #0
+  3e:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:267
+  FMC_NORSRAMInitStruct->FMC_WrapMode = FMC_WrapMode_Disable;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f04f 0200 	mov.w	r2, #0
+  46:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:268
+  FMC_NORSRAMInitStruct->FMC_WaitSignalActive = FMC_WaitSignalActive_BeforeWaitState;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f04f 0200 	mov.w	r2, #0
+  4e:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:269
+  FMC_NORSRAMInitStruct->FMC_WriteOperation = FMC_WriteOperation_Enable;
+  50:	687b      	ldr	r3, [r7, #4]
+  52:	f44f 5280 	mov.w	r2, #4096	; 0x1000
+  56:	621a      	str	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:270
+  FMC_NORSRAMInitStruct->FMC_WaitSignal = FMC_WaitSignal_Enable;
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	f44f 5200 	mov.w	r2, #8192	; 0x2000
+  5e:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:271
+  FMC_NORSRAMInitStruct->FMC_ExtendedMode = FMC_ExtendedMode_Disable;
+  60:	687b      	ldr	r3, [r7, #4]
+  62:	f04f 0200 	mov.w	r2, #0
+  66:	629a      	str	r2, [r3, #40]	; 0x28
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:272
+  FMC_NORSRAMInitStruct->FMC_WriteBurst = FMC_WriteBurst_Disable;
+  68:	687b      	ldr	r3, [r7, #4]
+  6a:	f04f 0200 	mov.w	r2, #0
+  6e:	631a      	str	r2, [r3, #48]	; 0x30
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:273
+  FMC_NORSRAMInitStruct->FMC_ContinousClock = FMC_CClock_SyncOnly;
+  70:	687b      	ldr	r3, [r7, #4]
+  72:	f04f 0200 	mov.w	r2, #0
+  76:	635a      	str	r2, [r3, #52]	; 0x34
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:275
+  
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressSetupTime = 15;
+  78:	687b      	ldr	r3, [r7, #4]
+  7a:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  7c:	f04f 020f 	mov.w	r2, #15
+  80:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:276
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AddressHoldTime = 15;
+  82:	687b      	ldr	r3, [r7, #4]
+  84:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  86:	f04f 020f 	mov.w	r2, #15
+  8a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:277
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataSetupTime = 255;
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  90:	f04f 02ff 	mov.w	r2, #255	; 0xff
+  94:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:278
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_BusTurnAroundDuration = 15;
+  96:	687b      	ldr	r3, [r7, #4]
+  98:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  9a:	f04f 020f 	mov.w	r2, #15
+  9e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:279
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_CLKDivision = 15;
+  a0:	687b      	ldr	r3, [r7, #4]
+  a2:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  a4:	f04f 020f 	mov.w	r2, #15
+  a8:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:280
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_DataLatency = 15;
+  aa:	687b      	ldr	r3, [r7, #4]
+  ac:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  ae:	f04f 020f 	mov.w	r2, #15
+  b2:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:281
+  FMC_NORSRAMInitStruct->FMC_ReadWriteTimingStruct->FMC_AccessMode = FMC_AccessMode_A; 
+  b4:	687b      	ldr	r3, [r7, #4]
+  b6:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  b8:	f04f 0200 	mov.w	r2, #0
+  bc:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:282
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressSetupTime = 15;
+  be:	687b      	ldr	r3, [r7, #4]
+  c0:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  c2:	f04f 020f 	mov.w	r2, #15
+  c6:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:283
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AddressHoldTime = 15;
+  c8:	687b      	ldr	r3, [r7, #4]
+  ca:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  cc:	f04f 020f 	mov.w	r2, #15
+  d0:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:284
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataSetupTime = 255;
+  d2:	687b      	ldr	r3, [r7, #4]
+  d4:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  d6:	f04f 02ff 	mov.w	r2, #255	; 0xff
+  da:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:285
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_BusTurnAroundDuration = 15;
+  dc:	687b      	ldr	r3, [r7, #4]
+  de:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  e0:	f04f 020f 	mov.w	r2, #15
+  e4:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:286
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_CLKDivision = 15;
+  e6:	687b      	ldr	r3, [r7, #4]
+  e8:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  ea:	f04f 020f 	mov.w	r2, #15
+  ee:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:287
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_DataLatency = 15;
+  f0:	687b      	ldr	r3, [r7, #4]
+  f2:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  f4:	f04f 020f 	mov.w	r2, #15
+  f8:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:288
+  FMC_NORSRAMInitStruct->FMC_WriteTimingStruct->FMC_AccessMode = FMC_AccessMode_A;
+  fa:	687b      	ldr	r3, [r7, #4]
+  fc:	6bdb      	ldr	r3, [r3, #60]	; 0x3c
+  fe:	f04f 0200 	mov.w	r2, #0
+ 102:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:289
+}
+ 104:	f107 070c 	add.w	r7, r7, #12
+ 108:	46bd      	mov	sp, r7
+ 10a:	bc80      	pop	{r7}
+ 10c:	4770      	bx	lr
+ 10e:	bf00      	nop
+
+Disassembly of section .text.FMC_NORSRAMCmd:
+
+00000000 <FMC_NORSRAMCmd>:
+FMC_NORSRAMCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:303
+  *            @arg FMC_Bank1_NORSRAM4: FMC Bank1 NOR/SRAM4 
+  * @param  NewState: new state of the FMC_Bank. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_NORSRAMCmd(uint32_t FMC_Bank, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:307
+  assert_param(IS_FMC_NORSRAM_BANK(FMC_Bank));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d00c      	beq.n	2c <FMC_NORSRAMCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:310
+  {
+    /* Enable the selected NOR/SRAM Bank by setting the PBKEN bit in the BCRx register */
+    FMC_Bank1->BTCR[FMC_Bank] |= BCR_MBKEN_SET;
+  12:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  16:	f04f 4220 	mov.w	r2, #2684354560	; 0xa0000000
+  1a:	6879      	ldr	r1, [r7, #4]
+  1c:	f852 2021 	ldr.w	r2, [r2, r1, lsl #2]
+  20:	f042 0101 	orr.w	r1, r2, #1
+  24:	687a      	ldr	r2, [r7, #4]
+  26:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+  2a:	e00c      	b.n	46 <FMC_NORSRAMCmd+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:315
+  }
+  else
+  {
+    /* Disable the selected NOR/SRAM Bank by clearing the PBKEN bit in the BCRx register */
+    FMC_Bank1->BTCR[FMC_Bank] &= BCR_MBKEN_RESET;
+  2c:	f04f 4220 	mov.w	r2, #2684354560	; 0xa0000000
+  30:	f04f 4320 	mov.w	r3, #2684354560	; 0xa0000000
+  34:	6879      	ldr	r1, [r7, #4]
+  36:	f853 1021 	ldr.w	r1, [r3, r1, lsl #2]
+  3a:	4b05      	ldr	r3, [pc, #20]	; (50 <FMC_NORSRAMCmd+0x50>)
+  3c:	ea01 0303 	and.w	r3, r1, r3
+  40:	6879      	ldr	r1, [r7, #4]
+  42:	f842 3021 	str.w	r3, [r2, r1, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:317
+  }
+}
+  46:	f107 070c 	add.w	r7, r7, #12
+  4a:	46bd      	mov	sp, r7
+  4c:	bc80      	pop	{r7}
+  4e:	4770      	bx	lr
+  50:	000ffffe 	.word	0x000ffffe
+
+Disassembly of section .text.FMC_NANDDeInit:
+
+00000000 <FMC_NANDDeInit>:
+FMC_NANDDeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:376
+  *            @arg FMC_Bank2_NAND: FMC Bank2 NAND 
+  *            @arg FMC_Bank3_NAND: FMC Bank3 NAND 
+  * @retval None
+  */
+void FMC_NANDDeInit(uint32_t FMC_Bank)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:380
+  /* Check the parameter */
+  assert_param(IS_FMC_NAND_BANK(FMC_Bank));
+  
+  if(FMC_Bank == FMC_Bank2_NAND)
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	2b10      	cmp	r3, #16
+   c:	d110      	bne.n	30 <FMC_NANDDeInit+0x30>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:383
+  {
+    /* Set the FMC_Bank2 registers to their reset values */
+    FMC_Bank2->PCR2 = 0x00000018;
+   e:	4b13      	ldr	r3, [pc, #76]	; (5c <FMC_NANDDeInit+0x5c>)
+  10:	f04f 0218 	mov.w	r2, #24
+  14:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:384
+    FMC_Bank2->SR2 = 0x00000040;
+  16:	4b11      	ldr	r3, [pc, #68]	; (5c <FMC_NANDDeInit+0x5c>)
+  18:	f04f 0240 	mov.w	r2, #64	; 0x40
+  1c:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:385
+    FMC_Bank2->PMEM2 = 0xFCFCFCFC;
+  1e:	4b0f      	ldr	r3, [pc, #60]	; (5c <FMC_NANDDeInit+0x5c>)
+  20:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  24:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:386
+    FMC_Bank2->PATT2 = 0xFCFCFCFC;  
+  26:	4b0d      	ldr	r3, [pc, #52]	; (5c <FMC_NANDDeInit+0x5c>)
+  28:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  2c:	60da      	str	r2, [r3, #12]
+  2e:	e00f      	b.n	50 <FMC_NANDDeInit+0x50>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:392
+  }
+  /* FMC_Bank3_NAND */  
+  else
+  {
+    /* Set the FMC_Bank3 registers to their reset values */
+    FMC_Bank3->PCR3 = 0x00000018;
+  30:	4b0b      	ldr	r3, [pc, #44]	; (60 <FMC_NANDDeInit+0x60>)
+  32:	f04f 0218 	mov.w	r2, #24
+  36:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:393
+    FMC_Bank3->SR3 = 0x00000040;
+  38:	4b09      	ldr	r3, [pc, #36]	; (60 <FMC_NANDDeInit+0x60>)
+  3a:	f04f 0240 	mov.w	r2, #64	; 0x40
+  3e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:394
+    FMC_Bank3->PMEM3 = 0xFCFCFCFC;
+  40:	4b07      	ldr	r3, [pc, #28]	; (60 <FMC_NANDDeInit+0x60>)
+  42:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  46:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:395
+    FMC_Bank3->PATT3 = 0xFCFCFCFC; 
+  48:	4b05      	ldr	r3, [pc, #20]	; (60 <FMC_NANDDeInit+0x60>)
+  4a:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  4e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:397
+  }  
+}
+  50:	f107 070c 	add.w	r7, r7, #12
+  54:	46bd      	mov	sp, r7
+  56:	bc80      	pop	{r7}
+  58:	4770      	bx	lr
+  5a:	bf00      	nop
+  5c:	a0000060 	.word	0xa0000060
+  60:	a0000080 	.word	0xa0000080
+
+Disassembly of section .text.FMC_NANDInit:
+
+00000000 <FMC_NANDInit>:
+FMC_NANDInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:407
+  * @param  FMC_NANDInitStruct : pointer to a FMC_NANDInitTypeDef structure that
+  *         contains the configuration information for the FMC NAND specified Banks.                       
+  * @retval None
+  */
+void FMC_NANDInit(FMC_NANDInitTypeDef* FMC_NANDInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:408
+  uint32_t tmppcr = 0x00000000, tmppmem = 0x00000000, tmppatt = 0x00000000; 
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	617b      	str	r3, [r7, #20]
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	613b      	str	r3, [r7, #16]
+  14:	f04f 0300 	mov.w	r3, #0
+  18:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:428
+  assert_param(IS_FMC_WAIT_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime));
+  assert_param(IS_FMC_HOLD_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	685a      	ldr	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:430
+            PCR_MEMORYTYPE_NAND |
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	689b      	ldr	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:429
+  assert_param(IS_FMC_HOLD_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+            PCR_MEMORYTYPE_NAND |
+  22:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:431
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+            FMC_NANDInitStruct->FMC_ECC |
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	68db      	ldr	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:430
+  assert_param(IS_FMC_HIZ_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+            PCR_MEMORYTYPE_NAND |
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+  28:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:432
+            FMC_NANDInitStruct->FMC_ECC |
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	691b      	ldr	r3, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:431
+  
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+            PCR_MEMORYTYPE_NAND |
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+            FMC_NANDInitStruct->FMC_ECC |
+  2e:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:433
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	695b      	ldr	r3, [r3, #20]
+  34:	ea4f 2343 	mov.w	r3, r3, lsl #9
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:432
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+            PCR_MEMORYTYPE_NAND |
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+            FMC_NANDInitStruct->FMC_ECC |
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+  38:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:434
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+            (FMC_NANDInitStruct->FMC_TARSetupTime << 13);
+  3a:	687b      	ldr	r3, [r7, #4]
+  3c:	699b      	ldr	r3, [r3, #24]
+  3e:	ea4f 3343 	mov.w	r3, r3, lsl #13
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:433
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+            PCR_MEMORYTYPE_NAND |
+            FMC_NANDInitStruct->FMC_MemoryDataWidth |
+            FMC_NANDInitStruct->FMC_ECC |
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+  42:	ea42 0303 	orr.w	r3, r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:428
+  assert_param(IS_FMC_WAIT_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime));
+  assert_param(IS_FMC_HOLD_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the tmppcr value according to FMC_NANDInitStruct parameters */
+  tmppcr = (uint32_t)FMC_NANDInitStruct->FMC_Waitfeature |
+  46:	f043 0308 	orr.w	r3, r3, #8
+  4a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:437
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+            (FMC_NANDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set tmppmem value according to FMC_CommonSpaceTimingStructure parameters */
+  tmppmem = (uint32_t)FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  4c:	687b      	ldr	r3, [r7, #4]
+  4e:	69db      	ldr	r3, [r3, #28]
+  50:	681a      	ldr	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:438
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  52:	687b      	ldr	r3, [r7, #4]
+  54:	69db      	ldr	r3, [r3, #28]
+  56:	685b      	ldr	r3, [r3, #4]
+  58:	ea4f 2303 	mov.w	r3, r3, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:437
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+            (FMC_NANDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set tmppmem value according to FMC_CommonSpaceTimingStructure parameters */
+  tmppmem = (uint32_t)FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  5c:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:439
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  5e:	687b      	ldr	r3, [r7, #4]
+  60:	69db      	ldr	r3, [r3, #28]
+  62:	689b      	ldr	r3, [r3, #8]
+  64:	ea4f 4303 	mov.w	r3, r3, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:438
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+            (FMC_NANDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set tmppmem value according to FMC_CommonSpaceTimingStructure parameters */
+  tmppmem = (uint32_t)FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  68:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:440
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+  6a:	687b      	ldr	r3, [r7, #4]
+  6c:	69db      	ldr	r3, [r3, #28]
+  6e:	68db      	ldr	r3, [r3, #12]
+  70:	ea4f 6303 	mov.w	r3, r3, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:437
+            FMC_NANDInitStruct->FMC_ECCPageSize |
+            (FMC_NANDInitStruct->FMC_TCLRSetupTime << 9 )|
+            (FMC_NANDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set tmppmem value according to FMC_CommonSpaceTimingStructure parameters */
+  tmppmem = (uint32_t)FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  74:	ea42 0303 	orr.w	r3, r2, r3
+  78:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:443
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set tmppatt value according to FMC_AttributeSpaceTimingStructure parameters */
+  tmppatt = (uint32_t)FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  7a:	687b      	ldr	r3, [r7, #4]
+  7c:	6a1b      	ldr	r3, [r3, #32]
+  7e:	681a      	ldr	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:444
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  80:	687b      	ldr	r3, [r7, #4]
+  82:	6a1b      	ldr	r3, [r3, #32]
+  84:	685b      	ldr	r3, [r3, #4]
+  86:	ea4f 2303 	mov.w	r3, r3, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:443
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set tmppatt value according to FMC_AttributeSpaceTimingStructure parameters */
+  tmppatt = (uint32_t)FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  8a:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:445
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  8c:	687b      	ldr	r3, [r7, #4]
+  8e:	6a1b      	ldr	r3, [r3, #32]
+  90:	689b      	ldr	r3, [r3, #8]
+  92:	ea4f 4303 	mov.w	r3, r3, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:444
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set tmppatt value according to FMC_AttributeSpaceTimingStructure parameters */
+  tmppatt = (uint32_t)FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  96:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:446
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);
+  98:	687b      	ldr	r3, [r7, #4]
+  9a:	6a1b      	ldr	r3, [r3, #32]
+  9c:	68db      	ldr	r3, [r3, #12]
+  9e:	ea4f 6303 	mov.w	r3, r3, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:443
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set tmppatt value according to FMC_AttributeSpaceTimingStructure parameters */
+  tmppatt = (uint32_t)FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  a2:	ea42 0303 	orr.w	r3, r2, r3
+  a6:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:448
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+            (FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);
+  
+  if(FMC_NANDInitStruct->FMC_Bank == FMC_Bank2_NAND)
+  a8:	687b      	ldr	r3, [r7, #4]
+  aa:	681b      	ldr	r3, [r3, #0]
+  ac:	2b10      	cmp	r3, #16
+  ae:	d109      	bne.n	c4 <FMC_NANDInit+0xc4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:451
+  {
+    /* FMC_Bank2_NAND registers configuration */
+    FMC_Bank2->PCR2 = tmppcr;
+  b0:	4b0b      	ldr	r3, [pc, #44]	; (e0 <FMC_NANDInit+0xe0>)
+  b2:	697a      	ldr	r2, [r7, #20]
+  b4:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:452
+    FMC_Bank2->PMEM2 = tmppmem;
+  b6:	4b0a      	ldr	r3, [pc, #40]	; (e0 <FMC_NANDInit+0xe0>)
+  b8:	693a      	ldr	r2, [r7, #16]
+  ba:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:453
+    FMC_Bank2->PATT2 = tmppatt;
+  bc:	4b08      	ldr	r3, [pc, #32]	; (e0 <FMC_NANDInit+0xe0>)
+  be:	68fa      	ldr	r2, [r7, #12]
+  c0:	60da      	str	r2, [r3, #12]
+  c2:	e008      	b.n	d6 <FMC_NANDInit+0xd6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:458
+  }
+  else
+  {
+    /* FMC_Bank3_NAND registers configuration */
+    FMC_Bank3->PCR3 = tmppcr;
+  c4:	4b07      	ldr	r3, [pc, #28]	; (e4 <FMC_NANDInit+0xe4>)
+  c6:	697a      	ldr	r2, [r7, #20]
+  c8:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:459
+    FMC_Bank3->PMEM3 = tmppmem;
+  ca:	4b06      	ldr	r3, [pc, #24]	; (e4 <FMC_NANDInit+0xe4>)
+  cc:	693a      	ldr	r2, [r7, #16]
+  ce:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:460
+    FMC_Bank3->PATT3 = tmppatt;
+  d0:	4b04      	ldr	r3, [pc, #16]	; (e4 <FMC_NANDInit+0xe4>)
+  d2:	68fa      	ldr	r2, [r7, #12]
+  d4:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:462
+  }
+}
+  d6:	f107 071c 	add.w	r7, r7, #28
+  da:	46bd      	mov	sp, r7
+  dc:	bc80      	pop	{r7}
+  de:	4770      	bx	lr
+  e0:	a0000060 	.word	0xa0000060
+  e4:	a0000080 	.word	0xa0000080
+
+Disassembly of section .text.FMC_NANDStructInit:
+
+00000000 <FMC_NANDStructInit>:
+FMC_NANDStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:472
+  * @param  FMC_NANDInitStruct: pointer to a FMC_NANDInitTypeDef structure which
+  *         will be initialized.
+  * @retval None
+  */
+void FMC_NANDStructInit(FMC_NANDInitTypeDef* FMC_NANDInitStruct)
+{ 
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:474
+  /* Reset NAND Init structure parameters values */
+  FMC_NANDInitStruct->FMC_Bank = FMC_Bank2_NAND;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0210 	mov.w	r2, #16
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:475
+  FMC_NANDInitStruct->FMC_Waitfeature = FMC_Waitfeature_Disable;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:476
+  FMC_NANDInitStruct->FMC_MemoryDataWidth = FMC_NAND_MemoryDataWidth_16b;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0210 	mov.w	r2, #16
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:477
+  FMC_NANDInitStruct->FMC_ECC = FMC_ECC_Disable;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:478
+  FMC_NANDInitStruct->FMC_ECCPageSize = FMC_ECCPageSize_256Bytes;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:479
+  FMC_NANDInitStruct->FMC_TCLRSetupTime = 0x0;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:480
+  FMC_NANDInitStruct->FMC_TARSetupTime = 0x0;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f04f 0200 	mov.w	r2, #0
+  3e:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:481
+  FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime = 252;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	69db      	ldr	r3, [r3, #28]
+  44:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  48:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:482
+  FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime = 252;
+  4a:	687b      	ldr	r3, [r7, #4]
+  4c:	69db      	ldr	r3, [r3, #28]
+  4e:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  52:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:483
+  FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime = 252;
+  54:	687b      	ldr	r3, [r7, #4]
+  56:	69db      	ldr	r3, [r3, #28]
+  58:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  5c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:484
+  FMC_NANDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime = 252;
+  5e:	687b      	ldr	r3, [r7, #4]
+  60:	69db      	ldr	r3, [r3, #28]
+  62:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  66:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:485
+  FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime = 252;
+  68:	687b      	ldr	r3, [r7, #4]
+  6a:	6a1b      	ldr	r3, [r3, #32]
+  6c:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  70:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:486
+  FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime = 252;
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	6a1b      	ldr	r3, [r3, #32]
+  76:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  7a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:487
+  FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime = 252;
+  7c:	687b      	ldr	r3, [r7, #4]
+  7e:	6a1b      	ldr	r3, [r3, #32]
+  80:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  84:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:488
+  FMC_NANDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime = 252;	  
+  86:	687b      	ldr	r3, [r7, #4]
+  88:	6a1b      	ldr	r3, [r3, #32]
+  8a:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  8e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:489
+}
+  90:	f107 070c 	add.w	r7, r7, #12
+  94:	46bd      	mov	sp, r7
+  96:	bc80      	pop	{r7}
+  98:	4770      	bx	lr
+  9a:	bf00      	nop
+
+Disassembly of section .text.FMC_NANDCmd:
+
+00000000 <FMC_NANDCmd>:
+FMC_NANDCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:501
+  *            @arg FMC_Bank3_NAND: FMC Bank3 NAND
+  * @param  NewState: new state of the FMC_Bank. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_NANDCmd(uint32_t FMC_Bank, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:505
+  assert_param(IS_FMC_NAND_BANK(FMC_Bank));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d010      	beq.n	34 <FMC_NANDCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:508
+  {
+    /* Enable the selected NAND Bank by setting the PBKEN bit in the PCRx register */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	2b10      	cmp	r3, #16
+  16:	d106      	bne.n	26 <FMC_NANDCmd+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:510
+    {
+      FMC_Bank2->PCR2 |= PCR_PBKEN_SET;
+  18:	4b12      	ldr	r3, [pc, #72]	; (64 <FMC_NANDCmd+0x64>)
+  1a:	4a12      	ldr	r2, [pc, #72]	; (64 <FMC_NANDCmd+0x64>)
+  1c:	6812      	ldr	r2, [r2, #0]
+  1e:	f042 0204 	orr.w	r2, r2, #4
+  22:	601a      	str	r2, [r3, #0]
+  24:	e018      	b.n	58 <FMC_NANDCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:514
+    }
+    else
+    {
+      FMC_Bank3->PCR3 |= PCR_PBKEN_SET;
+  26:	4b10      	ldr	r3, [pc, #64]	; (68 <FMC_NANDCmd+0x68>)
+  28:	4a0f      	ldr	r2, [pc, #60]	; (68 <FMC_NANDCmd+0x68>)
+  2a:	6812      	ldr	r2, [r2, #0]
+  2c:	f042 0204 	orr.w	r2, r2, #4
+  30:	601a      	str	r2, [r3, #0]
+  32:	e011      	b.n	58 <FMC_NANDCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:520
+    }
+  }
+  else
+  {
+    /* Disable the selected NAND Bank by clearing the PBKEN bit in the PCRx register */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	2b10      	cmp	r3, #16
+  38:	d107      	bne.n	4a <FMC_NANDCmd+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:522
+    {
+      FMC_Bank2->PCR2 &= PCR_PBKEN_RESET;
+  3a:	4a0a      	ldr	r2, [pc, #40]	; (64 <FMC_NANDCmd+0x64>)
+  3c:	4b09      	ldr	r3, [pc, #36]	; (64 <FMC_NANDCmd+0x64>)
+  3e:	6819      	ldr	r1, [r3, #0]
+  40:	4b0a      	ldr	r3, [pc, #40]	; (6c <FMC_NANDCmd+0x6c>)
+  42:	ea01 0303 	and.w	r3, r1, r3
+  46:	6013      	str	r3, [r2, #0]
+  48:	e006      	b.n	58 <FMC_NANDCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:526
+    }
+    else
+    {
+      FMC_Bank3->PCR3 &= PCR_PBKEN_RESET;
+  4a:	4a07      	ldr	r2, [pc, #28]	; (68 <FMC_NANDCmd+0x68>)
+  4c:	4b06      	ldr	r3, [pc, #24]	; (68 <FMC_NANDCmd+0x68>)
+  4e:	6819      	ldr	r1, [r3, #0]
+  50:	4b06      	ldr	r3, [pc, #24]	; (6c <FMC_NANDCmd+0x6c>)
+  52:	ea01 0303 	and.w	r3, r1, r3
+  56:	6013      	str	r3, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:529
+    }
+  }
+}
+  58:	f107 070c 	add.w	r7, r7, #12
+  5c:	46bd      	mov	sp, r7
+  5e:	bc80      	pop	{r7}
+  60:	4770      	bx	lr
+  62:	bf00      	nop
+  64:	a0000060 	.word	0xa0000060
+  68:	a0000080 	.word	0xa0000080
+  6c:	000ffffb 	.word	0x000ffffb
+
+Disassembly of section .text.FMC_NANDECCCmd:
+
+00000000 <FMC_NANDECCCmd>:
+FMC_NANDECCCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:541
+  * @param  NewState: new state of the FMC NAND ECC feature.  
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_NANDECCCmd(uint32_t FMC_Bank, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:545
+  assert_param(IS_FMC_NAND_BANK(FMC_Bank));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d010      	beq.n	34 <FMC_NANDECCCmd+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:548
+  {
+    /* Enable the selected NAND Bank ECC function by setting the ECCEN bit in the PCRx register */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	2b10      	cmp	r3, #16
+  16:	d106      	bne.n	26 <FMC_NANDECCCmd+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:550
+    {
+      FMC_Bank2->PCR2 |= PCR_ECCEN_SET;
+  18:	4b12      	ldr	r3, [pc, #72]	; (64 <FMC_NANDECCCmd+0x64>)
+  1a:	4a12      	ldr	r2, [pc, #72]	; (64 <FMC_NANDECCCmd+0x64>)
+  1c:	6812      	ldr	r2, [r2, #0]
+  1e:	f042 0240 	orr.w	r2, r2, #64	; 0x40
+  22:	601a      	str	r2, [r3, #0]
+  24:	e018      	b.n	58 <FMC_NANDECCCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:554
+    }
+    else
+    {
+      FMC_Bank3->PCR3 |= PCR_ECCEN_SET;
+  26:	4b10      	ldr	r3, [pc, #64]	; (68 <FMC_NANDECCCmd+0x68>)
+  28:	4a0f      	ldr	r2, [pc, #60]	; (68 <FMC_NANDECCCmd+0x68>)
+  2a:	6812      	ldr	r2, [r2, #0]
+  2c:	f042 0240 	orr.w	r2, r2, #64	; 0x40
+  30:	601a      	str	r2, [r3, #0]
+  32:	e011      	b.n	58 <FMC_NANDECCCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:560
+    }
+  }
+  else
+  {
+    /* Disable the selected NAND Bank ECC function by clearing the ECCEN bit in the PCRx register */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	2b10      	cmp	r3, #16
+  38:	d107      	bne.n	4a <FMC_NANDECCCmd+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:562
+    {
+      FMC_Bank2->PCR2 &= PCR_ECCEN_RESET;
+  3a:	4a0a      	ldr	r2, [pc, #40]	; (64 <FMC_NANDECCCmd+0x64>)
+  3c:	4b09      	ldr	r3, [pc, #36]	; (64 <FMC_NANDECCCmd+0x64>)
+  3e:	6819      	ldr	r1, [r3, #0]
+  40:	4b0a      	ldr	r3, [pc, #40]	; (6c <FMC_NANDECCCmd+0x6c>)
+  42:	ea01 0303 	and.w	r3, r1, r3
+  46:	6013      	str	r3, [r2, #0]
+  48:	e006      	b.n	58 <FMC_NANDECCCmd+0x58>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:566
+    }
+    else
+    {
+      FMC_Bank3->PCR3 &= PCR_ECCEN_RESET;
+  4a:	4a07      	ldr	r2, [pc, #28]	; (68 <FMC_NANDECCCmd+0x68>)
+  4c:	4b06      	ldr	r3, [pc, #24]	; (68 <FMC_NANDECCCmd+0x68>)
+  4e:	6819      	ldr	r1, [r3, #0]
+  50:	4b06      	ldr	r3, [pc, #24]	; (6c <FMC_NANDECCCmd+0x6c>)
+  52:	ea01 0303 	and.w	r3, r1, r3
+  56:	6013      	str	r3, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:569
+    }
+  }
+}
+  58:	f107 070c 	add.w	r7, r7, #12
+  5c:	46bd      	mov	sp, r7
+  5e:	bc80      	pop	{r7}
+  60:	4770      	bx	lr
+  62:	bf00      	nop
+  64:	a0000060 	.word	0xa0000060
+  68:	a0000080 	.word	0xa0000080
+  6c:	000fffbf 	.word	0x000fffbf
+
+Disassembly of section .text.FMC_GetECC:
+
+00000000 <FMC_GetECC>:
+FMC_GetECC():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:580
+  *            @arg FMC_Bank2_NAND: FMC Bank2 NAND 
+  *            @arg FMC_Bank3_NAND: FMC Bank3 NAND
+  * @retval The Error Correction Code (ECC) value.
+  */
+uint32_t FMC_GetECC(uint32_t FMC_Bank)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:581
+  uint32_t eccval = 0x00000000;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:583
+  
+  if(FMC_Bank == FMC_Bank2_NAND)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	2b10      	cmp	r3, #16
+  12:	d103      	bne.n	1c <FMC_GetECC+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:586
+  {
+    /* Get the ECCR2 register value */
+    eccval = FMC_Bank2->ECCR2;
+  14:	4b06      	ldr	r3, [pc, #24]	; (30 <FMC_GetECC+0x30>)
+  16:	695b      	ldr	r3, [r3, #20]
+  18:	60fb      	str	r3, [r7, #12]
+  1a:	e002      	b.n	22 <FMC_GetECC+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:591
+  }
+  else
+  {
+    /* Get the ECCR3 register value */
+    eccval = FMC_Bank3->ECCR3;
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <FMC_GetECC+0x34>)
+  1e:	695b      	ldr	r3, [r3, #20]
+  20:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:594
+  }
+  /* Return the error correction code value */
+  return(eccval);
+  22:	68fb      	ldr	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:595
+}
+  24:	4618      	mov	r0, r3
+  26:	f107 0714 	add.w	r7, r7, #20
+  2a:	46bd      	mov	sp, r7
+  2c:	bc80      	pop	{r7}
+  2e:	4770      	bx	lr
+  30:	a0000060 	.word	0xa0000060
+  34:	a0000080 	.word	0xa0000080
+
+Disassembly of section .text.FMC_PCCARDDeInit:
+
+00000000 <FMC_PCCARDDeInit>:
+FMC_PCCARDDeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:644
+  * @brief  De-initializes the FMC PCCARD Bank registers to their default reset values.
+  * @param  None                       
+  * @retval None
+  */
+void FMC_PCCARDDeInit(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:646
+  /* Set the FMC_Bank4 registers to their reset values */
+  FMC_Bank4->PCR4 = 0x00000018; 
+   4:	4b0b      	ldr	r3, [pc, #44]	; (34 <FMC_PCCARDDeInit+0x34>)
+   6:	f04f 0218 	mov.w	r2, #24
+   a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:647
+  FMC_Bank4->SR4 = 0x00000000;	
+   c:	4b09      	ldr	r3, [pc, #36]	; (34 <FMC_PCCARDDeInit+0x34>)
+   e:	f04f 0200 	mov.w	r2, #0
+  12:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:648
+  FMC_Bank4->PMEM4 = 0xFCFCFCFC;
+  14:	4b07      	ldr	r3, [pc, #28]	; (34 <FMC_PCCARDDeInit+0x34>)
+  16:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  1a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:649
+  FMC_Bank4->PATT4 = 0xFCFCFCFC;
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <FMC_PCCARDDeInit+0x34>)
+  1e:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  22:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:650
+  FMC_Bank4->PIO4 = 0xFCFCFCFC;
+  24:	4b03      	ldr	r3, [pc, #12]	; (34 <FMC_PCCARDDeInit+0x34>)
+  26:	f04f 32fc 	mov.w	r2, #4244438268	; 0xfcfcfcfc
+  2a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:651
+}
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+  34:	a00000a0 	.word	0xa00000a0
+
+Disassembly of section .text.FMC_PCCARDInit:
+
+00000000 <FMC_PCCARDInit>:
+FMC_PCCARDInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:661
+  * @param  FMC_PCCARDInitStruct : pointer to a FMC_PCCARDInitTypeDef structure
+  *         that contains the configuration information for the FMC PCCARD Bank.                       
+  * @retval None
+  */
+void FMC_PCCARDInit(FMC_PCCARDInitTypeDef* FMC_PCCARDInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:682
+  assert_param(IS_FMC_WAIT_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime));
+  assert_param(IS_FMC_HOLD_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the PCR4 register value according to FMC_PCCARDInitStruct parameters */
+  FMC_Bank4->PCR4 = (uint32_t)FMC_PCCARDInitStruct->FMC_Waitfeature |
+   8:	4b2e      	ldr	r3, [pc, #184]	; (c4 <FMC_PCCARDInit+0xc4>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	6811      	ldr	r1, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:684
+                     FMC_NAND_MemoryDataWidth_16b |  
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	6852      	ldr	r2, [r2, #4]
+  12:	ea4f 2242 	mov.w	r2, r2, lsl #9
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:683
+  assert_param(IS_FMC_HOLD_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the PCR4 register value according to FMC_PCCARDInitStruct parameters */
+  FMC_Bank4->PCR4 = (uint32_t)FMC_PCCARDInitStruct->FMC_Waitfeature |
+                     FMC_NAND_MemoryDataWidth_16b |  
+  16:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:685
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+  18:	687a      	ldr	r2, [r7, #4]
+  1a:	6892      	ldr	r2, [r2, #8]
+  1c:	ea4f 3242 	mov.w	r2, r2, lsl #13
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:684
+  assert_param(IS_FMC_HIZ_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the PCR4 register value according to FMC_PCCARDInitStruct parameters */
+  FMC_Bank4->PCR4 = (uint32_t)FMC_PCCARDInitStruct->FMC_Waitfeature |
+                     FMC_NAND_MemoryDataWidth_16b |  
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+  20:	ea41 0202 	orr.w	r2, r1, r2
+  24:	f042 0210 	orr.w	r2, r2, #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:682
+  assert_param(IS_FMC_WAIT_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime));
+  assert_param(IS_FMC_HOLD_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime));
+  assert_param(IS_FMC_HIZ_TIME(FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime));
+  
+  /* Set the PCR4 register value according to FMC_PCCARDInitStruct parameters */
+  FMC_Bank4->PCR4 = (uint32_t)FMC_PCCARDInitStruct->FMC_Waitfeature |
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:688
+                     FMC_NAND_MemoryDataWidth_16b |  
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set PMEM4 register value according to FMC_CommonSpaceTimingStructure parameters */
+  FMC_Bank4->PMEM4 = (uint32_t)FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  2a:	4b26      	ldr	r3, [pc, #152]	; (c4 <FMC_PCCARDInit+0xc4>)
+  2c:	687a      	ldr	r2, [r7, #4]
+  2e:	68d2      	ldr	r2, [r2, #12]
+  30:	6811      	ldr	r1, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:689
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  32:	687a      	ldr	r2, [r7, #4]
+  34:	68d2      	ldr	r2, [r2, #12]
+  36:	6852      	ldr	r2, [r2, #4]
+  38:	ea4f 2202 	mov.w	r2, r2, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:688
+                     FMC_NAND_MemoryDataWidth_16b |  
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set PMEM4 register value according to FMC_CommonSpaceTimingStructure parameters */
+  FMC_Bank4->PMEM4 = (uint32_t)FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  3c:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:690
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  3e:	687a      	ldr	r2, [r7, #4]
+  40:	68d2      	ldr	r2, [r2, #12]
+  42:	6892      	ldr	r2, [r2, #8]
+  44:	ea4f 4202 	mov.w	r2, r2, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:689
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set PMEM4 register value according to FMC_CommonSpaceTimingStructure parameters */
+  FMC_Bank4->PMEM4 = (uint32_t)FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  48:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:691
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+  4a:	687a      	ldr	r2, [r7, #4]
+  4c:	68d2      	ldr	r2, [r2, #12]
+  4e:	68d2      	ldr	r2, [r2, #12]
+  50:	ea4f 6202 	mov.w	r2, r2, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:690
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set PMEM4 register value according to FMC_CommonSpaceTimingStructure parameters */
+  FMC_Bank4->PMEM4 = (uint32_t)FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  54:	ea41 0202 	orr.w	r2, r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:688
+                     FMC_NAND_MemoryDataWidth_16b |  
+                     (FMC_PCCARDInitStruct->FMC_TCLRSetupTime << 9) |
+                     (FMC_PCCARDInitStruct->FMC_TARSetupTime << 13);
+            
+  /* Set PMEM4 register value according to FMC_CommonSpaceTimingStructure parameters */
+  FMC_Bank4->PMEM4 = (uint32_t)FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime |
+  58:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:694
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set PATT4 register value according to FMC_AttributeSpaceTimingStructure parameters */
+  FMC_Bank4->PATT4 = (uint32_t)FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  5a:	4b1a      	ldr	r3, [pc, #104]	; (c4 <FMC_PCCARDInit+0xc4>)
+  5c:	687a      	ldr	r2, [r7, #4]
+  5e:	6912      	ldr	r2, [r2, #16]
+  60:	6811      	ldr	r1, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:695
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  62:	687a      	ldr	r2, [r7, #4]
+  64:	6912      	ldr	r2, [r2, #16]
+  66:	6852      	ldr	r2, [r2, #4]
+  68:	ea4f 2202 	mov.w	r2, r2, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:694
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set PATT4 register value according to FMC_AttributeSpaceTimingStructure parameters */
+  FMC_Bank4->PATT4 = (uint32_t)FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  6c:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:696
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  6e:	687a      	ldr	r2, [r7, #4]
+  70:	6912      	ldr	r2, [r2, #16]
+  72:	6892      	ldr	r2, [r2, #8]
+  74:	ea4f 4202 	mov.w	r2, r2, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:695
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set PATT4 register value according to FMC_AttributeSpaceTimingStructure parameters */
+  FMC_Bank4->PATT4 = (uint32_t)FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  78:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:697
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+  7a:	687a      	ldr	r2, [r7, #4]
+  7c:	6912      	ldr	r2, [r2, #16]
+  7e:	68d2      	ldr	r2, [r2, #12]
+  80:	ea4f 6202 	mov.w	r2, r2, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:696
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set PATT4 register value according to FMC_AttributeSpaceTimingStructure parameters */
+  FMC_Bank4->PATT4 = (uint32_t)FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  84:	ea41 0202 	orr.w	r2, r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:694
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime << 24); 
+            
+  /* Set PATT4 register value according to FMC_AttributeSpaceTimingStructure parameters */
+  FMC_Bank4->PATT4 = (uint32_t)FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime |
+  88:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:700
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+            
+  /* Set PIO4 register value according to FMC_IOSpaceTimingStructure parameters */
+  FMC_Bank4->PIO4 = (uint32_t)FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime |
+  8a:	4b0e      	ldr	r3, [pc, #56]	; (c4 <FMC_PCCARDInit+0xc4>)
+  8c:	687a      	ldr	r2, [r7, #4]
+  8e:	6952      	ldr	r2, [r2, #20]
+  90:	6811      	ldr	r1, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:701
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  92:	687a      	ldr	r2, [r7, #4]
+  94:	6952      	ldr	r2, [r2, #20]
+  96:	6852      	ldr	r2, [r2, #4]
+  98:	ea4f 2202 	mov.w	r2, r2, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:700
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+            
+  /* Set PIO4 register value according to FMC_IOSpaceTimingStructure parameters */
+  FMC_Bank4->PIO4 = (uint32_t)FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime |
+  9c:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:702
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  9e:	687a      	ldr	r2, [r7, #4]
+  a0:	6952      	ldr	r2, [r2, #20]
+  a2:	6892      	ldr	r2, [r2, #8]
+  a4:	ea4f 4202 	mov.w	r2, r2, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:701
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+            
+  /* Set PIO4 register value according to FMC_IOSpaceTimingStructure parameters */
+  FMC_Bank4->PIO4 = (uint32_t)FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime |
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+  a8:	4311      	orrs	r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:703
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime << 24);             
+  aa:	687a      	ldr	r2, [r7, #4]
+  ac:	6952      	ldr	r2, [r2, #20]
+  ae:	68d2      	ldr	r2, [r2, #12]
+  b0:	ea4f 6202 	mov.w	r2, r2, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:702
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+            
+  /* Set PIO4 register value according to FMC_IOSpaceTimingStructure parameters */
+  FMC_Bank4->PIO4 = (uint32_t)FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime |
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+  b4:	ea41 0202 	orr.w	r2, r1, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:700
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                      (FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime << 24);	
+            
+  /* Set PIO4 register value according to FMC_IOSpaceTimingStructure parameters */
+  FMC_Bank4->PIO4 = (uint32_t)FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime |
+  b8:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:704
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime << 8) |
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime << 16)|
+                     (FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime << 24);             
+}
+  ba:	f107 070c 	add.w	r7, r7, #12
+  be:	46bd      	mov	sp, r7
+  c0:	bc80      	pop	{r7}
+  c2:	4770      	bx	lr
+  c4:	a00000a0 	.word	0xa00000a0
+
+Disassembly of section .text.FMC_PCCARDStructInit:
+
+00000000 <FMC_PCCARDStructInit>:
+FMC_PCCARDStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:713
+  * @param  FMC_PCCARDInitStruct: pointer to a FMC_PCCARDInitTypeDef structure
+  *         which will be initialized.
+  * @retval None
+  */
+void FMC_PCCARDStructInit(FMC_PCCARDInitTypeDef* FMC_PCCARDInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:715
+  /* Reset PCCARD Init structure parameters values */
+  FMC_PCCARDInitStruct->FMC_Waitfeature = FMC_Waitfeature_Disable;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:716
+  FMC_PCCARDInitStruct->FMC_TCLRSetupTime = 0;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:717
+  FMC_PCCARDInitStruct->FMC_TARSetupTime = 0;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:718
+  FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_SetupTime = 252;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	68db      	ldr	r3, [r3, #12]
+  24:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  28:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:719
+  FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_WaitSetupTime = 252;
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	68db      	ldr	r3, [r3, #12]
+  2e:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  32:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:720
+  FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HoldSetupTime = 252;
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	68db      	ldr	r3, [r3, #12]
+  38:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  3c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:721
+  FMC_PCCARDInitStruct->FMC_CommonSpaceTimingStruct->FMC_HiZSetupTime = 252;
+  3e:	687b      	ldr	r3, [r7, #4]
+  40:	68db      	ldr	r3, [r3, #12]
+  42:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  46:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:722
+  FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_SetupTime = 252;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	691b      	ldr	r3, [r3, #16]
+  4c:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  50:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:723
+  FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_WaitSetupTime = 252;
+  52:	687b      	ldr	r3, [r7, #4]
+  54:	691b      	ldr	r3, [r3, #16]
+  56:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  5a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:724
+  FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HoldSetupTime = 252;
+  5c:	687b      	ldr	r3, [r7, #4]
+  5e:	691b      	ldr	r3, [r3, #16]
+  60:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  64:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:725
+  FMC_PCCARDInitStruct->FMC_AttributeSpaceTimingStruct->FMC_HiZSetupTime = 252;	
+  66:	687b      	ldr	r3, [r7, #4]
+  68:	691b      	ldr	r3, [r3, #16]
+  6a:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  6e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:726
+  FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_SetupTime = 252;
+  70:	687b      	ldr	r3, [r7, #4]
+  72:	695b      	ldr	r3, [r3, #20]
+  74:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  78:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:727
+  FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_WaitSetupTime = 252;
+  7a:	687b      	ldr	r3, [r7, #4]
+  7c:	695b      	ldr	r3, [r3, #20]
+  7e:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  82:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:728
+  FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HoldSetupTime = 252;
+  84:	687b      	ldr	r3, [r7, #4]
+  86:	695b      	ldr	r3, [r3, #20]
+  88:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  8c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:729
+  FMC_PCCARDInitStruct->FMC_IOSpaceTimingStruct->FMC_HiZSetupTime = 252;
+  8e:	687b      	ldr	r3, [r7, #4]
+  90:	695b      	ldr	r3, [r3, #20]
+  92:	f04f 02fc 	mov.w	r2, #252	; 0xfc
+  96:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:730
+}
+  98:	f107 070c 	add.w	r7, r7, #12
+  9c:	46bd      	mov	sp, r7
+  9e:	bc80      	pop	{r7}
+  a0:	4770      	bx	lr
+  a2:	bf00      	nop
+
+Disassembly of section .text.FMC_PCCARDCmd:
+
+00000000 <FMC_PCCARDCmd>:
+FMC_PCCARDCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:739
+  * @param  NewState: new state of the PCCARD Memory Bank.  
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_PCCARDCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:742
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <FMC_PCCARDCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:745
+  {
+    /* Enable the PCCARD Bank by setting the PBKEN bit in the PCR4 register */
+    FMC_Bank4->PCR4 |= PCR_PBKEN_SET;
+  10:	4b09      	ldr	r3, [pc, #36]	; (38 <FMC_PCCARDCmd+0x38>)
+  12:	4a09      	ldr	r2, [pc, #36]	; (38 <FMC_PCCARDCmd+0x38>)
+  14:	6812      	ldr	r2, [r2, #0]
+  16:	f042 0204 	orr.w	r2, r2, #4
+  1a:	601a      	str	r2, [r3, #0]
+  1c:	e006      	b.n	2c <FMC_PCCARDCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:750
+  }
+  else
+  {
+    /* Disable the PCCARD Bank by clearing the PBKEN bit in the PCR4 register */
+    FMC_Bank4->PCR4 &= PCR_PBKEN_RESET;
+  1e:	4a06      	ldr	r2, [pc, #24]	; (38 <FMC_PCCARDCmd+0x38>)
+  20:	4b05      	ldr	r3, [pc, #20]	; (38 <FMC_PCCARDCmd+0x38>)
+  22:	6819      	ldr	r1, [r3, #0]
+  24:	4b05      	ldr	r3, [pc, #20]	; (3c <FMC_PCCARDCmd+0x3c>)
+  26:	ea01 0303 	and.w	r3, r1, r3
+  2a:	6013      	str	r3, [r2, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:752
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+  38:	a00000a0 	.word	0xa00000a0
+  3c:	000ffffb 	.word	0x000ffffb
+
+Disassembly of section .text.FMC_SDRAMDeInit:
+
+00000000 <FMC_SDRAMDeInit>:
+FMC_SDRAMDeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:811
+  *            @arg FMC_Bank1_SDRAM: FMC Bank1 SDRAM 
+  *            @arg FMC_Bank2_SDRAM: FMC Bank2 SDRAM 
+  * @retval None
+  */
+void FMC_SDRAMDeInit(uint32_t FMC_Bank)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:815
+  /* Check the parameter */
+  assert_param(IS_FMC_SDRAM_BANK(FMC_Bank));
+  
+  FMC_Bank5_6->SDCR[FMC_Bank] = 0x000002D0;
+   8:	4b0f      	ldr	r3, [pc, #60]	; (48 <FMC_SDRAMDeInit+0x48>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	f44f 7134 	mov.w	r1, #720	; 0x2d0
+  10:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:816
+  FMC_Bank5_6->SDTR[FMC_Bank] = 0x0FFFFFFF;    
+  14:	4b0c      	ldr	r3, [pc, #48]	; (48 <FMC_SDRAMDeInit+0x48>)
+  16:	687a      	ldr	r2, [r7, #4]
+  18:	f102 0202 	add.w	r2, r2, #2
+  1c:	f06f 4170 	mvn.w	r1, #4026531840	; 0xf0000000
+  20:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:817
+  FMC_Bank5_6->SDCMR = 0x00000000;
+  24:	4b08      	ldr	r3, [pc, #32]	; (48 <FMC_SDRAMDeInit+0x48>)
+  26:	f04f 0200 	mov.w	r2, #0
+  2a:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:818
+  FMC_Bank5_6->SDRTR = 0x00000000;
+  2c:	4b06      	ldr	r3, [pc, #24]	; (48 <FMC_SDRAMDeInit+0x48>)
+  2e:	f04f 0200 	mov.w	r2, #0
+  32:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:819
+  FMC_Bank5_6->SDSR = 0x00000000; 
+  34:	4b04      	ldr	r3, [pc, #16]	; (48 <FMC_SDRAMDeInit+0x48>)
+  36:	f04f 0200 	mov.w	r2, #0
+  3a:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:820
+}  
+  3c:	f107 070c 	add.w	r7, r7, #12
+  40:	46bd      	mov	sp, r7
+  42:	bc80      	pop	{r7}
+  44:	4770      	bx	lr
+  46:	bf00      	nop
+  48:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_SDRAMInit:
+
+00000000 <FMC_SDRAMInit>:
+FMC_SDRAMInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:831
+  *         that contains the configuration information for the FMC SDRAM 
+  *         specified Banks.                       
+  * @retval None
+  */
+void FMC_SDRAMInit(FMC_SDRAMInitTypeDef* FMC_SDRAMInitStruct)
+{ 
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:833
+  /* temporary registers */
+  uint32_t tmpr1 = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:834
+  uint32_t tmpr2 = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:835
+  uint32_t tmpr3 = 0;
+  14:	f04f 0300 	mov.w	r3, #0
+  18:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:836
+  uint32_t tmpr4 = 0;
+  1a:	f04f 0300 	mov.w	r3, #0
+  1e:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:862
+  assert_param(IS_FMC_WRITE_RECOVERY_TIME(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)); 
+  assert_param(IS_FMC_RP_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)); 
+  assert_param(IS_FMC_RCD_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay));    
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	685a      	ldr	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:863
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	689b      	ldr	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:862
+  assert_param(IS_FMC_WRITE_RECOVERY_TIME(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)); 
+  assert_param(IS_FMC_RP_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)); 
+  assert_param(IS_FMC_RCD_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay));    
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+  28:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:864
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	68db      	ldr	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:863
+  assert_param(IS_FMC_RP_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)); 
+  assert_param(IS_FMC_RCD_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay));    
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+  2e:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:865
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	691b      	ldr	r3, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:864
+  assert_param(IS_FMC_RCD_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay));    
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+  34:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:866
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+             FMC_SDRAMInitStruct->FMC_CASLatency |
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	695b      	ldr	r3, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:865
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+  3a:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:867
+             FMC_SDRAMInitStruct->FMC_CASLatency |
+             FMC_SDRAMInitStruct->FMC_WriteProtection |
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	699b      	ldr	r3, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:866
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+             FMC_SDRAMInitStruct->FMC_CASLatency |
+  40:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:868
+             FMC_SDRAMInitStruct->FMC_WriteProtection |
+             FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+  42:	687b      	ldr	r3, [r7, #4]
+  44:	69db      	ldr	r3, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:867
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+             FMC_SDRAMInitStruct->FMC_CASLatency |
+             FMC_SDRAMInitStruct->FMC_WriteProtection |
+  46:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:869
+             FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	6a1b      	ldr	r3, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:868
+             FMC_SDRAMInitStruct->FMC_RowBitsNumber |
+             FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth |
+             FMC_SDRAMInitStruct->FMC_InternalBankNumber |           
+             FMC_SDRAMInitStruct->FMC_CASLatency |
+             FMC_SDRAMInitStruct->FMC_WriteProtection |
+             FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+  4c:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:870
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+             FMC_SDRAMInitStruct->FMC_ReadPipeDelay;
+  4e:	687b      	ldr	r3, [r7, #4]
+  50:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:862
+  assert_param(IS_FMC_WRITE_RECOVERY_TIME(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)); 
+  assert_param(IS_FMC_RP_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)); 
+  assert_param(IS_FMC_RCD_DELAY(FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay));    
+  
+  /* SDRAM bank control register configuration */ 
+  tmpr1 =   (uint32_t)FMC_SDRAMInitStruct->FMC_ColumnBitsNumber |
+  52:	ea42 0303 	orr.w	r3, r2, r3
+  56:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:872
+             FMC_SDRAMInitStruct->FMC_WriteProtection |
+             FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+             FMC_SDRAMInitStruct->FMC_ReadPipeDelay;
+            
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	681b      	ldr	r3, [r3, #0]
+  5c:	2b00      	cmp	r3, #0
+  5e:	d106      	bne.n	6e <FMC_SDRAMInit+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:874
+  {
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  60:	4b4e      	ldr	r3, [pc, #312]	; (19c <FMC_SDRAMInit+0x19c>)
+  62:	687a      	ldr	r2, [r7, #4]
+  64:	6812      	ldr	r2, [r2, #0]
+  66:	6979      	ldr	r1, [r7, #20]
+  68:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+  6c:	e012      	b.n	94 <FMC_SDRAMInit+0x94>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:878
+  }
+  else   /* SDCR2 "don't care" bits configuration */
+  {
+    tmpr3 = (uint32_t)FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+  6e:	687b      	ldr	r3, [r7, #4]
+  70:	69da      	ldr	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:879
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	6a1b      	ldr	r3, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:878
+  {
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  }
+  else   /* SDCR2 "don't care" bits configuration */
+  {
+    tmpr3 = (uint32_t)FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+  76:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:880
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+             FMC_SDRAMInitStruct->FMC_ReadPipeDelay;
+  78:	687b      	ldr	r3, [r7, #4]
+  7a:	6a5b      	ldr	r3, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:878
+  {
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  }
+  else   /* SDCR2 "don't care" bits configuration */
+  {
+    tmpr3 = (uint32_t)FMC_SDRAMInitStruct->FMC_SDClockPeriod |
+  7c:	ea42 0303 	orr.w	r3, r2, r3
+  80:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:882
+             FMC_SDRAMInitStruct->FMC_ReadBurst | 
+             FMC_SDRAMInitStruct->FMC_ReadPipeDelay;
+    
+    FMC_Bank5_6->SDCR[FMC_Bank1_SDRAM] = tmpr3;
+  82:	4b46      	ldr	r3, [pc, #280]	; (19c <FMC_SDRAMInit+0x19c>)
+  84:	68fa      	ldr	r2, [r7, #12]
+  86:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:883
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  88:	4b44      	ldr	r3, [pc, #272]	; (19c <FMC_SDRAMInit+0x19c>)
+  8a:	687a      	ldr	r2, [r7, #4]
+  8c:	6812      	ldr	r2, [r2, #0]
+  8e:	6979      	ldr	r1, [r7, #20]
+  90:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:886
+  }
+  /* SDRAM bank timing register configuration */
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  94:	687b      	ldr	r3, [r7, #4]
+  96:	681b      	ldr	r3, [r3, #0]
+  98:	2b00      	cmp	r3, #0
+  9a:	d13f      	bne.n	11c <FMC_SDRAMInit+0x11c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:888
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+  9c:	687b      	ldr	r3, [r7, #4]
+  9e:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  a0:	681b      	ldr	r3, [r3, #0]
+  a2:	f103 32ff 	add.w	r2, r3, #4294967295
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:889
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+  a6:	687b      	ldr	r3, [r7, #4]
+  a8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  aa:	685b      	ldr	r3, [r3, #4]
+  ac:	f103 33ff 	add.w	r3, r3, #4294967295
+  b0:	ea4f 1303 	mov.w	r3, r3, lsl #4
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:888
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  }
+  /* SDRAM bank timing register configuration */
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+  b4:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:890
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+  b6:	687b      	ldr	r3, [r7, #4]
+  b8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  ba:	689b      	ldr	r3, [r3, #8]
+  bc:	f103 33ff 	add.w	r3, r3, #4294967295
+  c0:	ea4f 2303 	mov.w	r3, r3, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:889
+  }
+  /* SDRAM bank timing register configuration */
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+  c4:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:891
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+  c6:	687b      	ldr	r3, [r7, #4]
+  c8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  ca:	68db      	ldr	r3, [r3, #12]
+  cc:	f103 33ff 	add.w	r3, r3, #4294967295
+  d0:	ea4f 3303 	mov.w	r3, r3, lsl #12
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:890
+  /* SDRAM bank timing register configuration */
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+  d4:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:892
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16) |
+  d6:	687b      	ldr	r3, [r7, #4]
+  d8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  da:	691b      	ldr	r3, [r3, #16]
+  dc:	f103 33ff 	add.w	r3, r3, #4294967295
+  e0:	ea4f 4303 	mov.w	r3, r3, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:891
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+  e4:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:893
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)-1) << 20) |
+  e6:	687b      	ldr	r3, [r7, #4]
+  e8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  ea:	695b      	ldr	r3, [r3, #20]
+  ec:	f103 33ff 	add.w	r3, r3, #4294967295
+  f0:	ea4f 5303 	mov.w	r3, r3, lsl #20
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:892
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16) |
+  f4:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:894
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)-1) << 20) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay)-1) << 24);
+  f6:	687b      	ldr	r3, [r7, #4]
+  f8:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  fa:	699b      	ldr	r3, [r3, #24]
+  fc:	f103 33ff 	add.w	r3, r3, #4294967295
+ 100:	ea4f 6303 	mov.w	r3, r3, lsl #24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:888
+    FMC_Bank5_6->SDCR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr1;
+  }
+  /* SDRAM bank timing register configuration */
+  if(FMC_SDRAMInitStruct->FMC_Bank == FMC_Bank1_SDRAM )
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+ 104:	ea42 0303 	orr.w	r3, r2, r3
+ 108:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:896
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)-1) << 20) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay)-1) << 24);
+            
+            FMC_Bank5_6->SDTR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr2;
+ 10a:	4b24      	ldr	r3, [pc, #144]	; (19c <FMC_SDRAMInit+0x19c>)
+ 10c:	687a      	ldr	r2, [r7, #4]
+ 10e:	6812      	ldr	r2, [r2, #0]
+ 110:	f102 0202 	add.w	r2, r2, #2
+ 114:	6939      	ldr	r1, [r7, #16]
+ 116:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+ 11a:	e03a      	b.n	192 <FMC_SDRAMInit+0x192>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:900
+  }
+  else   /* SDTR "don't care bits configuration */
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+ 11c:	687b      	ldr	r3, [r7, #4]
+ 11e:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 120:	681b      	ldr	r3, [r3, #0]
+ 122:	f103 32ff 	add.w	r2, r3, #4294967295
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:901
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+ 126:	687b      	ldr	r3, [r7, #4]
+ 128:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 12a:	685b      	ldr	r3, [r3, #4]
+ 12c:	f103 33ff 	add.w	r3, r3, #4294967295
+ 130:	ea4f 1303 	mov.w	r3, r3, lsl #4
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:900
+            
+            FMC_Bank5_6->SDTR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr2;
+  }
+  else   /* SDTR "don't care bits configuration */
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+ 134:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:902
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+ 136:	687b      	ldr	r3, [r7, #4]
+ 138:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 13a:	689b      	ldr	r3, [r3, #8]
+ 13c:	f103 33ff 	add.w	r3, r3, #4294967295
+ 140:	ea4f 2303 	mov.w	r3, r3, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:901
+            FMC_Bank5_6->SDTR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr2;
+  }
+  else   /* SDTR "don't care bits configuration */
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+ 144:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:903
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16);
+ 146:	687b      	ldr	r3, [r7, #4]
+ 148:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 14a:	691b      	ldr	r3, [r3, #16]
+ 14c:	f103 33ff 	add.w	r3, r3, #4294967295
+ 150:	ea4f 4303 	mov.w	r3, r3, lsl #16
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:900
+            
+            FMC_Bank5_6->SDTR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr2;
+  }
+  else   /* SDTR "don't care bits configuration */
+  {
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+ 154:	ea42 0303 	orr.w	r3, r2, r3
+ 158:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:905
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16);
+            
+    tmpr4 =   (uint32_t)(((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+ 15a:	687b      	ldr	r3, [r7, #4]
+ 15c:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 15e:	68db      	ldr	r3, [r3, #12]
+ 160:	f103 33ff 	add.w	r3, r3, #4294967295
+ 164:	ea4f 3203 	mov.w	r2, r3, lsl #12
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:906
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)-1) << 20);
+ 168:	687b      	ldr	r3, [r7, #4]
+ 16a:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+ 16c:	695b      	ldr	r3, [r3, #20]
+ 16e:	f103 33ff 	add.w	r3, r3, #4294967295
+ 172:	ea4f 5303 	mov.w	r3, r3, lsl #20
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:905
+    tmpr2 =   (uint32_t)((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay)-1) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay)-1) << 4) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime)-1) << 8) |
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime)-1) << 16);
+            
+    tmpr4 =   (uint32_t)(((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay)-1) << 12) |
+ 176:	ea42 0303 	orr.w	r3, r2, r3
+ 17a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:908
+            (((FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay)-1) << 20);
+            
+            FMC_Bank5_6->SDTR[FMC_Bank1_SDRAM] = tmpr4;
+ 17c:	4b07      	ldr	r3, [pc, #28]	; (19c <FMC_SDRAMInit+0x19c>)
+ 17e:	68ba      	ldr	r2, [r7, #8]
+ 180:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:909
+            FMC_Bank5_6->SDTR[FMC_SDRAMInitStruct->FMC_Bank] = tmpr2;
+ 182:	4b06      	ldr	r3, [pc, #24]	; (19c <FMC_SDRAMInit+0x19c>)
+ 184:	687a      	ldr	r2, [r7, #4]
+ 186:	6812      	ldr	r2, [r2, #0]
+ 188:	f102 0202 	add.w	r2, r2, #2
+ 18c:	6939      	ldr	r1, [r7, #16]
+ 18e:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:912
+  }
+  
+}
+ 192:	f107 071c 	add.w	r7, r7, #28
+ 196:	46bd      	mov	sp, r7
+ 198:	bc80      	pop	{r7}
+ 19a:	4770      	bx	lr
+ 19c:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_SDRAMStructInit:
+
+00000000 <FMC_SDRAMStructInit>:
+FMC_SDRAMStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:921
+  * @param  FMC_SDRAMInitStruct: pointer to a FMC_SDRAMInitTypeDef structure 
+  *         which will be initialized.
+  * @retval None
+  */
+void FMC_SDRAMStructInit(FMC_SDRAMInitTypeDef* FMC_SDRAMInitStruct)  
+{  
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:923
+  /* Reset SDRAM Init structure parameters values */
+  FMC_SDRAMInitStruct->FMC_Bank = FMC_Bank1_SDRAM;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:924
+  FMC_SDRAMInitStruct->FMC_ColumnBitsNumber = FMC_ColumnBits_Number_8b;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:925
+  FMC_SDRAMInitStruct->FMC_RowBitsNumber = FMC_RowBits_Number_11b; 
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:926
+  FMC_SDRAMInitStruct->FMC_SDMemoryDataWidth = FMC_SDMemory_Width_16b;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0210 	mov.w	r2, #16
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:927
+  FMC_SDRAMInitStruct->FMC_InternalBankNumber = FMC_InternalBank_Number_4; 
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0240 	mov.w	r2, #64	; 0x40
+  2e:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:928
+  FMC_SDRAMInitStruct->FMC_CASLatency = FMC_CAS_Latency_1;  
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0280 	mov.w	r2, #128	; 0x80
+  36:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:929
+  FMC_SDRAMInitStruct->FMC_WriteProtection = FMC_Write_Protection_Enable;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f44f 7200 	mov.w	r2, #512	; 0x200
+  3e:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:930
+  FMC_SDRAMInitStruct->FMC_SDClockPeriod = FMC_SDClock_Disable;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f04f 0200 	mov.w	r2, #0
+  46:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:931
+  FMC_SDRAMInitStruct->FMC_ReadBurst = FMC_Read_Burst_Disable;
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f04f 0200 	mov.w	r2, #0
+  4e:	621a      	str	r2, [r3, #32]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:932
+  FMC_SDRAMInitStruct->FMC_ReadPipeDelay = FMC_ReadPipe_Delay_0; 
+  50:	687b      	ldr	r3, [r7, #4]
+  52:	f04f 0200 	mov.w	r2, #0
+  56:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:934
+   
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_LoadToActiveDelay = 16;
+  58:	687b      	ldr	r3, [r7, #4]
+  5a:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  5c:	f04f 0210 	mov.w	r2, #16
+  60:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:935
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_ExitSelfRefreshDelay = 16;
+  62:	687b      	ldr	r3, [r7, #4]
+  64:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  66:	f04f 0210 	mov.w	r2, #16
+  6a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:936
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_SelfRefreshTime = 16;
+  6c:	687b      	ldr	r3, [r7, #4]
+  6e:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  70:	f04f 0210 	mov.w	r2, #16
+  74:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:937
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RowCycleDelay = 16;
+  76:	687b      	ldr	r3, [r7, #4]
+  78:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  7a:	f04f 0210 	mov.w	r2, #16
+  7e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:938
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_WriteRecoveryTime = 16;
+  80:	687b      	ldr	r3, [r7, #4]
+  82:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  84:	f04f 0210 	mov.w	r2, #16
+  88:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:939
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RPDelay = 16;
+  8a:	687b      	ldr	r3, [r7, #4]
+  8c:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  8e:	f04f 0210 	mov.w	r2, #16
+  92:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:940
+  FMC_SDRAMInitStruct->FMC_SDRAMTimingStruct->FMC_RCDDelay = 16;
+  94:	687b      	ldr	r3, [r7, #4]
+  96:	6a9b      	ldr	r3, [r3, #40]	; 0x28
+  98:	f04f 0210 	mov.w	r2, #16
+  9c:	619a      	str	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:942
+  
+}
+  9e:	f107 070c 	add.w	r7, r7, #12
+  a2:	46bd      	mov	sp, r7
+  a4:	bc80      	pop	{r7}
+  a6:	4770      	bx	lr
+
+Disassembly of section .text.FMC_SDRAMCmdConfig:
+
+00000000 <FMC_SDRAMCmdConfig>:
+FMC_SDRAMCmdConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:951
+  * @param  FMC_SDRAMCommandStruct: pointer to a FMC_SDRAMCommandTypeDef structure 
+  *         which will be configured.
+  * @retval None
+  */
+void FMC_SDRAMCmdConfig(FMC_SDRAMCommandTypeDef* FMC_SDRAMCommandStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:952
+  uint32_t tmpr = 0x0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:960
+  assert_param(IS_FMC_COMMAND_MODE(FMC_SDRAMCommandStruct->FMC_CommandMode));
+  assert_param(IS_FMC_COMMAND_TARGET(FMC_SDRAMCommandStruct->FMC_CommandTarget));
+  assert_param(IS_FMC_AUTOREFRESH_NUMBER(FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber));
+  assert_param(IS_FMC_MODE_REGISTER(FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition));
+  
+  tmpr =   (uint32_t)(FMC_SDRAMCommandStruct->FMC_CommandMode |
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	681a      	ldr	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:961
+                      FMC_SDRAMCommandStruct->FMC_CommandTarget |
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	685b      	ldr	r3, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:960
+  assert_param(IS_FMC_COMMAND_MODE(FMC_SDRAMCommandStruct->FMC_CommandMode));
+  assert_param(IS_FMC_COMMAND_TARGET(FMC_SDRAMCommandStruct->FMC_CommandTarget));
+  assert_param(IS_FMC_AUTOREFRESH_NUMBER(FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber));
+  assert_param(IS_FMC_MODE_REGISTER(FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition));
+  
+  tmpr =   (uint32_t)(FMC_SDRAMCommandStruct->FMC_CommandMode |
+  16:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:962
+                      FMC_SDRAMCommandStruct->FMC_CommandTarget |
+                     (((FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber)-1)<<5) |
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	689b      	ldr	r3, [r3, #8]
+  1c:	f103 33ff 	add.w	r3, r3, #4294967295
+  20:	ea4f 1343 	mov.w	r3, r3, lsl #5
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:961
+  assert_param(IS_FMC_COMMAND_TARGET(FMC_SDRAMCommandStruct->FMC_CommandTarget));
+  assert_param(IS_FMC_AUTOREFRESH_NUMBER(FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber));
+  assert_param(IS_FMC_MODE_REGISTER(FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition));
+  
+  tmpr =   (uint32_t)(FMC_SDRAMCommandStruct->FMC_CommandMode |
+                      FMC_SDRAMCommandStruct->FMC_CommandTarget |
+  24:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:963
+                     (((FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber)-1)<<5) |
+                     ((FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition)<<9));
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	68db      	ldr	r3, [r3, #12]
+  2a:	ea4f 2343 	mov.w	r3, r3, lsl #9
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:960
+  assert_param(IS_FMC_COMMAND_MODE(FMC_SDRAMCommandStruct->FMC_CommandMode));
+  assert_param(IS_FMC_COMMAND_TARGET(FMC_SDRAMCommandStruct->FMC_CommandTarget));
+  assert_param(IS_FMC_AUTOREFRESH_NUMBER(FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber));
+  assert_param(IS_FMC_MODE_REGISTER(FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition));
+  
+  tmpr =   (uint32_t)(FMC_SDRAMCommandStruct->FMC_CommandMode |
+  2e:	ea42 0303 	orr.w	r3, r2, r3
+  32:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:965
+                      FMC_SDRAMCommandStruct->FMC_CommandTarget |
+                     (((FMC_SDRAMCommandStruct->FMC_AutoRefreshNumber)-1)<<5) |
+                     ((FMC_SDRAMCommandStruct->FMC_ModeRegisterDefinition)<<9));
+  
+  FMC_Bank5_6->SDCMR = tmpr;
+  34:	4b03      	ldr	r3, [pc, #12]	; (44 <FMC_SDRAMCmdConfig+0x44>)
+  36:	68fa      	ldr	r2, [r7, #12]
+  38:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:967
+
+}
+  3a:	f107 0714 	add.w	r7, r7, #20
+  3e:	46bd      	mov	sp, r7
+  40:	bc80      	pop	{r7}
+  42:	4770      	bx	lr
+  44:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_GetModeStatus:
+
+00000000 <FMC_GetModeStatus>:
+FMC_GetModeStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:977
+  * @param  SDRAM_Bank: Defines the FMC SDRAM bank. This parameter can be 
+  *                     FMC_Bank1_SDRAM or FMC_Bank2_SDRAM. 
+  * @retval The FMC SDRAM bank mode status         
+  */
+uint32_t FMC_GetModeStatus(uint32_t SDRAM_Bank)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:978
+  uint32_t tmpreg = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:984
+  
+  /* Check the parameter */
+  assert_param(IS_FMC_SDRAM_BANK(SDRAM_Bank));
+
+  /* Get the busy flag status */
+  if(SDRAM_Bank == FMC_Bank1_SDRAM)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	2b00      	cmp	r3, #0
+  12:	d105      	bne.n	20 <FMC_GetModeStatus+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:986
+  {
+    tmpreg = (uint32_t)(FMC_Bank5_6->SDSR & FMC_SDSR_MODES1); 
+  14:	4b09      	ldr	r3, [pc, #36]	; (3c <FMC_GetModeStatus+0x3c>)
+  16:	699b      	ldr	r3, [r3, #24]
+  18:	f003 0306 	and.w	r3, r3, #6
+  1c:	60fb      	str	r3, [r7, #12]
+  1e:	e006      	b.n	2e <FMC_GetModeStatus+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:990
+  }
+  else
+  {
+    tmpreg = ((uint32_t)(FMC_Bank5_6->SDSR & FMC_SDSR_MODES2) >> 2);
+  20:	4b06      	ldr	r3, [pc, #24]	; (3c <FMC_GetModeStatus+0x3c>)
+  22:	699b      	ldr	r3, [r3, #24]
+  24:	f003 0318 	and.w	r3, r3, #24
+  28:	ea4f 0393 	mov.w	r3, r3, lsr #2
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:994
+  }
+  
+  /* Return the mode status */
+  return tmpreg;
+  2e:	68fb      	ldr	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:995
+}
+  30:	4618      	mov	r0, r3
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+  3c:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_SetRefreshCount:
+
+00000000 <FMC_SetRefreshCount>:
+FMC_SetRefreshCount():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1003
+  * @brief  defines the SDRAM Memory Refresh rate.
+  * @param  FMC_Count: specifies the Refresh timer count.       
+  * @retval None
+  */
+void FMC_SetRefreshCount(uint32_t FMC_Count)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1007
+  /* check the parameters */
+  assert_param(IS_FMC_REFRESH_COUNT(FMC_Count));
+  
+  FMC_Bank5_6->SDRTR |= (FMC_Count<<1);
+   8:	4b06      	ldr	r3, [pc, #24]	; (24 <FMC_SetRefreshCount+0x24>)
+   a:	4a06      	ldr	r2, [pc, #24]	; (24 <FMC_SetRefreshCount+0x24>)
+   c:	6951      	ldr	r1, [r2, #20]
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	ea4f 0242 	mov.w	r2, r2, lsl #1
+  14:	ea41 0202 	orr.w	r2, r1, r2
+  18:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1009
+   
+}
+  1a:	f107 070c 	add.w	r7, r7, #12
+  1e:	46bd      	mov	sp, r7
+  20:	bc80      	pop	{r7}
+  22:	4770      	bx	lr
+  24:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_SetAutoRefresh_Number:
+
+00000000 <FMC_SetAutoRefresh_Number>:
+FMC_SetAutoRefresh_Number():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1017
+  * @brief  Sets the Number of consecutive SDRAM Memory auto Refresh commands.
+  * @param  FMC_Number: specifies the auto Refresh number.       
+  * @retval None
+  */
+void FMC_SetAutoRefresh_Number(uint32_t FMC_Number)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1021
+  /* check the parameters */
+  assert_param(IS_FMC_AUTOREFRESH_NUMBER(FMC_Number));
+  
+  FMC_Bank5_6->SDCMR |= (FMC_Number << 5);   
+   8:	4b06      	ldr	r3, [pc, #24]	; (24 <FMC_SetAutoRefresh_Number+0x24>)
+   a:	4a06      	ldr	r2, [pc, #24]	; (24 <FMC_SetAutoRefresh_Number+0x24>)
+   c:	6911      	ldr	r1, [r2, #16]
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	ea4f 1242 	mov.w	r2, r2, lsl #5
+  14:	ea41 0202 	orr.w	r2, r1, r2
+  18:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1022
+}
+  1a:	f107 070c 	add.w	r7, r7, #12
+  1e:	46bd      	mov	sp, r7
+  20:	bc80      	pop	{r7}
+  22:	4770      	bx	lr
+  24:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_SDRAMWriteProtectionConfig:
+
+00000000 <FMC_SDRAMWriteProtectionConfig>:
+FMC_SDRAMWriteProtectionConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1033
+  * @param  NewState: new state of the write protection flag.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_SDRAMWriteProtectionConfig(uint32_t SDRAM_Bank, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1038
+  /* Check the parameter */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  assert_param(IS_FMC_SDRAM_BANK(SDRAM_Bank));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d00a      	beq.n	28 <FMC_SDRAMWriteProtectionConfig+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1040
+  {
+    FMC_Bank5_6->SDCR[SDRAM_Bank] |= FMC_Write_Protection_Enable;    
+  12:	4b0e      	ldr	r3, [pc, #56]	; (4c <FMC_SDRAMWriteProtectionConfig+0x4c>)
+  14:	4a0d      	ldr	r2, [pc, #52]	; (4c <FMC_SDRAMWriteProtectionConfig+0x4c>)
+  16:	6879      	ldr	r1, [r7, #4]
+  18:	f852 2021 	ldr.w	r2, [r2, r1, lsl #2]
+  1c:	f442 7100 	orr.w	r1, r2, #512	; 0x200
+  20:	687a      	ldr	r2, [r7, #4]
+  22:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+  26:	e00b      	b.n	40 <FMC_SDRAMWriteProtectionConfig+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1044
+  }
+  else
+  {
+    FMC_Bank5_6->SDCR[SDRAM_Bank] &= SDCR_WriteProtection_RESET;
+  28:	4a08      	ldr	r2, [pc, #32]	; (4c <FMC_SDRAMWriteProtectionConfig+0x4c>)
+  2a:	4b08      	ldr	r3, [pc, #32]	; (4c <FMC_SDRAMWriteProtectionConfig+0x4c>)
+  2c:	6879      	ldr	r1, [r7, #4]
+  2e:	f853 1021 	ldr.w	r1, [r3, r1, lsl #2]
+  32:	f647 53ff 	movw	r3, #32255	; 0x7dff
+  36:	ea01 0303 	and.w	r3, r1, r3
+  3a:	6879      	ldr	r1, [r7, #4]
+  3c:	f842 3021 	str.w	r3, [r2, r1, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1047
+  } 
+  
+}
+  40:	f107 070c 	add.w	r7, r7, #12
+  44:	46bd      	mov	sp, r7
+  46:	bc80      	pop	{r7}
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+  4c:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_ITConfig:
+
+00000000 <FMC_ITConfig>:
+FMC_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1085
+  * @param  NewState: new state of the specified FMC interrupts.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void FMC_ITConfig(uint32_t FMC_Bank, uint32_t FMC_IT, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1090
+  assert_param(IS_FMC_IT_BANK(FMC_Bank));
+  assert_param(IS_FMC_IT(FMC_IT));	
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   e:	79fb      	ldrb	r3, [r7, #7]
+  10:	2b00      	cmp	r3, #0
+  12:	d02a      	beq.n	6a <FMC_ITConfig+0x6a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1093
+  {
+    /* Enable the selected FMC_Bank2 interrupts */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	2b10      	cmp	r3, #16
+  18:	d107      	bne.n	2a <FMC_ITConfig+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1095
+    {
+      FMC_Bank2->SR2 |= FMC_IT;
+  1a:	4b2f      	ldr	r3, [pc, #188]	; (d8 <FMC_ITConfig+0xd8>)
+  1c:	4a2e      	ldr	r2, [pc, #184]	; (d8 <FMC_ITConfig+0xd8>)
+  1e:	6851      	ldr	r1, [r2, #4]
+  20:	68ba      	ldr	r2, [r7, #8]
+  22:	ea41 0202 	orr.w	r2, r1, r2
+  26:	605a      	str	r2, [r3, #4]
+  28:	e051      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1098
+    }
+    /* Enable the selected FMC_Bank3 interrupts */
+    else if (FMC_Bank == FMC_Bank3_NAND)
+  2a:	68fb      	ldr	r3, [r7, #12]
+  2c:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  30:	d107      	bne.n	42 <FMC_ITConfig+0x42>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1100
+    {
+      FMC_Bank3->SR3 |= FMC_IT;
+  32:	4b2a      	ldr	r3, [pc, #168]	; (dc <FMC_ITConfig+0xdc>)
+  34:	4a29      	ldr	r2, [pc, #164]	; (dc <FMC_ITConfig+0xdc>)
+  36:	6851      	ldr	r1, [r2, #4]
+  38:	68ba      	ldr	r2, [r7, #8]
+  3a:	ea41 0202 	orr.w	r2, r1, r2
+  3e:	605a      	str	r2, [r3, #4]
+  40:	e045      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1103
+    }
+    /* Enable the selected FMC_Bank4 interrupts */
+    else if (FMC_Bank == FMC_Bank4_PCCARD)
+  42:	68fb      	ldr	r3, [r7, #12]
+  44:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  48:	d107      	bne.n	5a <FMC_ITConfig+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1105
+    {
+      FMC_Bank4->SR4 |= FMC_IT;    
+  4a:	4b25      	ldr	r3, [pc, #148]	; (e0 <FMC_ITConfig+0xe0>)
+  4c:	4a24      	ldr	r2, [pc, #144]	; (e0 <FMC_ITConfig+0xe0>)
+  4e:	6851      	ldr	r1, [r2, #4]
+  50:	68ba      	ldr	r2, [r7, #8]
+  52:	ea41 0202 	orr.w	r2, r1, r2
+  56:	605a      	str	r2, [r3, #4]
+  58:	e039      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1111
+    }
+    /* Enable the selected FMC_Bank5_6 interrupt */
+    else
+    {
+      /* Enables the interrupt if the refresh error flag is set */
+      FMC_Bank5_6->SDRTR |= FMC_IT; 
+  5a:	4b22      	ldr	r3, [pc, #136]	; (e4 <FMC_ITConfig+0xe4>)
+  5c:	4a21      	ldr	r2, [pc, #132]	; (e4 <FMC_ITConfig+0xe4>)
+  5e:	6951      	ldr	r1, [r2, #20]
+  60:	68ba      	ldr	r2, [r7, #8]
+  62:	ea41 0202 	orr.w	r2, r1, r2
+  66:	615a      	str	r2, [r3, #20]
+  68:	e031      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1117
+    }
+  }
+  else
+  {
+    /* Disable the selected FMC_Bank2 interrupts */
+    if(FMC_Bank == FMC_Bank2_NAND)
+  6a:	68fb      	ldr	r3, [r7, #12]
+  6c:	2b10      	cmp	r3, #16
+  6e:	d109      	bne.n	84 <FMC_ITConfig+0x84>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1120
+    {
+      
+      FMC_Bank2->SR2 &= (uint32_t)~FMC_IT;
+  70:	4b19      	ldr	r3, [pc, #100]	; (d8 <FMC_ITConfig+0xd8>)
+  72:	4a19      	ldr	r2, [pc, #100]	; (d8 <FMC_ITConfig+0xd8>)
+  74:	6851      	ldr	r1, [r2, #4]
+  76:	68ba      	ldr	r2, [r7, #8]
+  78:	ea6f 0202 	mvn.w	r2, r2
+  7c:	ea01 0202 	and.w	r2, r1, r2
+  80:	605a      	str	r2, [r3, #4]
+  82:	e024      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1123
+    }
+    /* Disable the selected FMC_Bank3 interrupts */
+    else if (FMC_Bank == FMC_Bank3_NAND)
+  84:	68fb      	ldr	r3, [r7, #12]
+  86:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  8a:	d109      	bne.n	a0 <FMC_ITConfig+0xa0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1125
+    {
+      FMC_Bank3->SR3 &= (uint32_t)~FMC_IT;
+  8c:	4b13      	ldr	r3, [pc, #76]	; (dc <FMC_ITConfig+0xdc>)
+  8e:	4a13      	ldr	r2, [pc, #76]	; (dc <FMC_ITConfig+0xdc>)
+  90:	6851      	ldr	r1, [r2, #4]
+  92:	68ba      	ldr	r2, [r7, #8]
+  94:	ea6f 0202 	mvn.w	r2, r2
+  98:	ea01 0202 	and.w	r2, r1, r2
+  9c:	605a      	str	r2, [r3, #4]
+  9e:	e016      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1128
+    }
+    /* Disable the selected FMC_Bank4 interrupts */
+    else if(FMC_Bank == FMC_Bank4_PCCARD)
+  a0:	68fb      	ldr	r3, [r7, #12]
+  a2:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  a6:	d109      	bne.n	bc <FMC_ITConfig+0xbc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1130
+    {
+      FMC_Bank4->SR4 &= (uint32_t)~FMC_IT;    
+  a8:	4b0d      	ldr	r3, [pc, #52]	; (e0 <FMC_ITConfig+0xe0>)
+  aa:	4a0d      	ldr	r2, [pc, #52]	; (e0 <FMC_ITConfig+0xe0>)
+  ac:	6851      	ldr	r1, [r2, #4]
+  ae:	68ba      	ldr	r2, [r7, #8]
+  b0:	ea6f 0202 	mvn.w	r2, r2
+  b4:	ea01 0202 	and.w	r2, r1, r2
+  b8:	605a      	str	r2, [r3, #4]
+  ba:	e008      	b.n	ce <FMC_ITConfig+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1136
+    }
+    /* Disable the selected FMC_Bank5_6 interrupt */
+    else
+    {
+      /* Disables the interrupt if the refresh error flag is not set */
+      FMC_Bank5_6->SDRTR &= (uint32_t)~FMC_IT; 
+  bc:	4b09      	ldr	r3, [pc, #36]	; (e4 <FMC_ITConfig+0xe4>)
+  be:	4a09      	ldr	r2, [pc, #36]	; (e4 <FMC_ITConfig+0xe4>)
+  c0:	6951      	ldr	r1, [r2, #20]
+  c2:	68ba      	ldr	r2, [r7, #8]
+  c4:	ea6f 0202 	mvn.w	r2, r2
+  c8:	ea01 0202 	and.w	r2, r1, r2
+  cc:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1139
+    }
+  }
+}
+  ce:	f107 0714 	add.w	r7, r7, #20
+  d2:	46bd      	mov	sp, r7
+  d4:	bc80      	pop	{r7}
+  d6:	4770      	bx	lr
+  d8:	a0000060 	.word	0xa0000060
+  dc:	a0000080 	.word	0xa0000080
+  e0:	a00000a0 	.word	0xa00000a0
+  e4:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_GetFlagStatus:
+
+00000000 <FMC_GetFlagStatus>:
+FMC_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1162
+  *            @arg FMC_FLAG_Refresh: Refresh error Flag.
+  *            @arg FMC_FLAG_Busy: Busy status Flag.     
+  * @retval The new state of FMC_FLAG (SET or RESET).
+  */
+FlagStatus FMC_GetFlagStatus(uint32_t FMC_Bank, uint32_t FMC_FLAG)
+{
+   0:	b085b480 	.word	0xb085b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1163
+  FlagStatus bitstatus = RESET;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1164
+  uint32_t tmpsr = 0x00000000;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1170
+  
+  /* Check the parameters */
+  assert_param(IS_FMC_GETFLAG_BANK(FMC_Bank));
+  assert_param(IS_FMC_GET_FLAG(FMC_FLAG));
+  
+  if(FMC_Bank == FMC_Bank2_NAND)
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	2b10      	cmp	r3, #16
+  1a:	d103      	bne.n	24 <FMC_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1172
+  {
+    tmpsr = FMC_Bank2->SR2;
+  1c:	4b15      	ldr	r3, [pc, #84]	; (74 <FMC_GetFlagStatus+0x74>)
+  1e:	685b      	ldr	r3, [r3, #4]
+  20:	60bb      	str	r3, [r7, #8]
+  22:	e012      	b.n	4a <FMC_GetFlagStatus+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1174
+  }  
+  else if(FMC_Bank == FMC_Bank3_NAND)
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  2a:	d103      	bne.n	34 <FMC_GetFlagStatus+0x34>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1176
+  {
+    tmpsr = FMC_Bank3->SR3;
+  2c:	4b12      	ldr	r3, [pc, #72]	; (78 <FMC_GetFlagStatus+0x78>)
+  2e:	685b      	ldr	r3, [r3, #4]
+  30:	60bb      	str	r3, [r7, #8]
+  32:	e00a      	b.n	4a <FMC_GetFlagStatus+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1178
+  }
+  else if(FMC_Bank == FMC_Bank4_PCCARD)
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  3a:	d103      	bne.n	44 <FMC_GetFlagStatus+0x44>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1180
+  {
+    tmpsr = FMC_Bank4->SR4;
+  3c:	4b0f      	ldr	r3, [pc, #60]	; (7c <FMC_GetFlagStatus+0x7c>)
+  3e:	685b      	ldr	r3, [r3, #4]
+  40:	60bb      	str	r3, [r7, #8]
+  42:	e002      	b.n	4a <FMC_GetFlagStatus+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1184
+  }
+  else 
+  {
+    tmpsr = FMC_Bank5_6->SDSR;
+  44:	4b0e      	ldr	r3, [pc, #56]	; (80 <FMC_GetFlagStatus+0x80>)
+  46:	699b      	ldr	r3, [r3, #24]
+  48:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1188
+  }
+  
+  /* Get the flag status */
+  if ((tmpsr & FMC_FLAG) != FMC_FLAG )
+  4a:	68ba      	ldr	r2, [r7, #8]
+  4c:	683b      	ldr	r3, [r7, #0]
+  4e:	401a      	ands	r2, r3
+  50:	683b      	ldr	r3, [r7, #0]
+  52:	429a      	cmp	r2, r3
+  54:	d003      	beq.n	5e <FMC_GetFlagStatus+0x5e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1190
+  {
+    bitstatus = RESET;
+  56:	f04f 0300 	mov.w	r3, #0
+  5a:	73fb      	strb	r3, [r7, #15]
+  5c:	e002      	b.n	64 <FMC_GetFlagStatus+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1194
+  }
+  else
+  {
+    bitstatus = SET;
+  5e:	f04f 0301 	mov.w	r3, #1
+  62:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1197
+  }
+  /* Return the flag status */
+  return bitstatus;
+  64:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1198
+}
+  66:	4618      	mov	r0, r3
+  68:	f107 0714 	add.w	r7, r7, #20
+  6c:	46bd      	mov	sp, r7
+  6e:	bc80      	pop	{r7}
+  70:	4770      	bx	lr
+  72:	bf00      	nop
+  74:	a0000060 	.word	0xa0000060
+  78:	a0000080 	.word	0xa0000080
+  7c:	a00000a0 	.word	0xa00000a0
+  80:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_ClearFlag:
+
+00000000 <FMC_ClearFlag>:
+FMC_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1218
+  *            @arg FMC_FLAG_FallingEdge: Falling edge detection Flag.
+  *            @arg FMC_FLAG_Refresh: Refresh error Flag.  
+  * @retval None
+  */
+void FMC_ClearFlag(uint32_t FMC_Bank, uint32_t FMC_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1223
+ /* Check the parameters */
+  assert_param(IS_FMC_GETFLAG_BANK(FMC_Bank));
+  assert_param(IS_FMC_CLEAR_FLAG(FMC_FLAG)) ;
+    
+  if(FMC_Bank == FMC_Bank2_NAND)
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	2b10      	cmp	r3, #16
+   e:	d109      	bne.n	24 <FMC_ClearFlag+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1225
+  {
+    FMC_Bank2->SR2 &= (~FMC_FLAG); 
+  10:	4b19      	ldr	r3, [pc, #100]	; (78 <FMC_ClearFlag+0x78>)
+  12:	4a19      	ldr	r2, [pc, #100]	; (78 <FMC_ClearFlag+0x78>)
+  14:	6851      	ldr	r1, [r2, #4]
+  16:	683a      	ldr	r2, [r7, #0]
+  18:	ea6f 0202 	mvn.w	r2, r2
+  1c:	ea01 0202 	and.w	r2, r1, r2
+  20:	605a      	str	r2, [r3, #4]
+  22:	e024      	b.n	6e <FMC_ClearFlag+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1227
+  }  
+  else if(FMC_Bank == FMC_Bank3_NAND)
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  2a:	d109      	bne.n	40 <FMC_ClearFlag+0x40>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1229
+  {
+    FMC_Bank3->SR3 &= (~FMC_FLAG);
+  2c:	4b13      	ldr	r3, [pc, #76]	; (7c <FMC_ClearFlag+0x7c>)
+  2e:	4a13      	ldr	r2, [pc, #76]	; (7c <FMC_ClearFlag+0x7c>)
+  30:	6851      	ldr	r1, [r2, #4]
+  32:	683a      	ldr	r2, [r7, #0]
+  34:	ea6f 0202 	mvn.w	r2, r2
+  38:	ea01 0202 	and.w	r2, r1, r2
+  3c:	605a      	str	r2, [r3, #4]
+  3e:	e016      	b.n	6e <FMC_ClearFlag+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1231
+  }
+  else if(FMC_Bank == FMC_Bank4_PCCARD)
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  46:	d109      	bne.n	5c <FMC_ClearFlag+0x5c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1233
+  {
+    FMC_Bank4->SR4 &= (~FMC_FLAG);
+  48:	4b0d      	ldr	r3, [pc, #52]	; (80 <FMC_ClearFlag+0x80>)
+  4a:	4a0d      	ldr	r2, [pc, #52]	; (80 <FMC_ClearFlag+0x80>)
+  4c:	6851      	ldr	r1, [r2, #4]
+  4e:	683a      	ldr	r2, [r7, #0]
+  50:	ea6f 0202 	mvn.w	r2, r2
+  54:	ea01 0202 	and.w	r2, r1, r2
+  58:	605a      	str	r2, [r3, #4]
+  5a:	e008      	b.n	6e <FMC_ClearFlag+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1238
+  }
+  /* FMC_Bank5_6 SDRAM*/
+  else
+  {
+    FMC_Bank5_6->SDRTR &= (~FMC_FLAG);
+  5c:	4b09      	ldr	r3, [pc, #36]	; (84 <FMC_ClearFlag+0x84>)
+  5e:	4a09      	ldr	r2, [pc, #36]	; (84 <FMC_ClearFlag+0x84>)
+  60:	6951      	ldr	r1, [r2, #20]
+  62:	683a      	ldr	r2, [r7, #0]
+  64:	ea6f 0202 	mvn.w	r2, r2
+  68:	ea01 0202 	and.w	r2, r1, r2
+  6c:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1241
+  }
+  
+}
+  6e:	f107 070c 	add.w	r7, r7, #12
+  72:	46bd      	mov	sp, r7
+  74:	bc80      	pop	{r7}
+  76:	4770      	bx	lr
+  78:	a0000060 	.word	0xa0000060
+  7c:	a0000080 	.word	0xa0000080
+  80:	a00000a0 	.word	0xa00000a0
+  84:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_GetITStatus:
+
+00000000 <FMC_GetITStatus>:
+FMC_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1261
+  *            @arg FMC_IT_FallingEdge: Falling edge detection interrupt.
+  *            @arg FMC_IT_Refresh: Refresh error detection interrupt.    
+  * @retval The new state of FMC_IT (SET or RESET).
+  */
+ITStatus FMC_GetITStatus(uint32_t FMC_Bank, uint32_t FMC_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b089      	sub	sp, #36	; 0x24
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1262
+  ITStatus bitstatus = RESET;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	77fb      	strb	r3, [r7, #31]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1263
+  uint32_t tmpsr = 0x0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1264
+  uint32_t tmpsr2 = 0x0;
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1265
+  uint32_t itstatus = 0x0;
+  1c:	f04f 0300 	mov.w	r3, #0
+  20:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1266
+  uint32_t itenable = 0x0; 
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1272
+  
+  /* Check the parameters */
+  assert_param(IS_FMC_IT_BANK(FMC_Bank));
+  assert_param(IS_FMC_GET_IT(FMC_IT));
+  
+  if(FMC_Bank == FMC_Bank2_NAND)
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	2b10      	cmp	r3, #16
+  2c:	d103      	bne.n	36 <FMC_GetITStatus+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1274
+  {
+    tmpsr = FMC_Bank2->SR2;
+  2e:	4b22      	ldr	r3, [pc, #136]	; (b8 <FMC_GetITStatus+0xb8>)
+  30:	685b      	ldr	r3, [r3, #4]
+  32:	61bb      	str	r3, [r7, #24]
+  34:	e015      	b.n	62 <FMC_GetITStatus+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1276
+  }  
+  else if(FMC_Bank == FMC_Bank3_NAND)
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  3c:	d103      	bne.n	46 <FMC_GetITStatus+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1278
+  {
+    tmpsr = FMC_Bank3->SR3;
+  3e:	4b1f      	ldr	r3, [pc, #124]	; (bc <FMC_GetITStatus+0xbc>)
+  40:	685b      	ldr	r3, [r3, #4]
+  42:	61bb      	str	r3, [r7, #24]
+  44:	e00d      	b.n	62 <FMC_GetITStatus+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1280
+  }
+  else if(FMC_Bank == FMC_Bank4_PCCARD)
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  4c:	d103      	bne.n	56 <FMC_GetITStatus+0x56>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1282
+  {
+    tmpsr = FMC_Bank4->SR4;
+  4e:	4b1c      	ldr	r3, [pc, #112]	; (c0 <FMC_GetITStatus+0xc0>)
+  50:	685b      	ldr	r3, [r3, #4]
+  52:	61bb      	str	r3, [r7, #24]
+  54:	e005      	b.n	62 <FMC_GetITStatus+0x62>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1287
+  }
+  /* FMC_Bank5_6 SDRAM*/
+  else
+  {
+    tmpsr = FMC_Bank5_6->SDRTR;
+  56:	4b1b      	ldr	r3, [pc, #108]	; (c4 <FMC_GetITStatus+0xc4>)
+  58:	695b      	ldr	r3, [r3, #20]
+  5a:	61bb      	str	r3, [r7, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1288
+    tmpsr2 = FMC_Bank5_6->SDSR;
+  5c:	4b19      	ldr	r3, [pc, #100]	; (c4 <FMC_GetITStatus+0xc4>)
+  5e:	699b      	ldr	r3, [r3, #24]
+  60:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1292
+  } 
+  
+  /* get the IT enable bit status*/
+  itenable = tmpsr & FMC_IT;
+  62:	69ba      	ldr	r2, [r7, #24]
+  64:	683b      	ldr	r3, [r7, #0]
+  66:	ea02 0303 	and.w	r3, r2, r3
+  6a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1295
+  
+  /* get the corresponding IT Flag status*/
+  if((FMC_Bank == FMC_Bank1_SDRAM) || (FMC_Bank == FMC_Bank2_SDRAM))
+  6c:	687b      	ldr	r3, [r7, #4]
+  6e:	2b00      	cmp	r3, #0
+  70:	d002      	beq.n	78 <FMC_GetITStatus+0x78>
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	2b01      	cmp	r3, #1
+  76:	d104      	bne.n	82 <FMC_GetITStatus+0x82>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1297
+  {
+    itstatus = tmpsr2 & FMC_SDSR_RE;  
+  78:	697b      	ldr	r3, [r7, #20]
+  7a:	f003 0301 	and.w	r3, r3, #1
+  7e:	613b      	str	r3, [r7, #16]
+  80:	e006      	b.n	90 <FMC_GetITStatus+0x90>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1301
+  }           
+  else
+  {
+    itstatus = tmpsr & (FMC_IT >> 3);  
+  82:	683b      	ldr	r3, [r7, #0]
+  84:	ea4f 02d3 	mov.w	r2, r3, lsr #3
+  88:	69bb      	ldr	r3, [r7, #24]
+  8a:	ea02 0303 	and.w	r3, r2, r3
+  8e:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1304
+  }  
+  
+  if ((itstatus != (uint32_t)RESET)  && (itenable != (uint32_t)RESET))
+  90:	693b      	ldr	r3, [r7, #16]
+  92:	2b00      	cmp	r3, #0
+  94:	d006      	beq.n	a4 <FMC_GetITStatus+0xa4>
+  96:	68fb      	ldr	r3, [r7, #12]
+  98:	2b00      	cmp	r3, #0
+  9a:	d003      	beq.n	a4 <FMC_GetITStatus+0xa4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1306
+  {
+    bitstatus = SET;
+  9c:	f04f 0301 	mov.w	r3, #1
+  a0:	77fb      	strb	r3, [r7, #31]
+  a2:	e002      	b.n	aa <FMC_GetITStatus+0xaa>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1310
+  }
+  else
+  {
+    bitstatus = RESET;
+  a4:	f04f 0300 	mov.w	r3, #0
+  a8:	77fb      	strb	r3, [r7, #31]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1312
+  }
+  return bitstatus; 
+  aa:	7ffb      	ldrb	r3, [r7, #31]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1313
+}
+  ac:	4618      	mov	r0, r3
+  ae:	f107 0724 	add.w	r7, r7, #36	; 0x24
+  b2:	46bd      	mov	sp, r7
+  b4:	bc80      	pop	{r7}
+  b6:	4770      	bx	lr
+  b8:	a0000060 	.word	0xa0000060
+  bc:	a0000080 	.word	0xa0000080
+  c0:	a00000a0 	.word	0xa00000a0
+  c4:	a0000140 	.word	0xa0000140
+
+Disassembly of section .text.FMC_ClearITPendingBit:
+
+00000000 <FMC_ClearITPendingBit>:
+FMC_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1333
+  *            @arg FMC_IT_FallingEdge: Falling edge detection interrupt.
+  *            @arg FMC_IT_Refresh: Refresh error detection interrupt.  
+  * @retval None
+  */
+void FMC_ClearITPendingBit(uint32_t FMC_Bank, uint32_t FMC_IT)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1338
+  /* Check the parameters */
+  assert_param(IS_FMC_IT_BANK(FMC_Bank));
+  assert_param(IS_FMC_IT(FMC_IT));
+    
+  if(FMC_Bank == FMC_Bank2_NAND)
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	2b10      	cmp	r3, #16
+   e:	d10b      	bne.n	28 <FMC_ClearITPendingBit+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1340
+  {
+    FMC_Bank2->SR2 &= ~(FMC_IT >> 3); 
+  10:	4b1b      	ldr	r3, [pc, #108]	; (80 <FMC_ClearITPendingBit+0x80>)
+  12:	4a1b      	ldr	r2, [pc, #108]	; (80 <FMC_ClearITPendingBit+0x80>)
+  14:	6851      	ldr	r1, [r2, #4]
+  16:	683a      	ldr	r2, [r7, #0]
+  18:	ea4f 02d2 	mov.w	r2, r2, lsr #3
+  1c:	ea6f 0202 	mvn.w	r2, r2
+  20:	ea01 0202 	and.w	r2, r1, r2
+  24:	605a      	str	r2, [r3, #4]
+  26:	e025      	b.n	74 <FMC_ClearITPendingBit+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1342
+  }  
+  else if(FMC_Bank == FMC_Bank3_NAND)
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f5b3 7f80 	cmp.w	r3, #256	; 0x100
+  2e:	d10b      	bne.n	48 <FMC_ClearITPendingBit+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1344
+  {
+    FMC_Bank3->SR3 &= ~(FMC_IT >> 3);
+  30:	4b14      	ldr	r3, [pc, #80]	; (84 <FMC_ClearITPendingBit+0x84>)
+  32:	4a14      	ldr	r2, [pc, #80]	; (84 <FMC_ClearITPendingBit+0x84>)
+  34:	6851      	ldr	r1, [r2, #4]
+  36:	683a      	ldr	r2, [r7, #0]
+  38:	ea4f 02d2 	mov.w	r2, r2, lsr #3
+  3c:	ea6f 0202 	mvn.w	r2, r2
+  40:	ea01 0202 	and.w	r2, r1, r2
+  44:	605a      	str	r2, [r3, #4]
+  46:	e015      	b.n	74 <FMC_ClearITPendingBit+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1346
+  }
+  else if(FMC_Bank == FMC_Bank4_PCCARD)
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	f5b3 5f80 	cmp.w	r3, #4096	; 0x1000
+  4e:	d10b      	bne.n	68 <FMC_ClearITPendingBit+0x68>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1348
+  {
+    FMC_Bank4->SR4 &= ~(FMC_IT >> 3);
+  50:	4b0d      	ldr	r3, [pc, #52]	; (88 <FMC_ClearITPendingBit+0x88>)
+  52:	4a0d      	ldr	r2, [pc, #52]	; (88 <FMC_ClearITPendingBit+0x88>)
+  54:	6851      	ldr	r1, [r2, #4]
+  56:	683a      	ldr	r2, [r7, #0]
+  58:	ea4f 02d2 	mov.w	r2, r2, lsr #3
+  5c:	ea6f 0202 	mvn.w	r2, r2
+  60:	ea01 0202 	and.w	r2, r1, r2
+  64:	605a      	str	r2, [r3, #4]
+  66:	e005      	b.n	74 <FMC_ClearITPendingBit+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1353
+  }
+  /* FMC_Bank5_6 SDRAM*/
+  else
+  {
+    FMC_Bank5_6->SDRTR |= FMC_SDRTR_CRE;
+  68:	4b08      	ldr	r3, [pc, #32]	; (8c <FMC_ClearITPendingBit+0x8c>)
+  6a:	4a08      	ldr	r2, [pc, #32]	; (8c <FMC_ClearITPendingBit+0x8c>)
+  6c:	6952      	ldr	r2, [r2, #20]
+  6e:	f042 0201 	orr.w	r2, r2, #1
+  72:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_fmc.c:1355
+  }
+}
+  74:	f107 070c 	add.w	r7, r7, #12
+  78:	46bd      	mov	sp, r7
+  7a:	bc80      	pop	{r7}
+  7c:	4770      	bx	lr
+  7e:	bf00      	nop
+  80:	a0000060 	.word	0xa0000060
+  84:	a0000080 	.word	0xa0000080
+  88:	a00000a0 	.word	0xa00000a0
+  8c:	a0000140 	.word	0xa0000140

@@ -1,0 +1,440 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_cdc_vcp.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_cdc_vcp.o
+
+
+Disassembly of section .text.VCP_Init:
+
+00000000 <VCP_Init>:
+VCP_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:92
+  *         Initializes the Media on the STM32
+  * @param  None
+  * @retval Result of the opeartion (USBD_OK in all cases)
+  */
+static uint16_t VCP_Init(void)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:93
+    UartInit( );
+   4:	f7ff fffe 	bl	0 <UartInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:94
+  return USBD_OK;
+   8:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:95
+}
+   c:	4618      	mov	r0, r3
+   e:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.VCP_DeInit:
+
+00000000 <VCP_DeInit>:
+VCP_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:104
+  *         DeInitializes the Media on the STM32
+  * @param  None
+  * @retval Result of the opeartion (USBD_OK in all cases)
+  */
+static uint16_t VCP_DeInit(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:106
+
+  return USBD_OK;
+   4:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:107
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+
+Disassembly of section .text.VCP_Ctrl:
+
+00000000 <VCP_Ctrl>:
+VCP_Ctrl():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:119
+  * @param  Buf: Buffer containing command data (request parameters)
+  * @param  Len: Number of data to be sent (in bytes)
+  * @retval Result of the opeartion (USBD_OK in all cases)
+  */
+static uint16_t VCP_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
+{ 
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	607a      	str	r2, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:120
+  switch (Cmd)
+   c:	68fb      	ldr	r3, [r7, #12]
+   e:	2b23      	cmp	r3, #35	; 0x23
+  10:	f200 80b2 	bhi.w	178 <VCP_Ctrl+0x178>
+  14:	a201      	add	r2, pc, #4	; (adr r2, 1c <VCP_Ctrl+0x1c>)
+  16:	f852 f023 	ldr.w	pc, [r2, r3, lsl #2]
+  1a:	bf00      	nop
+  1c:	00000179 	.word	0x00000179
+  20:	00000179 	.word	0x00000179
+  24:	00000179 	.word	0x00000179
+  28:	00000179 	.word	0x00000179
+  2c:	00000179 	.word	0x00000179
+  30:	00000179 	.word	0x00000179
+  34:	00000179 	.word	0x00000179
+  38:	00000179 	.word	0x00000179
+  3c:	00000179 	.word	0x00000179
+  40:	00000179 	.word	0x00000179
+  44:	00000179 	.word	0x00000179
+  48:	00000179 	.word	0x00000179
+  4c:	00000179 	.word	0x00000179
+  50:	00000179 	.word	0x00000179
+  54:	00000179 	.word	0x00000179
+  58:	00000179 	.word	0x00000179
+  5c:	00000179 	.word	0x00000179
+  60:	00000179 	.word	0x00000179
+  64:	00000179 	.word	0x00000179
+  68:	00000179 	.word	0x00000179
+  6c:	00000179 	.word	0x00000179
+  70:	00000179 	.word	0x00000179
+  74:	00000179 	.word	0x00000179
+  78:	00000179 	.word	0x00000179
+  7c:	00000179 	.word	0x00000179
+  80:	00000179 	.word	0x00000179
+  84:	00000179 	.word	0x00000179
+  88:	00000179 	.word	0x00000179
+  8c:	00000179 	.word	0x00000179
+  90:	00000179 	.word	0x00000179
+  94:	00000179 	.word	0x00000179
+  98:	00000179 	.word	0x00000179
+  9c:	000000ad 	.word	0x000000ad
+  a0:	00000113 	.word	0x00000113
+  a4:	00000179 	.word	0x00000179
+  a8:	00000179 	.word	0x00000179
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:143
+  case CLEAR_COMM_FEATURE:
+    /* Not  needed for this driver */
+    break;
+
+  case SET_LINE_CODING:
+    linecoding.bitrate = (uint32_t)(Buf[0] | (Buf[1] << 8) | (Buf[2] << 16) | (Buf[3] << 24));
+  ac:	68bb      	ldr	r3, [r7, #8]
+  ae:	781b      	ldrb	r3, [r3, #0]
+  b0:	461a      	mov	r2, r3
+  b2:	68bb      	ldr	r3, [r7, #8]
+  b4:	f103 0301 	add.w	r3, r3, #1
+  b8:	781b      	ldrb	r3, [r3, #0]
+  ba:	ea4f 2303 	mov.w	r3, r3, lsl #8
+  be:	431a      	orrs	r2, r3
+  c0:	68bb      	ldr	r3, [r7, #8]
+  c2:	f103 0302 	add.w	r3, r3, #2
+  c6:	781b      	ldrb	r3, [r3, #0]
+  c8:	ea4f 4303 	mov.w	r3, r3, lsl #16
+  cc:	431a      	orrs	r2, r3
+  ce:	68bb      	ldr	r3, [r7, #8]
+  d0:	f103 0303 	add.w	r3, r3, #3
+  d4:	781b      	ldrb	r3, [r3, #0]
+  d6:	ea4f 6303 	mov.w	r3, r3, lsl #24
+  da:	ea42 0303 	orr.w	r3, r2, r3
+  de:	461a      	mov	r2, r3
+  e0:	4b29      	ldr	r3, [pc, #164]	; (188 <VCP_Ctrl+0x188>)
+  e2:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:144
+    linecoding.format = Buf[4];
+  e4:	68bb      	ldr	r3, [r7, #8]
+  e6:	f103 0304 	add.w	r3, r3, #4
+  ea:	781a      	ldrb	r2, [r3, #0]
+  ec:	4b26      	ldr	r3, [pc, #152]	; (188 <VCP_Ctrl+0x188>)
+  ee:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:145
+    linecoding.paritytype = Buf[5];
+  f0:	68bb      	ldr	r3, [r7, #8]
+  f2:	f103 0305 	add.w	r3, r3, #5
+  f6:	781a      	ldrb	r2, [r3, #0]
+  f8:	4b23      	ldr	r3, [pc, #140]	; (188 <VCP_Ctrl+0x188>)
+  fa:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:146
+    linecoding.datatype = Buf[6];
+  fc:	68bb      	ldr	r3, [r7, #8]
+  fe:	f103 0306 	add.w	r3, r3, #6
+ 102:	781a      	ldrb	r2, [r3, #0]
+ 104:	4b20      	ldr	r3, [pc, #128]	; (188 <VCP_Ctrl+0x188>)
+ 106:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:148
+    /* Set the new configuration */
+    VCP_COMConfig(0);
+ 108:	f04f 0000 	mov.w	r0, #0
+ 10c:	f7ff fffe 	bl	0 <VCP_Ctrl>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:149
+    break;
+ 110:	e033      	b.n	17a <VCP_Ctrl+0x17a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:152
+
+  case GET_LINE_CODING:
+    Buf[0] = (uint8_t)(linecoding.bitrate);
+ 112:	4b1d      	ldr	r3, [pc, #116]	; (188 <VCP_Ctrl+0x188>)
+ 114:	681b      	ldr	r3, [r3, #0]
+ 116:	b2da      	uxtb	r2, r3
+ 118:	68bb      	ldr	r3, [r7, #8]
+ 11a:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:153
+    Buf[1] = (uint8_t)(linecoding.bitrate >> 8);
+ 11c:	68bb      	ldr	r3, [r7, #8]
+ 11e:	f103 0301 	add.w	r3, r3, #1
+ 122:	4a19      	ldr	r2, [pc, #100]	; (188 <VCP_Ctrl+0x188>)
+ 124:	6812      	ldr	r2, [r2, #0]
+ 126:	ea4f 2212 	mov.w	r2, r2, lsr #8
+ 12a:	b2d2      	uxtb	r2, r2
+ 12c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:154
+    Buf[2] = (uint8_t)(linecoding.bitrate >> 16);
+ 12e:	68bb      	ldr	r3, [r7, #8]
+ 130:	f103 0302 	add.w	r3, r3, #2
+ 134:	4a14      	ldr	r2, [pc, #80]	; (188 <VCP_Ctrl+0x188>)
+ 136:	6812      	ldr	r2, [r2, #0]
+ 138:	ea4f 4212 	mov.w	r2, r2, lsr #16
+ 13c:	b2d2      	uxtb	r2, r2
+ 13e:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:155
+    Buf[3] = (uint8_t)(linecoding.bitrate >> 24);
+ 140:	68bb      	ldr	r3, [r7, #8]
+ 142:	f103 0303 	add.w	r3, r3, #3
+ 146:	4a10      	ldr	r2, [pc, #64]	; (188 <VCP_Ctrl+0x188>)
+ 148:	6812      	ldr	r2, [r2, #0]
+ 14a:	ea4f 6212 	mov.w	r2, r2, lsr #24
+ 14e:	b2d2      	uxtb	r2, r2
+ 150:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:156
+    Buf[4] = linecoding.format;
+ 152:	68bb      	ldr	r3, [r7, #8]
+ 154:	f103 0304 	add.w	r3, r3, #4
+ 158:	4a0b      	ldr	r2, [pc, #44]	; (188 <VCP_Ctrl+0x188>)
+ 15a:	7912      	ldrb	r2, [r2, #4]
+ 15c:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:157
+    Buf[5] = linecoding.paritytype;
+ 15e:	68bb      	ldr	r3, [r7, #8]
+ 160:	f103 0305 	add.w	r3, r3, #5
+ 164:	4a08      	ldr	r2, [pc, #32]	; (188 <VCP_Ctrl+0x188>)
+ 166:	7952      	ldrb	r2, [r2, #5]
+ 168:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:158
+    Buf[6] = linecoding.datatype; 
+ 16a:	68bb      	ldr	r3, [r7, #8]
+ 16c:	f103 0306 	add.w	r3, r3, #6
+ 170:	4a05      	ldr	r2, [pc, #20]	; (188 <VCP_Ctrl+0x188>)
+ 172:	7992      	ldrb	r2, [r2, #6]
+ 174:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:159
+    break;
+ 176:	e000      	b.n	17a <VCP_Ctrl+0x17a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:170
+  case SEND_BREAK:
+    /* Not  needed for this driver */
+    break;    
+    
+  default:
+    break;
+ 178:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:173
+  }
+
+  return USBD_OK;
+ 17a:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:174
+}
+ 17e:	4618      	mov	r0, r3
+ 180:	f107 0710 	add.w	r7, r7, #16
+ 184:	46bd      	mov	sp, r7
+ 186:	bd80      	pop	{r7, pc}
+ 188:	00000000 	.word	0x00000000
+
+Disassembly of section .text.VCP_DataTx:
+
+00000000 <VCP_DataTx>:
+VCP_DataTx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:185
+  * @param  Buf: Buffer of data to be sent
+  * @param  Len: Number of data to be sent (in bytes)
+  * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
+  */
+static uint16_t VCP_DataTx (uint8_t* Buf, uint32_t Len)
+{
+   0:	b083b590 	.word	0xb083b590
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:186
+  if (linecoding.datatype == 7)
+   a:	4b1a      	ldr	r3, [pc, #104]	; (74 <VCP_DataTx+0x74>)
+   c:	799b      	ldrb	r3, [r3, #6]
+   e:	2b07      	cmp	r3, #7
+  10:	d10c      	bne.n	2c <VCP_DataTx+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:188
+  {
+    APP_Rx_Buffer[APP_Rx_ptr_in] = FifoPop( &FifoTx ) & 0x7F;
+  12:	4b19      	ldr	r3, [pc, #100]	; (78 <VCP_DataTx+0x78>)
+  14:	681c      	ldr	r4, [r3, #0]
+  16:	4819      	ldr	r0, [pc, #100]	; (7c <VCP_DataTx+0x7c>)
+  18:	f7ff fffe 	bl	0 <FifoPop>
+  1c:	4603      	mov	r3, r0
+  1e:	b2db      	uxtb	r3, r3
+  20:	f003 037f 	and.w	r3, r3, #127	; 0x7f
+  24:	b2da      	uxtb	r2, r3
+  26:	4b16      	ldr	r3, [pc, #88]	; (80 <VCP_DataTx+0x80>)
+  28:	551a      	strb	r2, [r3, r4]
+  2a:	e00c      	b.n	46 <VCP_DataTx+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:190
+  }
+  else if (linecoding.datatype == 8)
+  2c:	4b11      	ldr	r3, [pc, #68]	; (74 <VCP_DataTx+0x74>)
+  2e:	799b      	ldrb	r3, [r3, #6]
+  30:	2b08      	cmp	r3, #8
+  32:	d108      	bne.n	46 <VCP_DataTx+0x46>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:192
+  {
+    APP_Rx_Buffer[APP_Rx_ptr_in] = FifoPop( &FifoTx );
+  34:	4b10      	ldr	r3, [pc, #64]	; (78 <VCP_DataTx+0x78>)
+  36:	681c      	ldr	r4, [r3, #0]
+  38:	4810      	ldr	r0, [pc, #64]	; (7c <VCP_DataTx+0x7c>)
+  3a:	f7ff fffe 	bl	0 <FifoPop>
+  3e:	4603      	mov	r3, r0
+  40:	b2da      	uxtb	r2, r3
+  42:	4b0f      	ldr	r3, [pc, #60]	; (80 <VCP_DataTx+0x80>)
+  44:	551a      	strb	r2, [r3, r4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:195
+  }
+  
+  APP_Rx_ptr_in++;
+  46:	4b0c      	ldr	r3, [pc, #48]	; (78 <VCP_DataTx+0x78>)
+  48:	681b      	ldr	r3, [r3, #0]
+  4a:	f103 0201 	add.w	r2, r3, #1
+  4e:	4b0a      	ldr	r3, [pc, #40]	; (78 <VCP_DataTx+0x78>)
+  50:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:198
+  
+  /* To avoid buffer overflow */
+  if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
+  52:	4b09      	ldr	r3, [pc, #36]	; (78 <VCP_DataTx+0x78>)
+  54:	681b      	ldr	r3, [r3, #0]
+  56:	f5b3 6f00 	cmp.w	r3, #2048	; 0x800
+  5a:	d103      	bne.n	64 <VCP_DataTx+0x64>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:200
+  {
+    APP_Rx_ptr_in = 0;
+  5c:	4b06      	ldr	r3, [pc, #24]	; (78 <VCP_DataTx+0x78>)
+  5e:	f04f 0200 	mov.w	r2, #0
+  62:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:203
+  }  
+  
+  return USBD_OK;
+  64:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:204
+}
+  68:	4618      	mov	r0, r3
+  6a:	f107 070c 	add.w	r7, r7, #12
+  6e:	46bd      	mov	sp, r7
+  70:	bd90      	pop	{r4, r7, pc}
+  72:	bf00      	nop
+	...
+
+Disassembly of section .text.VCP_DataRx:
+
+00000000 <VCP_DataRx>:
+VCP_DataRx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:222
+  * @param  Buf: Buffer of data to be received
+  * @param  Len: Number of data received (in bytes)
+  * @retval Result of the opeartion: USBD_OK if all operations are OK else VCP_FAIL
+  */
+static uint16_t VCP_DataRx (uint8_t* Buf, uint32_t Len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:225
+    uint32_t i;
+  
+	if( IsFifoEmpty( &FifoRx ) == true )
+   a:	4810      	ldr	r0, [pc, #64]	; (4c <VCP_DataRx+0x4c>)
+   c:	f7ff fffe 	bl	0 <IsFifoEmpty>
+  10:	4603      	mov	r3, r0
+  12:	2b00      	cmp	r3, #0
+  14:	d013      	beq.n	3e <VCP_DataRx+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:227
+	{
+		for( i = 0; i < Len; i++ )
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	60fb      	str	r3, [r7, #12]
+  1c:	e00b      	b.n	36 <VCP_DataRx+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:229
+		{
+			FifoPush( &FifoRx, Buf[i] );
+  1e:	687a      	ldr	r2, [r7, #4]
+  20:	68fb      	ldr	r3, [r7, #12]
+  22:	18d3      	adds	r3, r2, r3
+  24:	781b      	ldrb	r3, [r3, #0]
+  26:	4809      	ldr	r0, [pc, #36]	; (4c <VCP_DataRx+0x4c>)
+  28:	4619      	mov	r1, r3
+  2a:	f7ff fffe 	bl	0 <FifoPush>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:227
+{
+    uint32_t i;
+  
+	if( IsFifoEmpty( &FifoRx ) == true )
+	{
+		for( i = 0; i < Len; i++ )
+  2e:	68fb      	ldr	r3, [r7, #12]
+  30:	f103 0301 	add.w	r3, r3, #1
+  34:	60fb      	str	r3, [r7, #12]
+  36:	68fa      	ldr	r2, [r7, #12]
+  38:	683b      	ldr	r3, [r7, #0]
+  3a:	429a      	cmp	r2, r3
+  3c:	d3ef      	bcc.n	1e <VCP_DataRx+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:233
+		{
+			FifoPush( &FifoRx, Buf[i] );
+		}
+	}
+ 
+  return USBD_OK;
+  3e:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:234
+}
+  42:	4618      	mov	r0, r3
+  44:	f107 0710 	add.w	r7, r7, #16
+  48:	46bd      	mov	sp, r7
+  4a:	bd80      	pop	{r7, pc}
+  4c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.VCP_COMConfig:
+
+00000000 <VCP_COMConfig>:
+VCP_COMConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:244
+  * @param  Conf: can be DEFAULT_CONFIG to set the default configuration or OTHER_CONFIG
+  *         to set a configuration received from the host.
+  * @retval None.
+  */
+static uint16_t VCP_COMConfig(uint8_t Conf)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:245
+  return USBD_OK;
+   a:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_cdc_vcp.c:246
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop

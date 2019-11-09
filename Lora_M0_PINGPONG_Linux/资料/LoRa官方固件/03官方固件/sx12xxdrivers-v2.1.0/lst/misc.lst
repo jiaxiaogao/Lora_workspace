@@ -1,0 +1,337 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\misc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\misc.o
+
+
+Disassembly of section .text.NVIC_PriorityGroupConfig:
+
+00000000 <NVIC_PriorityGroupConfig>:
+NVIC_PriorityGroupConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:119
+  * @note   When the NVIC_PriorityGroup_0 is selected, IRQ pre-emption is no more possible. 
+  *         The pending IRQ priority will be managed only by the subpriority. 
+  * @retval None
+  */
+void NVIC_PriorityGroupConfig(uint32_t NVIC_PriorityGroup)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:124
+  /* Check the parameters */
+  assert_param(IS_NVIC_PRIORITY_GROUP(NVIC_PriorityGroup));
+  
+  /* Set the PRIGROUP[10:8] bits according to NVIC_PriorityGroup value */
+  SCB->AIRCR = AIRCR_VECTKEY_MASK | NVIC_PriorityGroup;
+   8:	4a05      	ldr	r2, [pc, #20]	; (20 <NVIC_PriorityGroupConfig+0x20>)
+   a:	687b      	ldr	r3, [r7, #4]
+   c:	f043 63be 	orr.w	r3, r3, #99614720	; 0x5f00000
+  10:	f443 2320 	orr.w	r3, r3, #655360	; 0xa0000
+  14:	60d3      	str	r3, [r2, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:125
+}
+  16:	f107 070c 	add.w	r7, r7, #12
+  1a:	46bd      	mov	sp, r7
+  1c:	bc80      	pop	{r7}
+  1e:	4770      	bx	lr
+  20:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.NVIC_Init:
+
+00000000 <NVIC_Init>:
+NVIC_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:137
+  * @param  NVIC_InitStruct: pointer to a NVIC_InitTypeDef structure that contains
+  *         the configuration information for the specified NVIC peripheral.
+  * @retval None
+  */
+void NVIC_Init(NVIC_InitTypeDef* NVIC_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:138
+  uint8_t tmppriority = 0x00, tmppre = 0x00, tmpsub = 0x0F;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	73bb      	strb	r3, [r7, #14]
+  14:	f04f 030f 	mov.w	r3, #15
+  18:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:145
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NVIC_InitStruct->NVIC_IRQChannelCmd));
+  assert_param(IS_NVIC_PREEMPTION_PRIORITY(NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority));  
+  assert_param(IS_NVIC_SUB_PRIORITY(NVIC_InitStruct->NVIC_IRQChannelSubPriority));
+    
+  if (NVIC_InitStruct->NVIC_IRQChannelCmd != DISABLE)
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	78db      	ldrb	r3, [r3, #3]
+  1e:	2b00      	cmp	r3, #0
+  20:	d03e      	beq.n	a0 <NVIC_Init+0xa0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:148
+  {
+    /* Compute the Corresponding IRQ Priority --------------------------------*/    
+    tmppriority = (0x700 - ((SCB->AIRCR) & (uint32_t)0x700))>> 0x08;
+  22:	4b2b      	ldr	r3, [pc, #172]	; (d0 <NVIC_Init+0xd0>)
+  24:	68db      	ldr	r3, [r3, #12]
+  26:	ea6f 0303 	mvn.w	r3, r3
+  2a:	f403 63e0 	and.w	r3, r3, #1792	; 0x700
+  2e:	ea4f 2313 	mov.w	r3, r3, lsr #8
+  32:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:149
+    tmppre = (0x4 - tmppriority);
+  34:	7bfb      	ldrb	r3, [r7, #15]
+  36:	f1c3 0304 	rsb	r3, r3, #4
+  3a:	73bb      	strb	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:150
+    tmpsub = tmpsub >> tmppriority;
+  3c:	7b7a      	ldrb	r2, [r7, #13]
+  3e:	7bfb      	ldrb	r3, [r7, #15]
+  40:	fa42 f303 	asr.w	r3, r2, r3
+  44:	737b      	strb	r3, [r7, #13]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:152
+
+    tmppriority = NVIC_InitStruct->NVIC_IRQChannelPreemptionPriority << tmppre;
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	785b      	ldrb	r3, [r3, #1]
+  4a:	461a      	mov	r2, r3
+  4c:	7bbb      	ldrb	r3, [r7, #14]
+  4e:	fa02 f303 	lsl.w	r3, r2, r3
+  52:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:153
+    tmppriority |=  (uint8_t)(NVIC_InitStruct->NVIC_IRQChannelSubPriority & tmpsub);
+  54:	687b      	ldr	r3, [r7, #4]
+  56:	789a      	ldrb	r2, [r3, #2]
+  58:	7b7b      	ldrb	r3, [r7, #13]
+  5a:	ea02 0303 	and.w	r3, r2, r3
+  5e:	b2da      	uxtb	r2, r3
+  60:	7bfb      	ldrb	r3, [r7, #15]
+  62:	ea42 0303 	orr.w	r3, r2, r3
+  66:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:155
+        
+    tmppriority = tmppriority << 0x04;
+  68:	7bfb      	ldrb	r3, [r7, #15]
+  6a:	ea4f 1303 	mov.w	r3, r3, lsl #4
+  6e:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:157
+        
+    NVIC->IP[NVIC_InitStruct->NVIC_IRQChannel] = tmppriority;
+  70:	4a18      	ldr	r2, [pc, #96]	; (d4 <NVIC_Init+0xd4>)
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	781b      	ldrb	r3, [r3, #0]
+  76:	18d3      	adds	r3, r2, r3
+  78:	7bfa      	ldrb	r2, [r7, #15]
+  7a:	f883 2300 	strb.w	r2, [r3, #768]	; 0x300
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:160
+    
+    /* Enable the Selected IRQ Channels --------------------------------------*/
+    NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+  7e:	4b15      	ldr	r3, [pc, #84]	; (d4 <NVIC_Init+0xd4>)
+  80:	687a      	ldr	r2, [r7, #4]
+  82:	7812      	ldrb	r2, [r2, #0]
+  84:	ea4f 1252 	mov.w	r2, r2, lsr #5
+  88:	b2d2      	uxtb	r2, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:161
+      (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+  8a:	6879      	ldr	r1, [r7, #4]
+  8c:	7809      	ldrb	r1, [r1, #0]
+  8e:	f001 011f 	and.w	r1, r1, #31
+  92:	f04f 0001 	mov.w	r0, #1
+  96:	fa00 f101 	lsl.w	r1, r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:160
+    tmppriority = tmppriority << 0x04;
+        
+    NVIC->IP[NVIC_InitStruct->NVIC_IRQChannel] = tmppriority;
+    
+    /* Enable the Selected IRQ Channels --------------------------------------*/
+    NVIC->ISER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+  9a:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+  9e:	e011      	b.n	c4 <NVIC_Init+0xc4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:166
+      (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+  }
+  else
+  {
+    /* Disable the Selected IRQ Channels -------------------------------------*/
+    NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+  a0:	4b0c      	ldr	r3, [pc, #48]	; (d4 <NVIC_Init+0xd4>)
+  a2:	687a      	ldr	r2, [r7, #4]
+  a4:	7812      	ldrb	r2, [r2, #0]
+  a6:	ea4f 1252 	mov.w	r2, r2, lsr #5
+  aa:	b2d2      	uxtb	r2, r2
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:167
+      (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+  ac:	6879      	ldr	r1, [r7, #4]
+  ae:	7809      	ldrb	r1, [r1, #0]
+  b0:	f001 011f 	and.w	r1, r1, #31
+  b4:	f04f 0001 	mov.w	r0, #1
+  b8:	fa00 f101 	lsl.w	r1, r0, r1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:166
+      (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+  }
+  else
+  {
+    /* Disable the Selected IRQ Channels -------------------------------------*/
+    NVIC->ICER[NVIC_InitStruct->NVIC_IRQChannel >> 0x05] =
+  bc:	f102 0220 	add.w	r2, r2, #32
+  c0:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:169
+      (uint32_t)0x01 << (NVIC_InitStruct->NVIC_IRQChannel & (uint8_t)0x1F);
+  }
+}
+  c4:	f107 0714 	add.w	r7, r7, #20
+  c8:	46bd      	mov	sp, r7
+  ca:	bc80      	pop	{r7}
+  cc:	4770      	bx	lr
+  ce:	bf00      	nop
+  d0:	e000ed00 	.word	0xe000ed00
+  d4:	e000e100 	.word	0xe000e100
+
+Disassembly of section .text.NVIC_SetVectorTable:
+
+00000000 <NVIC_SetVectorTable>:
+NVIC_SetVectorTable():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:181
+  *     @arg NVIC_VectTab_FLASH: Vector Table in internal FLASH.
+  * @param  Offset: Vector Table base offset field. This value must be a multiple of 0x200.
+  * @retval None
+  */
+void NVIC_SetVectorTable(uint32_t NVIC_VectTab, uint32_t Offset)
+{ 
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:186
+  /* Check the parameters */
+  assert_param(IS_NVIC_VECTTAB(NVIC_VectTab));
+  assert_param(IS_NVIC_OFFSET(Offset));  
+   
+  SCB->VTOR = NVIC_VectTab | (Offset & (uint32_t)0x1FFFFF80);
+   a:	4a07      	ldr	r2, [pc, #28]	; (28 <NVIC_SetVectorTable+0x28>)
+   c:	683b      	ldr	r3, [r7, #0]
+   e:	f023 4360 	bic.w	r3, r3, #3758096384	; 0xe0000000
+  12:	f023 037f 	bic.w	r3, r3, #127	; 0x7f
+  16:	6879      	ldr	r1, [r7, #4]
+  18:	430b      	orrs	r3, r1
+  1a:	6093      	str	r3, [r2, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:187
+}
+  1c:	f107 070c 	add.w	r7, r7, #12
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+  28:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.NVIC_SystemLPConfig:
+
+00000000 <NVIC_SystemLPConfig>:
+NVIC_SystemLPConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:200
+  *     @arg NVIC_LP_SLEEPONEXIT: Low Power Sleep on Exit.
+  * @param  NewState: new state of LP condition. This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void NVIC_SystemLPConfig(uint8_t LowPowerMode, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:205
+  /* Check the parameters */
+  assert_param(IS_NVIC_LP(LowPowerMode));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));  
+  
+  if (NewState != DISABLE)
+   e:	79bb      	ldrb	r3, [r7, #6]
+  10:	2b00      	cmp	r3, #0
+  12:	d007      	beq.n	24 <NVIC_SystemLPConfig+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:207
+  {
+    SCB->SCR |= LowPowerMode;
+  14:	4b0a      	ldr	r3, [pc, #40]	; (40 <NVIC_SystemLPConfig+0x40>)
+  16:	4a0a      	ldr	r2, [pc, #40]	; (40 <NVIC_SystemLPConfig+0x40>)
+  18:	6911      	ldr	r1, [r2, #16]
+  1a:	79fa      	ldrb	r2, [r7, #7]
+  1c:	ea41 0202 	orr.w	r2, r1, r2
+  20:	611a      	str	r2, [r3, #16]
+  22:	e008      	b.n	36 <NVIC_SystemLPConfig+0x36>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:211
+  }
+  else
+  {
+    SCB->SCR &= (uint32_t)(~(uint32_t)LowPowerMode);
+  24:	4b06      	ldr	r3, [pc, #24]	; (40 <NVIC_SystemLPConfig+0x40>)
+  26:	4a06      	ldr	r2, [pc, #24]	; (40 <NVIC_SystemLPConfig+0x40>)
+  28:	6911      	ldr	r1, [r2, #16]
+  2a:	79fa      	ldrb	r2, [r7, #7]
+  2c:	ea6f 0202 	mvn.w	r2, r2
+  30:	ea01 0202 	and.w	r2, r1, r2
+  34:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:213
+  }
+}
+  36:	f107 070c 	add.w	r7, r7, #12
+  3a:	46bd      	mov	sp, r7
+  3c:	bc80      	pop	{r7}
+  3e:	4770      	bx	lr
+  40:	e000ed00 	.word	0xe000ed00
+
+Disassembly of section .text.SysTick_CLKSourceConfig:
+
+00000000 <SysTick_CLKSourceConfig>:
+SysTick_CLKSourceConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:224
+  *     @arg SysTick_CLKSource_HCLK_Div8: AHB clock divided by 8 selected as SysTick clock source.
+  *     @arg SysTick_CLKSource_HCLK: AHB clock selected as SysTick clock source.
+  * @retval None
+  */
+void SysTick_CLKSourceConfig(uint32_t SysTick_CLKSource)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:227
+  /* Check the parameters */
+  assert_param(IS_SYSTICK_CLK_SOURCE(SysTick_CLKSource));
+  if (SysTick_CLKSource == SysTick_CLKSource_HCLK)
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	2b04      	cmp	r3, #4
+   c:	d106      	bne.n	1c <SysTick_CLKSourceConfig+0x1c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:229
+  {
+    SysTick->CTRL |= SysTick_CLKSource_HCLK;
+   e:	4b09      	ldr	r3, [pc, #36]	; (34 <SysTick_CLKSourceConfig+0x34>)
+  10:	4a08      	ldr	r2, [pc, #32]	; (34 <SysTick_CLKSourceConfig+0x34>)
+  12:	6812      	ldr	r2, [r2, #0]
+  14:	f042 0204 	orr.w	r2, r2, #4
+  18:	601a      	str	r2, [r3, #0]
+  1a:	e005      	b.n	28 <SysTick_CLKSourceConfig+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:233
+  }
+  else
+  {
+    SysTick->CTRL &= SysTick_CLKSource_HCLK_Div8;
+  1c:	4b05      	ldr	r3, [pc, #20]	; (34 <SysTick_CLKSourceConfig+0x34>)
+  1e:	4a05      	ldr	r2, [pc, #20]	; (34 <SysTick_CLKSourceConfig+0x34>)
+  20:	6812      	ldr	r2, [r2, #0]
+  22:	f022 0204 	bic.w	r2, r2, #4
+  26:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/misc.c:235
+  }
+}
+  28:	f107 070c 	add.w	r7, r7, #12
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+  34:	e000e010 	.word	0xe000e010

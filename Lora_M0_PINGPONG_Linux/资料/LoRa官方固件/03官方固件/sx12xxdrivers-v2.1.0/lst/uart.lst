@@ -1,0 +1,396 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\uart.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\uart.o
+
+
+Disassembly of section .text.UartInit:
+
+00000000 <UartInit>:
+UartInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:70
+
+uint16_t FifoRxBuffer[FIFO_RX_SIZE];
+uint16_t FifoTxBuffer[FIFO_TX_SIZE];
+
+uint8_t UartInit( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:71
+	FifoInit( &FifoRx, FifoRxBuffer, FIFO_RX_SIZE );
+   4:	4807      	ldr	r0, [pc, #28]	; (24 <UartInit+0x24>)
+   6:	4908      	ldr	r1, [pc, #32]	; (28 <UartInit+0x28>)
+   8:	f04f 0280 	mov.w	r2, #128	; 0x80
+   c:	f7ff fffe 	bl	0 <FifoInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:72
+	FifoInit( &FifoTx, FifoTxBuffer, FIFO_TX_SIZE );
+  10:	4806      	ldr	r0, [pc, #24]	; (2c <UartInit+0x2c>)
+  12:	4907      	ldr	r1, [pc, #28]	; (30 <UartInit+0x30>)
+  14:	f04f 0280 	mov.w	r2, #128	; 0x80
+  18:	f7ff fffe 	bl	0 <FifoInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:74
+
+	return UART_OK;
+  1c:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:75
+}
+  20:	4618      	mov	r0, r3
+  22:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.UartProcess:
+
+00000000 <UartProcess>:
+UartProcess():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:78
+
+void UartProcess( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:79
+	if( IsFifoEmpty( &FifoTx ) == false )
+   4:	4808      	ldr	r0, [pc, #32]	; (28 <UartProcess+0x28>)
+   6:	f7ff fffe 	bl	0 <IsFifoEmpty>
+   a:	4603      	mov	r3, r0
+   c:	f083 0301 	eor.w	r3, r3, #1
+  10:	b2db      	uxtb	r3, r3
+  12:	2b00      	cmp	r3, #0
+  14:	d006      	beq.n	24 <UartProcess+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:83
+	{
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+        
+		APP_FOPS.pIf_DataTx( 0, 0 );
+  16:	4b05      	ldr	r3, [pc, #20]	; (2c <UartProcess+0x2c>)
+  18:	68db      	ldr	r3, [r3, #12]
+  1a:	f04f 0000 	mov.w	r0, #0
+  1e:	f04f 0100 	mov.w	r1, #0
+  22:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:106
+            USART_Rx_ptr_in = 0;
+        }	
+        
+#endif        
+	}
+}
+  24:	bd80      	pop	{r7, pc}
+  26:	bf00      	nop
+	...
+
+Disassembly of section .text.UartPutChar:
+
+00000000 <UartPutChar>:
+UartPutChar():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:109
+
+uint8_t UartPutChar( uint8_t data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:110
+	if( IsFifoFull( &FifoTx ) == true )
+   a:	480a      	ldr	r0, [pc, #40]	; (34 <UartPutChar+0x34>)
+   c:	f7ff fffe 	bl	0 <IsFifoFull>
+  10:	4603      	mov	r3, r0
+  12:	2b00      	cmp	r3, #0
+  14:	d001      	beq.n	1a <UartPutChar+0x1a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:112
+	{
+		UartProcess( );
+  16:	f7ff fffe 	bl	0 <UartPutChar>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:115
+		//return BUSY;
+	}
+	FifoPush( &FifoTx, data );
+  1a:	79fb      	ldrb	r3, [r7, #7]
+  1c:	b29b      	uxth	r3, r3
+  1e:	4805      	ldr	r0, [pc, #20]	; (34 <UartPutChar+0x34>)
+  20:	4619      	mov	r1, r3
+  22:	f7ff fffe 	bl	0 <FifoPush>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:116
+	return UART_OK;
+  26:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:117
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0708 	add.w	r7, r7, #8
+  30:	46bd      	mov	sp, r7
+  32:	bd80      	pop	{r7, pc}
+  34:	00000000 	.word	0x00000000
+
+Disassembly of section .text.UartGetChar:
+
+00000000 <UartGetChar>:
+UartGetChar():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:120
+
+uint8_t UartGetChar( uint8_t *data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:121
+	if( IsFifoEmpty( &FifoRx ) == true )
+   8:	480b      	ldr	r0, [pc, #44]	; (38 <UartGetChar+0x38>)
+   a:	f7ff fffe 	bl	0 <IsFifoEmpty>
+   e:	4603      	mov	r3, r0
+  10:	2b00      	cmp	r3, #0
+  12:	d002      	beq.n	1a <UartGetChar+0x1a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:123
+	{
+		return UART_EMPTY;
+  14:	f04f 0303 	mov.w	r3, #3
+  18:	e008      	b.n	2c <UartGetChar+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:125
+	}
+	*data = FifoPop( &FifoRx );
+  1a:	4807      	ldr	r0, [pc, #28]	; (38 <UartGetChar+0x38>)
+  1c:	f7ff fffe 	bl	0 <FifoPop>
+  20:	4603      	mov	r3, r0
+  22:	b2da      	uxtb	r2, r3
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:126
+	return UART_OK;
+  28:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:127
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0708 	add.w	r7, r7, #8
+  32:	46bd      	mov	sp, r7
+  34:	bd80      	pop	{r7, pc}
+  36:	bf00      	nop
+  38:	00000000 	.word	0x00000000
+
+Disassembly of section .text.UartPutBuffer:
+
+00000000 <UartPutBuffer>:
+UartPutBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:130
+
+uint8_t UartPutBuffer( uint8_t *buffer, uint8_t size )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:133
+	uint8_t i;
+
+	for( i = 0; i < size; i++ )
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+  12:	e014      	b.n	3e <UartPutBuffer+0x3e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:135
+	{
+		if( IsFifoFull( &FifoTx ) == true )
+  14:	480f      	ldr	r0, [pc, #60]	; (54 <UartPutBuffer+0x54>)
+  16:	f7ff fffe 	bl	0 <IsFifoFull>
+  1a:	4603      	mov	r3, r0
+  1c:	2b00      	cmp	r3, #0
+  1e:	d002      	beq.n	26 <UartPutBuffer+0x26>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:137
+		{
+			return UART_BUSY;
+  20:	f04f 0302 	mov.w	r3, #2
+  24:	e011      	b.n	4a <UartPutBuffer+0x4a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:139
+		}
+		FifoPush( &FifoTx, buffer[i] );
+  26:	7bfb      	ldrb	r3, [r7, #15]
+  28:	687a      	ldr	r2, [r7, #4]
+  2a:	18d3      	adds	r3, r2, r3
+  2c:	781b      	ldrb	r3, [r3, #0]
+  2e:	4809      	ldr	r0, [pc, #36]	; (54 <UartPutBuffer+0x54>)
+  30:	4619      	mov	r1, r3
+  32:	f7ff fffe 	bl	0 <FifoPush>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:133
+
+uint8_t UartPutBuffer( uint8_t *buffer, uint8_t size )
+{
+	uint8_t i;
+
+	for( i = 0; i < size; i++ )
+  36:	7bfb      	ldrb	r3, [r7, #15]
+  38:	f103 0301 	add.w	r3, r3, #1
+  3c:	73fb      	strb	r3, [r7, #15]
+  3e:	7bfa      	ldrb	r2, [r7, #15]
+  40:	78fb      	ldrb	r3, [r7, #3]
+  42:	429a      	cmp	r2, r3
+  44:	d3e6      	bcc.n	14 <UartPutBuffer+0x14>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:141
+		{
+			return UART_BUSY;
+		}
+		FifoPush( &FifoTx, buffer[i] );
+	}
+	return UART_OK;	
+  46:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:142
+}
+  4a:	4618      	mov	r0, r3
+  4c:	f107 0710 	add.w	r7, r7, #16
+  50:	46bd      	mov	sp, r7
+  52:	bd80      	pop	{r7, pc}
+  54:	00000000 	.word	0x00000000
+
+Disassembly of section .text.UartGetBuffer:
+
+00000000 <UartGetBuffer>:
+UartGetBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:145
+
+uint8_t UartGetBuffer( uint8_t *buffer, uint8_t size, uint8_t *nbReadBytes )
+{
+   0:	b590      	push	{r4, r7, lr}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	460b      	mov	r3, r1
+   a:	607a      	str	r2, [r7, #4]
+   c:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:148
+	uint8_t i;
+
+	for( i = 0; i < size; i++ )
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	75fb      	strb	r3, [r7, #23]
+  14:	e018      	b.n	48 <UartGetBuffer+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:150
+	{
+		if( IsFifoEmpty( &FifoRx ) == true )
+  16:	4813      	ldr	r0, [pc, #76]	; (64 <UartGetBuffer+0x64>)
+  18:	f7ff fffe 	bl	0 <IsFifoEmpty>
+  1c:	4603      	mov	r3, r0
+  1e:	2b00      	cmp	r3, #0
+  20:	d005      	beq.n	2e <UartGetBuffer+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:152
+		{
+			*nbReadBytes = i;
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	7dfa      	ldrb	r2, [r7, #23]
+  26:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:153
+			return UART_EMPTY;
+  28:	f04f 0303 	mov.w	r3, #3
+  2c:	e015      	b.n	5a <UartGetBuffer+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:155
+		}
+		buffer[i] = FifoPop( &FifoRx );
+  2e:	7dfb      	ldrb	r3, [r7, #23]
+  30:	68fa      	ldr	r2, [r7, #12]
+  32:	18d4      	adds	r4, r2, r3
+  34:	480b      	ldr	r0, [pc, #44]	; (64 <UartGetBuffer+0x64>)
+  36:	f7ff fffe 	bl	0 <FifoPop>
+  3a:	4603      	mov	r3, r0
+  3c:	b2db      	uxtb	r3, r3
+  3e:	7023      	strb	r3, [r4, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:148
+
+uint8_t UartGetBuffer( uint8_t *buffer, uint8_t size, uint8_t *nbReadBytes )
+{
+	uint8_t i;
+
+	for( i = 0; i < size; i++ )
+  40:	7dfb      	ldrb	r3, [r7, #23]
+  42:	f103 0301 	add.w	r3, r3, #1
+  46:	75fb      	strb	r3, [r7, #23]
+  48:	7dfa      	ldrb	r2, [r7, #23]
+  4a:	7afb      	ldrb	r3, [r7, #11]
+  4c:	429a      	cmp	r2, r3
+  4e:	d3e2      	bcc.n	16 <UartGetBuffer+0x16>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:157
+			*nbReadBytes = i;
+			return UART_EMPTY;
+		}
+		buffer[i] = FifoPop( &FifoRx );
+	}
+	*nbReadBytes = i;
+  50:	687b      	ldr	r3, [r7, #4]
+  52:	7dfa      	ldrb	r2, [r7, #23]
+  54:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:158
+	return( UART_OK );
+  56:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:159
+}
+  5a:	4618      	mov	r0, r3
+  5c:	f107 071c 	add.w	r7, r7, #28
+  60:	46bd      	mov	sp, r7
+  62:	bd90      	pop	{r4, r7, pc}
+  64:	00000000 	.word	0x00000000
+
+Disassembly of section .text.UartFlush:
+
+00000000 <UartFlush>:
+UartFlush():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:162
+
+uint8_t UartFlush( void )
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:163
+	FifoFlush( &FifoRx );
+   4:	4804      	ldr	r0, [pc, #16]	; (14 <FifoFlush+0x14>)
+   6:	f7ff fffe 	bl	0 <FifoFlush>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:164
+	FifoFlush( &FifoTx );
+   a:	4804      	ldr	r0, [pc, #16]	; (14 <FifoFlush+0x14>)
+   c:	f7ff fffe 	bl	0 <FifoFlush>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:165
+	return( UART_OK );
+  10:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:166
+}
+  14:	4618      	mov	r0, r3
+  16:	bd80      	pop	{r7, pc}
+	...
+
+Disassembly of section .text.UartIsTxFifoEmpty:
+
+00000000 <UartIsTxFifoEmpty>:
+UartIsTxFifoEmpty():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:169
+
+bool UartIsTxFifoEmpty( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:170
+	return IsFifoEmpty( &FifoTx );
+   4:	4802      	ldr	r0, [pc, #8]	; (10 <UartIsTxFifoEmpty+0x10>)
+   6:	f7ff fffe 	bl	0 <IsFifoEmpty>
+   a:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:171
+}
+   c:	4618      	mov	r0, r3
+   e:	bd80      	pop	{r7, pc}
+  10:	00000000 	.word	0x00000000
+
+Disassembly of section .text.UartIsRxFifoEmpty:
+
+00000000 <UartIsRxFifoEmpty>:
+UartIsRxFifoEmpty():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:174
+
+bool UartIsRxFifoEmpty( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:175
+	return IsFifoEmpty( &FifoRx );
+   4:	4802      	ldr	r0, [pc, #8]	; (10 <UartIsRxFifoEmpty+0x10>)
+   6:	f7ff fffe 	bl	0 <IsFifoEmpty>
+   a:	4603      	mov	r3, r0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/uart.c:176
+}
+   c:	4618      	mov	r0, r3
+   e:	bd80      	pop	{r7, pc}
+  10:	00000000 	.word	0x00000000

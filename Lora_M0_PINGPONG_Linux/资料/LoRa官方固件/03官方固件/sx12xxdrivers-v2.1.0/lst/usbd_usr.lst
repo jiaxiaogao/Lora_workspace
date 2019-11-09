@@ -1,0 +1,176 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_usr.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_usr.o
+
+
+Disassembly of section .text.USBD_USR_Init:
+
+00000000 <USBD_USR_Init>:
+USBD_USR_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:115
+*         Displays the message on LCD for host lib initialization
+* @param  None
+* @retval None
+*/
+void USBD_USR_Init(void)
+{  
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:116
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.USBD_USR_DeviceReset:
+
+00000000 <USBD_USR_DeviceReset>:
+USBD_USR_DeviceReset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:125
+*         Displays the message on LCD on device Reset Event
+* @param  speed : device speed
+* @retval None
+*/
+void USBD_USR_DeviceReset(uint8_t speed )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:126
+ switch (speed)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d001      	beq.n	14 <USBD_USR_DeviceReset+0x14>
+  10:	2b01      	cmp	r3, #1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:132
+ {
+   case USB_OTG_SPEED_HIGH: 
+     break;
+
+  case USB_OTG_SPEED_FULL: 
+     break;
+  12:	e000      	b.n	16 <USBD_USR_DeviceReset+0x16>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:129
+void USBD_USR_DeviceReset(uint8_t speed )
+{
+ switch (speed)
+ {
+   case USB_OTG_SPEED_HIGH: 
+     break;
+  14:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:136
+  case USB_OTG_SPEED_FULL: 
+     break;
+  default:
+     break;
+ }
+}
+  16:	f107 070c 	add.w	r7, r7, #12
+  1a:	46bd      	mov	sp, r7
+  1c:	bc80      	pop	{r7}
+  1e:	4770      	bx	lr
+
+Disassembly of section .text.USBD_USR_DeviceConfigured:
+
+00000000 <USBD_USR_DeviceConfigured>:
+USBD_USR_DeviceConfigured():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:146
+*         Displays the message on LCD on device configuration Event
+* @param  None
+* @retval Staus
+*/
+void USBD_USR_DeviceConfigured (void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:147
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.USBD_USR_DeviceSuspended:
+
+00000000 <USBD_USR_DeviceSuspended>:
+USBD_USR_DeviceSuspended():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:156
+*         Displays the message on LCD on device suspend Event
+* @param  None
+* @retval None
+*/
+void USBD_USR_DeviceSuspended(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:158
+  /* Users can do their application actions here for the USB-Reset */
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.USBD_USR_DeviceResumed:
+
+00000000 <USBD_USR_DeviceResumed>:
+USBD_USR_DeviceResumed():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:168
+*         Displays the message on LCD on device resume Event
+* @param  None
+* @retval None
+*/
+void USBD_USR_DeviceResumed(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:170
+  /* Users can do their application actions here for the USB-Reset */
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.USBD_USR_DeviceConnected:
+
+00000000 <USBD_USR_DeviceConnected>:
+USBD_USR_DeviceConnected():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:180
+*         Displays the message on LCD on device connection Event
+* @param  None
+* @retval Staus
+*/
+void USBD_USR_DeviceConnected (void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:181
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.USBD_USR_DeviceDisconnected:
+
+00000000 <USBD_USR_DeviceDisconnected>:
+USBD_USR_DeviceDisconnected():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:191
+*         Displays the message on LCD on device disconnection Event
+* @param  None
+* @retval Staus
+*/
+void USBD_USR_DeviceDisconnected (void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_usr.c:192
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop

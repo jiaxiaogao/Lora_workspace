@@ -1,0 +1,310 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32fxxx_it.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32fxxx_it.o
+
+
+Disassembly of section .text.NMI_Handler:
+
+00000000 <NMI_Handler>:
+NMI_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:77
+  * @brief   This function handles NMI exception.
+  * @param  None
+  * @retval None
+  */
+void NMI_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:78
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.HardFault_Handler_C:
+
+00000000 <HardFault_Handler_C>:
+HardFault_Handler_C():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:106
+// From Joseph Yiu, minor edits by FVH
+// hard fault handler in C,
+// with stack frame location as input parameter
+// called from HardFault_Handler in file xxx.s
+void HardFault_Handler_C( unsigned int *args )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:147
+    sprintf( s, "SCB_SHCSR = %x\n", SCB->SHCSR );
+#endif
+    /* Go to infinite loop when Hard Fault exception occurs */
+    while( 1 )
+    {
+    }
+   8:	e7fe      	b.n	8 <HardFault_Handler_C+0x8>
+   a:	bf00      	nop
+
+Disassembly of section .text.MemManage_Handler:
+
+00000000 <MemManage_Handler>:
+MemManage_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:156
+  * @brief  This function handles Memory Manage exception.
+  * @param  None
+  * @retval None
+  */
+void MemManage_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:160
+  /* Go to infinite loop when Memory Manage exception occurs */
+  while (1)
+  {
+  }
+   4:	e7fe      	b.n	4 <MemManage_Handler+0x4>
+   6:	bf00      	nop
+
+Disassembly of section .text.BusFault_Handler:
+
+00000000 <BusFault_Handler>:
+BusFault_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:169
+  * @brief  This function handles Bus Fault exception.
+  * @param  None
+  * @retval None
+  */
+void BusFault_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:173
+  /* Go to infinite loop when Bus Fault exception occurs */
+  while (1)
+  {
+  }
+   4:	e7fe      	b.n	4 <BusFault_Handler+0x4>
+   6:	bf00      	nop
+
+Disassembly of section .text.UsageFault_Handler:
+
+00000000 <UsageFault_Handler>:
+UsageFault_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:182
+  * @brief  This function handles Usage Fault exception.
+  * @param  None
+  * @retval None
+  */
+void UsageFault_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:186
+  /* Go to infinite loop when Usage Fault exception occurs */
+  while (1)
+  {
+  }
+   4:	e7fe      	b.n	4 <UsageFault_Handler+0x4>
+   6:	bf00      	nop
+
+Disassembly of section .text.SVC_Handler:
+
+00000000 <SVC_Handler>:
+SVC_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:195
+  * @brief  This function handles SVCall exception.
+  * @param  None
+  * @retval None
+  */
+void SVC_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:196
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.DebugMon_Handler:
+
+00000000 <DebugMon_Handler>:
+DebugMon_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:204
+  * @brief  This function handles Debug Monitor exception.
+  * @param  None
+  * @retval None
+  */
+void DebugMon_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:205
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.PendSV_Handler:
+
+00000000 <PendSV_Handler>:
+PendSV_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:213
+  * @brief  This function handles PendSVC exception.
+  * @param  None
+  * @retval None
+  */
+void PendSV_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:214
+}
+   4:	46bd      	mov	sp, r7
+   6:	bc80      	pop	{r7}
+   8:	4770      	bx	lr
+   a:	bf00      	nop
+
+Disassembly of section .text.SysTick_Handler:
+
+00000000 <SysTick_Handler>:
+SysTick_Handler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:222
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
+void SysTick_Handler(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:223
+    TickCounter++;
+   4:	4b04      	ldr	r3, [pc, #16]	; (18 <SysTick_Handler+0x18>)
+   6:	681b      	ldr	r3, [r3, #0]
+   8:	f103 0201 	add.w	r2, r3, #1
+   c:	4b02      	ldr	r3, [pc, #8]	; (18 <SysTick_Handler+0x18>)
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:224
+}
+  10:	46bd      	mov	sp, r7
+  12:	bc80      	pop	{r7}
+  14:	4770      	bx	lr
+  16:	bf00      	nop
+  18:	00000000 	.word	0x00000000
+
+Disassembly of section .text.OTG_HS_WKUP_IRQHandler:
+
+00000000 <OTG_HS_WKUP_IRQHandler>:
+OTG_HS_WKUP_IRQHandler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:252
+  * @param  None
+  * @retval None
+  */
+#ifdef USE_USB_OTG_HS  
+void OTG_HS_WKUP_IRQHandler(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:253
+  if(USB_OTG_dev.cfg.low_power)
+   4:	4b09      	ldr	r3, [pc, #36]	; (2c <OTG_HS_WKUP_IRQHandler+0x2c>)
+   6:	7a9b      	ldrb	r3, [r3, #10]
+   8:	2b00      	cmp	r3, #0
+   a:	d00a      	beq.n	22 <OTG_HS_WKUP_IRQHandler+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:255
+  {
+    *(uint32_t *)(0xE000ED10) &= 0xFFFFFFF9 ; 
+   c:	4b08      	ldr	r3, [pc, #32]	; (30 <OTG_HS_WKUP_IRQHandler+0x30>)
+   e:	4a08      	ldr	r2, [pc, #32]	; (30 <OTG_HS_WKUP_IRQHandler+0x30>)
+  10:	6812      	ldr	r2, [r2, #0]
+  12:	f022 0206 	bic.w	r2, r2, #6
+  16:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:256
+    SystemInit();
+  18:	f7ff fffe 	bl	0 <SystemInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:257
+    USB_OTG_UngateClock(&USB_OTG_dev);
+  1c:	4803      	ldr	r0, [pc, #12]	; (10 <USB_OTG_UngateClock+0x10>)
+  1e:	f7ff fffe 	bl	0 <USB_OTG_UngateClock>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:259
+  }
+  EXTI_ClearITPendingBit(EXTI_Line20);
+  22:	f44f 1080 	mov.w	r0, #1048576	; 0x100000
+  26:	f7ff fffe 	bl	0 <EXTI_ClearITPendingBit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:260
+}
+  2a:	bd80      	pop	{r7, pc}
+  2c:	00000000 	.word	0x00000000
+  30:	e000ed10 	.word	0xe000ed10
+
+Disassembly of section .text.OTG_HS_IRQHandler:
+
+00000000 <OTG_HS_IRQHandler>:
+OTG_HS_IRQHandler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:273
+#ifdef USE_USB_OTG_HS  
+void OTG_HS_IRQHandler(void)
+#else
+void OTG_FS_IRQHandler(void)
+#endif
+{
+   0:	af00b580 	.word	0xaf00b580
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:274
+  USBD_OTG_ISR_Handler (&USB_OTG_dev);
+   4:	4801      	ldr	r0, [pc, #4]	; (8 <USBD_OTG_ISR_Handler+0x8>)
+   6:	f7ff fffe 	bl	0 <USBD_OTG_ISR_Handler>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:275
+}
+   a:	bd80      	pop	{r7, pc}
+   c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.OTG_HS_EP1_IN_IRQHandler:
+
+00000000 <OTG_HS_EP1_IN_IRQHandler>:
+OTG_HS_EP1_IN_IRQHandler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:284
+  * @brief  This function handles EP1_IN Handler.
+  * @param  None
+  * @retval None
+  */
+void OTG_HS_EP1_IN_IRQHandler(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:285
+  USBD_OTG_EP1IN_ISR_Handler (&USB_OTG_dev);
+   4:	4801      	ldr	r0, [pc, #4]	; (c <OTG_HS_EP1_IN_IRQHandler+0xc>)
+   6:	f7ff fffe 	bl	0 <USBD_OTG_EP1IN_ISR_Handler>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:286
+}
+   a:	bd80      	pop	{r7, pc}
+   c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.OTG_HS_EP1_OUT_IRQHandler:
+
+00000000 <OTG_HS_EP1_OUT_IRQHandler>:
+OTG_HS_EP1_OUT_IRQHandler():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:294
+  * @brief  This function handles EP1_OUT Handler.
+  * @param  None
+  * @retval None
+  */
+void OTG_HS_EP1_OUT_IRQHandler(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:295
+  USBD_OTG_EP1OUT_ISR_Handler (&USB_OTG_dev);
+   4:	4801      	ldr	r0, [pc, #4]	; (c <OTG_HS_EP1_OUT_IRQHandler+0xc>)
+   6:	f7ff fffe 	bl	0 <USBD_OTG_EP1OUT_ISR_Handler>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/stm32fxxx_it.c:296
+}
+   a:	bd80      	pop	{r7, pc}
+   c:	00000000 	.word	0x00000000

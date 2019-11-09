@@ -1,0 +1,328 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_desc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_desc.o
+
+
+Disassembly of section .text.USBD_USR_DeviceDescriptor:
+
+00000000 <USBD_USR_DeviceDescriptor>:
+USBD_USR_DeviceDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:192
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_DeviceDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:193
+  *length = sizeof(USBD_DeviceDesc);
+   c:	683b      	ldr	r3, [r7, #0]
+   e:	f04f 0212 	mov.w	r2, #18
+  12:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:194
+  return USBD_DeviceDesc;
+  14:	4b03      	ldr	r3, [pc, #12]	; (24 <USBD_USR_DeviceDescriptor+0x24>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:195
+}
+  16:	4618      	mov	r0, r3
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+  24:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_USR_LangIDStrDescriptor:
+
+00000000 <USBD_USR_LangIDStrDescriptor>:
+USBD_USR_LangIDStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:205
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_LangIDStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:206
+  *length =  sizeof(USBD_LangIDDesc);  
+   c:	683b      	ldr	r3, [r7, #0]
+   e:	f04f 0204 	mov.w	r2, #4
+  12:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:207
+  return USBD_LangIDDesc;
+  14:	4b03      	ldr	r3, [pc, #12]	; (24 <USBD_USR_LangIDStrDescriptor+0x24>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:208
+}
+  16:	4618      	mov	r0, r3
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+  24:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_USR_ProductStrDescriptor:
+
+00000000 <USBD_USR_ProductStrDescriptor>:
+USBD_USR_ProductStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:219
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_ProductStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:222
+ 
+  
+  if(speed == 0)
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	2b00      	cmp	r3, #0
+  10:	d106      	bne.n	20 <USBD_USR_ProductStrDescriptor+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:224
+  {   
+    USBD_GetString (USBD_PRODUCT_HS_STRING, USBD_StrDesc, length);
+  12:	4b09      	ldr	r3, [pc, #36]	; (38 <USBD_USR_ProductStrDescriptor+0x38>)
+  14:	4618      	mov	r0, r3
+  16:	4909      	ldr	r1, [pc, #36]	; (3c <USBD_USR_ProductStrDescriptor+0x3c>)
+  18:	683a      	ldr	r2, [r7, #0]
+  1a:	f7ff fffe 	bl	0 <USBD_GetString>
+  1e:	e005      	b.n	2c <USBD_USR_ProductStrDescriptor+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:228
+  }
+  else
+  {
+    USBD_GetString (USBD_PRODUCT_FS_STRING, USBD_StrDesc, length);    
+  20:	4b07      	ldr	r3, [pc, #28]	; (40 <USBD_USR_ProductStrDescriptor+0x40>)
+  22:	4618      	mov	r0, r3
+  24:	4905      	ldr	r1, [pc, #20]	; (3c <USBD_USR_ProductStrDescriptor+0x3c>)
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	f7ff fffe 	bl	0 <USBD_GetString>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:230
+  }
+  return USBD_StrDesc;
+  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <USBD_USR_ProductStrDescriptor+0x3c>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:231
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0708 	add.w	r7, r7, #8
+  34:	46bd      	mov	sp, r7
+  36:	bd80      	pop	{r7, pc}
+	...
+  40:	00000024 	.word	0x00000024
+
+Disassembly of section .text.USBD_USR_ManufacturerStrDescriptor:
+
+00000000 <USBD_USR_ManufacturerStrDescriptor>:
+USBD_USR_ManufacturerStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:241
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_ManufacturerStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:242
+  USBD_GetString (USBD_MANUFACTURER_STRING, USBD_StrDesc, length);
+   c:	4b05      	ldr	r3, [pc, #20]	; (24 <USBD_USR_ManufacturerStrDescriptor+0x24>)
+   e:	4618      	mov	r0, r3
+  10:	4905      	ldr	r1, [pc, #20]	; (28 <USBD_USR_ManufacturerStrDescriptor+0x28>)
+  12:	683a      	ldr	r2, [r7, #0]
+  14:	f7ff fffe 	bl	0 <USBD_GetString>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:243
+  return USBD_StrDesc;
+  18:	4b03      	ldr	r3, [pc, #12]	; (28 <USBD_USR_ManufacturerStrDescriptor+0x28>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:244
+}
+  1a:	4618      	mov	r0, r3
+  1c:	f107 0708 	add.w	r7, r7, #8
+  20:	46bd      	mov	sp, r7
+  22:	bd80      	pop	{r7, pc}
+  24:	00000048 	.word	0x00000048
+  28:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_USR_SerialStrDescriptor:
+
+00000000 <USBD_USR_SerialStrDescriptor>:
+USBD_USR_SerialStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:254
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_SerialStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:255
+  if(speed  == USB_OTG_SPEED_HIGH)
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	2b00      	cmp	r3, #0
+  10:	d106      	bne.n	20 <USBD_USR_SerialStrDescriptor+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:257
+  {    
+    USBD_GetString (USBD_SERIALNUMBER_HS_STRING, USBD_StrDesc, length);
+  12:	4b09      	ldr	r3, [pc, #36]	; (38 <USBD_USR_SerialStrDescriptor+0x38>)
+  14:	4618      	mov	r0, r3
+  16:	4909      	ldr	r1, [pc, #36]	; (3c <USBD_USR_SerialStrDescriptor+0x3c>)
+  18:	683a      	ldr	r2, [r7, #0]
+  1a:	f7ff fffe 	bl	0 <USBD_GetString>
+  1e:	e005      	b.n	2c <USBD_USR_SerialStrDescriptor+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:261
+  }
+  else
+  {
+    USBD_GetString (USBD_SERIALNUMBER_FS_STRING, USBD_StrDesc, length);    
+  20:	4b07      	ldr	r3, [pc, #28]	; (40 <USBD_USR_SerialStrDescriptor+0x40>)
+  22:	4618      	mov	r0, r3
+  24:	4905      	ldr	r1, [pc, #20]	; (3c <USBD_USR_SerialStrDescriptor+0x3c>)
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	f7ff fffe 	bl	0 <USBD_GetString>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:263
+  }
+  return USBD_StrDesc;
+  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <USBD_USR_SerialStrDescriptor+0x3c>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:264
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0708 	add.w	r7, r7, #8
+  34:	46bd      	mov	sp, r7
+  36:	bd80      	pop	{r7, pc}
+  38:	0000005c 	.word	0x0000005c
+  3c:	00000000 	.word	0x00000000
+  40:	0000006c 	.word	0x0000006c
+
+Disassembly of section .text.USBD_USR_ConfigStrDescriptor:
+
+00000000 <USBD_USR_ConfigStrDescriptor>:
+USBD_USR_ConfigStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:274
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_ConfigStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:275
+  if(speed  == USB_OTG_SPEED_HIGH)
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	2b00      	cmp	r3, #0
+  10:	d106      	bne.n	20 <USBD_USR_ConfigStrDescriptor+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:277
+  {  
+    USBD_GetString (USBD_CONFIGURATION_HS_STRING, USBD_StrDesc, length);
+  12:	4b09      	ldr	r3, [pc, #36]	; (38 <USBD_USR_ConfigStrDescriptor+0x38>)
+  14:	4618      	mov	r0, r3
+  16:	4909      	ldr	r1, [pc, #36]	; (3c <USBD_USR_ConfigStrDescriptor+0x3c>)
+  18:	683a      	ldr	r2, [r7, #0]
+  1a:	f7ff fffe 	bl	0 <USBD_GetString>
+  1e:	e005      	b.n	2c <USBD_USR_ConfigStrDescriptor+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:281
+  }
+  else
+  {
+    USBD_GetString (USBD_CONFIGURATION_FS_STRING, USBD_StrDesc, length); 
+  20:	4b05      	ldr	r3, [pc, #20]	; (38 <USBD_USR_ConfigStrDescriptor+0x38>)
+  22:	4618      	mov	r0, r3
+  24:	4905      	ldr	r1, [pc, #20]	; (3c <USBD_USR_ConfigStrDescriptor+0x3c>)
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	f7ff fffe 	bl	0 <USBD_GetString>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:283
+  }
+  return USBD_StrDesc;  
+  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <USBD_USR_ConfigStrDescriptor+0x3c>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:284
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0708 	add.w	r7, r7, #8
+  34:	46bd      	mov	sp, r7
+  36:	bd80      	pop	{r7, pc}
+  38:	0000007c 	.word	0x0000007c
+  3c:	00000000 	.word	0x00000000
+
+Disassembly of section .text.USBD_USR_InterfaceStrDescriptor:
+
+00000000 <USBD_USR_InterfaceStrDescriptor>:
+USBD_USR_InterfaceStrDescriptor():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:295
+* @param  speed : current device speed
+* @param  length : pointer to data length variable
+* @retval pointer to descriptor buffer
+*/
+uint8_t *  USBD_USR_InterfaceStrDescriptor( uint8_t speed , uint16_t *length)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:296
+  if(speed == 0)
+   c:	79fb      	ldrb	r3, [r7, #7]
+   e:	2b00      	cmp	r3, #0
+  10:	d106      	bne.n	20 <USBD_USR_InterfaceStrDescriptor+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:298
+  {
+    USBD_GetString (USBD_INTERFACE_HS_STRING, USBD_StrDesc, length);
+  12:	4b09      	ldr	r3, [pc, #36]	; (38 <USBD_USR_InterfaceStrDescriptor+0x38>)
+  14:	4618      	mov	r0, r3
+  16:	4909      	ldr	r1, [pc, #36]	; (3c <USBD_USR_InterfaceStrDescriptor+0x3c>)
+  18:	683a      	ldr	r2, [r7, #0]
+  1a:	f7ff fffe 	bl	0 <USBD_GetString>
+  1e:	e005      	b.n	2c <USBD_USR_InterfaceStrDescriptor+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:302
+  }
+  else
+  {
+    USBD_GetString (USBD_INTERFACE_FS_STRING, USBD_StrDesc, length);
+  20:	4b05      	ldr	r3, [pc, #20]	; (38 <USBD_USR_InterfaceStrDescriptor+0x38>)
+  22:	4618      	mov	r0, r3
+  24:	4905      	ldr	r1, [pc, #20]	; (3c <USBD_USR_InterfaceStrDescriptor+0x3c>)
+  26:	683a      	ldr	r2, [r7, #0]
+  28:	f7ff fffe 	bl	0 <USBD_GetString>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:304
+  }
+  return USBD_StrDesc;  
+  2c:	4b03      	ldr	r3, [pc, #12]	; (3c <USBD_USR_InterfaceStrDescriptor+0x3c>)
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger\Usb\stm32f4xx\src/usbd_desc.c:305
+}
+  2e:	4618      	mov	r0, r3
+  30:	f107 0708 	add.w	r7, r7, #8
+  34:	46bd      	mov	sp, r7
+  36:	bd80      	pop	{r7, pc}
+  38:	00000088 	.word	0x00000088
+  3c:	00000000 	.word	0x00000000

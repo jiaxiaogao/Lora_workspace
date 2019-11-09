@@ -1,0 +1,2700 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_adc.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_adc.o
+
+
+Disassembly of section .text.ADC_DeInit:
+
+00000000 <ADC_DeInit>:
+ADC_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:214
+  *         values.
+  * @param  None
+  * @retval None
+  */
+void ADC_DeInit(void)
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:216
+  /* Enable all ADCs reset state */
+  RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC, ENABLE);
+   4:	f44f 7080 	mov.w	r0, #256	; 0x100
+   8:	f04f 0101 	mov.w	r1, #1
+   c:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:219
+  
+  /* Release all ADCs from reset state */
+  RCC_APB2PeriphResetCmd(RCC_APB2Periph_ADC, DISABLE);
+  10:	f44f 7080 	mov.w	r0, #256	; 0x100
+  14:	f04f 0100 	mov.w	r1, #0
+  18:	f7ff fffe 	bl	0 <RCC_APB2PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:220
+}
+  1c:	bd80      	pop	{r7, pc}
+  1e:	bf00      	nop
+
+Disassembly of section .text.ADC_Init:
+
+00000000 <ADC_Init>:
+ADC_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:236
+  * @param  ADC_InitStruct: pointer to an ADC_InitTypeDef structure that contains
+  *         the configuration information for the specified ADC peripheral.
+  * @retval None
+  */
+void ADC_Init(ADC_TypeDef* ADCx, ADC_InitTypeDef* ADC_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:237
+  uint32_t tmpreg1 = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:238
+  uint8_t tmpreg2 = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:251
+  assert_param(IS_ADC_DATA_ALIGN(ADC_InitStruct->ADC_DataAlign)); 
+  assert_param(IS_ADC_REGULAR_LENGTH(ADC_InitStruct->ADC_NbrOfConversion));
+  
+  /*---------------------------- ADCx CR1 Configuration -----------------*/
+  /* Get the ADCx CR1 value */
+  tmpreg1 = ADCx->CR1;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	685b      	ldr	r3, [r3, #4]
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:254
+  
+  /* Clear RES and SCAN bits */
+  tmpreg1 &= CR1_CLEAR_MASK;
+  1c:	68fb      	ldr	r3, [r7, #12]
+  1e:	f023 7340 	bic.w	r3, r3, #50331648	; 0x3000000
+  22:	f423 7380 	bic.w	r3, r3, #256	; 0x100
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:259
+  
+  /* Configure ADCx: scan conversion mode and resolution */
+  /* Set SCAN bit according to ADC_ScanConvMode value */
+  /* Set RES bit according to ADC_Resolution value */ 
+  tmpreg1 |= (uint32_t)(((uint32_t)ADC_InitStruct->ADC_ScanConvMode << 8) | \
+  28:	683b      	ldr	r3, [r7, #0]
+  2a:	791b      	ldrb	r3, [r3, #4]
+  2c:	ea4f 2203 	mov.w	r2, r3, lsl #8
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:260
+                                   ADC_InitStruct->ADC_Resolution);
+  30:	683b      	ldr	r3, [r7, #0]
+  32:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:259
+  tmpreg1 &= CR1_CLEAR_MASK;
+  
+  /* Configure ADCx: scan conversion mode and resolution */
+  /* Set SCAN bit according to ADC_ScanConvMode value */
+  /* Set RES bit according to ADC_Resolution value */ 
+  tmpreg1 |= (uint32_t)(((uint32_t)ADC_InitStruct->ADC_ScanConvMode << 8) | \
+  34:	ea42 0303 	orr.w	r3, r2, r3
+  38:	68fa      	ldr	r2, [r7, #12]
+  3a:	ea42 0303 	orr.w	r3, r2, r3
+  3e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:262
+                                   ADC_InitStruct->ADC_Resolution);
+  /* Write to ADCx CR1 */
+  ADCx->CR1 = tmpreg1;
+  40:	687b      	ldr	r3, [r7, #4]
+  42:	68fa      	ldr	r2, [r7, #12]
+  44:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:265
+  /*---------------------------- ADCx CR2 Configuration -----------------*/
+  /* Get the ADCx CR2 value */
+  tmpreg1 = ADCx->CR2;
+  46:	687b      	ldr	r3, [r7, #4]
+  48:	689b      	ldr	r3, [r3, #8]
+  4a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:268
+  
+  /* Clear CONT, ALIGN, EXTEN and EXTSEL bits */
+  tmpreg1 &= CR2_CLEAR_MASK;
+  4c:	68fa      	ldr	r2, [r7, #12]
+  4e:	4b1c      	ldr	r3, [pc, #112]	; (c0 <ADC_Init+0xc0>)
+  50:	ea02 0303 	and.w	r3, r2, r3
+  54:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:276
+     continuous conversion mode */
+  /* Set ALIGN bit according to ADC_DataAlign value */
+  /* Set EXTEN bits according to ADC_ExternalTrigConvEdge value */ 
+  /* Set EXTSEL bits according to ADC_ExternalTrigConv value */
+  /* Set CONT bit according to ADC_ContinuousConvMode value */
+  tmpreg1 |= (uint32_t)(ADC_InitStruct->ADC_DataAlign | \
+  56:	683b      	ldr	r3, [r7, #0]
+  58:	691a      	ldr	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:277
+                        ADC_InitStruct->ADC_ExternalTrigConv | 
+  5a:	683b      	ldr	r3, [r7, #0]
+  5c:	68db      	ldr	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:276
+     continuous conversion mode */
+  /* Set ALIGN bit according to ADC_DataAlign value */
+  /* Set EXTEN bits according to ADC_ExternalTrigConvEdge value */ 
+  /* Set EXTSEL bits according to ADC_ExternalTrigConv value */
+  /* Set CONT bit according to ADC_ContinuousConvMode value */
+  tmpreg1 |= (uint32_t)(ADC_InitStruct->ADC_DataAlign | \
+  5e:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:278
+                        ADC_InitStruct->ADC_ExternalTrigConv | 
+                        ADC_InitStruct->ADC_ExternalTrigConvEdge | \
+  60:	683b      	ldr	r3, [r7, #0]
+  62:	689b      	ldr	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:277
+  /* Set ALIGN bit according to ADC_DataAlign value */
+  /* Set EXTEN bits according to ADC_ExternalTrigConvEdge value */ 
+  /* Set EXTSEL bits according to ADC_ExternalTrigConv value */
+  /* Set CONT bit according to ADC_ContinuousConvMode value */
+  tmpreg1 |= (uint32_t)(ADC_InitStruct->ADC_DataAlign | \
+                        ADC_InitStruct->ADC_ExternalTrigConv | 
+  64:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:279
+                        ADC_InitStruct->ADC_ExternalTrigConvEdge | \
+                        ((uint32_t)ADC_InitStruct->ADC_ContinuousConvMode << 1));
+  66:	683b      	ldr	r3, [r7, #0]
+  68:	795b      	ldrb	r3, [r3, #5]
+  6a:	ea4f 0343 	mov.w	r3, r3, lsl #1
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:276
+     continuous conversion mode */
+  /* Set ALIGN bit according to ADC_DataAlign value */
+  /* Set EXTEN bits according to ADC_ExternalTrigConvEdge value */ 
+  /* Set EXTSEL bits according to ADC_ExternalTrigConv value */
+  /* Set CONT bit according to ADC_ContinuousConvMode value */
+  tmpreg1 |= (uint32_t)(ADC_InitStruct->ADC_DataAlign | \
+  6e:	ea42 0303 	orr.w	r3, r2, r3
+  72:	68fa      	ldr	r2, [r7, #12]
+  74:	ea42 0303 	orr.w	r3, r2, r3
+  78:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:282
+                        ADC_InitStruct->ADC_ExternalTrigConv | 
+                        ADC_InitStruct->ADC_ExternalTrigConvEdge | \
+                        ((uint32_t)ADC_InitStruct->ADC_ContinuousConvMode << 1));
+                        
+  /* Write to ADCx CR2 */
+  ADCx->CR2 = tmpreg1;
+  7a:	687b      	ldr	r3, [r7, #4]
+  7c:	68fa      	ldr	r2, [r7, #12]
+  7e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:285
+  /*---------------------------- ADCx SQR1 Configuration -----------------*/
+  /* Get the ADCx SQR1 value */
+  tmpreg1 = ADCx->SQR1;
+  80:	687b      	ldr	r3, [r7, #4]
+  82:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+  84:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:288
+  
+  /* Clear L bits */
+  tmpreg1 &= SQR1_L_RESET;
+  86:	68fb      	ldr	r3, [r7, #12]
+  88:	f423 0370 	bic.w	r3, r3, #15728640	; 0xf00000
+  8c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:292
+  
+  /* Configure ADCx: regular channel sequence length */
+  /* Set L bits according to ADC_NbrOfConversion value */
+  tmpreg2 |= (uint8_t)(ADC_InitStruct->ADC_NbrOfConversion - (uint8_t)1);
+  8e:	683b      	ldr	r3, [r7, #0]
+  90:	7d1b      	ldrb	r3, [r3, #20]
+  92:	f103 33ff 	add.w	r3, r3, #4294967295
+  96:	b2da      	uxtb	r2, r3
+  98:	7afb      	ldrb	r3, [r7, #11]
+  9a:	ea42 0303 	orr.w	r3, r2, r3
+  9e:	72fb      	strb	r3, [r7, #11]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:293
+  tmpreg1 |= ((uint32_t)tmpreg2 << 20);
+  a0:	7afb      	ldrb	r3, [r7, #11]
+  a2:	ea4f 5303 	mov.w	r3, r3, lsl #20
+  a6:	68fa      	ldr	r2, [r7, #12]
+  a8:	ea42 0303 	orr.w	r3, r2, r3
+  ac:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:296
+  
+  /* Write to ADCx SQR1 */
+  ADCx->SQR1 = tmpreg1;
+  ae:	687b      	ldr	r3, [r7, #4]
+  b0:	68fa      	ldr	r2, [r7, #12]
+  b2:	62da      	str	r2, [r3, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:297
+}
+  b4:	f107 0714 	add.w	r7, r7, #20
+  b8:	46bd      	mov	sp, r7
+  ba:	bc80      	pop	{r7}
+  bc:	4770      	bx	lr
+  be:	bf00      	nop
+  c0:	c0fff7fd 	.word	0xc0fff7fd
+
+Disassembly of section .text.ADC_StructInit:
+
+00000000 <ADC_StructInit>:
+ADC_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:311
+  * @param  ADC_InitStruct: pointer to an ADC_InitTypeDef structure which will 
+  *         be initialized.
+  * @retval None
+  */
+void ADC_StructInit(ADC_InitTypeDef* ADC_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:313
+  /* Initialize the ADC_Mode member */
+  ADC_InitStruct->ADC_Resolution = ADC_Resolution_12b;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:316
+
+  /* initialize the ADC_ScanConvMode member */
+  ADC_InitStruct->ADC_ScanConvMode = DISABLE;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:319
+
+  /* Initialize the ADC_ContinuousConvMode member */
+  ADC_InitStruct->ADC_ContinuousConvMode = DISABLE;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:322
+
+  /* Initialize the ADC_ExternalTrigConvEdge member */
+  ADC_InitStruct->ADC_ExternalTrigConvEdge = ADC_ExternalTrigConvEdge_None;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:325
+
+  /* Initialize the ADC_ExternalTrigConv member */
+  ADC_InitStruct->ADC_ExternalTrigConv = ADC_ExternalTrigConv_T1_CC1;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:328
+
+  /* Initialize the ADC_DataAlign member */
+  ADC_InitStruct->ADC_DataAlign = ADC_DataAlign_Right;
+  30:	687b      	ldr	r3, [r7, #4]
+  32:	f04f 0200 	mov.w	r2, #0
+  36:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:331
+
+  /* Initialize the ADC_NbrOfConversion member */
+  ADC_InitStruct->ADC_NbrOfConversion = 1;
+  38:	687b      	ldr	r3, [r7, #4]
+  3a:	f04f 0201 	mov.w	r2, #1
+  3e:	751a      	strb	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:332
+}
+  40:	f107 070c 	add.w	r7, r7, #12
+  44:	46bd      	mov	sp, r7
+  46:	bc80      	pop	{r7}
+  48:	4770      	bx	lr
+  4a:	bf00      	nop
+
+Disassembly of section .text.ADC_CommonInit:
+
+00000000 <ADC_CommonInit>:
+ADC_CommonInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:342
+  * @param  ADC_CommonInitStruct: pointer to an ADC_CommonInitTypeDef structure 
+  *         that contains the configuration information for  All ADCs peripherals.
+  * @retval None
+  */
+void ADC_CommonInit(ADC_CommonInitTypeDef* ADC_CommonInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:343
+  uint32_t tmpreg1 = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:351
+  assert_param(IS_ADC_PRESCALER(ADC_CommonInitStruct->ADC_Prescaler));
+  assert_param(IS_ADC_DMA_ACCESS_MODE(ADC_CommonInitStruct->ADC_DMAAccessMode));
+  assert_param(IS_ADC_SAMPLING_DELAY(ADC_CommonInitStruct->ADC_TwoSamplingDelay));
+  /*---------------------------- ADC CCR Configuration -----------------*/
+  /* Get the ADC CCR value */
+  tmpreg1 = ADC->CCR;
+   e:	4b10      	ldr	r3, [pc, #64]	; (50 <ADC_CommonInit+0x50>)
+  10:	685b      	ldr	r3, [r3, #4]
+  12:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:354
+  
+  /* Clear MULTI, DELAY, DMA and ADCPRE bits */
+  tmpreg1 &= CR_CLEAR_MASK;
+  14:	68fa      	ldr	r2, [r7, #12]
+  16:	4b0f      	ldr	r3, [pc, #60]	; (54 <ADC_CommonInit+0x54>)
+  18:	ea02 0303 	and.w	r3, r2, r3
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:362
+     and DMA access mode for multimode */
+  /* Set MULTI bits according to ADC_Mode value */
+  /* Set ADCPRE bits according to ADC_Prescaler value */
+  /* Set DMA bits according to ADC_DMAAccessMode value */
+  /* Set DELAY bits according to ADC_TwoSamplingDelay value */    
+  tmpreg1 |= (uint32_t)(ADC_CommonInitStruct->ADC_Mode | 
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	681a      	ldr	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:363
+                        ADC_CommonInitStruct->ADC_Prescaler | 
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	685b      	ldr	r3, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:362
+     and DMA access mode for multimode */
+  /* Set MULTI bits according to ADC_Mode value */
+  /* Set ADCPRE bits according to ADC_Prescaler value */
+  /* Set DMA bits according to ADC_DMAAccessMode value */
+  /* Set DELAY bits according to ADC_TwoSamplingDelay value */    
+  tmpreg1 |= (uint32_t)(ADC_CommonInitStruct->ADC_Mode | 
+  26:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:364
+                        ADC_CommonInitStruct->ADC_Prescaler | 
+                        ADC_CommonInitStruct->ADC_DMAAccessMode | 
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	689b      	ldr	r3, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:363
+  /* Set MULTI bits according to ADC_Mode value */
+  /* Set ADCPRE bits according to ADC_Prescaler value */
+  /* Set DMA bits according to ADC_DMAAccessMode value */
+  /* Set DELAY bits according to ADC_TwoSamplingDelay value */    
+  tmpreg1 |= (uint32_t)(ADC_CommonInitStruct->ADC_Mode | 
+                        ADC_CommonInitStruct->ADC_Prescaler | 
+  2c:	431a      	orrs	r2, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:365
+                        ADC_CommonInitStruct->ADC_DMAAccessMode | 
+                        ADC_CommonInitStruct->ADC_TwoSamplingDelay);
+  2e:	687b      	ldr	r3, [r7, #4]
+  30:	68db      	ldr	r3, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:362
+     and DMA access mode for multimode */
+  /* Set MULTI bits according to ADC_Mode value */
+  /* Set ADCPRE bits according to ADC_Prescaler value */
+  /* Set DMA bits according to ADC_DMAAccessMode value */
+  /* Set DELAY bits according to ADC_TwoSamplingDelay value */    
+  tmpreg1 |= (uint32_t)(ADC_CommonInitStruct->ADC_Mode | 
+  32:	ea42 0303 	orr.w	r3, r2, r3
+  36:	68fa      	ldr	r2, [r7, #12]
+  38:	ea42 0303 	orr.w	r3, r2, r3
+  3c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:368
+                        ADC_CommonInitStruct->ADC_Prescaler | 
+                        ADC_CommonInitStruct->ADC_DMAAccessMode | 
+                        ADC_CommonInitStruct->ADC_TwoSamplingDelay);
+                        
+  /* Write to ADC CCR */
+  ADC->CCR = tmpreg1;
+  3e:	4b04      	ldr	r3, [pc, #16]	; (50 <ADC_CommonInit+0x50>)
+  40:	68fa      	ldr	r2, [r7, #12]
+  42:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:369
+}
+  44:	f107 0714 	add.w	r7, r7, #20
+  48:	46bd      	mov	sp, r7
+  4a:	bc80      	pop	{r7}
+  4c:	4770      	bx	lr
+  4e:	bf00      	nop
+  50:	40012300 	.word	0x40012300
+  54:	fffc30e0 	.word	0xfffc30e0
+
+Disassembly of section .text.ADC_CommonStructInit:
+
+00000000 <ADC_CommonStructInit>:
+ADC_CommonStructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:378
+  * @param  ADC_CommonInitStruct: pointer to an ADC_CommonInitTypeDef structure
+  *         which will be initialized.
+  * @retval None
+  */
+void ADC_CommonStructInit(ADC_CommonInitTypeDef* ADC_CommonInitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:380
+  /* Initialize the ADC_Mode member */
+  ADC_CommonInitStruct->ADC_Mode = ADC_Mode_Independent;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:383
+
+  /* initialize the ADC_Prescaler member */
+  ADC_CommonInitStruct->ADC_Prescaler = ADC_Prescaler_Div2;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:386
+
+  /* Initialize the ADC_DMAAccessMode member */
+  ADC_CommonInitStruct->ADC_DMAAccessMode = ADC_DMAAccessMode_Disabled;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:389
+
+  /* Initialize the ADC_TwoSamplingDelay member */
+  ADC_CommonInitStruct->ADC_TwoSamplingDelay = ADC_TwoSamplingDelay_5Cycles;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:390
+}
+  28:	f107 070c 	add.w	r7, r7, #12
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+
+Disassembly of section .text.ADC_Cmd:
+
+00000000 <ADC_Cmd>:
+ADC_Cmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:400
+  * @param  NewState: new state of the ADCx peripheral. 
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_Cmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:404
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_Cmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:407
+  {
+    /* Set the ADON bit to wake up the ADC from power down mode */
+    ADCx->CR2 |= (uint32_t)ADC_CR2_ADON;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	689b      	ldr	r3, [r3, #8]
+  16:	f043 0201 	orr.w	r2, r3, #1
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	609a      	str	r2, [r3, #8]
+  1e:	e005      	b.n	2c <ADC_Cmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:412
+  }
+  else
+  {
+    /* Disable the selected ADC peripheral */
+    ADCx->CR2 &= (uint32_t)(~ADC_CR2_ADON);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	689b      	ldr	r3, [r3, #8]
+  24:	f023 0201 	bic.w	r2, r3, #1
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:414
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_AnalogWatchdogCmd:
+
+00000000 <ADC_AnalogWatchdogCmd>:
+ADC_AnalogWatchdogCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:456
+  *            @arg ADC_AnalogWatchdog_AllRegAllInjecEnable: Analog watchdog on all regular and injected channels
+  *            @arg ADC_AnalogWatchdog_None: No channel guarded by the analog watchdog
+  * @retval None	  
+  */
+void ADC_AnalogWatchdogCmd(ADC_TypeDef* ADCx, uint32_t ADC_AnalogWatchdog)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:457
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:463
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_ANALOG_WATCHDOG(ADC_AnalogWatchdog));
+  
+  /* Get the old register value */
+  tmpreg = ADCx->CR1;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	685b      	ldr	r3, [r3, #4]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:466
+  
+  /* Clear AWDEN, JAWDEN and AWDSGL bits */
+  tmpreg &= CR1_AWDMode_RESET;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 0340 	bic.w	r3, r3, #12582912	; 0xc00000
+  1c:	f423 7300 	bic.w	r3, r3, #512	; 0x200
+  20:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:469
+  
+  /* Set the analog watchdog enable mode */
+  tmpreg |= ADC_AnalogWatchdog;
+  22:	68fa      	ldr	r2, [r7, #12]
+  24:	683b      	ldr	r3, [r7, #0]
+  26:	ea42 0303 	orr.w	r3, r2, r3
+  2a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:472
+  
+  /* Store the new register value */
+  ADCx->CR1 = tmpreg;
+  2c:	687b      	ldr	r3, [r7, #4]
+  2e:	68fa      	ldr	r2, [r7, #12]
+  30:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:473
+}
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+
+Disassembly of section .text.ADC_AnalogWatchdogThresholdsConfig:
+
+00000000 <ADC_AnalogWatchdogThresholdsConfig>:
+ADC_AnalogWatchdogThresholdsConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:486
+  *          This parameter must be a 12-bit value.
+  * @retval None
+  */
+void ADC_AnalogWatchdogThresholdsConfig(ADC_TypeDef* ADCx, uint16_t HighThreshold,
+                                        uint16_t LowThreshold)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	807a      	strh	r2, [r7, #2]
+   e:	803b      	strh	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:493
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_THRESHOLD(HighThreshold));
+  assert_param(IS_ADC_THRESHOLD(LowThreshold));
+  
+  /* Set the ADCx high threshold */
+  ADCx->HTR = HighThreshold;
+  10:	887a      	ldrh	r2, [r7, #2]
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	625a      	str	r2, [r3, #36]	; 0x24
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:496
+  
+  /* Set the ADCx low threshold */
+  ADCx->LTR = LowThreshold;
+  16:	883a      	ldrh	r2, [r7, #0]
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	629a      	str	r2, [r3, #40]	; 0x28
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:497
+}
+  1c:	f107 070c 	add.w	r7, r7, #12
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+
+Disassembly of section .text.ADC_AnalogWatchdogSingleChannelConfig:
+
+00000000 <ADC_AnalogWatchdogSingleChannelConfig>:
+ADC_AnalogWatchdogSingleChannelConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:526
+  *            @arg ADC_Channel_17: ADC Channel17 selected
+  *            @arg ADC_Channel_18: ADC Channel18 selected
+  * @retval None
+  */
+void ADC_AnalogWatchdogSingleChannelConfig(ADC_TypeDef* ADCx, uint8_t ADC_Channel)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:527
+  uint32_t tmpreg = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:533
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_CHANNEL(ADC_Channel));
+  
+  /* Get the old register value */
+  tmpreg = ADCx->CR1;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	685b      	ldr	r3, [r3, #4]
+  16:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:536
+  
+  /* Clear the Analog watchdog channel select bits */
+  tmpreg &= CR1_AWDCH_RESET;
+  18:	68fb      	ldr	r3, [r7, #12]
+  1a:	f023 031f 	bic.w	r3, r3, #31
+  1e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:539
+  
+  /* Set the Analog watchdog channel */
+  tmpreg |= ADC_Channel;
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	68fa      	ldr	r2, [r7, #12]
+  24:	ea42 0303 	orr.w	r3, r2, r3
+  28:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:542
+  
+  /* Store the new register value */
+  ADCx->CR1 = tmpreg;
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	68fa      	ldr	r2, [r7, #12]
+  2e:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:543
+}
+  30:	f107 0714 	add.w	r7, r7, #20
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+
+Disassembly of section .text.ADC_TempSensorVrefintCmd:
+
+00000000 <ADC_TempSensorVrefintCmd>:
+ADC_TempSensorVrefintCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:590
+  * @param  NewState: new state of the temperature sensor and Vrefint channels.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_TempSensorVrefintCmd(FunctionalState NewState)                
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:593
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <ADC_TempSensorVrefintCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:596
+  {
+    /* Enable the temperature sensor and Vrefint channel*/
+    ADC->CCR |= (uint32_t)ADC_CCR_TSVREFE;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <ADC_TempSensorVrefintCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <ADC_TempSensorVrefintCmd+0x34>)
+  14:	6852      	ldr	r2, [r2, #4]
+  16:	f442 0200 	orr.w	r2, r2, #8388608	; 0x800000
+  1a:	605a      	str	r2, [r3, #4]
+  1c:	e005      	b.n	2a <ADC_TempSensorVrefintCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:601
+  }
+  else
+  {
+    /* Disable the temperature sensor and Vrefint channel*/
+    ADC->CCR &= (uint32_t)(~ADC_CCR_TSVREFE);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <ADC_TempSensorVrefintCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <ADC_TempSensorVrefintCmd+0x34>)
+  22:	6852      	ldr	r2, [r2, #4]
+  24:	f422 0200 	bic.w	r2, r2, #8388608	; 0x800000
+  28:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:603
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40012300 	.word	0x40012300
+
+Disassembly of section .text.ADC_VBATCmd:
+
+00000000 <ADC_VBATCmd>:
+ADC_VBATCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:616
+  * @param  NewState: new state of the VBAT channel.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_VBATCmd(FunctionalState NewState)                             
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:619
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <ADC_VBATCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:622
+  {
+    /* Enable the VBAT channel*/
+    ADC->CCR |= (uint32_t)ADC_CCR_VBATE;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <ADC_VBATCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <ADC_VBATCmd+0x34>)
+  14:	6852      	ldr	r2, [r2, #4]
+  16:	f442 0280 	orr.w	r2, r2, #4194304	; 0x400000
+  1a:	605a      	str	r2, [r3, #4]
+  1c:	e005      	b.n	2a <ADC_VBATCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:627
+  }
+  else
+  {
+    /* Disable the VBAT channel*/
+    ADC->CCR &= (uint32_t)(~ADC_CCR_VBATE);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <ADC_VBATCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <ADC_VBATCmd+0x34>)
+  22:	6852      	ldr	r2, [r2, #4]
+  24:	f422 0280 	bic.w	r2, r2, #4194304	; 0x400000
+  28:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:629
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40012300 	.word	0x40012300
+
+Disassembly of section .text.ADC_RegularChannelConfig:
+
+00000000 <ADC_RegularChannelConfig>:
+ADC_RegularChannelConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:716
+  *            @arg ADC_SampleTime_144Cycles: Sample time equal to 144 cycles	
+  *            @arg ADC_SampleTime_480Cycles: Sample time equal to 480 cycles	
+  * @retval None
+  */
+void ADC_RegularChannelConfig(ADC_TypeDef* ADCx, uint8_t ADC_Channel, uint8_t Rank, uint8_t ADC_SampleTime)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	70f9      	strb	r1, [r7, #3]
+   a:	70ba      	strb	r2, [r7, #2]
+   c:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:717
+  uint32_t tmpreg1 = 0, tmpreg2 = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	60fb      	str	r3, [r7, #12]
+  14:	f04f 0300 	mov.w	r3, #0
+  18:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:725
+  assert_param(IS_ADC_CHANNEL(ADC_Channel));
+  assert_param(IS_ADC_REGULAR_RANK(Rank));
+  assert_param(IS_ADC_SAMPLE_TIME(ADC_SampleTime));
+  
+  /* if ADC_Channel_10 ... ADC_Channel_18 is selected */
+  if (ADC_Channel > ADC_Channel_9)
+  1a:	78fb      	ldrb	r3, [r7, #3]
+  1c:	2b09      	cmp	r3, #9
+  1e:	d929      	bls.n	74 <ADC_RegularChannelConfig+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:728
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SMPR1;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	68db      	ldr	r3, [r3, #12]
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:731
+    
+    /* Calculate the mask to clear */
+    tmpreg2 = SMPR1_SMP_SET << (3 * (ADC_Channel - 10));
+  26:	78fa      	ldrb	r2, [r7, #3]
+  28:	4613      	mov	r3, r2
+  2a:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  2e:	189b      	adds	r3, r3, r2
+  30:	f1a3 031e 	sub.w	r3, r3, #30
+  34:	f04f 0207 	mov.w	r2, #7
+  38:	fa02 f303 	lsl.w	r3, r2, r3
+  3c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:734
+    
+    /* Clear the old sample time */
+    tmpreg1 &= ~tmpreg2;
+  3e:	68bb      	ldr	r3, [r7, #8]
+  40:	ea6f 0303 	mvn.w	r3, r3
+  44:	68fa      	ldr	r2, [r7, #12]
+  46:	ea02 0303 	and.w	r3, r2, r3
+  4a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:737
+    
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_SampleTime << (3 * (ADC_Channel - 10));
+  4c:	7879      	ldrb	r1, [r7, #1]
+  4e:	78fa      	ldrb	r2, [r7, #3]
+  50:	4613      	mov	r3, r2
+  52:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  56:	189b      	adds	r3, r3, r2
+  58:	f1a3 031e 	sub.w	r3, r3, #30
+  5c:	fa01 f303 	lsl.w	r3, r1, r3
+  60:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:740
+    
+    /* Set the new sample time */
+    tmpreg1 |= tmpreg2;
+  62:	68fa      	ldr	r2, [r7, #12]
+  64:	68bb      	ldr	r3, [r7, #8]
+  66:	ea42 0303 	orr.w	r3, r2, r3
+  6a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:743
+    
+    /* Store the new register value */
+    ADCx->SMPR1 = tmpreg1;
+  6c:	687b      	ldr	r3, [r7, #4]
+  6e:	68fa      	ldr	r2, [r7, #12]
+  70:	60da      	str	r2, [r3, #12]
+  72:	e024      	b.n	be <ADC_RegularChannelConfig+0xbe>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:748
+  }
+  else /* ADC_Channel include in ADC_Channel_[0..9] */
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SMPR2;
+  74:	687b      	ldr	r3, [r7, #4]
+  76:	691b      	ldr	r3, [r3, #16]
+  78:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:751
+    
+    /* Calculate the mask to clear */
+    tmpreg2 = SMPR2_SMP_SET << (3 * ADC_Channel);
+  7a:	78fa      	ldrb	r2, [r7, #3]
+  7c:	4613      	mov	r3, r2
+  7e:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  82:	189b      	adds	r3, r3, r2
+  84:	f04f 0207 	mov.w	r2, #7
+  88:	fa02 f303 	lsl.w	r3, r2, r3
+  8c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:754
+    
+    /* Clear the old sample time */
+    tmpreg1 &= ~tmpreg2;
+  8e:	68bb      	ldr	r3, [r7, #8]
+  90:	ea6f 0303 	mvn.w	r3, r3
+  94:	68fa      	ldr	r2, [r7, #12]
+  96:	ea02 0303 	and.w	r3, r2, r3
+  9a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:757
+    
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_SampleTime << (3 * ADC_Channel);
+  9c:	7879      	ldrb	r1, [r7, #1]
+  9e:	78fa      	ldrb	r2, [r7, #3]
+  a0:	4613      	mov	r3, r2
+  a2:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  a6:	189b      	adds	r3, r3, r2
+  a8:	fa01 f303 	lsl.w	r3, r1, r3
+  ac:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:760
+    
+    /* Set the new sample time */
+    tmpreg1 |= tmpreg2;
+  ae:	68fa      	ldr	r2, [r7, #12]
+  b0:	68bb      	ldr	r3, [r7, #8]
+  b2:	ea42 0303 	orr.w	r3, r2, r3
+  b6:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:763
+    
+    /* Store the new register value */
+    ADCx->SMPR2 = tmpreg1;
+  b8:	687b      	ldr	r3, [r7, #4]
+  ba:	68fa      	ldr	r2, [r7, #12]
+  bc:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:766
+  }
+  /* For Rank 1 to 6 */
+  if (Rank < 7)
+  be:	78bb      	ldrb	r3, [r7, #2]
+  c0:	2b06      	cmp	r3, #6
+  c2:	d829      	bhi.n	118 <ADC_RegularChannelConfig+0x118>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:769
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SQR3;
+  c4:	687b      	ldr	r3, [r7, #4]
+  c6:	6b5b      	ldr	r3, [r3, #52]	; 0x34
+  c8:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:772
+    
+    /* Calculate the mask to clear */
+    tmpreg2 = SQR3_SQ_SET << (5 * (Rank - 1));
+  ca:	78bb      	ldrb	r3, [r7, #2]
+  cc:	f103 32ff 	add.w	r2, r3, #4294967295
+  d0:	4613      	mov	r3, r2
+  d2:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  d6:	189b      	adds	r3, r3, r2
+  d8:	f04f 021f 	mov.w	r2, #31
+  dc:	fa02 f303 	lsl.w	r3, r2, r3
+  e0:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:775
+    
+    /* Clear the old SQx bits for the selected rank */
+    tmpreg1 &= ~tmpreg2;
+  e2:	68bb      	ldr	r3, [r7, #8]
+  e4:	ea6f 0303 	mvn.w	r3, r3
+  e8:	68fa      	ldr	r2, [r7, #12]
+  ea:	ea02 0303 	and.w	r3, r2, r3
+  ee:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:778
+    
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 1));
+  f0:	78f9      	ldrb	r1, [r7, #3]
+  f2:	78bb      	ldrb	r3, [r7, #2]
+  f4:	f103 32ff 	add.w	r2, r3, #4294967295
+  f8:	4613      	mov	r3, r2
+  fa:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  fe:	189b      	adds	r3, r3, r2
+ 100:	fa01 f303 	lsl.w	r3, r1, r3
+ 104:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:781
+    
+    /* Set the SQx bits for the selected rank */
+    tmpreg1 |= tmpreg2;
+ 106:	68fa      	ldr	r2, [r7, #12]
+ 108:	68bb      	ldr	r3, [r7, #8]
+ 10a:	ea42 0303 	orr.w	r3, r2, r3
+ 10e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:784
+    
+    /* Store the new register value */
+    ADCx->SQR3 = tmpreg1;
+ 110:	687b      	ldr	r3, [r7, #4]
+ 112:	68fa      	ldr	r2, [r7, #12]
+ 114:	635a      	str	r2, [r3, #52]	; 0x34
+ 116:	e055      	b.n	1c4 <ADC_RegularChannelConfig+0x1c4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:787
+  }
+  /* For Rank 7 to 12 */
+  else if (Rank < 13)
+ 118:	78bb      	ldrb	r3, [r7, #2]
+ 11a:	2b0c      	cmp	r3, #12
+ 11c:	d829      	bhi.n	172 <ADC_RegularChannelConfig+0x172>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:790
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SQR2;
+ 11e:	687b      	ldr	r3, [r7, #4]
+ 120:	6b1b      	ldr	r3, [r3, #48]	; 0x30
+ 122:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:793
+    
+    /* Calculate the mask to clear */
+    tmpreg2 = SQR2_SQ_SET << (5 * (Rank - 7));
+ 124:	78ba      	ldrb	r2, [r7, #2]
+ 126:	4613      	mov	r3, r2
+ 128:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 12c:	189b      	adds	r3, r3, r2
+ 12e:	f1a3 0323 	sub.w	r3, r3, #35	; 0x23
+ 132:	f04f 021f 	mov.w	r2, #31
+ 136:	fa02 f303 	lsl.w	r3, r2, r3
+ 13a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:796
+    
+    /* Clear the old SQx bits for the selected rank */
+    tmpreg1 &= ~tmpreg2;
+ 13c:	68bb      	ldr	r3, [r7, #8]
+ 13e:	ea6f 0303 	mvn.w	r3, r3
+ 142:	68fa      	ldr	r2, [r7, #12]
+ 144:	ea02 0303 	and.w	r3, r2, r3
+ 148:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:799
+    
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 7));
+ 14a:	78f9      	ldrb	r1, [r7, #3]
+ 14c:	78ba      	ldrb	r2, [r7, #2]
+ 14e:	4613      	mov	r3, r2
+ 150:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 154:	189b      	adds	r3, r3, r2
+ 156:	f1a3 0323 	sub.w	r3, r3, #35	; 0x23
+ 15a:	fa01 f303 	lsl.w	r3, r1, r3
+ 15e:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:802
+    
+    /* Set the SQx bits for the selected rank */
+    tmpreg1 |= tmpreg2;
+ 160:	68fa      	ldr	r2, [r7, #12]
+ 162:	68bb      	ldr	r3, [r7, #8]
+ 164:	ea42 0303 	orr.w	r3, r2, r3
+ 168:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:805
+    
+    /* Store the new register value */
+    ADCx->SQR2 = tmpreg1;
+ 16a:	687b      	ldr	r3, [r7, #4]
+ 16c:	68fa      	ldr	r2, [r7, #12]
+ 16e:	631a      	str	r2, [r3, #48]	; 0x30
+ 170:	e028      	b.n	1c4 <ADC_RegularChannelConfig+0x1c4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:811
+  }
+  /* For Rank 13 to 16 */
+  else
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SQR1;
+ 172:	687b      	ldr	r3, [r7, #4]
+ 174:	6adb      	ldr	r3, [r3, #44]	; 0x2c
+ 176:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:814
+    
+    /* Calculate the mask to clear */
+    tmpreg2 = SQR1_SQ_SET << (5 * (Rank - 13));
+ 178:	78ba      	ldrb	r2, [r7, #2]
+ 17a:	4613      	mov	r3, r2
+ 17c:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 180:	189b      	adds	r3, r3, r2
+ 182:	f1a3 0341 	sub.w	r3, r3, #65	; 0x41
+ 186:	f04f 021f 	mov.w	r2, #31
+ 18a:	fa02 f303 	lsl.w	r3, r2, r3
+ 18e:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:817
+    
+    /* Clear the old SQx bits for the selected rank */
+    tmpreg1 &= ~tmpreg2;
+ 190:	68bb      	ldr	r3, [r7, #8]
+ 192:	ea6f 0303 	mvn.w	r3, r3
+ 196:	68fa      	ldr	r2, [r7, #12]
+ 198:	ea02 0303 	and.w	r3, r2, r3
+ 19c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:820
+    
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_Channel << (5 * (Rank - 13));
+ 19e:	78f9      	ldrb	r1, [r7, #3]
+ 1a0:	78ba      	ldrb	r2, [r7, #2]
+ 1a2:	4613      	mov	r3, r2
+ 1a4:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 1a8:	189b      	adds	r3, r3, r2
+ 1aa:	f1a3 0341 	sub.w	r3, r3, #65	; 0x41
+ 1ae:	fa01 f303 	lsl.w	r3, r1, r3
+ 1b2:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:823
+    
+    /* Set the SQx bits for the selected rank */
+    tmpreg1 |= tmpreg2;
+ 1b4:	68fa      	ldr	r2, [r7, #12]
+ 1b6:	68bb      	ldr	r3, [r7, #8]
+ 1b8:	ea42 0303 	orr.w	r3, r2, r3
+ 1bc:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:826
+    
+    /* Store the new register value */
+    ADCx->SQR1 = tmpreg1;
+ 1be:	687b      	ldr	r3, [r7, #4]
+ 1c0:	68fa      	ldr	r2, [r7, #12]
+ 1c2:	62da      	str	r2, [r3, #44]	; 0x2c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:828
+  }
+}
+ 1c4:	f107 0714 	add.w	r7, r7, #20
+ 1c8:	46bd      	mov	sp, r7
+ 1ca:	bc80      	pop	{r7}
+ 1cc:	4770      	bx	lr
+ 1ce:	bf00      	nop
+
+Disassembly of section .text.ADC_SoftwareStartConv:
+
+00000000 <ADC_SoftwareStartConv>:
+ADC_SoftwareStartConv():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:836
+  * @brief  Enables the selected ADC software start conversion of the regular channels.
+  * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
+  * @retval None
+  */
+void ADC_SoftwareStartConv(ADC_TypeDef* ADCx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:841
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  
+  /* Enable the selected ADC conversion for regular group */
+  ADCx->CR2 |= (uint32_t)ADC_CR2_SWSTART;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	689b      	ldr	r3, [r3, #8]
+   c:	f043 4280 	orr.w	r2, r3, #1073741824	; 0x40000000
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:842
+}
+  14:	f107 070c 	add.w	r7, r7, #12
+  18:	46bd      	mov	sp, r7
+  1a:	bc80      	pop	{r7}
+  1c:	4770      	bx	lr
+  1e:	bf00      	nop
+
+Disassembly of section .text.ADC_GetSoftwareStartConvStatus:
+
+00000000 <ADC_GetSoftwareStartConvStatus>:
+ADC_GetSoftwareStartConvStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:850
+  * @brief  Gets the selected ADC Software start regular conversion Status.
+  * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
+  * @retval The new state of ADC software start conversion (SET or RESET).
+  */
+FlagStatus ADC_GetSoftwareStartConvStatus(ADC_TypeDef* ADCx)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:851
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:856
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  
+  /* Check the status of SWSTART bit */
+  if ((ADCx->CR2 & ADC_CR2_SWSTART) != (uint32_t)RESET)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	f003 4380 	and.w	r3, r3, #1073741824	; 0x40000000
+  16:	2b00      	cmp	r3, #0
+  18:	d003      	beq.n	22 <ADC_GetSoftwareStartConvStatus+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:859
+  {
+    /* SWSTART bit is set */
+    bitstatus = SET;
+  1a:	f04f 0301 	mov.w	r3, #1
+  1e:	73fb      	strb	r3, [r7, #15]
+  20:	e002      	b.n	28 <ADC_GetSoftwareStartConvStatus+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:864
+  }
+  else
+  {
+    /* SWSTART bit is reset */
+    bitstatus = RESET;
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:868
+  }
+  
+  /* Return the SWSTART bit status */
+  return  bitstatus;
+  28:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:869
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_EOCOnEachRegularChannelCmd:
+
+00000000 <ADC_EOCOnEachRegularChannelCmd>:
+ADC_EOCOnEachRegularChannelCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:880
+  * @param  NewState: new state of the selected ADC EOC flag rising
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_EOCOnEachRegularChannelCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:885
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_EOCOnEachRegularChannelCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:888
+  {
+    /* Enable the selected ADC EOC rising on each regular channel conversion */
+    ADCx->CR2 |= (uint32_t)ADC_CR2_EOCS;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	689b      	ldr	r3, [r3, #8]
+  16:	f443 6280 	orr.w	r2, r3, #1024	; 0x400
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	609a      	str	r2, [r3, #8]
+  1e:	e005      	b.n	2c <ADC_EOCOnEachRegularChannelCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:893
+  }
+  else
+  {
+    /* Disable the selected ADC EOC rising on each regular channel conversion */
+    ADCx->CR2 &= (uint32_t)(~ADC_CR2_EOCS);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	689b      	ldr	r3, [r3, #8]
+  24:	f423 6280 	bic.w	r2, r3, #1024	; 0x400
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:895
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_ContinuousModeCmd:
+
+00000000 <ADC_ContinuousModeCmd>:
+ADC_ContinuousModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:905
+  * @param  NewState: new state of the selected ADC continuous conversion mode
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_ContinuousModeCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:910
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_ContinuousModeCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:913
+  {
+    /* Enable the selected ADC continuous conversion mode */
+    ADCx->CR2 |= (uint32_t)ADC_CR2_CONT;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	689b      	ldr	r3, [r3, #8]
+  16:	f043 0202 	orr.w	r2, r3, #2
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	609a      	str	r2, [r3, #8]
+  1e:	e005      	b.n	2c <ADC_ContinuousModeCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:918
+  }
+  else
+  {
+    /* Disable the selected ADC continuous conversion mode */
+    ADCx->CR2 &= (uint32_t)(~ADC_CR2_CONT);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	689b      	ldr	r3, [r3, #8]
+  24:	f023 0202 	bic.w	r2, r3, #2
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:920
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_DiscModeChannelCountConfig:
+
+00000000 <ADC_DiscModeChannelCountConfig>:
+ADC_DiscModeChannelCountConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:931
+  * @param  Number: specifies the discontinuous mode regular channel count value.
+  *          This number must be between 1 and 8.
+  * @retval None
+  */
+void ADC_DiscModeChannelCountConfig(ADC_TypeDef* ADCx, uint8_t Number)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:932
+  uint32_t tmpreg1 = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:933
+  uint32_t tmpreg2 = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:940
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_REGULAR_DISC_NUMBER(Number));
+  
+  /* Get the old register value */
+  tmpreg1 = ADCx->CR1;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	685b      	ldr	r3, [r3, #4]
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:943
+  
+  /* Clear the old discontinuous mode channel count */
+  tmpreg1 &= CR1_DISCNUM_RESET;
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	f423 4360 	bic.w	r3, r3, #57344	; 0xe000
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:946
+  
+  /* Set the discontinuous mode channel count */
+  tmpreg2 = Number - 1;
+  26:	78fb      	ldrb	r3, [r7, #3]
+  28:	f103 33ff 	add.w	r3, r3, #4294967295
+  2c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:947
+  tmpreg1 |= tmpreg2 << 13;
+  2e:	68bb      	ldr	r3, [r7, #8]
+  30:	ea4f 3343 	mov.w	r3, r3, lsl #13
+  34:	68fa      	ldr	r2, [r7, #12]
+  36:	ea42 0303 	orr.w	r3, r2, r3
+  3a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:950
+  
+  /* Store the new register value */
+  ADCx->CR1 = tmpreg1;
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	68fa      	ldr	r2, [r7, #12]
+  40:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:951
+}
+  42:	f107 0714 	add.w	r7, r7, #20
+  46:	46bd      	mov	sp, r7
+  48:	bc80      	pop	{r7}
+  4a:	4770      	bx	lr
+
+Disassembly of section .text.ADC_DiscModeCmd:
+
+00000000 <ADC_DiscModeCmd>:
+ADC_DiscModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:963
+  *         regular group channel.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_DiscModeCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:968
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_DiscModeCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:971
+  {
+    /* Enable the selected ADC regular discontinuous mode */
+    ADCx->CR1 |= (uint32_t)ADC_CR1_DISCEN;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	685b      	ldr	r3, [r3, #4]
+  16:	f443 6200 	orr.w	r2, r3, #2048	; 0x800
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	605a      	str	r2, [r3, #4]
+  1e:	e005      	b.n	2c <ADC_DiscModeCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:976
+  }
+  else
+  {
+    /* Disable the selected ADC regular discontinuous mode */
+    ADCx->CR1 &= (uint32_t)(~ADC_CR1_DISCEN);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	685b      	ldr	r3, [r3, #4]
+  24:	f423 6200 	bic.w	r2, r3, #2048	; 0x800
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:978
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_GetConversionValue:
+
+00000000 <ADC_GetConversionValue>:
+ADC_GetConversionValue():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:986
+  * @brief  Returns the last ADCx conversion result data for regular channel.
+  * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
+  * @retval The Data conversion value.
+  */
+uint16_t ADC_GetConversionValue(ADC_TypeDef* ADCx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:991
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  
+  /* Return the selected ADC conversion value */
+  return (uint16_t) ADCx->DR;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	6cdb      	ldr	r3, [r3, #76]	; 0x4c
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:992
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.ADC_GetMultiModeConversionValue:
+
+00000000 <ADC_GetMultiModeConversionValue>:
+ADC_GetMultiModeConversionValue():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1007
+  * @note   In triple mode, the value returned by this function is as following
+  *           Data[15:0] : these bits contain alternatively the regular data of ADC1, ADC3 and ADC2.
+  *           Data[31:16]: these bits contain alternatively the regular data of ADC2, ADC1 and ADC3.           
+  */
+uint32_t ADC_GetMultiModeConversionValue(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1009
+  /* Return the multi mode conversion value */
+  return (*(__IO uint32_t *) CDR_ADDRESS);
+   4:	4b02      	ldr	r3, [pc, #8]	; (10 <ADC_GetMultiModeConversionValue+0x10>)
+   6:	681b      	ldr	r3, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1010
+}
+   8:	4618      	mov	r0, r3
+   a:	46bd      	mov	sp, r7
+   c:	bc80      	pop	{r7}
+   e:	4770      	bx	lr
+  10:	40012308 	.word	0x40012308
+
+Disassembly of section .text.ADC_DMACmd:
+
+00000000 <ADC_DMACmd>:
+ADC_DMACmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1053
+  * @param  NewState: new state of the selected ADC DMA transfer.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_DMACmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1057
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_DMACmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1060
+  {
+    /* Enable the selected ADC DMA request */
+    ADCx->CR2 |= (uint32_t)ADC_CR2_DMA;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	689b      	ldr	r3, [r3, #8]
+  16:	f443 7280 	orr.w	r2, r3, #256	; 0x100
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	609a      	str	r2, [r3, #8]
+  1e:	e005      	b.n	2c <ADC_DMACmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1065
+  }
+  else
+  {
+    /* Disable the selected ADC DMA request */
+    ADCx->CR2 &= (uint32_t)(~ADC_CR2_DMA);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	689b      	ldr	r3, [r3, #8]
+  24:	f423 7280 	bic.w	r2, r3, #256	; 0x100
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1067
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_DMARequestAfterLastTransferCmd:
+
+00000000 <ADC_DMARequestAfterLastTransferCmd>:
+ADC_DMARequestAfterLastTransferCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1077
+  * @param  NewState: new state of the selected ADC DMA request after last transfer.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_DMARequestAfterLastTransferCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1081
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_DMARequestAfterLastTransferCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1084
+  {
+    /* Enable the selected ADC DMA request after last transfer */
+    ADCx->CR2 |= (uint32_t)ADC_CR2_DDS;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	689b      	ldr	r3, [r3, #8]
+  16:	f443 7200 	orr.w	r2, r3, #512	; 0x200
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	609a      	str	r2, [r3, #8]
+  1e:	e005      	b.n	2c <ADC_DMARequestAfterLastTransferCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1089
+  }
+  else
+  {
+    /* Disable the selected ADC DMA request after last transfer */
+    ADCx->CR2 &= (uint32_t)(~ADC_CR2_DDS);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	689b      	ldr	r3, [r3, #8]
+  24:	f423 7200 	bic.w	r2, r3, #512	; 0x200
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1091
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_MultiModeDMARequestAfterLastTransferCmd:
+
+00000000 <ADC_MultiModeDMARequestAfterLastTransferCmd>:
+ADC_MultiModeDMARequestAfterLastTransferCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1104
+  *         by ADC_CommonInitStruct.ADC_DMAAccessMode structure member) is 
+  *          ADC_DMAAccessMode_1, ADC_DMAAccessMode_2 or ADC_DMAAccessMode_3.     
+  * @retval None
+  */
+void ADC_MultiModeDMARequestAfterLastTransferCmd(FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1107
+  /* Check the parameters */
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   a:	79fb      	ldrb	r3, [r7, #7]
+   c:	2b00      	cmp	r3, #0
+   e:	d006      	beq.n	1e <ADC_MultiModeDMARequestAfterLastTransferCmd+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1110
+  {
+    /* Enable the selected ADC DMA request after last transfer */
+    ADC->CCR |= (uint32_t)ADC_CCR_DDS;
+  10:	4b08      	ldr	r3, [pc, #32]	; (34 <ADC_MultiModeDMARequestAfterLastTransferCmd+0x34>)
+  12:	4a08      	ldr	r2, [pc, #32]	; (34 <ADC_MultiModeDMARequestAfterLastTransferCmd+0x34>)
+  14:	6852      	ldr	r2, [r2, #4]
+  16:	f442 5200 	orr.w	r2, r2, #8192	; 0x2000
+  1a:	605a      	str	r2, [r3, #4]
+  1c:	e005      	b.n	2a <ADC_MultiModeDMARequestAfterLastTransferCmd+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1115
+  }
+  else
+  {
+    /* Disable the selected ADC DMA request after last transfer */
+    ADC->CCR &= (uint32_t)(~ADC_CCR_DDS);
+  1e:	4b05      	ldr	r3, [pc, #20]	; (34 <ADC_MultiModeDMARequestAfterLastTransferCmd+0x34>)
+  20:	4a04      	ldr	r2, [pc, #16]	; (34 <ADC_MultiModeDMARequestAfterLastTransferCmd+0x34>)
+  22:	6852      	ldr	r2, [r2, #4]
+  24:	f422 5200 	bic.w	r2, r2, #8192	; 0x2000
+  28:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1117
+  }
+}
+  2a:	f107 070c 	add.w	r7, r7, #12
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+  34:	40012300 	.word	0x40012300
+
+Disassembly of section .text.ADC_InjectedChannelConfig:
+
+00000000 <ADC_InjectedChannelConfig>:
+ADC_InjectedChannelConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1191
+  *            @arg ADC_SampleTime_144Cycles: Sample time equal to 144 cycles	
+  *            @arg ADC_SampleTime_480Cycles: Sample time equal to 480 cycles	
+  * @retval None
+  */
+void ADC_InjectedChannelConfig(ADC_TypeDef* ADCx, uint8_t ADC_Channel, uint8_t Rank, uint8_t ADC_SampleTime)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	70f9      	strb	r1, [r7, #3]
+   a:	70ba      	strb	r2, [r7, #2]
+   c:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1192
+  uint32_t tmpreg1 = 0, tmpreg2 = 0, tmpreg3 = 0;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	617b      	str	r3, [r7, #20]
+  14:	f04f 0300 	mov.w	r3, #0
+  18:	613b      	str	r3, [r7, #16]
+  1a:	f04f 0300 	mov.w	r3, #0
+  1e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1199
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_CHANNEL(ADC_Channel));
+  assert_param(IS_ADC_INJECTED_RANK(Rank));
+  assert_param(IS_ADC_SAMPLE_TIME(ADC_SampleTime));
+  /* if ADC_Channel_10 ... ADC_Channel_18 is selected */
+  if (ADC_Channel > ADC_Channel_9)
+  20:	78fb      	ldrb	r3, [r7, #3]
+  22:	2b09      	cmp	r3, #9
+  24:	d929      	bls.n	7a <ADC_InjectedChannelConfig+0x7a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1202
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SMPR1;
+  26:	687b      	ldr	r3, [r7, #4]
+  28:	68db      	ldr	r3, [r3, #12]
+  2a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1204
+    /* Calculate the mask to clear */
+    tmpreg2 = SMPR1_SMP_SET << (3*(ADC_Channel - 10));
+  2c:	78fa      	ldrb	r2, [r7, #3]
+  2e:	4613      	mov	r3, r2
+  30:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  34:	189b      	adds	r3, r3, r2
+  36:	f1a3 031e 	sub.w	r3, r3, #30
+  3a:	f04f 0207 	mov.w	r2, #7
+  3e:	fa02 f303 	lsl.w	r3, r2, r3
+  42:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1206
+    /* Clear the old sample time */
+    tmpreg1 &= ~tmpreg2;
+  44:	693b      	ldr	r3, [r7, #16]
+  46:	ea6f 0303 	mvn.w	r3, r3
+  4a:	697a      	ldr	r2, [r7, #20]
+  4c:	ea02 0303 	and.w	r3, r2, r3
+  50:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1208
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_SampleTime << (3*(ADC_Channel - 10));
+  52:	7879      	ldrb	r1, [r7, #1]
+  54:	78fa      	ldrb	r2, [r7, #3]
+  56:	4613      	mov	r3, r2
+  58:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  5c:	189b      	adds	r3, r3, r2
+  5e:	f1a3 031e 	sub.w	r3, r3, #30
+  62:	fa01 f303 	lsl.w	r3, r1, r3
+  66:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1210
+    /* Set the new sample time */
+    tmpreg1 |= tmpreg2;
+  68:	697a      	ldr	r2, [r7, #20]
+  6a:	693b      	ldr	r3, [r7, #16]
+  6c:	ea42 0303 	orr.w	r3, r2, r3
+  70:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1212
+    /* Store the new register value */
+    ADCx->SMPR1 = tmpreg1;
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	697a      	ldr	r2, [r7, #20]
+  76:	60da      	str	r2, [r3, #12]
+  78:	e024      	b.n	c4 <ADC_InjectedChannelConfig+0xc4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1217
+  }
+  else /* ADC_Channel include in ADC_Channel_[0..9] */
+  {
+    /* Get the old register value */
+    tmpreg1 = ADCx->SMPR2;
+  7a:	687b      	ldr	r3, [r7, #4]
+  7c:	691b      	ldr	r3, [r3, #16]
+  7e:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1219
+    /* Calculate the mask to clear */
+    tmpreg2 = SMPR2_SMP_SET << (3 * ADC_Channel);
+  80:	78fa      	ldrb	r2, [r7, #3]
+  82:	4613      	mov	r3, r2
+  84:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  88:	189b      	adds	r3, r3, r2
+  8a:	f04f 0207 	mov.w	r2, #7
+  8e:	fa02 f303 	lsl.w	r3, r2, r3
+  92:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1221
+    /* Clear the old sample time */
+    tmpreg1 &= ~tmpreg2;
+  94:	693b      	ldr	r3, [r7, #16]
+  96:	ea6f 0303 	mvn.w	r3, r3
+  9a:	697a      	ldr	r2, [r7, #20]
+  9c:	ea02 0303 	and.w	r3, r2, r3
+  a0:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1223
+    /* Calculate the mask to set */
+    tmpreg2 = (uint32_t)ADC_SampleTime << (3 * ADC_Channel);
+  a2:	7879      	ldrb	r1, [r7, #1]
+  a4:	78fa      	ldrb	r2, [r7, #3]
+  a6:	4613      	mov	r3, r2
+  a8:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  ac:	189b      	adds	r3, r3, r2
+  ae:	fa01 f303 	lsl.w	r3, r1, r3
+  b2:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1225
+    /* Set the new sample time */
+    tmpreg1 |= tmpreg2;
+  b4:	697a      	ldr	r2, [r7, #20]
+  b6:	693b      	ldr	r3, [r7, #16]
+  b8:	ea42 0303 	orr.w	r3, r2, r3
+  bc:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1227
+    /* Store the new register value */
+    ADCx->SMPR2 = tmpreg1;
+  be:	687b      	ldr	r3, [r7, #4]
+  c0:	697a      	ldr	r2, [r7, #20]
+  c2:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1231
+  }
+  /* Rank configuration */
+  /* Get the old register value */
+  tmpreg1 = ADCx->JSQR;
+  c4:	687b      	ldr	r3, [r7, #4]
+  c6:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  c8:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1233
+  /* Get JL value: Number = JL+1 */
+  tmpreg3 =  (tmpreg1 & JSQR_JL_SET)>> 20;
+  ca:	697b      	ldr	r3, [r7, #20]
+  cc:	f403 1340 	and.w	r3, r3, #3145728	; 0x300000
+  d0:	ea4f 5313 	mov.w	r3, r3, lsr #20
+  d4:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1235
+  /* Calculate the mask to clear: ((Rank-1)+(4-JL-1)) */
+  tmpreg2 = JSQR_JSQ_SET << (5 * (uint8_t)((Rank + 3) - (tmpreg3 + 1)));
+  d6:	68fb      	ldr	r3, [r7, #12]
+  d8:	b2db      	uxtb	r3, r3
+  da:	ea6f 0303 	mvn.w	r3, r3
+  de:	b2da      	uxtb	r2, r3
+  e0:	78bb      	ldrb	r3, [r7, #2]
+  e2:	18d3      	adds	r3, r2, r3
+  e4:	b2db      	uxtb	r3, r3
+  e6:	f103 0303 	add.w	r3, r3, #3
+  ea:	b2db      	uxtb	r3, r3
+  ec:	461a      	mov	r2, r3
+  ee:	4613      	mov	r3, r2
+  f0:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  f4:	189b      	adds	r3, r3, r2
+  f6:	f04f 021f 	mov.w	r2, #31
+  fa:	fa02 f303 	lsl.w	r3, r2, r3
+  fe:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1237
+  /* Clear the old JSQx bits for the selected rank */
+  tmpreg1 &= ~tmpreg2;
+ 100:	693b      	ldr	r3, [r7, #16]
+ 102:	ea6f 0303 	mvn.w	r3, r3
+ 106:	697a      	ldr	r2, [r7, #20]
+ 108:	ea02 0303 	and.w	r3, r2, r3
+ 10c:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1239
+  /* Calculate the mask to set: ((Rank-1)+(4-JL-1)) */
+  tmpreg2 = (uint32_t)ADC_Channel << (5 * (uint8_t)((Rank + 3) - (tmpreg3 + 1)));
+ 10e:	78f9      	ldrb	r1, [r7, #3]
+ 110:	68fb      	ldr	r3, [r7, #12]
+ 112:	b2db      	uxtb	r3, r3
+ 114:	ea6f 0303 	mvn.w	r3, r3
+ 118:	b2da      	uxtb	r2, r3
+ 11a:	78bb      	ldrb	r3, [r7, #2]
+ 11c:	18d3      	adds	r3, r2, r3
+ 11e:	b2db      	uxtb	r3, r3
+ 120:	f103 0303 	add.w	r3, r3, #3
+ 124:	b2db      	uxtb	r3, r3
+ 126:	461a      	mov	r2, r3
+ 128:	4613      	mov	r3, r2
+ 12a:	ea4f 0383 	mov.w	r3, r3, lsl #2
+ 12e:	189b      	adds	r3, r3, r2
+ 130:	fa01 f303 	lsl.w	r3, r1, r3
+ 134:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1241
+  /* Set the JSQx bits for the selected rank */
+  tmpreg1 |= tmpreg2;
+ 136:	697a      	ldr	r2, [r7, #20]
+ 138:	693b      	ldr	r3, [r7, #16]
+ 13a:	ea42 0303 	orr.w	r3, r2, r3
+ 13e:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1243
+  /* Store the new register value */
+  ADCx->JSQR = tmpreg1;
+ 140:	687b      	ldr	r3, [r7, #4]
+ 142:	697a      	ldr	r2, [r7, #20]
+ 144:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1244
+}
+ 146:	f107 071c 	add.w	r7, r7, #28
+ 14a:	46bd      	mov	sp, r7
+ 14c:	bc80      	pop	{r7}
+ 14e:	4770      	bx	lr
+
+Disassembly of section .text.ADC_InjectedSequencerLengthConfig:
+
+00000000 <ADC_InjectedSequencerLengthConfig>:
+ADC_InjectedSequencerLengthConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1254
+  * @param  Length: The sequencer length. 
+  *          This parameter must be a number between 1 to 4.
+  * @retval None
+  */
+void ADC_InjectedSequencerLengthConfig(ADC_TypeDef* ADCx, uint8_t Length)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1255
+  uint32_t tmpreg1 = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1256
+  uint32_t tmpreg2 = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1262
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_INJECTED_LENGTH(Length));
+  
+  /* Get the old register value */
+  tmpreg1 = ADCx->JSQR;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	6b9b      	ldr	r3, [r3, #56]	; 0x38
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1265
+  
+  /* Clear the old injected sequence length JL bits */
+  tmpreg1 &= JSQR_JL_RESET;
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	f423 1340 	bic.w	r3, r3, #3145728	; 0x300000
+  24:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1268
+  
+  /* Set the injected sequence length JL bits */
+  tmpreg2 = Length - 1; 
+  26:	78fb      	ldrb	r3, [r7, #3]
+  28:	f103 33ff 	add.w	r3, r3, #4294967295
+  2c:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1269
+  tmpreg1 |= tmpreg2 << 20;
+  2e:	68bb      	ldr	r3, [r7, #8]
+  30:	ea4f 5303 	mov.w	r3, r3, lsl #20
+  34:	68fa      	ldr	r2, [r7, #12]
+  36:	ea42 0303 	orr.w	r3, r2, r3
+  3a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1272
+  
+  /* Store the new register value */
+  ADCx->JSQR = tmpreg1;
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	68fa      	ldr	r2, [r7, #12]
+  40:	639a      	str	r2, [r3, #56]	; 0x38
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1273
+}
+  42:	f107 0714 	add.w	r7, r7, #20
+  46:	46bd      	mov	sp, r7
+  48:	bc80      	pop	{r7}
+  4a:	4770      	bx	lr
+
+Disassembly of section .text.ADC_SetInjectedOffset:
+
+00000000 <ADC_SetInjectedOffset>:
+ADC_SetInjectedOffset():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1289
+  * @param  Offset: the offset value for the selected ADC injected channel
+  *          This parameter must be a 12bit value.
+  * @retval None
+  */
+void ADC_SetInjectedOffset(ADC_TypeDef* ADCx, uint8_t ADC_InjectedChannel, uint16_t Offset)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	70fa      	strb	r2, [r7, #3]
+   e:	803b      	strh	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1290
+    __IO uint32_t tmp = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1296
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_INJECTED_CHANNEL(ADC_InjectedChannel));
+  assert_param(IS_ADC_OFFSET(Offset));
+  
+  tmp = (uint32_t)ADCx;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1297
+  tmp += ADC_InjectedChannel;
+  1a:	78fa      	ldrb	r2, [r7, #3]
+  1c:	68fb      	ldr	r3, [r7, #12]
+  1e:	18d3      	adds	r3, r2, r3
+  20:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1300
+  
+  /* Set the selected injected channel data offset */
+ *(__IO uint32_t *) tmp = (uint32_t)Offset;
+  22:	68fb      	ldr	r3, [r7, #12]
+  24:	883a      	ldrh	r2, [r7, #0]
+  26:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1301
+}
+  28:	f107 0714 	add.w	r7, r7, #20
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+
+Disassembly of section .text.ADC_ExternalTrigInjectedConvConfig:
+
+00000000 <ADC_ExternalTrigInjectedConvConfig>:
+ADC_ExternalTrigInjectedConvConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1327
+  *            @arg ADC_ExternalTrigInjecConv_T8_CC4: Timer8 capture compare4 selected 
+  *            @arg ADC_ExternalTrigInjecConv_Ext_IT15: External interrupt line 15 event selected                          
+  * @retval None
+  */
+void ADC_ExternalTrigInjectedConvConfig(ADC_TypeDef* ADCx, uint32_t ADC_ExternalTrigInjecConv)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1328
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1334
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_EXT_INJEC_TRIG(ADC_ExternalTrigInjecConv));
+  
+  /* Get the old register value */
+  tmpreg = ADCx->CR2;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	689b      	ldr	r3, [r3, #8]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1337
+  
+  /* Clear the old external event selection for injected group */
+  tmpreg &= CR2_JEXTSEL_RESET;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 2370 	bic.w	r3, r3, #983040	; 0xf0000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1340
+  
+  /* Set the external event selection for injected group */
+  tmpreg |= ADC_ExternalTrigInjecConv;
+  1e:	68fa      	ldr	r2, [r7, #12]
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1343
+  
+  /* Store the new register value */
+  ADCx->CR2 = tmpreg;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1344
+}
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+
+Disassembly of section .text.ADC_ExternalTrigInjectedConvEdgeConfig:
+
+00000000 <ADC_ExternalTrigInjectedConvEdgeConfig>:
+ADC_ExternalTrigInjectedConvEdgeConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1361
+  *            @arg ADC_ExternalTrigInjecConvEdge_RisingFalling: detection on both rising 
+  *                                                               and falling edge
+  * @retval None
+  */
+void ADC_ExternalTrigInjectedConvEdgeConfig(ADC_TypeDef* ADCx, uint32_t ADC_ExternalTrigInjecConvEdge)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1362
+  uint32_t tmpreg = 0;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1367
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_EXT_INJEC_TRIG_EDGE(ADC_ExternalTrigInjecConvEdge));
+  /* Get the old register value */
+  tmpreg = ADCx->CR2;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	689b      	ldr	r3, [r3, #8]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1369
+  /* Clear the old external trigger edge for injected group */
+  tmpreg &= CR2_JEXTEN_RESET;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f423 1340 	bic.w	r3, r3, #3145728	; 0x300000
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1371
+  /* Set the new external trigger edge for injected group */
+  tmpreg |= ADC_ExternalTrigInjecConvEdge;
+  1e:	68fa      	ldr	r2, [r7, #12]
+  20:	683b      	ldr	r3, [r7, #0]
+  22:	ea42 0303 	orr.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1373
+  /* Store the new register value */
+  ADCx->CR2 = tmpreg;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	68fa      	ldr	r2, [r7, #12]
+  2c:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1374
+}
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+
+Disassembly of section .text.ADC_SoftwareStartInjectedConv:
+
+00000000 <ADC_SoftwareStartInjectedConv>:
+ADC_SoftwareStartInjectedConv():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1382
+  * @brief  Enables the selected ADC software start conversion of the injected channels.
+  * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
+  * @retval None
+  */
+void ADC_SoftwareStartInjectedConv(ADC_TypeDef* ADCx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1386
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  /* Enable the selected ADC conversion for injected group */
+  ADCx->CR2 |= (uint32_t)ADC_CR2_JSWSTART;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	689b      	ldr	r3, [r3, #8]
+   c:	f443 0280 	orr.w	r2, r3, #4194304	; 0x400000
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1387
+}
+  14:	f107 070c 	add.w	r7, r7, #12
+  18:	46bd      	mov	sp, r7
+  1a:	bc80      	pop	{r7}
+  1c:	4770      	bx	lr
+  1e:	bf00      	nop
+
+Disassembly of section .text.ADC_GetSoftwareStartInjectedConvCmdStatus:
+
+00000000 <ADC_GetSoftwareStartInjectedConvCmdStatus>:
+ADC_GetSoftwareStartInjectedConvCmdStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1395
+  * @brief  Gets the selected ADC Software start injected conversion Status.
+  * @param  ADCx: where x can be 1, 2 or 3 to select the ADC peripheral.
+  * @retval The new state of ADC software start injected conversion (SET or RESET).
+  */
+FlagStatus ADC_GetSoftwareStartInjectedConvCmdStatus(ADC_TypeDef* ADCx)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1396
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1401
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  
+  /* Check the status of JSWSTART bit */
+  if ((ADCx->CR2 & ADC_CR2_JSWSTART) != (uint32_t)RESET)
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	689b      	ldr	r3, [r3, #8]
+  12:	f403 0380 	and.w	r3, r3, #4194304	; 0x400000
+  16:	2b00      	cmp	r3, #0
+  18:	d003      	beq.n	22 <ADC_GetSoftwareStartInjectedConvCmdStatus+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1404
+  {
+    /* JSWSTART bit is set */
+    bitstatus = SET;
+  1a:	f04f 0301 	mov.w	r3, #1
+  1e:	73fb      	strb	r3, [r7, #15]
+  20:	e002      	b.n	28 <ADC_GetSoftwareStartInjectedConvCmdStatus+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1409
+  }
+  else
+  {
+    /* JSWSTART bit is reset */
+    bitstatus = RESET;
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1412
+  }
+  /* Return the JSWSTART bit status */
+  return  bitstatus;
+  28:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1413
+}
+  2a:	4618      	mov	r0, r3
+  2c:	f107 0714 	add.w	r7, r7, #20
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_AutoInjectedConvCmd:
+
+00000000 <ADC_AutoInjectedConvCmd>:
+ADC_AutoInjectedConvCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1424
+  * @param  NewState: new state of the selected ADC auto injected conversion
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_AutoInjectedConvCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1428
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_AutoInjectedConvCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1431
+  {
+    /* Enable the selected ADC automatic injected group conversion */
+    ADCx->CR1 |= (uint32_t)ADC_CR1_JAUTO;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	685b      	ldr	r3, [r3, #4]
+  16:	f443 6280 	orr.w	r2, r3, #1024	; 0x400
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	605a      	str	r2, [r3, #4]
+  1e:	e005      	b.n	2c <ADC_AutoInjectedConvCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1436
+  }
+  else
+  {
+    /* Disable the selected ADC automatic injected group conversion */
+    ADCx->CR1 &= (uint32_t)(~ADC_CR1_JAUTO);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	685b      	ldr	r3, [r3, #4]
+  24:	f423 6280 	bic.w	r2, r3, #1024	; 0x400
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1438
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_InjectedDiscModeCmd:
+
+00000000 <ADC_InjectedDiscModeCmd>:
+ADC_InjectedDiscModeCmd():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1450
+  *         group channel.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_InjectedDiscModeCmd(ADC_TypeDef* ADCx, FunctionalState NewState)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1454
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  if (NewState != DISABLE)
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	2b00      	cmp	r3, #0
+  10:	d006      	beq.n	20 <ADC_InjectedDiscModeCmd+0x20>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1457
+  {
+    /* Enable the selected ADC injected discontinuous mode */
+    ADCx->CR1 |= (uint32_t)ADC_CR1_JDISCEN;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	685b      	ldr	r3, [r3, #4]
+  16:	f443 5280 	orr.w	r2, r3, #4096	; 0x1000
+  1a:	687b      	ldr	r3, [r7, #4]
+  1c:	605a      	str	r2, [r3, #4]
+  1e:	e005      	b.n	2c <ADC_InjectedDiscModeCmd+0x2c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1462
+  }
+  else
+  {
+    /* Disable the selected ADC injected discontinuous mode */
+    ADCx->CR1 &= (uint32_t)(~ADC_CR1_JDISCEN);
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	685b      	ldr	r3, [r3, #4]
+  24:	f423 5280 	bic.w	r2, r3, #4096	; 0x1000
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1464
+  }
+}
+  2c:	f107 070c 	add.w	r7, r7, #12
+  30:	46bd      	mov	sp, r7
+  32:	bc80      	pop	{r7}
+  34:	4770      	bx	lr
+  36:	bf00      	nop
+
+Disassembly of section .text.ADC_GetInjectedConversionValue:
+
+00000000 <ADC_GetInjectedConversionValue>:
+ADC_GetInjectedConversionValue():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1478
+  *            @arg ADC_InjectedChannel_3: Injected Channel3 selected
+  *            @arg ADC_InjectedChannel_4: Injected Channel4 selected
+  * @retval The Data conversion value.
+  */
+uint16_t ADC_GetInjectedConversionValue(ADC_TypeDef* ADCx, uint8_t ADC_InjectedChannel)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1479
+  __IO uint32_t tmp = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1485
+  
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_INJECTED_CHANNEL(ADC_InjectedChannel));
+
+  tmp = (uint32_t)ADCx;
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1486
+  tmp += ADC_InjectedChannel + JDR_OFFSET;
+  16:	78fa      	ldrb	r2, [r7, #3]
+  18:	68fb      	ldr	r3, [r7, #12]
+  1a:	18d3      	adds	r3, r2, r3
+  1c:	f103 0328 	add.w	r3, r3, #40	; 0x28
+  20:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1489
+  
+  /* Returns the selected injected channel conversion data value */
+  return (uint16_t) (*(__IO uint32_t*)  tmp); 
+  22:	68fb      	ldr	r3, [r7, #12]
+  24:	681b      	ldr	r3, [r3, #0]
+  26:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1490
+}
+  28:	4618      	mov	r0, r3
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+
+Disassembly of section .text.ADC_ITConfig:
+
+00000000 <ADC_ITConfig>:
+ADC_ITConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1585
+  * @param  NewState: new state of the specified ADC interrupts.
+  *          This parameter can be: ENABLE or DISABLE.
+  * @retval None
+  */
+void ADC_ITConfig(ADC_TypeDef* ADCx, uint16_t ADC_IT, FunctionalState NewState)  
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	807a      	strh	r2, [r7, #2]
+   e:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1586
+  uint32_t itmask = 0;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1593
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_FUNCTIONAL_STATE(NewState));
+  assert_param(IS_ADC_IT(ADC_IT)); 
+
+  /* Get the ADC IT index */
+  itmask = (uint8_t)ADC_IT;
+  16:	887b      	ldrh	r3, [r7, #2]
+  18:	b2db      	uxtb	r3, r3
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1594
+  itmask = (uint32_t)0x01 << itmask;    
+  1c:	68fb      	ldr	r3, [r7, #12]
+  1e:	f04f 0201 	mov.w	r2, #1
+  22:	fa02 f303 	lsl.w	r3, r2, r3
+  26:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1596
+
+  if (NewState != DISABLE)
+  28:	787b      	ldrb	r3, [r7, #1]
+  2a:	2b00      	cmp	r3, #0
+  2c:	d006      	beq.n	3c <ADC_ITConfig+0x3c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1599
+  {
+    /* Enable the selected ADC interrupts */
+    ADCx->CR1 |= itmask;
+  2e:	687b      	ldr	r3, [r7, #4]
+  30:	685a      	ldr	r2, [r3, #4]
+  32:	68fb      	ldr	r3, [r7, #12]
+  34:	431a      	orrs	r2, r3
+  36:	687b      	ldr	r3, [r7, #4]
+  38:	605a      	str	r2, [r3, #4]
+  3a:	e007      	b.n	4c <ADC_ITConfig+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1604
+  }
+  else
+  {
+    /* Disable the selected ADC interrupts */
+    ADCx->CR1 &= (~(uint32_t)itmask);
+  3c:	687b      	ldr	r3, [r7, #4]
+  3e:	685a      	ldr	r2, [r3, #4]
+  40:	68fb      	ldr	r3, [r7, #12]
+  42:	ea6f 0303 	mvn.w	r3, r3
+  46:	401a      	ands	r2, r3
+  48:	687b      	ldr	r3, [r7, #4]
+  4a:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1606
+  }
+}
+  4c:	f107 0714 	add.w	r7, r7, #20
+  50:	46bd      	mov	sp, r7
+  52:	bc80      	pop	{r7}
+  54:	4770      	bx	lr
+  56:	bf00      	nop
+
+Disassembly of section .text.ADC_GetFlagStatus:
+
+00000000 <ADC_GetFlagStatus>:
+ADC_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1622
+  *            @arg ADC_FLAG_STRT: Start of regular group conversion flag
+  *            @arg ADC_FLAG_OVR: Overrun flag                                                 
+  * @retval The new state of ADC_FLAG (SET or RESET).
+  */
+FlagStatus ADC_GetFlagStatus(ADC_TypeDef* ADCx, uint8_t ADC_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1623
+  FlagStatus bitstatus = RESET;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1629
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_GET_FLAG(ADC_FLAG));
+
+  /* Check the status of the specified ADC flag */
+  if ((ADCx->SR & ADC_FLAG) != (uint8_t)RESET)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	681a      	ldr	r2, [r3, #0]
+  16:	78fb      	ldrb	r3, [r7, #3]
+  18:	ea02 0303 	and.w	r3, r2, r3
+  1c:	2b00      	cmp	r3, #0
+  1e:	d003      	beq.n	28 <ADC_GetFlagStatus+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1632
+  {
+    /* ADC_FLAG is set */
+    bitstatus = SET;
+  20:	f04f 0301 	mov.w	r3, #1
+  24:	73fb      	strb	r3, [r7, #15]
+  26:	e002      	b.n	2e <ADC_GetFlagStatus+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1637
+  }
+  else
+  {
+    /* ADC_FLAG is reset */
+    bitstatus = RESET;
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1640
+  }
+  /* Return the ADC_FLAG status */
+  return  bitstatus;
+  2e:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1641
+}
+  30:	4618      	mov	r0, r3
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+
+Disassembly of section .text.ADC_ClearFlag:
+
+00000000 <ADC_ClearFlag>:
+ADC_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1657
+  *            @arg ADC_FLAG_STRT: Start of regular group conversion flag
+  *            @arg ADC_FLAG_OVR: Overrun flag                          
+  * @retval None
+  */
+void ADC_ClearFlag(ADC_TypeDef* ADCx, uint8_t ADC_FLAG)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1663
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_CLEAR_FLAG(ADC_FLAG));
+
+  /* Clear the selected ADC flags */
+  ADCx->SR = ~(uint32_t)ADC_FLAG;
+   c:	78fb      	ldrb	r3, [r7, #3]
+   e:	ea6f 0203 	mvn.w	r2, r3
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1664
+}
+  16:	f107 070c 	add.w	r7, r7, #12
+  1a:	46bd      	mov	sp, r7
+  1c:	bc80      	pop	{r7}
+  1e:	4770      	bx	lr
+
+Disassembly of section .text.ADC_GetITStatus:
+
+00000000 <ADC_GetITStatus>:
+ADC_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1678
+  *            @arg ADC_IT_JEOC: End of injected conversion interrupt mask
+  *            @arg ADC_IT_OVR: Overrun interrupt mask                        
+  * @retval The new state of ADC_IT (SET or RESET).
+  */
+ITStatus ADC_GetITStatus(ADC_TypeDef* ADCx, uint16_t ADC_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1679
+  ITStatus bitstatus = RESET;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1680
+  uint32_t itmask = 0, enablestatus = 0;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	613b      	str	r3, [r7, #16]
+  18:	f04f 0300 	mov.w	r3, #0
+  1c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1687
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_IT(ADC_IT));
+
+  /* Get the ADC IT index */
+  itmask = ADC_IT >> 8;
+  1e:	887b      	ldrh	r3, [r7, #2]
+  20:	ea4f 2313 	mov.w	r3, r3, lsr #8
+  24:	b29b      	uxth	r3, r3
+  26:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1690
+
+  /* Get the ADC_IT enable bit status */
+  enablestatus = (ADCx->CR1 & ((uint32_t)0x01 << (uint8_t)ADC_IT)) ;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	685a      	ldr	r2, [r3, #4]
+  2c:	887b      	ldrh	r3, [r7, #2]
+  2e:	b2db      	uxtb	r3, r3
+  30:	f04f 0101 	mov.w	r1, #1
+  34:	fa01 f303 	lsl.w	r3, r1, r3
+  38:	ea02 0303 	and.w	r3, r2, r3
+  3c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1693
+
+  /* Check the status of the specified ADC interrupt */
+  if (((ADCx->SR & itmask) != (uint32_t)RESET) && enablestatus)
+  3e:	687b      	ldr	r3, [r7, #4]
+  40:	681a      	ldr	r2, [r3, #0]
+  42:	693b      	ldr	r3, [r7, #16]
+  44:	ea02 0303 	and.w	r3, r2, r3
+  48:	2b00      	cmp	r3, #0
+  4a:	d006      	beq.n	5a <ADC_GetITStatus+0x5a>
+  4c:	68fb      	ldr	r3, [r7, #12]
+  4e:	2b00      	cmp	r3, #0
+  50:	d003      	beq.n	5a <ADC_GetITStatus+0x5a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1696
+  {
+    /* ADC_IT is set */
+    bitstatus = SET;
+  52:	f04f 0301 	mov.w	r3, #1
+  56:	75fb      	strb	r3, [r7, #23]
+  58:	e002      	b.n	60 <ADC_GetITStatus+0x60>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1701
+  }
+  else
+  {
+    /* ADC_IT is reset */
+    bitstatus = RESET;
+  5a:	f04f 0300 	mov.w	r3, #0
+  5e:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1704
+  }
+  /* Return the ADC_IT status */
+  return  bitstatus;
+  60:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1705
+}
+  62:	4618      	mov	r0, r3
+  64:	f107 071c 	add.w	r7, r7, #28
+  68:	46bd      	mov	sp, r7
+  6a:	bc80      	pop	{r7}
+  6c:	4770      	bx	lr
+  6e:	bf00      	nop
+
+Disassembly of section .text.ADC_ClearITPendingBit:
+
+00000000 <ADC_ClearITPendingBit>:
+ADC_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1719
+  *            @arg ADC_IT_JEOC: End of injected conversion interrupt mask
+  *            @arg ADC_IT_OVR: Overrun interrupt mask                         
+  * @retval None
+  */
+void ADC_ClearITPendingBit(ADC_TypeDef* ADCx, uint16_t ADC_IT)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1720
+  uint8_t itmask = 0;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1725
+  /* Check the parameters */
+  assert_param(IS_ADC_ALL_PERIPH(ADCx));
+  assert_param(IS_ADC_IT(ADC_IT)); 
+  /* Get the ADC IT index */
+  itmask = (uint8_t)(ADC_IT >> 8);
+  12:	887b      	ldrh	r3, [r7, #2]
+  14:	ea4f 2313 	mov.w	r3, r3, lsr #8
+  18:	b29b      	uxth	r3, r3
+  1a:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1727
+  /* Clear the selected ADC interrupt pending bits */
+  ADCx->SR = ~(uint32_t)itmask;
+  1c:	7bfb      	ldrb	r3, [r7, #15]
+  1e:	ea6f 0203 	mvn.w	r2, r3
+  22:	687b      	ldr	r3, [r7, #4]
+  24:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_adc.c:1728
+}                    
+  26:	f107 0714 	add.w	r7, r7, #20
+  2a:	46bd      	mov	sp, r7
+  2c:	bc80      	pop	{r7}
+  2e:	4770      	bx	lr

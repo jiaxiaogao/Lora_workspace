@@ -1,0 +1,551 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\main.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\main.o
+
+
+Disassembly of section .text.OnMaster:
+
+00000000 <OnMaster>:
+OnMaster():
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:50
+
+/*
+ * Manages the master operation
+ */
+void OnMaster( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:53
+    uint8_t i;
+    
+    switch( Radio->Process( ) )
+   6:	4b53      	ldr	r3, [pc, #332]	; (154 <OnMaster+0x154>)
+   8:	681b      	ldr	r3, [r3, #0]
+   a:	695b      	ldr	r3, [r3, #20]
+   c:	4798      	blx	r3
+   e:	4603      	mov	r3, r0
+  10:	2b03      	cmp	r3, #3
+  12:	d005      	beq.n	20 <OnMaster+0x20>
+  14:	2b04      	cmp	r3, #4
+  16:	f000 808c 	beq.w	132 <OnMaster+0x132>
+  1a:	2b02      	cmp	r3, #2
+  1c:	d02e      	beq.n	7c <OnMaster+0x7c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:102
+        // Indicates on a LED that we have sent a PING
+        LedToggle( LED_RED );
+        Radio->StartRx( );
+        break;
+    default:
+        break;
+  1e:	e095      	b.n	14c <OnMaster+0x14c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:57
+    
+    switch( Radio->Process( ) )
+    {
+    case RF_RX_TIMEOUT:
+        // Send the next PING frame
+        Buffer[0] = 'P';
+  20:	4b4d      	ldr	r3, [pc, #308]	; (158 <OnMaster+0x158>)
+  22:	f04f 0250 	mov.w	r2, #80	; 0x50
+  26:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:58
+        Buffer[1] = 'I';
+  28:	4b4b      	ldr	r3, [pc, #300]	; (158 <OnMaster+0x158>)
+  2a:	f04f 0249 	mov.w	r2, #73	; 0x49
+  2e:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:59
+        Buffer[2] = 'N';
+  30:	4b49      	ldr	r3, [pc, #292]	; (158 <OnMaster+0x158>)
+  32:	f04f 024e 	mov.w	r2, #78	; 0x4e
+  36:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:60
+        Buffer[3] = 'G';
+  38:	4b47      	ldr	r3, [pc, #284]	; (158 <OnMaster+0x158>)
+  3a:	f04f 0247 	mov.w	r2, #71	; 0x47
+  3e:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:61
+        for( i = 4; i < BufferSize; i++ )
+  40:	f04f 0304 	mov.w	r3, #4
+  44:	71fb      	strb	r3, [r7, #7]
+  46:	e00a      	b.n	5e <OnMaster+0x5e>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:63
+        {
+            Buffer[i] = i - 4;
+  48:	79fb      	ldrb	r3, [r7, #7]
+  4a:	79fa      	ldrb	r2, [r7, #7]
+  4c:	f1a2 0204 	sub.w	r2, r2, #4
+  50:	b2d1      	uxtb	r1, r2
+  52:	4a41      	ldr	r2, [pc, #260]	; (158 <OnMaster+0x158>)
+  54:	54d1      	strb	r1, [r2, r3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:61
+        // Send the next PING frame
+        Buffer[0] = 'P';
+        Buffer[1] = 'I';
+        Buffer[2] = 'N';
+        Buffer[3] = 'G';
+        for( i = 4; i < BufferSize; i++ )
+  56:	79fb      	ldrb	r3, [r7, #7]
+  58:	f103 0301 	add.w	r3, r3, #1
+  5c:	71fb      	strb	r3, [r7, #7]
+  5e:	79fb      	ldrb	r3, [r7, #7]
+  60:	b29a      	uxth	r2, r3
+  62:	4b3e      	ldr	r3, [pc, #248]	; (15c <OnMaster+0x15c>)
+  64:	881b      	ldrh	r3, [r3, #0]
+  66:	429a      	cmp	r2, r3
+  68:	d3ee      	bcc.n	48 <OnMaster+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:65
+        {
+            Buffer[i] = i - 4;
+        }
+        Radio->SetTxPacket( Buffer, BufferSize );
+  6a:	4b3a      	ldr	r3, [pc, #232]	; (154 <OnMaster+0x154>)
+  6c:	681b      	ldr	r3, [r3, #0]
+  6e:	691b      	ldr	r3, [r3, #16]
+  70:	4a3a      	ldr	r2, [pc, #232]	; (15c <OnMaster+0x15c>)
+  72:	8812      	ldrh	r2, [r2, #0]
+  74:	4838      	ldr	r0, [pc, #224]	; (158 <OnMaster+0x158>)
+  76:	4611      	mov	r1, r2
+  78:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:66
+        break;
+  7a:	e067      	b.n	14c <OnMaster+0x14c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:68
+    case RF_RX_DONE:
+        Radio->GetRxPacket( Buffer, ( uint16_t* )&BufferSize );
+  7c:	4b35      	ldr	r3, [pc, #212]	; (154 <OnMaster+0x154>)
+  7e:	681b      	ldr	r3, [r3, #0]
+  80:	68db      	ldr	r3, [r3, #12]
+  82:	4835      	ldr	r0, [pc, #212]	; (158 <OnMaster+0x158>)
+  84:	4935      	ldr	r1, [pc, #212]	; (15c <OnMaster+0x15c>)
+  86:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:70
+    
+        if( BufferSize > 0 )
+  88:	4b34      	ldr	r3, [pc, #208]	; (15c <OnMaster+0x15c>)
+  8a:	881b      	ldrh	r3, [r3, #0]
+  8c:	2b00      	cmp	r3, #0
+  8e:	d05a      	beq.n	146 <OnMaster+0x146>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:72
+        {
+            if( strncmp( ( const char* )Buffer, ( const char* )PongMsg, 4 ) == 0 )
+  90:	4a31      	ldr	r2, [pc, #196]	; (158 <OnMaster+0x158>)
+  92:	4b33      	ldr	r3, [pc, #204]	; (160 <OnMaster+0x160>)
+  94:	4610      	mov	r0, r2
+  96:	4619      	mov	r1, r3
+  98:	f04f 0204 	mov.w	r2, #4
+  9c:	f7ff fffe 	bl	0 <strncmp>
+  a0:	4603      	mov	r3, r0
+  a2:	2b00      	cmp	r3, #0
+  a4:	d131      	bne.n	10a <OnMaster+0x10a>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:75
+            {
+                // Indicates on a LED that the received frame is a PONG
+                LedToggle( LED_GREEN );
+  a6:	f04f 0000 	mov.w	r0, #0
+  aa:	f7ff fffe 	bl	0 <LedToggle>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:78
+
+                // Send the next PING frame            
+                Buffer[0] = 'P';
+  ae:	4b2a      	ldr	r3, [pc, #168]	; (158 <OnMaster+0x158>)
+  b0:	f04f 0250 	mov.w	r2, #80	; 0x50
+  b4:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:79
+                Buffer[1] = 'I';
+  b6:	4b28      	ldr	r3, [pc, #160]	; (158 <OnMaster+0x158>)
+  b8:	f04f 0249 	mov.w	r2, #73	; 0x49
+  bc:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:80
+                Buffer[2] = 'N';
+  be:	4b26      	ldr	r3, [pc, #152]	; (158 <OnMaster+0x158>)
+  c0:	f04f 024e 	mov.w	r2, #78	; 0x4e
+  c4:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:81
+                Buffer[3] = 'G';
+  c6:	4b24      	ldr	r3, [pc, #144]	; (158 <OnMaster+0x158>)
+  c8:	f04f 0247 	mov.w	r2, #71	; 0x47
+  cc:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:83
+                // We fill the buffer with numbers for the payload 
+                for( i = 4; i < BufferSize; i++ )
+  ce:	f04f 0304 	mov.w	r3, #4
+  d2:	71fb      	strb	r3, [r7, #7]
+  d4:	e00a      	b.n	ec <OnMaster+0xec>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:85
+                {
+                    Buffer[i] = i - 4;
+  d6:	79fb      	ldrb	r3, [r7, #7]
+  d8:	79fa      	ldrb	r2, [r7, #7]
+  da:	f1a2 0204 	sub.w	r2, r2, #4
+  de:	b2d1      	uxtb	r1, r2
+  e0:	4a1d      	ldr	r2, [pc, #116]	; (158 <OnMaster+0x158>)
+  e2:	54d1      	strb	r1, [r2, r3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:83
+                Buffer[0] = 'P';
+                Buffer[1] = 'I';
+                Buffer[2] = 'N';
+                Buffer[3] = 'G';
+                // We fill the buffer with numbers for the payload 
+                for( i = 4; i < BufferSize; i++ )
+  e4:	79fb      	ldrb	r3, [r7, #7]
+  e6:	f103 0301 	add.w	r3, r3, #1
+  ea:	71fb      	strb	r3, [r7, #7]
+  ec:	79fb      	ldrb	r3, [r7, #7]
+  ee:	b29a      	uxth	r2, r3
+  f0:	4b1a      	ldr	r3, [pc, #104]	; (15c <OnMaster+0x15c>)
+  f2:	881b      	ldrh	r3, [r3, #0]
+  f4:	429a      	cmp	r2, r3
+  f6:	d3ee      	bcc.n	d6 <OnMaster+0xd6>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:87
+                {
+                    Buffer[i] = i - 4;
+                }
+                Radio->SetTxPacket( Buffer, BufferSize );
+  f8:	4b16      	ldr	r3, [pc, #88]	; (154 <OnMaster+0x154>)
+  fa:	681b      	ldr	r3, [r3, #0]
+  fc:	691b      	ldr	r3, [r3, #16]
+  fe:	4a17      	ldr	r2, [pc, #92]	; (15c <OnMaster+0x15c>)
+ 100:	8812      	ldrh	r2, [r2, #0]
+ 102:	4815      	ldr	r0, [pc, #84]	; (158 <OnMaster+0x158>)
+ 104:	4611      	mov	r1, r2
+ 106:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:95
+            { // A master already exists then become a slave
+                EnableMaster = false;
+                LedOff( LED_RED );
+            }
+        }            
+        break;
+ 108:	e020      	b.n	14c <OnMaster+0x14c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:89
+                {
+                    Buffer[i] = i - 4;
+                }
+                Radio->SetTxPacket( Buffer, BufferSize );
+            }
+            else if( strncmp( ( const char* )Buffer, ( const char* )PingMsg, 4 ) == 0 )
+ 10a:	4a13      	ldr	r2, [pc, #76]	; (158 <OnMaster+0x158>)
+ 10c:	4b15      	ldr	r3, [pc, #84]	; (164 <OnMaster+0x164>)
+ 10e:	4610      	mov	r0, r2
+ 110:	4619      	mov	r1, r3
+ 112:	f04f 0204 	mov.w	r2, #4
+ 116:	f7ff fffe 	bl	0 <strncmp>
+ 11a:	4603      	mov	r3, r0
+ 11c:	2b00      	cmp	r3, #0
+ 11e:	d114      	bne.n	14a <OnMaster+0x14a>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:91
+            { // A master already exists then become a slave
+                EnableMaster = false;
+ 120:	4b11      	ldr	r3, [pc, #68]	; (168 <OnMaster+0x168>)
+ 122:	f04f 0200 	mov.w	r2, #0
+ 126:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:92
+                LedOff( LED_RED );
+ 128:	f04f 0001 	mov.w	r0, #1
+ 12c:	f7ff fffe 	bl	0 <LedOff>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:95
+            }
+        }            
+        break;
+ 130:	e00c      	b.n	14c <OnMaster+0x14c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:98
+    case RF_TX_DONE:
+        // Indicates on a LED that we have sent a PING
+        LedToggle( LED_RED );
+ 132:	f04f 0001 	mov.w	r0, #1
+ 136:	f7ff fffe 	bl	0 <LedToggle>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:99
+        Radio->StartRx( );
+ 13a:	4b06      	ldr	r3, [pc, #24]	; (154 <OnMaster+0x154>)
+ 13c:	681b      	ldr	r3, [r3, #0]
+ 13e:	689b      	ldr	r3, [r3, #8]
+ 140:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:100
+        break;
+ 142:	bf00      	nop
+ 144:	e002      	b.n	14c <OnMaster+0x14c>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:95
+            { // A master already exists then become a slave
+                EnableMaster = false;
+                LedOff( LED_RED );
+            }
+        }            
+        break;
+ 146:	bf00      	nop
+ 148:	e000      	b.n	14c <OnMaster+0x14c>
+ 14a:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:104
+        Radio->StartRx( );
+        break;
+    default:
+        break;
+    }
+}
+ 14c:	f107 0708 	add.w	r7, r7, #8
+ 150:	46bd      	mov	sp, r7
+ 152:	bd80      	pop	{r7, pc}
+	...
+ 168:	00000002 	.word	0x00000002
+
+Disassembly of section .text.OnSlave:
+
+00000000 <OnSlave>:
+OnSlave():
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:110
+
+/*
+ * Manages the slave operation
+ */
+void OnSlave( void )
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:113
+    uint8_t i;
+
+    switch( Radio->Process( ) )
+   6:	4b31      	ldr	r3, [pc, #196]	; (cc <OnSlave+0xcc>)
+   8:	681b      	ldr	r3, [r3, #0]
+   a:	695b      	ldr	r3, [r3, #20]
+   c:	4798      	blx	r3
+   e:	4603      	mov	r3, r0
+  10:	2b02      	cmp	r3, #2
+  12:	d002      	beq.n	1a <OnSlave+0x1a>
+  14:	2b04      	cmp	r3, #4
+  16:	d047      	beq.n	a8 <OnSlave+0xa8>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:146
+        // Indicates on a LED that we have sent a PONG
+        LedToggle( LED_RED );
+        Radio->StartRx( );
+        break;
+    default:
+        break;
+  18:	e053      	b.n	c2 <OnSlave+0xc2>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:116
+    uint8_t i;
+
+    switch( Radio->Process( ) )
+    {
+    case RF_RX_DONE:
+        Radio->GetRxPacket( Buffer, ( uint16_t* )&BufferSize );
+  1a:	4b2c      	ldr	r3, [pc, #176]	; (cc <OnSlave+0xcc>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	68db      	ldr	r3, [r3, #12]
+  20:	482b      	ldr	r0, [pc, #172]	; (d0 <OnSlave+0xd0>)
+  22:	492c      	ldr	r1, [pc, #176]	; (d4 <OnSlave+0xd4>)
+  24:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:118
+    
+        if( BufferSize > 0 )
+  26:	4b2b      	ldr	r3, [pc, #172]	; (d4 <OnSlave+0xd4>)
+  28:	881b      	ldrh	r3, [r3, #0]
+  2a:	2b00      	cmp	r3, #0
+  2c:	d046      	beq.n	bc <OnSlave+0xbc>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:120
+        {
+            if( strncmp( ( const char* )Buffer, ( const char* )PingMsg, 4 ) == 0 )
+  2e:	4a28      	ldr	r2, [pc, #160]	; (d0 <OnSlave+0xd0>)
+  30:	4b29      	ldr	r3, [pc, #164]	; (d8 <OnSlave+0xd8>)
+  32:	4610      	mov	r0, r2
+  34:	4619      	mov	r1, r3
+  36:	f04f 0204 	mov.w	r2, #4
+  3a:	f7ff fffe 	bl	0 <strncmp>
+  3e:	4603      	mov	r3, r0
+  40:	2b00      	cmp	r3, #0
+  42:	d13d      	bne.n	c0 <OnSlave+0xc0>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:123
+            {
+                // Indicates on a LED that the received frame is a PING
+                LedToggle( LED_GREEN );
+  44:	f04f 0000 	mov.w	r0, #0
+  48:	f7ff fffe 	bl	0 <LedToggle>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:126
+
+               // Send the reply to the PONG string
+                Buffer[0] = 'P';
+  4c:	4b20      	ldr	r3, [pc, #128]	; (d0 <OnSlave+0xd0>)
+  4e:	f04f 0250 	mov.w	r2, #80	; 0x50
+  52:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:127
+                Buffer[1] = 'O';
+  54:	4b1e      	ldr	r3, [pc, #120]	; (d0 <OnSlave+0xd0>)
+  56:	f04f 024f 	mov.w	r2, #79	; 0x4f
+  5a:	705a      	strb	r2, [r3, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:128
+                Buffer[2] = 'N';
+  5c:	4b1c      	ldr	r3, [pc, #112]	; (d0 <OnSlave+0xd0>)
+  5e:	f04f 024e 	mov.w	r2, #78	; 0x4e
+  62:	709a      	strb	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:129
+                Buffer[3] = 'G';
+  64:	4b1a      	ldr	r3, [pc, #104]	; (d0 <OnSlave+0xd0>)
+  66:	f04f 0247 	mov.w	r2, #71	; 0x47
+  6a:	70da      	strb	r2, [r3, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:131
+                // We fill the buffer with numbers for the payload 
+                for( i = 4; i < BufferSize; i++ )
+  6c:	f04f 0304 	mov.w	r3, #4
+  70:	71fb      	strb	r3, [r7, #7]
+  72:	e00a      	b.n	8a <OnSlave+0x8a>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:133
+                {
+                    Buffer[i] = i - 4;
+  74:	79fb      	ldrb	r3, [r7, #7]
+  76:	79fa      	ldrb	r2, [r7, #7]
+  78:	f1a2 0204 	sub.w	r2, r2, #4
+  7c:	b2d1      	uxtb	r1, r2
+  7e:	4a14      	ldr	r2, [pc, #80]	; (d0 <OnSlave+0xd0>)
+  80:	54d1      	strb	r1, [r2, r3]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:131
+                Buffer[0] = 'P';
+                Buffer[1] = 'O';
+                Buffer[2] = 'N';
+                Buffer[3] = 'G';
+                // We fill the buffer with numbers for the payload 
+                for( i = 4; i < BufferSize; i++ )
+  82:	79fb      	ldrb	r3, [r7, #7]
+  84:	f103 0301 	add.w	r3, r3, #1
+  88:	71fb      	strb	r3, [r7, #7]
+  8a:	79fb      	ldrb	r3, [r7, #7]
+  8c:	b29a      	uxth	r2, r3
+  8e:	4b11      	ldr	r3, [pc, #68]	; (d4 <OnSlave+0xd4>)
+  90:	881b      	ldrh	r3, [r3, #0]
+  92:	429a      	cmp	r2, r3
+  94:	d3ee      	bcc.n	74 <OnSlave+0x74>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:136
+                {
+                    Buffer[i] = i - 4;
+                }
+
+                Radio->SetTxPacket( Buffer, BufferSize );
+  96:	4b0d      	ldr	r3, [pc, #52]	; (cc <OnSlave+0xcc>)
+  98:	681b      	ldr	r3, [r3, #0]
+  9a:	691b      	ldr	r3, [r3, #16]
+  9c:	4a0d      	ldr	r2, [pc, #52]	; (d4 <OnSlave+0xd4>)
+  9e:	8812      	ldrh	r2, [r2, #0]
+  a0:	480b      	ldr	r0, [pc, #44]	; (d0 <OnSlave+0xd0>)
+  a2:	4611      	mov	r1, r2
+  a4:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:139
+            }
+        }
+        break;
+  a6:	e00c      	b.n	c2 <OnSlave+0xc2>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:142
+    case RF_TX_DONE:
+        // Indicates on a LED that we have sent a PONG
+        LedToggle( LED_RED );
+  a8:	f04f 0001 	mov.w	r0, #1
+  ac:	f7ff fffe 	bl	0 <LedToggle>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:143
+        Radio->StartRx( );
+  b0:	4b06      	ldr	r3, [pc, #24]	; (cc <OnSlave+0xcc>)
+  b2:	681b      	ldr	r3, [r3, #0]
+  b4:	689b      	ldr	r3, [r3, #8]
+  b6:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:144
+        break;
+  b8:	bf00      	nop
+  ba:	e002      	b.n	c2 <OnSlave+0xc2>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:139
+                }
+
+                Radio->SetTxPacket( Buffer, BufferSize );
+            }
+        }
+        break;
+  bc:	bf00      	nop
+  be:	e000      	b.n	c2 <OnSlave+0xc2>
+  c0:	bf00      	nop
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:148
+        Radio->StartRx( );
+        break;
+    default:
+        break;
+    }
+}
+  c2:	f107 0708 	add.w	r7, r7, #8
+  c6:	46bd      	mov	sp, r7
+  c8:	bd80      	pop	{r7, pc}
+  ca:	bf00      	nop
+	...
+
+Disassembly of section .text.main:
+
+00000000 <main>:
+main():
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:155
+
+/*
+ * Main application entry point.
+ */
+int main( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:156
+    BoardInit( );
+   4:	f7ff fffe 	bl	0 <BoardInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:158
+    
+    Radio = RadioDriverInit( );
+   8:	f7ff fffe 	bl	0 <RadioDriverInit>
+   c:	4602      	mov	r2, r0
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <main+0x38>)
+  10:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:160
+    
+    Radio->Init( );
+  12:	4b09      	ldr	r3, [pc, #36]	; (38 <main+0x38>)
+  14:	681b      	ldr	r3, [r3, #0]
+  16:	681b      	ldr	r3, [r3, #0]
+  18:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:162
+
+    Radio->StartRx( );
+  1a:	4b07      	ldr	r3, [pc, #28]	; (38 <main+0x38>)
+  1c:	681b      	ldr	r3, [r3, #0]
+  1e:	689b      	ldr	r3, [r3, #8]
+  20:	4798      	blx	r3
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:166
+    
+    while( 1 )
+    {
+        if( EnableMaster == true )
+  22:	4b06      	ldr	r3, [pc, #24]	; (3c <main+0x3c>)
+  24:	781b      	ldrb	r3, [r3, #0]
+  26:	2b01      	cmp	r3, #1
+  28:	d102      	bne.n	30 <main+0x30>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:168
+        {
+            OnMaster( );
+  2a:	f7ff fffe 	bl	0 <main>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:186
+            {
+                UartPutChar( data );
+            }
+        }
+#endif        
+    }
+  2e:	e7f8      	b.n	fffffff4 <Radio+0xffffffe8>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:172
+        {
+            OnMaster( );
+        }
+        else
+        {
+            OnSlave( );
+  30:	f7ff fffe 	bl	0 <main>
+C:\Users\gcristian\Desktop\F429\Drivers\src/main.c:186
+            {
+                UartPutChar( data );
+            }
+        }
+#endif        
+    }
+  34:	e7f5      	b.n	22 <main+0x22>
+  36:	bf00      	nop
+  38:	00000000 	.word	0x00000000
+  3c:	00000002 	.word	0x00000002

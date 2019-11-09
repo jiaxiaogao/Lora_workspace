@@ -1,0 +1,347 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_ioreq.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\usbd_ioreq.o
+
+
+Disassembly of section .text.USBD_CtlSendData:
+
+00000000 <USBD_CtlSendData>:
+USBD_CtlSendData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:98
+* @retval status
+*/
+USBD_Status  USBD_CtlSendData (USB_OTG_CORE_HANDLE  *pdev, 
+                               uint8_t *pbuf,
+                               uint16_t len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:99
+  USBD_Status ret = USBD_OK;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:101
+  
+  pdev->dev.in_ep[0].total_data_len = len;
+  14:	88fa      	ldrh	r2, [r7, #6]
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f8c3 213c 	str.w	r2, [r3, #316]	; 0x13c
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:102
+  pdev->dev.in_ep[0].rem_data_len   = len;
+  1c:	88fa      	ldrh	r2, [r7, #6]
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	f8c3 2138 	str.w	r2, [r3, #312]	; 0x138
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:103
+  pdev->dev.device_state = USB_OTG_EP0_DATA_IN;
+  24:	68fb      	ldr	r3, [r7, #12]
+  26:	f04f 0202 	mov.w	r2, #2
+  2a:	f883 2111 	strb.w	r2, [r3, #273]	; 0x111
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:105
+
+  DCD_EP_Tx (pdev, 0, pbuf, len);
+  2e:	88fb      	ldrh	r3, [r7, #6]
+  30:	68f8      	ldr	r0, [r7, #12]
+  32:	f04f 0100 	mov.w	r1, #0
+  36:	68ba      	ldr	r2, [r7, #8]
+  38:	f7ff fffe 	bl	0 <DCD_EP_Tx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:107
+ 
+  return ret;
+  3c:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:108
+}
+  3e:	4618      	mov	r0, r3
+  40:	f107 0718 	add.w	r7, r7, #24
+  44:	46bd      	mov	sp, r7
+  46:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_CtlContinueSendData:
+
+00000000 <USBD_CtlContinueSendData>:
+USBD_CtlContinueSendData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:121
+* @retval status
+*/
+USBD_Status  USBD_CtlContinueSendData (USB_OTG_CORE_HANDLE  *pdev, 
+                                       uint8_t *pbuf,
+                                       uint16_t len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:122
+  USBD_Status ret = USBD_OK;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:124
+  
+  DCD_EP_Tx (pdev, 0, pbuf, len);
+  14:	88fb      	ldrh	r3, [r7, #6]
+  16:	68f8      	ldr	r0, [r7, #12]
+  18:	f04f 0100 	mov.w	r1, #0
+  1c:	68ba      	ldr	r2, [r7, #8]
+  1e:	f7ff fffe 	bl	0 <DCD_EP_Tx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:127
+  
+  
+  return ret;
+  22:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:128
+}
+  24:	4618      	mov	r0, r3
+  26:	f107 0718 	add.w	r7, r7, #24
+  2a:	46bd      	mov	sp, r7
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+
+Disassembly of section .text.USBD_CtlPrepareRx:
+
+00000000 <USBD_CtlPrepareRx>:
+USBD_CtlPrepareRx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:141
+* @retval status
+*/
+USBD_Status  USBD_CtlPrepareRx (USB_OTG_CORE_HANDLE  *pdev,
+                                  uint8_t *pbuf,                                  
+                                  uint16_t len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:142
+  USBD_Status ret = USBD_OK;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:144
+  
+  pdev->dev.out_ep[0].total_data_len = len;
+  14:	88fa      	ldrh	r2, [r7, #6]
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f8c3 2394 	str.w	r2, [r3, #916]	; 0x394
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:145
+  pdev->dev.out_ep[0].rem_data_len   = len;
+  1c:	88fa      	ldrh	r2, [r7, #6]
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	f8c3 2390 	str.w	r2, [r3, #912]	; 0x390
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:146
+  pdev->dev.device_state = USB_OTG_EP0_DATA_OUT;
+  24:	68fb      	ldr	r3, [r7, #12]
+  26:	f04f 0203 	mov.w	r2, #3
+  2a:	f883 2111 	strb.w	r2, [r3, #273]	; 0x111
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:148
+  
+  DCD_EP_PrepareRx (pdev,
+  2e:	88fb      	ldrh	r3, [r7, #6]
+  30:	68f8      	ldr	r0, [r7, #12]
+  32:	f04f 0100 	mov.w	r1, #0
+  36:	68ba      	ldr	r2, [r7, #8]
+  38:	f7ff fffe 	bl	0 <DCD_EP_PrepareRx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:154
+                    0,
+                    pbuf,
+                    len);
+  
+
+  return ret;
+  3c:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:155
+}
+  3e:	4618      	mov	r0, r3
+  40:	f107 0718 	add.w	r7, r7, #24
+  44:	46bd      	mov	sp, r7
+  46:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_CtlContinueRx:
+
+00000000 <USBD_CtlContinueRx>:
+USBD_CtlContinueRx():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:168
+* @retval status
+*/
+USBD_Status  USBD_CtlContinueRx (USB_OTG_CORE_HANDLE  *pdev, 
+                                          uint8_t *pbuf,                                          
+                                          uint16_t len)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:169
+  USBD_Status ret = USBD_OK;
+   e:	f04f 0300 	mov.w	r3, #0
+  12:	75fb      	strb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:171
+  
+  DCD_EP_PrepareRx (pdev,
+  14:	88fb      	ldrh	r3, [r7, #6]
+  16:	68f8      	ldr	r0, [r7, #12]
+  18:	f04f 0100 	mov.w	r1, #0
+  1c:	68ba      	ldr	r2, [r7, #8]
+  1e:	f7ff fffe 	bl	0 <DCD_EP_PrepareRx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:175
+                    0,                     
+                    pbuf,                         
+                    len);
+  return ret;
+  22:	7dfb      	ldrb	r3, [r7, #23]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:176
+}
+  24:	4618      	mov	r0, r3
+  26:	f107 0718 	add.w	r7, r7, #24
+  2a:	46bd      	mov	sp, r7
+  2c:	bd80      	pop	{r7, pc}
+  2e:	bf00      	nop
+
+Disassembly of section .text.USBD_CtlSendStatus:
+
+00000000 <USBD_CtlSendStatus>:
+USBD_CtlSendStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:184
+*         send zero lzngth packet on the ctl pipe
+* @param  pdev: USB OTG device instance
+* @retval status
+*/
+USBD_Status  USBD_CtlSendStatus (USB_OTG_CORE_HANDLE  *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:185
+  USBD_Status ret = USBD_OK;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:186
+  pdev->dev.device_state = USB_OTG_EP0_STATUS_IN;
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	f04f 0204 	mov.w	r2, #4
+  14:	f883 2111 	strb.w	r2, [r3, #273]	; 0x111
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:187
+  DCD_EP_Tx (pdev,
+  18:	6878      	ldr	r0, [r7, #4]
+  1a:	f04f 0100 	mov.w	r1, #0
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	f7ff fffe 	bl	0 <DCD_EP_Tx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:192
+             0,
+             NULL, 
+             0); 
+  
+  USB_OTG_EP0_OutStart(pdev);  
+  2a:	6878      	ldr	r0, [r7, #4]
+  2c:	f7ff fffe 	bl	0 <USB_OTG_EP0_OutStart>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:194
+  
+  return ret;
+  30:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:195
+}
+  32:	4618      	mov	r0, r3
+  34:	f107 0710 	add.w	r7, r7, #16
+  38:	46bd      	mov	sp, r7
+  3a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_CtlReceiveStatus:
+
+00000000 <USBD_CtlReceiveStatus>:
+USBD_CtlReceiveStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:204
+*         receive zero lzngth packet on the ctl pipe
+* @param  pdev: USB OTG device instance
+* @retval status
+*/
+USBD_Status  USBD_CtlReceiveStatus (USB_OTG_CORE_HANDLE  *pdev)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b084      	sub	sp, #16
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:205
+  USBD_Status ret = USBD_OK;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:206
+  pdev->dev.device_state = USB_OTG_EP0_STATUS_OUT;  
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	f04f 0205 	mov.w	r2, #5
+  14:	f883 2111 	strb.w	r2, [r3, #273]	; 0x111
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:207
+  DCD_EP_PrepareRx ( pdev,
+  18:	6878      	ldr	r0, [r7, #4]
+  1a:	f04f 0100 	mov.w	r1, #0
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	f04f 0300 	mov.w	r3, #0
+  26:	f7ff fffe 	bl	0 <DCD_EP_PrepareRx>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:212
+                    0,
+                    NULL,
+                    0);  
+
+  USB_OTG_EP0_OutStart(pdev);
+  2a:	6878      	ldr	r0, [r7, #4]
+  2c:	f7ff fffe 	bl	0 <USB_OTG_EP0_OutStart>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:214
+  
+  return ret;
+  30:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:215
+}
+  32:	4618      	mov	r0, r3
+  34:	f107 0710 	add.w	r7, r7, #16
+  38:	46bd      	mov	sp, r7
+  3a:	bd80      	pop	{r7, pc}
+
+Disassembly of section .text.USBD_GetRxCount:
+
+00000000 <USBD_GetRxCount>:
+USBD_GetRxCount():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:226
+* @param  pdev: USB OTG device instance
+*         epnum: endpoint index
+* @retval Rx Data blength
+*/
+uint16_t  USBD_GetRxCount (USB_OTG_CORE_HANDLE  *pdev , uint8_t epnum)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	70fb      	strb	r3, [r7, #3]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:227
+  return pdev->dev.out_ep[epnum].xfer_count;
+   c:	78fa      	ldrb	r2, [r7, #3]
+   e:	6879      	ldr	r1, [r7, #4]
+  10:	4613      	mov	r3, r2
+  12:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  16:	189b      	adds	r3, r3, r2
+  18:	ea4f 03c3 	mov.w	r3, r3, lsl #3
+  1c:	18cb      	adds	r3, r1, r3
+  1e:	f503 7363 	add.w	r3, r3, #908	; 0x38c
+  22:	681b      	ldr	r3, [r3, #0]
+  24:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\STM32_USB_Device_Library\Core\src/usbd_ioreq.c:228
+}
+  26:	4618      	mov	r0, r3
+  28:	f107 070c 	add.w	r7, r7, #12
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop

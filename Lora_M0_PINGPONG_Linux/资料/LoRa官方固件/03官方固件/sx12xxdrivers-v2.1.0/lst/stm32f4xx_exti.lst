@@ -1,0 +1,484 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_exti.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_exti.o
+
+
+Disassembly of section .text.EXTI_DeInit:
+
+00000000 <EXTI_DeInit>:
+EXTI_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:111
+  * @brief  Deinitializes the EXTI peripheral registers to their default reset values.
+  * @param  None
+  * @retval None
+  */
+void EXTI_DeInit(void)
+{
+   0:	b480      	push	{r7}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:112
+  EXTI->IMR = 0x00000000;
+   4:	4b0a      	ldr	r3, [pc, #40]	; (30 <EXTI_DeInit+0x30>)
+   6:	f04f 0200 	mov.w	r2, #0
+   a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:113
+  EXTI->EMR = 0x00000000;
+   c:	4b08      	ldr	r3, [pc, #32]	; (30 <EXTI_DeInit+0x30>)
+   e:	f04f 0200 	mov.w	r2, #0
+  12:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:114
+  EXTI->RTSR = 0x00000000;
+  14:	4b06      	ldr	r3, [pc, #24]	; (30 <EXTI_DeInit+0x30>)
+  16:	f04f 0200 	mov.w	r2, #0
+  1a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:115
+  EXTI->FTSR = 0x00000000;
+  1c:	4b04      	ldr	r3, [pc, #16]	; (30 <EXTI_DeInit+0x30>)
+  1e:	f04f 0200 	mov.w	r2, #0
+  22:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:116
+  EXTI->PR = 0x007FFFFF;
+  24:	4b02      	ldr	r3, [pc, #8]	; (30 <EXTI_DeInit+0x30>)
+  26:	4a03      	ldr	r2, [pc, #12]	; (34 <EXTI_DeInit+0x34>)
+  28:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:117
+}
+  2a:	46bd      	mov	sp, r7
+  2c:	bc80      	pop	{r7}
+  2e:	4770      	bx	lr
+  30:	40013c00 	.word	0x40013c00
+  34:	007fffff 	.word	0x007fffff
+
+Disassembly of section .text.EXTI_Init:
+
+00000000 <EXTI_Init>:
+EXTI_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:127
+  * @param  EXTI_InitStruct: pointer to a EXTI_InitTypeDef structure
+  *         that contains the configuration information for the EXTI peripheral.
+  * @retval None
+  */
+void EXTI_Init(EXTI_InitTypeDef* EXTI_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:128
+  uint32_t tmp = 0;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:136
+  assert_param(IS_EXTI_MODE(EXTI_InitStruct->EXTI_Mode));
+  assert_param(IS_EXTI_TRIGGER(EXTI_InitStruct->EXTI_Trigger));
+  assert_param(IS_EXTI_LINE(EXTI_InitStruct->EXTI_Line));  
+  assert_param(IS_FUNCTIONAL_STATE(EXTI_InitStruct->EXTI_LineCmd));
+
+  tmp = (uint32_t)EXTI_BASE;
+   e:	4b3a      	ldr	r3, [pc, #232]	; (f8 <EXTI_Init+0xf8>)
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:138
+     
+  if (EXTI_InitStruct->EXTI_LineCmd != DISABLE)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	799b      	ldrb	r3, [r3, #6]
+  16:	2b00      	cmp	r3, #0
+  18:	d059      	beq.n	ce <EXTI_Init+0xce>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:141
+  {
+    /* Clear EXTI line configuration */
+    EXTI->IMR &= ~EXTI_InitStruct->EXTI_Line;
+  1a:	4b37      	ldr	r3, [pc, #220]	; (f8 <EXTI_Init+0xf8>)
+  1c:	4a36      	ldr	r2, [pc, #216]	; (f8 <EXTI_Init+0xf8>)
+  1e:	6811      	ldr	r1, [r2, #0]
+  20:	687a      	ldr	r2, [r7, #4]
+  22:	6812      	ldr	r2, [r2, #0]
+  24:	ea6f 0202 	mvn.w	r2, r2
+  28:	ea01 0202 	and.w	r2, r1, r2
+  2c:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:142
+    EXTI->EMR &= ~EXTI_InitStruct->EXTI_Line;
+  2e:	4b32      	ldr	r3, [pc, #200]	; (f8 <EXTI_Init+0xf8>)
+  30:	4a31      	ldr	r2, [pc, #196]	; (f8 <EXTI_Init+0xf8>)
+  32:	6851      	ldr	r1, [r2, #4]
+  34:	687a      	ldr	r2, [r7, #4]
+  36:	6812      	ldr	r2, [r2, #0]
+  38:	ea6f 0202 	mvn.w	r2, r2
+  3c:	ea01 0202 	and.w	r2, r1, r2
+  40:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:144
+    
+    tmp += EXTI_InitStruct->EXTI_Mode;
+  42:	687b      	ldr	r3, [r7, #4]
+  44:	791b      	ldrb	r3, [r3, #4]
+  46:	68fa      	ldr	r2, [r7, #12]
+  48:	18d3      	adds	r3, r2, r3
+  4a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:146
+
+    *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+  4c:	68fb      	ldr	r3, [r7, #12]
+  4e:	68fa      	ldr	r2, [r7, #12]
+  50:	6811      	ldr	r1, [r2, #0]
+  52:	687a      	ldr	r2, [r7, #4]
+  54:	6812      	ldr	r2, [r2, #0]
+  56:	ea41 0202 	orr.w	r2, r1, r2
+  5a:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:149
+
+    /* Clear Rising Falling edge configuration */
+    EXTI->RTSR &= ~EXTI_InitStruct->EXTI_Line;
+  5c:	4b26      	ldr	r3, [pc, #152]	; (f8 <EXTI_Init+0xf8>)
+  5e:	4a26      	ldr	r2, [pc, #152]	; (f8 <EXTI_Init+0xf8>)
+  60:	6891      	ldr	r1, [r2, #8]
+  62:	687a      	ldr	r2, [r7, #4]
+  64:	6812      	ldr	r2, [r2, #0]
+  66:	ea6f 0202 	mvn.w	r2, r2
+  6a:	ea01 0202 	and.w	r2, r1, r2
+  6e:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:150
+    EXTI->FTSR &= ~EXTI_InitStruct->EXTI_Line;
+  70:	4b21      	ldr	r3, [pc, #132]	; (f8 <EXTI_Init+0xf8>)
+  72:	4a21      	ldr	r2, [pc, #132]	; (f8 <EXTI_Init+0xf8>)
+  74:	68d1      	ldr	r1, [r2, #12]
+  76:	687a      	ldr	r2, [r7, #4]
+  78:	6812      	ldr	r2, [r2, #0]
+  7a:	ea6f 0202 	mvn.w	r2, r2
+  7e:	ea01 0202 	and.w	r2, r1, r2
+  82:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:153
+    
+    /* Select the trigger for the selected external interrupts */
+    if (EXTI_InitStruct->EXTI_Trigger == EXTI_Trigger_Rising_Falling)
+  84:	687b      	ldr	r3, [r7, #4]
+  86:	795b      	ldrb	r3, [r3, #5]
+  88:	2b10      	cmp	r3, #16
+  8a:	d110      	bne.n	ae <EXTI_Init+0xae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:156
+    {
+      /* Rising Falling edge */
+      EXTI->RTSR |= EXTI_InitStruct->EXTI_Line;
+  8c:	4b1a      	ldr	r3, [pc, #104]	; (f8 <EXTI_Init+0xf8>)
+  8e:	4a1a      	ldr	r2, [pc, #104]	; (f8 <EXTI_Init+0xf8>)
+  90:	6891      	ldr	r1, [r2, #8]
+  92:	687a      	ldr	r2, [r7, #4]
+  94:	6812      	ldr	r2, [r2, #0]
+  96:	ea41 0202 	orr.w	r2, r1, r2
+  9a:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:157
+      EXTI->FTSR |= EXTI_InitStruct->EXTI_Line;
+  9c:	4b16      	ldr	r3, [pc, #88]	; (f8 <EXTI_Init+0xf8>)
+  9e:	4a16      	ldr	r2, [pc, #88]	; (f8 <EXTI_Init+0xf8>)
+  a0:	68d1      	ldr	r1, [r2, #12]
+  a2:	687a      	ldr	r2, [r7, #4]
+  a4:	6812      	ldr	r2, [r2, #0]
+  a6:	ea41 0202 	orr.w	r2, r1, r2
+  aa:	60da      	str	r2, [r3, #12]
+  ac:	e01e      	b.n	ec <EXTI_Init+0xec>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:161
+    }
+    else
+    {
+      tmp = (uint32_t)EXTI_BASE;
+  ae:	4b12      	ldr	r3, [pc, #72]	; (f8 <EXTI_Init+0xf8>)
+  b0:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:162
+      tmp += EXTI_InitStruct->EXTI_Trigger;
+  b2:	687b      	ldr	r3, [r7, #4]
+  b4:	795b      	ldrb	r3, [r3, #5]
+  b6:	68fa      	ldr	r2, [r7, #12]
+  b8:	18d3      	adds	r3, r2, r3
+  ba:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:164
+
+      *(__IO uint32_t *) tmp |= EXTI_InitStruct->EXTI_Line;
+  bc:	68fb      	ldr	r3, [r7, #12]
+  be:	68fa      	ldr	r2, [r7, #12]
+  c0:	6811      	ldr	r1, [r2, #0]
+  c2:	687a      	ldr	r2, [r7, #4]
+  c4:	6812      	ldr	r2, [r2, #0]
+  c6:	ea41 0202 	orr.w	r2, r1, r2
+  ca:	601a      	str	r2, [r3, #0]
+  cc:	e00e      	b.n	ec <EXTI_Init+0xec>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:169
+    }
+  }
+  else
+  {
+    tmp += EXTI_InitStruct->EXTI_Mode;
+  ce:	687b      	ldr	r3, [r7, #4]
+  d0:	791b      	ldrb	r3, [r3, #4]
+  d2:	68fa      	ldr	r2, [r7, #12]
+  d4:	18d3      	adds	r3, r2, r3
+  d6:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:172
+
+    /* Disable the selected external lines */
+    *(__IO uint32_t *) tmp &= ~EXTI_InitStruct->EXTI_Line;
+  d8:	68fb      	ldr	r3, [r7, #12]
+  da:	68fa      	ldr	r2, [r7, #12]
+  dc:	6811      	ldr	r1, [r2, #0]
+  de:	687a      	ldr	r2, [r7, #4]
+  e0:	6812      	ldr	r2, [r2, #0]
+  e2:	ea6f 0202 	mvn.w	r2, r2
+  e6:	ea01 0202 	and.w	r2, r1, r2
+  ea:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:174
+  }
+}
+  ec:	f107 0714 	add.w	r7, r7, #20
+  f0:	46bd      	mov	sp, r7
+  f2:	bc80      	pop	{r7}
+  f4:	4770      	bx	lr
+  f6:	bf00      	nop
+  f8:	40013c00 	.word	0x40013c00
+
+Disassembly of section .text.EXTI_StructInit:
+
+00000000 <EXTI_StructInit>:
+EXTI_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:183
+  * @param  EXTI_InitStruct: pointer to a EXTI_InitTypeDef structure which will
+  *         be initialized.
+  * @retval None
+  */
+void EXTI_StructInit(EXTI_InitTypeDef* EXTI_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:184
+  EXTI_InitStruct->EXTI_Line = EXTI_LINENONE;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:185
+  EXTI_InitStruct->EXTI_Mode = EXTI_Mode_Interrupt;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:186
+  EXTI_InitStruct->EXTI_Trigger = EXTI_Trigger_Falling;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 020c 	mov.w	r2, #12
+  1e:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:187
+  EXTI_InitStruct->EXTI_LineCmd = DISABLE;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:188
+}
+  28:	f107 070c 	add.w	r7, r7, #12
+  2c:	46bd      	mov	sp, r7
+  2e:	bc80      	pop	{r7}
+  30:	4770      	bx	lr
+  32:	bf00      	nop
+
+Disassembly of section .text.EXTI_GenerateSWInterrupt:
+
+00000000 <EXTI_GenerateSWInterrupt>:
+EXTI_GenerateSWInterrupt():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:198
+  *         will be generated.
+  *         This parameter can be any combination of EXTI_Linex where x can be (0..22)
+  * @retval None
+  */
+void EXTI_GenerateSWInterrupt(uint32_t EXTI_Line)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:202
+  /* Check the parameters */
+  assert_param(IS_EXTI_LINE(EXTI_Line));
+  
+  EXTI->SWIER |= EXTI_Line;
+   8:	4b05      	ldr	r3, [pc, #20]	; (20 <EXTI_GenerateSWInterrupt+0x20>)
+   a:	4a05      	ldr	r2, [pc, #20]	; (20 <EXTI_GenerateSWInterrupt+0x20>)
+   c:	6911      	ldr	r1, [r2, #16]
+   e:	687a      	ldr	r2, [r7, #4]
+  10:	ea41 0202 	orr.w	r2, r1, r2
+  14:	611a      	str	r2, [r3, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:203
+}
+  16:	f107 070c 	add.w	r7, r7, #12
+  1a:	46bd      	mov	sp, r7
+  1c:	bc80      	pop	{r7}
+  1e:	4770      	bx	lr
+  20:	40013c00 	.word	0x40013c00
+
+Disassembly of section .text.EXTI_GetFlagStatus:
+
+00000000 <EXTI_GetFlagStatus>:
+EXTI_GetFlagStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:228
+  * @param  EXTI_Line: specifies the EXTI line flag to check.
+  *          This parameter can be EXTI_Linex where x can be(0..22)
+  * @retval The new state of EXTI_Line (SET or RESET).
+  */
+FlagStatus EXTI_GetFlagStatus(uint32_t EXTI_Line)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:229
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:233
+  /* Check the parameters */
+  assert_param(IS_GET_EXTI_LINE(EXTI_Line));
+  
+  if ((EXTI->PR & EXTI_Line) != (uint32_t)RESET)
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <EXTI_GetFlagStatus+0x38>)
+  10:	695a      	ldr	r2, [r3, #20]
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <EXTI_GetFlagStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:235
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <EXTI_GetFlagStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:239
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:241
+  }
+  return bitstatus;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:242
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40013c00 	.word	0x40013c00
+
+Disassembly of section .text.EXTI_ClearFlag:
+
+00000000 <EXTI_ClearFlag>:
+EXTI_ClearFlag():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:251
+  * @param  EXTI_Line: specifies the EXTI lines flags to clear.
+  *          This parameter can be any combination of EXTI_Linex where x can be (0..22)
+  * @retval None
+  */
+void EXTI_ClearFlag(uint32_t EXTI_Line)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:255
+  /* Check the parameters */
+  assert_param(IS_EXTI_LINE(EXTI_Line));
+  
+  EXTI->PR = EXTI_Line;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <EXTI_ClearFlag+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:256
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40013c00 	.word	0x40013c00
+
+Disassembly of section .text.EXTI_GetITStatus:
+
+00000000 <EXTI_GetITStatus>:
+EXTI_GetITStatus():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:265
+  * @param  EXTI_Line: specifies the EXTI line to check.
+  *          This parameter can be EXTI_Linex where x can be(0..22)
+  * @retval The new state of EXTI_Line (SET or RESET).
+  */
+ITStatus EXTI_GetITStatus(uint32_t EXTI_Line)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:266
+  FlagStatus bitstatus = RESET;
+   8:	f04f 0300 	mov.w	r3, #0
+   c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:270
+  /* Check the parameters */
+  assert_param(IS_GET_EXTI_LINE(EXTI_Line));
+  
+  if ((EXTI->PR & EXTI_Line) != (uint32_t)RESET)
+   e:	4b0a      	ldr	r3, [pc, #40]	; (38 <EXTI_GetITStatus+0x38>)
+  10:	695a      	ldr	r2, [r3, #20]
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	ea02 0303 	and.w	r3, r2, r3
+  18:	2b00      	cmp	r3, #0
+  1a:	d003      	beq.n	24 <EXTI_GetITStatus+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:272
+  {
+    bitstatus = SET;
+  1c:	f04f 0301 	mov.w	r3, #1
+  20:	73fb      	strb	r3, [r7, #15]
+  22:	e002      	b.n	2a <EXTI_GetITStatus+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:276
+  }
+  else
+  {
+    bitstatus = RESET;
+  24:	f04f 0300 	mov.w	r3, #0
+  28:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:278
+  }
+  return bitstatus;
+  2a:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:280
+  
+}
+  2c:	4618      	mov	r0, r3
+  2e:	f107 0714 	add.w	r7, r7, #20
+  32:	46bd      	mov	sp, r7
+  34:	bc80      	pop	{r7}
+  36:	4770      	bx	lr
+  38:	40013c00 	.word	0x40013c00
+
+Disassembly of section .text.EXTI_ClearITPendingBit:
+
+00000000 <EXTI_ClearITPendingBit>:
+EXTI_ClearITPendingBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:289
+  * @param  EXTI_Line: specifies the EXTI lines to clear.
+  *          This parameter can be any combination of EXTI_Linex where x can be (0..22)
+  * @retval None
+  */
+void EXTI_ClearITPendingBit(uint32_t EXTI_Line)
+{
+   0:	b083b480 	.word	0xb083b480
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:293
+  /* Check the parameters */
+  assert_param(IS_EXTI_LINE(EXTI_Line));
+  
+  EXTI->PR = EXTI_Line;
+   8:	4b03      	ldr	r3, [pc, #12]	; (18 <EXTI_ClearITPendingBit+0x18>)
+   a:	687a      	ldr	r2, [r7, #4]
+   c:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_exti.c:294
+}
+   e:	f107 070c 	add.w	r7, r7, #12
+  12:	46bd      	mov	sp, r7
+  14:	bc80      	pop	{r7}
+  16:	4770      	bx	lr
+  18:	40013c00 	.word	0x40013c00

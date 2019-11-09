@@ -1,0 +1,1040 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_gpio.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\stm32f4xx_gpio.o
+
+
+Disassembly of section .text.GPIO_DeInit:
+
+00000000 <GPIO_DeInit>:
+GPIO_DeInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:128
+  *                      x can be (A..I) to select the GPIO peripheral for STM32F42xxx/43xxx devices.
+  *                      x can be (A, B, C, D and H) to select the GPIO peripheral for STM32F401xx devices.  
+  * @retval None
+  */
+void GPIO_DeInit(GPIO_TypeDef* GPIOx)
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:132
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  if (GPIOx == GPIOA)
+   8:	687a      	ldr	r2, [r7, #4]
+   a:	4b5e      	ldr	r3, [pc, #376]	; (184 <GPIO_DeInit+0x184>)
+   c:	429a      	cmp	r2, r3
+   e:	d10c      	bne.n	2a <GPIO_DeInit+0x2a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:134
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOA, ENABLE);
+  10:	f04f 0001 	mov.w	r0, #1
+  14:	f04f 0101 	mov.w	r1, #1
+  18:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:135
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOA, DISABLE);
+  1c:	f04f 0001 	mov.w	r0, #1
+  20:	f04f 0100 	mov.w	r1, #0
+  24:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  28:	e0a8      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:137
+  }
+  else if (GPIOx == GPIOB)
+  2a:	687a      	ldr	r2, [r7, #4]
+  2c:	4b56      	ldr	r3, [pc, #344]	; (188 <GPIO_DeInit+0x188>)
+  2e:	429a      	cmp	r2, r3
+  30:	d10c      	bne.n	4c <GPIO_DeInit+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:139
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+  32:	f04f 0002 	mov.w	r0, #2
+  36:	f04f 0101 	mov.w	r1, #1
+  3a:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:140
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOB, DISABLE);
+  3e:	f04f 0002 	mov.w	r0, #2
+  42:	f04f 0100 	mov.w	r1, #0
+  46:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  4a:	e097      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:142
+  }
+  else if (GPIOx == GPIOC)
+  4c:	687a      	ldr	r2, [r7, #4]
+  4e:	4b4f      	ldr	r3, [pc, #316]	; (18c <GPIO_DeInit+0x18c>)
+  50:	429a      	cmp	r2, r3
+  52:	d10c      	bne.n	6e <GPIO_DeInit+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:144
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+  54:	f04f 0004 	mov.w	r0, #4
+  58:	f04f 0101 	mov.w	r1, #1
+  5c:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:145
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOC, DISABLE);
+  60:	f04f 0004 	mov.w	r0, #4
+  64:	f04f 0100 	mov.w	r1, #0
+  68:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  6c:	e086      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:147
+  }
+  else if (GPIOx == GPIOD)
+  6e:	687a      	ldr	r2, [r7, #4]
+  70:	4b47      	ldr	r3, [pc, #284]	; (190 <GPIO_DeInit+0x190>)
+  72:	429a      	cmp	r2, r3
+  74:	d10c      	bne.n	90 <GPIO_DeInit+0x90>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:149
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOD, ENABLE);
+  76:	f04f 0008 	mov.w	r0, #8
+  7a:	f04f 0101 	mov.w	r1, #1
+  7e:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:150
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOD, DISABLE);
+  82:	f04f 0008 	mov.w	r0, #8
+  86:	f04f 0100 	mov.w	r1, #0
+  8a:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  8e:	e075      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:152
+  }
+  else if (GPIOx == GPIOE)
+  90:	687a      	ldr	r2, [r7, #4]
+  92:	4b40      	ldr	r3, [pc, #256]	; (194 <GPIO_DeInit+0x194>)
+  94:	429a      	cmp	r2, r3
+  96:	d10c      	bne.n	b2 <GPIO_DeInit+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:154
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+  98:	f04f 0010 	mov.w	r0, #16
+  9c:	f04f 0101 	mov.w	r1, #1
+  a0:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:155
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOE, DISABLE);
+  a4:	f04f 0010 	mov.w	r0, #16
+  a8:	f04f 0100 	mov.w	r1, #0
+  ac:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  b0:	e064      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:157
+  }
+  else if (GPIOx == GPIOF)
+  b2:	687a      	ldr	r2, [r7, #4]
+  b4:	4b38      	ldr	r3, [pc, #224]	; (198 <GPIO_DeInit+0x198>)
+  b6:	429a      	cmp	r2, r3
+  b8:	d10c      	bne.n	d4 <GPIO_DeInit+0xd4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:159
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOF, ENABLE);
+  ba:	f04f 0020 	mov.w	r0, #32
+  be:	f04f 0101 	mov.w	r1, #1
+  c2:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:160
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOF, DISABLE);
+  c6:	f04f 0020 	mov.w	r0, #32
+  ca:	f04f 0100 	mov.w	r1, #0
+  ce:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  d2:	e053      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:162
+  }
+  else if (GPIOx == GPIOG)
+  d4:	687a      	ldr	r2, [r7, #4]
+  d6:	4b31      	ldr	r3, [pc, #196]	; (19c <GPIO_DeInit+0x19c>)
+  d8:	429a      	cmp	r2, r3
+  da:	d10c      	bne.n	f6 <GPIO_DeInit+0xf6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:164
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOG, ENABLE);
+  dc:	f04f 0040 	mov.w	r0, #64	; 0x40
+  e0:	f04f 0101 	mov.w	r1, #1
+  e4:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:165
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOG, DISABLE);
+  e8:	f04f 0040 	mov.w	r0, #64	; 0x40
+  ec:	f04f 0100 	mov.w	r1, #0
+  f0:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+  f4:	e042      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:167
+  }
+  else if (GPIOx == GPIOH)
+  f6:	687a      	ldr	r2, [r7, #4]
+  f8:	4b29      	ldr	r3, [pc, #164]	; (1a0 <GPIO_DeInit+0x1a0>)
+  fa:	429a      	cmp	r2, r3
+  fc:	d10c      	bne.n	118 <GPIO_DeInit+0x118>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:169
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOH, ENABLE);
+  fe:	f04f 0080 	mov.w	r0, #128	; 0x80
+ 102:	f04f 0101 	mov.w	r1, #1
+ 106:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:170
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOH, DISABLE);
+ 10a:	f04f 0080 	mov.w	r0, #128	; 0x80
+ 10e:	f04f 0100 	mov.w	r1, #0
+ 112:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+ 116:	e031      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:173
+  }
+
+  else if (GPIOx == GPIOI)
+ 118:	687a      	ldr	r2, [r7, #4]
+ 11a:	4b22      	ldr	r3, [pc, #136]	; (1a4 <GPIO_DeInit+0x1a4>)
+ 11c:	429a      	cmp	r2, r3
+ 11e:	d10c      	bne.n	13a <GPIO_DeInit+0x13a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:175
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOI, ENABLE);
+ 120:	f44f 7080 	mov.w	r0, #256	; 0x100
+ 124:	f04f 0101 	mov.w	r1, #1
+ 128:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:176
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOI, DISABLE);
+ 12c:	f44f 7080 	mov.w	r0, #256	; 0x100
+ 130:	f04f 0100 	mov.w	r1, #0
+ 134:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+ 138:	e020      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:178
+  }
+  else if (GPIOx == GPIOJ)
+ 13a:	687a      	ldr	r2, [r7, #4]
+ 13c:	4b1a      	ldr	r3, [pc, #104]	; (1a8 <GPIO_DeInit+0x1a8>)
+ 13e:	429a      	cmp	r2, r3
+ 140:	d10c      	bne.n	15c <GPIO_DeInit+0x15c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:180
+  {
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOJ, ENABLE);
+ 142:	f44f 7000 	mov.w	r0, #512	; 0x200
+ 146:	f04f 0101 	mov.w	r1, #1
+ 14a:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:181
+    RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOJ, DISABLE);
+ 14e:	f44f 7000 	mov.w	r0, #512	; 0x200
+ 152:	f04f 0100 	mov.w	r1, #0
+ 156:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+ 15a:	e00f      	b.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:185
+  }
+  else
+  {
+    if (GPIOx == GPIOK)
+ 15c:	687a      	ldr	r2, [r7, #4]
+ 15e:	4b13      	ldr	r3, [pc, #76]	; (1ac <GPIO_DeInit+0x1ac>)
+ 160:	429a      	cmp	r2, r3
+ 162:	d10b      	bne.n	17c <GPIO_DeInit+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:187
+    {
+      RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOK, ENABLE);
+ 164:	f44f 6080 	mov.w	r0, #1024	; 0x400
+ 168:	f04f 0101 	mov.w	r1, #1
+ 16c:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:188
+      RCC_AHB1PeriphResetCmd(RCC_AHB1Periph_GPIOK, DISABLE);
+ 170:	f44f 6080 	mov.w	r0, #1024	; 0x400
+ 174:	f04f 0100 	mov.w	r1, #0
+ 178:	f7ff fffe 	bl	0 <RCC_AHB1PeriphResetCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:191
+    }
+  }
+}
+ 17c:	f107 0708 	add.w	r7, r7, #8
+ 180:	46bd      	mov	sp, r7
+ 182:	bd80      	pop	{r7, pc}
+ 184:	40020000 	.word	0x40020000
+ 188:	40020400 	.word	0x40020400
+ 18c:	40020800 	.word	0x40020800
+ 190:	40020c00 	.word	0x40020c00
+ 194:	40021000 	.word	0x40021000
+ 198:	40021400 	.word	0x40021400
+ 19c:	40021800 	.word	0x40021800
+ 1a0:	40021c00 	.word	0x40021c00
+ 1a4:	40022000 	.word	0x40022000
+ 1a8:	40022400 	.word	0x40022400
+ 1ac:	40022800 	.word	0x40022800
+
+Disassembly of section .text.GPIO_Init:
+
+00000000 <GPIO_Init>:
+GPIO_Init():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:203
+  * @param  GPIO_InitStruct: pointer to a GPIO_InitTypeDef structure that contains
+  *         the configuration information for the specified GPIO peripheral.
+  * @retval None
+  */
+void GPIO_Init(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b087      	sub	sp, #28
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	6039      	str	r1, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:204
+  uint32_t pinpos = 0x00, pos = 0x00 , currentpin = 0x00;
+   a:	f04f 0300 	mov.w	r3, #0
+   e:	617b      	str	r3, [r7, #20]
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	613b      	str	r3, [r7, #16]
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:214
+  assert_param(IS_GPIO_MODE(GPIO_InitStruct->GPIO_Mode));
+  assert_param(IS_GPIO_PUPD(GPIO_InitStruct->GPIO_PuPd));
+
+  /* ------------------------- Configure the port pins ---------------- */
+  /*-- GPIO Mode Configuration --*/
+  for (pinpos = 0x00; pinpos < 0x10; pinpos++)
+  1c:	f04f 0300 	mov.w	r3, #0
+  20:	617b      	str	r3, [r7, #20]
+  22:	e087      	b.n	134 <GPIO_Init+0x134>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:216
+  {
+    pos = ((uint32_t)0x01) << pinpos;
+  24:	697b      	ldr	r3, [r7, #20]
+  26:	f04f 0201 	mov.w	r2, #1
+  2a:	fa02 f303 	lsl.w	r3, r2, r3
+  2e:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:218
+    /* Get the port pins position */
+    currentpin = (GPIO_InitStruct->GPIO_Pin) & pos;
+  30:	683b      	ldr	r3, [r7, #0]
+  32:	681a      	ldr	r2, [r3, #0]
+  34:	693b      	ldr	r3, [r7, #16]
+  36:	ea02 0303 	and.w	r3, r2, r3
+  3a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:220
+
+    if (currentpin == pos)
+  3c:	68fa      	ldr	r2, [r7, #12]
+  3e:	693b      	ldr	r3, [r7, #16]
+  40:	429a      	cmp	r2, r3
+  42:	d173      	bne.n	12c <GPIO_Init+0x12c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:222
+    {
+      GPIOx->MODER  &= ~(GPIO_MODER_MODER0 << (pinpos * 2));
+  44:	687b      	ldr	r3, [r7, #4]
+  46:	681a      	ldr	r2, [r3, #0]
+  48:	697b      	ldr	r3, [r7, #20]
+  4a:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  4e:	f04f 0103 	mov.w	r1, #3
+  52:	fa01 f303 	lsl.w	r3, r1, r3
+  56:	ea6f 0303 	mvn.w	r3, r3
+  5a:	401a      	ands	r2, r3
+  5c:	687b      	ldr	r3, [r7, #4]
+  5e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:223
+      GPIOx->MODER |= (((uint32_t)GPIO_InitStruct->GPIO_Mode) << (pinpos * 2));
+  60:	687b      	ldr	r3, [r7, #4]
+  62:	681a      	ldr	r2, [r3, #0]
+  64:	683b      	ldr	r3, [r7, #0]
+  66:	791b      	ldrb	r3, [r3, #4]
+  68:	4619      	mov	r1, r3
+  6a:	697b      	ldr	r3, [r7, #20]
+  6c:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  70:	fa01 f303 	lsl.w	r3, r1, r3
+  74:	431a      	orrs	r2, r3
+  76:	687b      	ldr	r3, [r7, #4]
+  78:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:225
+
+      if ((GPIO_InitStruct->GPIO_Mode == GPIO_Mode_OUT) || (GPIO_InitStruct->GPIO_Mode == GPIO_Mode_AF))
+  7a:	683b      	ldr	r3, [r7, #0]
+  7c:	791b      	ldrb	r3, [r3, #4]
+  7e:	2b01      	cmp	r3, #1
+  80:	d003      	beq.n	8a <GPIO_Init+0x8a>
+  82:	683b      	ldr	r3, [r7, #0]
+  84:	791b      	ldrb	r3, [r3, #4]
+  86:	2b02      	cmp	r3, #2
+  88:	d134      	bne.n	f4 <GPIO_Init+0xf4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:231
+      {
+        /* Check Speed mode parameters */
+        assert_param(IS_GPIO_SPEED(GPIO_InitStruct->GPIO_Speed));
+
+        /* Speed mode configuration */
+        GPIOx->OSPEEDR &= ~(GPIO_OSPEEDER_OSPEEDR0 << (pinpos * 2));
+  8a:	687b      	ldr	r3, [r7, #4]
+  8c:	689a      	ldr	r2, [r3, #8]
+  8e:	697b      	ldr	r3, [r7, #20]
+  90:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  94:	f04f 0103 	mov.w	r1, #3
+  98:	fa01 f303 	lsl.w	r3, r1, r3
+  9c:	ea6f 0303 	mvn.w	r3, r3
+  a0:	401a      	ands	r2, r3
+  a2:	687b      	ldr	r3, [r7, #4]
+  a4:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:232
+        GPIOx->OSPEEDR |= ((uint32_t)(GPIO_InitStruct->GPIO_Speed) << (pinpos * 2));
+  a6:	687b      	ldr	r3, [r7, #4]
+  a8:	689a      	ldr	r2, [r3, #8]
+  aa:	683b      	ldr	r3, [r7, #0]
+  ac:	795b      	ldrb	r3, [r3, #5]
+  ae:	4619      	mov	r1, r3
+  b0:	697b      	ldr	r3, [r7, #20]
+  b2:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  b6:	fa01 f303 	lsl.w	r3, r1, r3
+  ba:	431a      	orrs	r2, r3
+  bc:	687b      	ldr	r3, [r7, #4]
+  be:	609a      	str	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:238
+
+        /* Check Output mode parameters */
+        assert_param(IS_GPIO_OTYPE(GPIO_InitStruct->GPIO_OType));
+
+        /* Output mode configuration*/
+        GPIOx->OTYPER  &= ~((GPIO_OTYPER_OT_0) << ((uint16_t)pinpos)) ;
+  c0:	687b      	ldr	r3, [r7, #4]
+  c2:	685a      	ldr	r2, [r3, #4]
+  c4:	697b      	ldr	r3, [r7, #20]
+  c6:	b29b      	uxth	r3, r3
+  c8:	f04f 0101 	mov.w	r1, #1
+  cc:	fa01 f303 	lsl.w	r3, r1, r3
+  d0:	ea6f 0303 	mvn.w	r3, r3
+  d4:	401a      	ands	r2, r3
+  d6:	687b      	ldr	r3, [r7, #4]
+  d8:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:239
+        GPIOx->OTYPER |= (uint16_t)(((uint16_t)GPIO_InitStruct->GPIO_OType) << ((uint16_t)pinpos));
+  da:	687b      	ldr	r3, [r7, #4]
+  dc:	685a      	ldr	r2, [r3, #4]
+  de:	683b      	ldr	r3, [r7, #0]
+  e0:	799b      	ldrb	r3, [r3, #6]
+  e2:	4619      	mov	r1, r3
+  e4:	697b      	ldr	r3, [r7, #20]
+  e6:	b29b      	uxth	r3, r3
+  e8:	fa01 f303 	lsl.w	r3, r1, r3
+  ec:	b29b      	uxth	r3, r3
+  ee:	431a      	orrs	r2, r3
+  f0:	687b      	ldr	r3, [r7, #4]
+  f2:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:243
+      }
+
+      /* Pull-up Pull down resistor configuration*/
+      GPIOx->PUPDR &= ~(GPIO_PUPDR_PUPDR0 << ((uint16_t)pinpos * 2));
+  f4:	687b      	ldr	r3, [r7, #4]
+  f6:	68da      	ldr	r2, [r3, #12]
+  f8:	697b      	ldr	r3, [r7, #20]
+  fa:	b29b      	uxth	r3, r3
+  fc:	ea4f 0343 	mov.w	r3, r3, lsl #1
+ 100:	f04f 0103 	mov.w	r1, #3
+ 104:	fa01 f303 	lsl.w	r3, r1, r3
+ 108:	ea6f 0303 	mvn.w	r3, r3
+ 10c:	401a      	ands	r2, r3
+ 10e:	687b      	ldr	r3, [r7, #4]
+ 110:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:244
+      GPIOx->PUPDR |= (((uint32_t)GPIO_InitStruct->GPIO_PuPd) << (pinpos * 2));
+ 112:	687b      	ldr	r3, [r7, #4]
+ 114:	68da      	ldr	r2, [r3, #12]
+ 116:	683b      	ldr	r3, [r7, #0]
+ 118:	79db      	ldrb	r3, [r3, #7]
+ 11a:	4619      	mov	r1, r3
+ 11c:	697b      	ldr	r3, [r7, #20]
+ 11e:	ea4f 0343 	mov.w	r3, r3, lsl #1
+ 122:	fa01 f303 	lsl.w	r3, r1, r3
+ 126:	431a      	orrs	r2, r3
+ 128:	687b      	ldr	r3, [r7, #4]
+ 12a:	60da      	str	r2, [r3, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:214
+  assert_param(IS_GPIO_MODE(GPIO_InitStruct->GPIO_Mode));
+  assert_param(IS_GPIO_PUPD(GPIO_InitStruct->GPIO_PuPd));
+
+  /* ------------------------- Configure the port pins ---------------- */
+  /*-- GPIO Mode Configuration --*/
+  for (pinpos = 0x00; pinpos < 0x10; pinpos++)
+ 12c:	697b      	ldr	r3, [r7, #20]
+ 12e:	f103 0301 	add.w	r3, r3, #1
+ 132:	617b      	str	r3, [r7, #20]
+ 134:	697b      	ldr	r3, [r7, #20]
+ 136:	2b0f      	cmp	r3, #15
+ 138:	f67f af74 	bls.w	24 <GPIO_Init+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:247
+      /* Pull-up Pull down resistor configuration*/
+      GPIOx->PUPDR &= ~(GPIO_PUPDR_PUPDR0 << ((uint16_t)pinpos * 2));
+      GPIOx->PUPDR |= (((uint32_t)GPIO_InitStruct->GPIO_PuPd) << (pinpos * 2));
+    }
+  }
+}
+ 13c:	f107 071c 	add.w	r7, r7, #28
+ 140:	46bd      	mov	sp, r7
+ 142:	bc80      	pop	{r7}
+ 144:	4770      	bx	lr
+ 146:	bf00      	nop
+
+Disassembly of section .text.GPIO_StructInit:
+
+00000000 <GPIO_StructInit>:
+GPIO_StructInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:255
+  * @brief  Fills each GPIO_InitStruct member with its default value.
+  * @param  GPIO_InitStruct : pointer to a GPIO_InitTypeDef structure which will be initialized.
+  * @retval None
+  */
+void GPIO_StructInit(GPIO_InitTypeDef* GPIO_InitStruct)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:257
+  /* Reset GPIO init structure parameters values */
+  GPIO_InitStruct->GPIO_Pin  = GPIO_Pin_All;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f64f 72ff 	movw	r2, #65535	; 0xffff
+   e:	601a      	str	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:258
+  GPIO_InitStruct->GPIO_Mode = GPIO_Mode_IN;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	711a      	strb	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:259
+  GPIO_InitStruct->GPIO_Speed = GPIO_Speed_2MHz;
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	f04f 0200 	mov.w	r2, #0
+  1e:	715a      	strb	r2, [r3, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:260
+  GPIO_InitStruct->GPIO_OType = GPIO_OType_PP;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	f04f 0200 	mov.w	r2, #0
+  26:	719a      	strb	r2, [r3, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:261
+  GPIO_InitStruct->GPIO_PuPd = GPIO_PuPd_NOPULL;
+  28:	687b      	ldr	r3, [r7, #4]
+  2a:	f04f 0200 	mov.w	r2, #0
+  2e:	71da      	strb	r2, [r3, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:262
+}
+  30:	f107 070c 	add.w	r7, r7, #12
+  34:	46bd      	mov	sp, r7
+  36:	bc80      	pop	{r7}
+  38:	4770      	bx	lr
+  3a:	bf00      	nop
+
+Disassembly of section .text.GPIO_PinLockConfig:
+
+00000000 <GPIO_PinLockConfig>:
+GPIO_PinLockConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:278
+  * @param  GPIO_Pin: specifies the port bit to be locked.
+  *          This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
+  * @retval None
+  */
+void GPIO_PinLockConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:279
+  __IO uint32_t tmp = 0x00010000;
+   c:	f44f 3380 	mov.w	r3, #65536	; 0x10000
+  10:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:285
+
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+  tmp |= GPIO_Pin;
+  12:	887a      	ldrh	r2, [r7, #2]
+  14:	68fb      	ldr	r3, [r7, #12]
+  16:	ea42 0303 	orr.w	r3, r2, r3
+  1a:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:287
+  /* Set LCKK bit */
+  GPIOx->LCKR = tmp;
+  1c:	68fa      	ldr	r2, [r7, #12]
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:289
+  /* Reset LCKK bit */
+  GPIOx->LCKR =  GPIO_Pin;
+  22:	887a      	ldrh	r2, [r7, #2]
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:291
+  /* Set LCKK bit */
+  GPIOx->LCKR = tmp;
+  28:	68fa      	ldr	r2, [r7, #12]
+  2a:	687b      	ldr	r3, [r7, #4]
+  2c:	61da      	str	r2, [r3, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:293
+  /* Read LCKK bit*/
+  tmp = GPIOx->LCKR;
+  2e:	687b      	ldr	r3, [r7, #4]
+  30:	69db      	ldr	r3, [r3, #28]
+  32:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:295
+  /* Read LCKK bit*/
+  tmp = GPIOx->LCKR;
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	69db      	ldr	r3, [r3, #28]
+  38:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:296
+}
+  3a:	f107 0714 	add.w	r7, r7, #20
+  3e:	46bd      	mov	sp, r7
+  40:	bc80      	pop	{r7}
+  42:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_ReadInputDataBit:
+
+00000000 <GPIO_ReadInputDataBit>:
+GPIO_ReadInputDataBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:324
+  * @param  GPIO_Pin: specifies the port bit to read.
+  *         This parameter can be GPIO_Pin_x where x can be (0..15).
+  * @retval The input port pin value.
+  */
+uint8_t GPIO_ReadInputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:325
+  uint8_t bitstatus = 0x00;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:331
+
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+
+  if ((GPIOx->IDR & GPIO_Pin) != (uint32_t)Bit_RESET)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	691a      	ldr	r2, [r3, #16]
+  16:	887b      	ldrh	r3, [r7, #2]
+  18:	ea02 0303 	and.w	r3, r2, r3
+  1c:	2b00      	cmp	r3, #0
+  1e:	d003      	beq.n	28 <GPIO_ReadInputDataBit+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:333
+  {
+    bitstatus = (uint8_t)Bit_SET;
+  20:	f04f 0301 	mov.w	r3, #1
+  24:	73fb      	strb	r3, [r7, #15]
+  26:	e002      	b.n	2e <GPIO_ReadInputDataBit+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:337
+  }
+  else
+  {
+    bitstatus = (uint8_t)Bit_RESET;
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:339
+  }
+  return bitstatus;
+  2e:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:340
+}
+  30:	4618      	mov	r0, r3
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_ReadInputData:
+
+00000000 <GPIO_ReadInputData>:
+GPIO_ReadInputData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:350
+  *                      x can be (A..I) to select the GPIO peripheral for STM32F42xxx/43xxx devices.
+  *                      x can be (A, B, C, D and H) to select the GPIO peripheral for STM32F401xx devices. 
+  * @retval GPIO input data port value.
+  */
+uint16_t GPIO_ReadInputData(GPIO_TypeDef* GPIOx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:354
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  return ((uint16_t)GPIOx->IDR);
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	691b      	ldr	r3, [r3, #16]
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:355
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.GPIO_ReadOutputDataBit:
+
+00000000 <GPIO_ReadOutputDataBit>:
+GPIO_ReadOutputDataBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:367
+  * @param  GPIO_Pin: specifies the port bit to read.
+  *          This parameter can be GPIO_Pin_x where x can be (0..15).
+  * @retval The output port pin value.
+  */
+uint8_t GPIO_ReadOutputDataBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:368
+  uint8_t bitstatus = 0x00;
+   c:	f04f 0300 	mov.w	r3, #0
+  10:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:374
+
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+
+  if (((GPIOx->ODR) & GPIO_Pin) != (uint32_t)Bit_RESET)
+  12:	687b      	ldr	r3, [r7, #4]
+  14:	695a      	ldr	r2, [r3, #20]
+  16:	887b      	ldrh	r3, [r7, #2]
+  18:	ea02 0303 	and.w	r3, r2, r3
+  1c:	2b00      	cmp	r3, #0
+  1e:	d003      	beq.n	28 <GPIO_ReadOutputDataBit+0x28>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:376
+  {
+    bitstatus = (uint8_t)Bit_SET;
+  20:	f04f 0301 	mov.w	r3, #1
+  24:	73fb      	strb	r3, [r7, #15]
+  26:	e002      	b.n	2e <GPIO_ReadOutputDataBit+0x2e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:380
+  }
+  else
+  {
+    bitstatus = (uint8_t)Bit_RESET;
+  28:	f04f 0300 	mov.w	r3, #0
+  2c:	73fb      	strb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:382
+  }
+  return bitstatus;
+  2e:	7bfb      	ldrb	r3, [r7, #15]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:383
+}
+  30:	4618      	mov	r0, r3
+  32:	f107 0714 	add.w	r7, r7, #20
+  36:	46bd      	mov	sp, r7
+  38:	bc80      	pop	{r7}
+  3a:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_ReadOutputData:
+
+00000000 <GPIO_ReadOutputData>:
+GPIO_ReadOutputData():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:393
+  *                      x can be (A..I) to select the GPIO peripheral for STM32F42xxx/43xxx devices.
+  *                      x can be (A, B, C, D and H) to select the GPIO peripheral for STM32F401xx devices. 
+  * @retval GPIO output data port value.
+  */
+uint16_t GPIO_ReadOutputData(GPIO_TypeDef* GPIOx)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:397
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  return ((uint16_t)GPIOx->ODR);
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	695b      	ldr	r3, [r3, #20]
+   c:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:398
+}
+   e:	4618      	mov	r0, r3
+  10:	f107 070c 	add.w	r7, r7, #12
+  14:	46bd      	mov	sp, r7
+  16:	bc80      	pop	{r7}
+  18:	4770      	bx	lr
+  1a:	bf00      	nop
+
+Disassembly of section .text.GPIO_SetBits:
+
+00000000 <GPIO_SetBits>:
+GPIO_SetBits():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:413
+  * @param  GPIO_Pin: specifies the port bits to be written.
+  *          This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
+  * @retval None
+  */
+void GPIO_SetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:418
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+  GPIOx->BSRRL = GPIO_Pin;
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	887a      	ldrh	r2, [r7, #2]
+  10:	831a      	strh	r2, [r3, #24]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:419
+}
+  12:	f107 070c 	add.w	r7, r7, #12
+  16:	46bd      	mov	sp, r7
+  18:	bc80      	pop	{r7}
+  1a:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_ResetBits:
+
+00000000 <GPIO_ResetBits>:
+GPIO_ResetBits():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:434
+  * @param  GPIO_Pin: specifies the port bits to be written.
+  *          This parameter can be any combination of GPIO_Pin_x where x can be (0..15).
+  * @retval None
+  */
+void GPIO_ResetBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:439
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GPIO_PIN(GPIO_Pin));
+
+  GPIOx->BSRRH = GPIO_Pin;
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	887a      	ldrh	r2, [r7, #2]
+  10:	835a      	strh	r2, [r3, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:440
+}
+  12:	f107 070c 	add.w	r7, r7, #12
+  16:	46bd      	mov	sp, r7
+  18:	bc80      	pop	{r7}
+  1a:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_WriteBit:
+
+00000000 <GPIO_WriteBit>:
+GPIO_WriteBit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:456
+  *            @arg Bit_RESET: to clear the port pin
+  *            @arg Bit_SET: to set the port pin
+  * @retval None
+  */
+void GPIO_WriteBit(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin, BitAction BitVal)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	807a      	strh	r2, [r7, #2]
+   e:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:462
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GET_GPIO_PIN(GPIO_Pin));
+  assert_param(IS_GPIO_BIT_ACTION(BitVal));
+
+  if (BitVal != Bit_RESET)
+  10:	787b      	ldrb	r3, [r7, #1]
+  12:	2b00      	cmp	r3, #0
+  14:	d003      	beq.n	1e <GPIO_WriteBit+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:464
+  {
+    GPIOx->BSRRL = GPIO_Pin;
+  16:	687b      	ldr	r3, [r7, #4]
+  18:	887a      	ldrh	r2, [r7, #2]
+  1a:	831a      	strh	r2, [r3, #24]
+  1c:	e002      	b.n	24 <GPIO_WriteBit+0x24>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:468
+  }
+  else
+  {
+    GPIOx->BSRRH = GPIO_Pin ;
+  1e:	687b      	ldr	r3, [r7, #4]
+  20:	887a      	ldrh	r2, [r7, #2]
+  22:	835a      	strh	r2, [r3, #26]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:470
+  }
+}
+  24:	f107 070c 	add.w	r7, r7, #12
+  28:	46bd      	mov	sp, r7
+  2a:	bc80      	pop	{r7}
+  2c:	4770      	bx	lr
+  2e:	bf00      	nop
+
+Disassembly of section .text.GPIO_Write:
+
+00000000 <GPIO_Write>:
+GPIO_Write():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:481
+  *                      x can be (A, B, C, D and H) to select the GPIO peripheral for STM32F401xx devices. 
+  * @param  PortVal: specifies the value to be written to the port output data register.
+  * @retval None
+  */
+void GPIO_Write(GPIO_TypeDef* GPIOx, uint16_t PortVal)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:485
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  GPIOx->ODR = PortVal;
+   c:	887a      	ldrh	r2, [r7, #2]
+   e:	687b      	ldr	r3, [r7, #4]
+  10:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:486
+}
+  12:	f107 070c 	add.w	r7, r7, #12
+  16:	46bd      	mov	sp, r7
+  18:	bc80      	pop	{r7}
+  1a:	4770      	bx	lr
+
+Disassembly of section .text.GPIO_ToggleBits:
+
+00000000 <GPIO_ToggleBits>:
+GPIO_ToggleBits():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:497
+  *                      x can be (A, B, C, D and H) to select the GPIO peripheral for STM32F401xx devices. 
+  * @param  GPIO_Pin: Specifies the pins to be toggled.
+  * @retval None
+  */
+void GPIO_ToggleBits(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:501
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+
+  GPIOx->ODR ^= GPIO_Pin;
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	695a      	ldr	r2, [r3, #20]
+  10:	887b      	ldrh	r3, [r7, #2]
+  12:	405a      	eors	r2, r3
+  14:	687b      	ldr	r3, [r7, #4]
+  16:	615a      	str	r2, [r3, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:502
+}
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+
+Disassembly of section .text.GPIO_PinAFConfig:
+
+00000000 <GPIO_PinAFConfig>:
+GPIO_PinAFConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:580
+  *            @arg GPIO_AF_LTDC: Connect LTDC pins to AF14 for STM32F429xx/439xx devices. 
+  *            @arg GPIO_AF_EVENTOUT: Connect EVENTOUT pins to AF15
+  * @retval None
+  */
+void GPIO_PinAFConfig(GPIO_TypeDef* GPIOx, uint16_t GPIO_PinSource, uint8_t GPIO_AF)
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	4613      	mov	r3, r2
+   a:	460a      	mov	r2, r1
+   c:	807a      	strh	r2, [r7, #2]
+   e:	707b      	strb	r3, [r7, #1]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:581
+  uint32_t temp = 0x00;
+  10:	f04f 0300 	mov.w	r3, #0
+  14:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:582
+  uint32_t temp_2 = 0x00;
+  16:	f04f 0300 	mov.w	r3, #0
+  1a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:589
+  /* Check the parameters */
+  assert_param(IS_GPIO_ALL_PERIPH(GPIOx));
+  assert_param(IS_GPIO_PIN_SOURCE(GPIO_PinSource));
+  assert_param(IS_GPIO_AF(GPIO_AF));
+  
+  temp = ((uint32_t)(GPIO_AF) << ((uint32_t)((uint32_t)GPIO_PinSource & (uint32_t)0x07) * 4)) ;
+  1c:	787a      	ldrb	r2, [r7, #1]
+  1e:	887b      	ldrh	r3, [r7, #2]
+  20:	f003 0307 	and.w	r3, r3, #7
+  24:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  28:	fa02 f303 	lsl.w	r3, r2, r3
+  2c:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:590
+  GPIOx->AFR[GPIO_PinSource >> 0x03] &= ~((uint32_t)0xF << ((uint32_t)((uint32_t)GPIO_PinSource & (uint32_t)0x07) * 4)) ;
+  2e:	887b      	ldrh	r3, [r7, #2]
+  30:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+  34:	b29b      	uxth	r3, r3
+  36:	461a      	mov	r2, r3
+  38:	887b      	ldrh	r3, [r7, #2]
+  3a:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+  3e:	b29b      	uxth	r3, r3
+  40:	4619      	mov	r1, r3
+  42:	687b      	ldr	r3, [r7, #4]
+  44:	f101 0108 	add.w	r1, r1, #8
+  48:	f853 1021 	ldr.w	r1, [r3, r1, lsl #2]
+  4c:	887b      	ldrh	r3, [r7, #2]
+  4e:	f003 0307 	and.w	r3, r3, #7
+  52:	ea4f 0383 	mov.w	r3, r3, lsl #2
+  56:	f04f 000f 	mov.w	r0, #15
+  5a:	fa00 f303 	lsl.w	r3, r0, r3
+  5e:	ea6f 0303 	mvn.w	r3, r3
+  62:	4019      	ands	r1, r3
+  64:	687b      	ldr	r3, [r7, #4]
+  66:	f102 0208 	add.w	r2, r2, #8
+  6a:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:591
+  temp_2 = GPIOx->AFR[GPIO_PinSource >> 0x03] | temp;
+  6e:	887b      	ldrh	r3, [r7, #2]
+  70:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+  74:	b29b      	uxth	r3, r3
+  76:	461a      	mov	r2, r3
+  78:	687b      	ldr	r3, [r7, #4]
+  7a:	f102 0208 	add.w	r2, r2, #8
+  7e:	f853 2022 	ldr.w	r2, [r3, r2, lsl #2]
+  82:	68fb      	ldr	r3, [r7, #12]
+  84:	ea42 0303 	orr.w	r3, r2, r3
+  88:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:592
+  GPIOx->AFR[GPIO_PinSource >> 0x03] = temp_2;
+  8a:	887b      	ldrh	r3, [r7, #2]
+  8c:	ea4f 03d3 	mov.w	r3, r3, lsr #3
+  90:	b29b      	uxth	r3, r3
+  92:	461a      	mov	r2, r3
+  94:	687b      	ldr	r3, [r7, #4]
+  96:	f102 0208 	add.w	r2, r2, #8
+  9a:	68b9      	ldr	r1, [r7, #8]
+  9c:	f843 1022 	str.w	r1, [r3, r2, lsl #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\stm32libs\stm32f4xx\src/stm32f4xx_gpio.c:593
+}
+  a0:	f107 0714 	add.w	r7, r7, #20
+  a4:	46bd      	mov	sp, r7
+  a6:	bc80      	pop	{r7}
+  a8:	4770      	bx	lr
+  aa:	bf00      	nop

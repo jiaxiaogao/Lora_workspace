@@ -1,0 +1,1955 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\i2c.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\i2c.o
+
+
+Disassembly of section .text.I2cFsmcClkEnable:
+
+00000000 <I2cFsmcClkEnable>:
+I2cFsmcClkEnable():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:17
+#endif
+
+#if ( defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx ) )
+
+static void I2cFsmcClkEnable( bool enable )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:19
+    
+}
+   a:	f107 070c 	add.w	r7, r7, #12
+   e:	46bd      	mov	sp, r7
+  10:	bc80      	pop	{r7}
+  12:	4770      	bx	lr
+
+Disassembly of section .text.I2cInit:
+
+00000000 <I2cInit>:
+I2cInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:42
+}
+
+#endif
+
+void I2cInit( void )
+{
+   0:	b580      	push	{r7, lr}
+   2:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:43
+    I2C_DeInit( I2C_INTERFACE );
+   4:	4803      	ldr	r0, [pc, #12]	; (14 <I2cInit+0x14>)
+   6:	f7ff fffe 	bl	0 <I2C_DeInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:45
+
+    I2cGpioConfig( );
+   a:	f7ff fffe 	bl	0 <I2cInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:46
+    I2cConfig( );
+   e:	f7ff fffe 	bl	0 <I2cInit>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:47
+}
+  12:	bd80      	pop	{r7, pc}
+  14:	40005400 	.word	0x40005400
+
+Disassembly of section .text.I2cWrite:
+
+00000000 <I2cWrite>:
+I2cWrite():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:50
+
+uint8_t I2cWrite( uint8_t deviceAddr, uint8_t data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	4602      	mov	r2, r0
+   8:	460b      	mov	r3, r1
+   a:	71fa      	strb	r2, [r7, #7]
+   c:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:54
+    __IO int32_t i;
+    uint32_t timeOut;
+
+    I2cFsmcClkEnable( false );
+   e:	f04f 0000 	mov.w	r0, #0
+  12:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:57
+   
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+  16:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  1a:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:58
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  1c:	e014      	b.n	48 <I2cWrite+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:60
+    {
+        if( ( timeOut-- ) == 0 )
+  1e:	697b      	ldr	r3, [r7, #20]
+  20:	2b00      	cmp	r3, #0
+  22:	bf14      	ite	ne
+  24:	2300      	movne	r3, #0
+  26:	2301      	moveq	r3, #1
+  28:	b2db      	uxtb	r3, r3
+  2a:	697a      	ldr	r2, [r7, #20]
+  2c:	f102 32ff 	add.w	r2, r2, #4294967295
+  30:	617a      	str	r2, [r7, #20]
+  32:	2b00      	cmp	r3, #0
+  34:	d008      	beq.n	48 <I2cWrite+0x48>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:62
+        {
+            I2cInit( );
+  36:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:63
+            I2cFsmcClkEnable( true );
+  3a:	f04f 0001 	mov.w	r0, #1
+  3e:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:64
+            return( SX_TIMEOUT );
+  42:	f04f 0305 	mov.w	r3, #5
+  46:	e09d      	b.n	184 <I2cWrite+0x184>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:58
+
+    I2cFsmcClkEnable( false );
+   
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  48:	4851      	ldr	r0, [pc, #324]	; (190 <I2cWrite+0x190>)
+  4a:	f44f 3100 	mov.w	r1, #131072	; 0x20000
+  4e:	f7ff fffe 	bl	0 <I2C_GetFlagStatus>
+  52:	4603      	mov	r3, r0
+  54:	2b00      	cmp	r3, #0
+  56:	d1e2      	bne.n	1e <I2cWrite+0x1e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:69
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+  58:	484d      	ldr	r0, [pc, #308]	; (190 <I2cWrite+0x190>)
+  5a:	f04f 0101 	mov.w	r1, #1
+  5e:	f7ff fffe 	bl	0 <I2C_GenerateSTART>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:72
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+  62:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  66:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:73
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  68:	e021      	b.n	ae <I2cWrite+0xae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:75
+    {
+        if( I2C_INTERFACE->SR1 & I2C_FLAG_RXNE )
+  6a:	4b49      	ldr	r3, [pc, #292]	; (190 <I2cWrite+0x190>)
+  6c:	8a9b      	ldrh	r3, [r3, #20]
+  6e:	b29b      	uxth	r3, r3
+  70:	461a      	mov	r2, r3
+  72:	4b48      	ldr	r3, [pc, #288]	; (194 <I2cWrite+0x194>)
+  74:	ea02 0303 	and.w	r3, r2, r3
+  78:	2b00      	cmp	r3, #0
+  7a:	d003      	beq.n	84 <I2cWrite+0x84>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:78
+        {
+            volatile uint32_t drTemp;
+            drTemp = I2C_INTERFACE->DR;
+  7c:	4b44      	ldr	r3, [pc, #272]	; (190 <I2cWrite+0x190>)
+  7e:	8a1b      	ldrh	r3, [r3, #16]
+  80:	b29b      	uxth	r3, r3
+  82:	60fb      	str	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:80
+        }
+        if( ( timeOut-- ) == 0 )
+  84:	697b      	ldr	r3, [r7, #20]
+  86:	2b00      	cmp	r3, #0
+  88:	bf14      	ite	ne
+  8a:	2300      	movne	r3, #0
+  8c:	2301      	moveq	r3, #1
+  8e:	b2db      	uxtb	r3, r3
+  90:	697a      	ldr	r2, [r7, #20]
+  92:	f102 32ff 	add.w	r2, r2, #4294967295
+  96:	617a      	str	r2, [r7, #20]
+  98:	2b00      	cmp	r3, #0
+  9a:	d008      	beq.n	ae <I2cWrite+0xae>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:82
+        {
+            I2cInit( );
+  9c:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:83
+            I2cFsmcClkEnable( true );
+  a0:	f04f 0001 	mov.w	r0, #1
+  a4:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:84
+            return( SX_TIMEOUT );
+  a8:	f04f 0305 	mov.w	r3, #5
+  ac:	e06a      	b.n	184 <I2cWrite+0x184>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:73
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  ae:	4838      	ldr	r0, [pc, #224]	; (190 <I2cWrite+0x190>)
+  b0:	4939      	ldr	r1, [pc, #228]	; (198 <I2cWrite+0x198>)
+  b2:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+  b6:	4603      	mov	r3, r0
+  b8:	2b00      	cmp	r3, #0
+  ba:	d0d6      	beq.n	6a <I2cWrite+0x6a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:88
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+    /* Send device's address for write */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+  bc:	79fb      	ldrb	r3, [r7, #7]
+  be:	4834      	ldr	r0, [pc, #208]	; (190 <I2cWrite+0x190>)
+  c0:	4619      	mov	r1, r3
+  c2:	f04f 0200 	mov.w	r2, #0
+  c6:	f7ff fffe 	bl	0 <I2C_Send7bitAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:91
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+  ca:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  ce:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:92
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+  d0:	e014      	b.n	fc <I2cWrite+0xfc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:94
+    {
+        if( ( timeOut-- ) == 0 )
+  d2:	697b      	ldr	r3, [r7, #20]
+  d4:	2b00      	cmp	r3, #0
+  d6:	bf14      	ite	ne
+  d8:	2300      	movne	r3, #0
+  da:	2301      	moveq	r3, #1
+  dc:	b2db      	uxtb	r3, r3
+  de:	697a      	ldr	r2, [r7, #20]
+  e0:	f102 32ff 	add.w	r2, r2, #4294967295
+  e4:	617a      	str	r2, [r7, #20]
+  e6:	2b00      	cmp	r3, #0
+  e8:	d008      	beq.n	fc <I2cWrite+0xfc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:96
+        {
+            I2cInit( );
+  ea:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:97
+            I2cFsmcClkEnable( true );
+  ee:	f04f 0001 	mov.w	r0, #1
+  f2:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:98
+            return( SX_TIMEOUT );
+  f6:	f04f 0305 	mov.w	r3, #5
+  fa:	e043      	b.n	184 <I2cWrite+0x184>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:92
+    /* Send device's address for write */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+  fc:	4824      	ldr	r0, [pc, #144]	; (190 <I2cWrite+0x190>)
+  fe:	4927      	ldr	r1, [pc, #156]	; (19c <I2cWrite+0x19c>)
+ 100:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 104:	4603      	mov	r3, r0
+ 106:	2b00      	cmp	r3, #0
+ 108:	d0e3      	beq.n	d2 <I2cWrite+0xd2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:102
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+
+    I2C_SendData( I2C_INTERFACE, data );
+ 10a:	79bb      	ldrb	r3, [r7, #6]
+ 10c:	4820      	ldr	r0, [pc, #128]	; (190 <I2cWrite+0x190>)
+ 10e:	4619      	mov	r1, r3
+ 110:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:105
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+ 114:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 118:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:106
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 11a:	e014      	b.n	146 <I2cWrite+0x146>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:108
+    {
+        if( ( timeOut-- ) == 0 )
+ 11c:	697b      	ldr	r3, [r7, #20]
+ 11e:	2b00      	cmp	r3, #0
+ 120:	bf14      	ite	ne
+ 122:	2300      	movne	r3, #0
+ 124:	2301      	moveq	r3, #1
+ 126:	b2db      	uxtb	r3, r3
+ 128:	697a      	ldr	r2, [r7, #20]
+ 12a:	f102 32ff 	add.w	r2, r2, #4294967295
+ 12e:	617a      	str	r2, [r7, #20]
+ 130:	2b00      	cmp	r3, #0
+ 132:	d008      	beq.n	146 <I2cWrite+0x146>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:110
+        {
+            I2cInit( );
+ 134:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:111
+            I2cFsmcClkEnable( true );
+ 138:	f04f 0001 	mov.w	r0, #1
+ 13c:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:112
+            return( SX_TIMEOUT );
+ 140:	f04f 0305 	mov.w	r3, #5
+ 144:	e01e      	b.n	184 <I2cWrite+0x184>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:106
+
+    I2C_SendData( I2C_INTERFACE, data );
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 146:	4812      	ldr	r0, [pc, #72]	; (190 <I2cWrite+0x190>)
+ 148:	4915      	ldr	r1, [pc, #84]	; (1a0 <I2cWrite+0x1a0>)
+ 14a:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 14e:	4603      	mov	r3, r0
+ 150:	2b00      	cmp	r3, #0
+ 152:	d0e3      	beq.n	11c <I2cWrite+0x11c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:116
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+
+    I2C_GenerateSTOP( I2C_INTERFACE, ENABLE ); 
+ 154:	480e      	ldr	r0, [pc, #56]	; (190 <I2cWrite+0x190>)
+ 156:	f04f 0101 	mov.w	r1, #1
+ 15a:	f7ff fffe 	bl	0 <I2C_GenerateSTOP>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:117
+    for( i = 0 ; i < 500 ; i++ ){ ; }
+ 15e:	f04f 0300 	mov.w	r3, #0
+ 162:	613b      	str	r3, [r7, #16]
+ 164:	e003      	b.n	16e <I2cWrite+0x16e>
+ 166:	693b      	ldr	r3, [r7, #16]
+ 168:	f103 0301 	add.w	r3, r3, #1
+ 16c:	613b      	str	r3, [r7, #16]
+ 16e:	693a      	ldr	r2, [r7, #16]
+ 170:	f240 13f3 	movw	r3, #499	; 0x1f3
+ 174:	429a      	cmp	r2, r3
+ 176:	ddf6      	ble.n	166 <I2cWrite+0x166>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:119
+
+    I2cFsmcClkEnable( true );
+ 178:	f04f 0001 	mov.w	r0, #1
+ 17c:	f7ff fffe 	bl	0 <I2cWrite>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:120
+    return( SX_OK );
+ 180:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:121
+}
+ 184:	4618      	mov	r0, r3
+ 186:	f107 0718 	add.w	r7, r7, #24
+ 18a:	46bd      	mov	sp, r7
+ 18c:	bd80      	pop	{r7, pc}
+ 18e:	bf00      	nop
+ 190:	40005400 	.word	0x40005400
+ 194:	10000040 	.word	0x10000040
+ 198:	00030001 	.word	0x00030001
+ 19c:	00070082 	.word	0x00070082
+ 1a0:	00070084 	.word	0x00070084
+
+Disassembly of section .text.I2cRead:
+
+00000000 <I2cRead>:
+I2cRead():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:124
+
+uint8_t I2cRead( uint8_t deviceAddr, uint8_t *data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b086      	sub	sp, #24
+   4:	af00      	add	r7, sp, #0
+   6:	4603      	mov	r3, r0
+   8:	6039      	str	r1, [r7, #0]
+   a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:126
+    __IO int32_t i;
+    int32_t size = 1;
+   c:	f04f 0301 	mov.w	r3, #1
+  10:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:129
+    uint32_t timeOut;
+
+    I2cFsmcClkEnable( false );
+  12:	f04f 0000 	mov.w	r0, #0
+  16:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:132
+    
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+  1a:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  1e:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:133
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  20:	e014      	b.n	4c <I2cRead+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:135
+    {
+        if( ( timeOut-- ) == 0 )
+  22:	693b      	ldr	r3, [r7, #16]
+  24:	2b00      	cmp	r3, #0
+  26:	bf14      	ite	ne
+  28:	2300      	movne	r3, #0
+  2a:	2301      	moveq	r3, #1
+  2c:	b2db      	uxtb	r3, r3
+  2e:	693a      	ldr	r2, [r7, #16]
+  30:	f102 32ff 	add.w	r2, r2, #4294967295
+  34:	613a      	str	r2, [r7, #16]
+  36:	2b00      	cmp	r3, #0
+  38:	d008      	beq.n	4c <I2cRead+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:137
+        {
+            I2cInit( );
+  3a:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:138
+            I2cFsmcClkEnable( true );
+  3e:	f04f 0001 	mov.w	r0, #1
+  42:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:139
+            return( SX_TIMEOUT );
+  46:	f04f 0305 	mov.w	r3, #5
+  4a:	e0a7      	b.n	19c <I2cRead+0x19c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:133
+
+    I2cFsmcClkEnable( false );
+    
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  4c:	4856      	ldr	r0, [pc, #344]	; (1a8 <I2cRead+0x1a8>)
+  4e:	f44f 3100 	mov.w	r1, #131072	; 0x20000
+  52:	f7ff fffe 	bl	0 <I2C_GetFlagStatus>
+  56:	4603      	mov	r3, r0
+  58:	2b00      	cmp	r3, #0
+  5a:	d1e2      	bne.n	22 <I2cRead+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:144
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send START condition a second time */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+  5c:	4852      	ldr	r0, [pc, #328]	; (1a8 <I2cRead+0x1a8>)
+  5e:	f04f 0101 	mov.w	r1, #1
+  62:	f7ff fffe 	bl	0 <I2C_GenerateSTART>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:147
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+  66:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  6a:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:148
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  6c:	e014      	b.n	98 <I2cRead+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:150
+    {
+        if( ( timeOut-- ) == 0 )
+  6e:	693b      	ldr	r3, [r7, #16]
+  70:	2b00      	cmp	r3, #0
+  72:	bf14      	ite	ne
+  74:	2300      	movne	r3, #0
+  76:	2301      	moveq	r3, #1
+  78:	b2db      	uxtb	r3, r3
+  7a:	693a      	ldr	r2, [r7, #16]
+  7c:	f102 32ff 	add.w	r2, r2, #4294967295
+  80:	613a      	str	r2, [r7, #16]
+  82:	2b00      	cmp	r3, #0
+  84:	d008      	beq.n	98 <I2cRead+0x98>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:152
+        {
+            I2cInit( );
+  86:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:153
+            I2cFsmcClkEnable( true );
+  8a:	f04f 0001 	mov.w	r0, #1
+  8e:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:154
+            return( SX_TIMEOUT );
+  92:	f04f 0305 	mov.w	r3, #5
+  96:	e081      	b.n	19c <I2cRead+0x19c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:148
+    /* Send START condition a second time */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  98:	4843      	ldr	r0, [pc, #268]	; (1a8 <I2cRead+0x1a8>)
+  9a:	4944      	ldr	r1, [pc, #272]	; (1ac <I2cRead+0x1ac>)
+  9c:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+  a0:	4603      	mov	r3, r0
+  a2:	2b00      	cmp	r3, #0
+  a4:	d0e3      	beq.n	6e <I2cRead+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:159
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send device's address for read */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Receiver );
+  a6:	79fb      	ldrb	r3, [r7, #7]
+  a8:	483f      	ldr	r0, [pc, #252]	; (1a8 <I2cRead+0x1a8>)
+  aa:	4619      	mov	r1, r3
+  ac:	f04f 0201 	mov.w	r2, #1
+  b0:	f7ff fffe 	bl	0 <I2C_Send7bitAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:162
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+  b4:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  b8:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:163
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ) )
+  ba:	e014      	b.n	e6 <I2cRead+0xe6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:165
+    {
+        if( ( timeOut-- ) == 0 )
+  bc:	693b      	ldr	r3, [r7, #16]
+  be:	2b00      	cmp	r3, #0
+  c0:	bf14      	ite	ne
+  c2:	2300      	movne	r3, #0
+  c4:	2301      	moveq	r3, #1
+  c6:	b2db      	uxtb	r3, r3
+  c8:	693a      	ldr	r2, [r7, #16]
+  ca:	f102 32ff 	add.w	r2, r2, #4294967295
+  ce:	613a      	str	r2, [r7, #16]
+  d0:	2b00      	cmp	r3, #0
+  d2:	d008      	beq.n	e6 <I2cRead+0xe6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:167
+        {
+            I2cInit( );
+  d4:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:168
+            I2cFsmcClkEnable( true );
+  d8:	f04f 0001 	mov.w	r0, #1
+  dc:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:169
+            return( SX_TIMEOUT );
+  e0:	f04f 0305 	mov.w	r3, #5
+  e4:	e05a      	b.n	19c <I2cRead+0x19c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:163
+    /* Send device's address for read */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Receiver );
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ) )
+  e6:	4830      	ldr	r0, [pc, #192]	; (1a8 <I2cRead+0x1a8>)
+  e8:	4931      	ldr	r1, [pc, #196]	; (1b0 <I2cRead+0x1b0>)
+  ea:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+  ee:	4603      	mov	r3, r0
+  f0:	2b00      	cmp	r3, #0
+  f2:	d0e3      	beq.n	bc <I2cRead+0xbc>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:174
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* While there is data to be read */
+    while( size )
+  f4:	e037      	b.n	166 <I2cRead+0x166>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:176
+    {
+        if( size == 1 )
+  f6:	697b      	ldr	r3, [r7, #20]
+  f8:	2b01      	cmp	r3, #1
+  fa:	d109      	bne.n	110 <I2cRead+0x110>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:179
+        {
+            /* Disable Acknowledgement */
+            I2C_AcknowledgeConfig( I2C_INTERFACE, DISABLE );
+  fc:	482a      	ldr	r0, [pc, #168]	; (1a8 <I2cRead+0x1a8>)
+  fe:	f04f 0100 	mov.w	r1, #0
+ 102:	f7ff fffe 	bl	0 <I2C_AcknowledgeConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:182
+
+            /* Send STOP Condition */
+            I2C_GenerateSTOP( I2C_INTERFACE, ENABLE );
+ 106:	4828      	ldr	r0, [pc, #160]	; (1a8 <I2cRead+0x1a8>)
+ 108:	f04f 0101 	mov.w	r1, #1
+ 10c:	f7ff fffe 	bl	0 <I2C_GenerateSTOP>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:186
+        }
+
+        /* Test on EV7 and clear it */
+        timeOut = TIMEOUT_MAX;
+ 110:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 114:	613b      	str	r3, [r7, #16]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:187
+        if( I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_RECEIVED ) )
+ 116:	4824      	ldr	r0, [pc, #144]	; (1a8 <I2cRead+0x1a8>)
+ 118:	4926      	ldr	r1, [pc, #152]	; (1b4 <I2cRead+0x1b4>)
+ 11a:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 11e:	4603      	mov	r3, r0
+ 120:	2b00      	cmp	r3, #0
+ 122:	d00b      	beq.n	13c <I2cRead+0x13c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:190
+        {
+            /* Read a byte from the device */
+            *data = I2C_ReceiveData( I2C_INTERFACE );
+ 124:	4820      	ldr	r0, [pc, #128]	; (1a8 <I2cRead+0x1a8>)
+ 126:	f7ff fffe 	bl	0 <I2C_ReceiveData>
+ 12a:	4603      	mov	r3, r0
+ 12c:	461a      	mov	r2, r3
+ 12e:	683b      	ldr	r3, [r7, #0]
+ 130:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:193
+
+            /* Decrement the read bytes counter */
+            size--;
+ 132:	697b      	ldr	r3, [r7, #20]
+ 134:	f103 33ff 	add.w	r3, r3, #4294967295
+ 138:	617b      	str	r3, [r7, #20]
+ 13a:	e014      	b.n	166 <I2cRead+0x166>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:197
+        }
+        else
+        {
+            if( ( timeOut-- ) == 0 )
+ 13c:	693b      	ldr	r3, [r7, #16]
+ 13e:	2b00      	cmp	r3, #0
+ 140:	bf14      	ite	ne
+ 142:	2300      	movne	r3, #0
+ 144:	2301      	moveq	r3, #1
+ 146:	b2db      	uxtb	r3, r3
+ 148:	693a      	ldr	r2, [r7, #16]
+ 14a:	f102 32ff 	add.w	r2, r2, #4294967295
+ 14e:	613a      	str	r2, [r7, #16]
+ 150:	2b00      	cmp	r3, #0
+ 152:	d008      	beq.n	166 <I2cRead+0x166>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:199
+            {
+                I2cInit( );
+ 154:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:200
+                I2cFsmcClkEnable( true );
+ 158:	f04f 0001 	mov.w	r0, #1
+ 15c:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:201
+                return( SX_TIMEOUT );
+ 160:	f04f 0305 	mov.w	r3, #5
+ 164:	e01a      	b.n	19c <I2cRead+0x19c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:174
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* While there is data to be read */
+    while( size )
+ 166:	697b      	ldr	r3, [r7, #20]
+ 168:	2b00      	cmp	r3, #0
+ 16a:	d1c4      	bne.n	f6 <I2cRead+0xf6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:207
+            }
+        }
+    }
+
+    /* Enable Acknowledgement to be ready for another reception */
+    I2C_AcknowledgeConfig( I2C_INTERFACE, ENABLE );
+ 16c:	480e      	ldr	r0, [pc, #56]	; (1a8 <I2cRead+0x1a8>)
+ 16e:	f04f 0101 	mov.w	r1, #1
+ 172:	f7ff fffe 	bl	0 <I2C_AcknowledgeConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:209
+
+    for( i = 0 ; i < 500 ; i++ ){ ; }
+ 176:	f04f 0300 	mov.w	r3, #0
+ 17a:	60fb      	str	r3, [r7, #12]
+ 17c:	e003      	b.n	186 <I2cRead+0x186>
+ 17e:	68fb      	ldr	r3, [r7, #12]
+ 180:	f103 0301 	add.w	r3, r3, #1
+ 184:	60fb      	str	r3, [r7, #12]
+ 186:	68fa      	ldr	r2, [r7, #12]
+ 188:	f240 13f3 	movw	r3, #499	; 0x1f3
+ 18c:	429a      	cmp	r2, r3
+ 18e:	ddf6      	ble.n	17e <I2cRead+0x17e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:211
+
+    I2cFsmcClkEnable( true );
+ 190:	f04f 0001 	mov.w	r0, #1
+ 194:	f7ff fffe 	bl	0 <I2cRead>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:212
+    return( SX_OK );
+ 198:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:213
+}
+ 19c:	4618      	mov	r0, r3
+ 19e:	f107 0718 	add.w	r7, r7, #24
+ 1a2:	46bd      	mov	sp, r7
+ 1a4:	bd80      	pop	{r7, pc}
+ 1a6:	bf00      	nop
+ 1a8:	40005400 	.word	0x40005400
+ 1ac:	00030001 	.word	0x00030001
+ 1b0:	00030002 	.word	0x00030002
+ 1b4:	00030040 	.word	0x00030040
+
+Disassembly of section .text.I2cWriteBuffer:
+
+00000000 <I2cWriteBuffer>:
+I2cWriteBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:216
+
+uint8_t I2cWriteBuffer( uint8_t deviceAddr, uint16_t addr, uint8_t *buffer, uint16_t size, tI2cAddrSize addrSize )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b088      	sub	sp, #32
+   4:	af00      	add	r7, sp, #0
+   6:	60ba      	str	r2, [r7, #8]
+   8:	4602      	mov	r2, r0
+   a:	73fa      	strb	r2, [r7, #15]
+   c:	460a      	mov	r2, r1
+   e:	81ba      	strh	r2, [r7, #12]
+  10:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:220
+    __IO int32_t i;
+    uint32_t timeOut;
+
+    I2cFsmcClkEnable( false );
+  12:	f04f 0000 	mov.w	r0, #0
+  16:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:223
+
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+  1a:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  1e:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:224
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  20:	e014      	b.n	4c <I2cWriteBuffer+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:226
+    {
+        if( ( timeOut-- ) == 0 )
+  22:	69fb      	ldr	r3, [r7, #28]
+  24:	2b00      	cmp	r3, #0
+  26:	bf14      	ite	ne
+  28:	2300      	movne	r3, #0
+  2a:	2301      	moveq	r3, #1
+  2c:	b2db      	uxtb	r3, r3
+  2e:	69fa      	ldr	r2, [r7, #28]
+  30:	f102 32ff 	add.w	r2, r2, #4294967295
+  34:	61fa      	str	r2, [r7, #28]
+  36:	2b00      	cmp	r3, #0
+  38:	d008      	beq.n	4c <I2cWriteBuffer+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:228
+        {
+            I2cInit( );
+  3a:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:229
+            I2cFsmcClkEnable( true );
+  3e:	f04f 0001 	mov.w	r0, #1
+  42:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:230
+            return( SX_TIMEOUT );
+  46:	f04f 0305 	mov.w	r3, #5
+  4a:	e100      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:224
+
+    I2cFsmcClkEnable( false );
+
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  4c:	4882      	ldr	r0, [pc, #520]	; (258 <I2cWriteBuffer+0x258>)
+  4e:	f44f 3100 	mov.w	r1, #131072	; 0x20000
+  52:	f7ff fffe 	bl	0 <I2C_GetFlagStatus>
+  56:	4603      	mov	r3, r0
+  58:	2b00      	cmp	r3, #0
+  5a:	d1e2      	bne.n	22 <I2cWriteBuffer+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:235
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+  5c:	487e      	ldr	r0, [pc, #504]	; (258 <I2cWriteBuffer+0x258>)
+  5e:	f04f 0101 	mov.w	r1, #1
+  62:	f7ff fffe 	bl	0 <I2C_GenerateSTART>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:238
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+  66:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  6a:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:239
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  6c:	e021      	b.n	b2 <I2cWriteBuffer+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:241
+    {
+        if( I2C_INTERFACE->SR1 & I2C_FLAG_RXNE )
+  6e:	4b7a      	ldr	r3, [pc, #488]	; (258 <I2cWriteBuffer+0x258>)
+  70:	8a9b      	ldrh	r3, [r3, #20]
+  72:	b29b      	uxth	r3, r3
+  74:	461a      	mov	r2, r3
+  76:	4b79      	ldr	r3, [pc, #484]	; (25c <I2cWriteBuffer+0x25c>)
+  78:	ea02 0303 	and.w	r3, r2, r3
+  7c:	2b00      	cmp	r3, #0
+  7e:	d003      	beq.n	88 <I2cWriteBuffer+0x88>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:244
+        {
+            volatile uint32_t drTemp;
+            drTemp = I2C_INTERFACE->DR;
+  80:	4b75      	ldr	r3, [pc, #468]	; (258 <I2cWriteBuffer+0x258>)
+  82:	8a1b      	ldrh	r3, [r3, #16]
+  84:	b29b      	uxth	r3, r3
+  86:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:246
+        }
+        if( ( timeOut-- ) == 0 )
+  88:	69fb      	ldr	r3, [r7, #28]
+  8a:	2b00      	cmp	r3, #0
+  8c:	bf14      	ite	ne
+  8e:	2300      	movne	r3, #0
+  90:	2301      	moveq	r3, #1
+  92:	b2db      	uxtb	r3, r3
+  94:	69fa      	ldr	r2, [r7, #28]
+  96:	f102 32ff 	add.w	r2, r2, #4294967295
+  9a:	61fa      	str	r2, [r7, #28]
+  9c:	2b00      	cmp	r3, #0
+  9e:	d008      	beq.n	b2 <I2cWriteBuffer+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:248
+        {
+            I2cInit( );
+  a0:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:249
+            I2cFsmcClkEnable( true );
+  a4:	f04f 0001 	mov.w	r0, #1
+  a8:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:250
+            return( SX_TIMEOUT );
+  ac:	f04f 0305 	mov.w	r3, #5
+  b0:	e0cd      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:239
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  b2:	4869      	ldr	r0, [pc, #420]	; (258 <I2cWriteBuffer+0x258>)
+  b4:	496a      	ldr	r1, [pc, #424]	; (260 <I2cWriteBuffer+0x260>)
+  b6:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+  ba:	4603      	mov	r3, r0
+  bc:	2b00      	cmp	r3, #0
+  be:	d0d6      	beq.n	6e <I2cWriteBuffer+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:255
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send device's address for write */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+  c0:	7bfb      	ldrb	r3, [r7, #15]
+  c2:	4865      	ldr	r0, [pc, #404]	; (258 <I2cWriteBuffer+0x258>)
+  c4:	4619      	mov	r1, r3
+  c6:	f04f 0200 	mov.w	r2, #0
+  ca:	f7ff fffe 	bl	0 <I2C_Send7bitAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:258
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+  ce:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  d2:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:259
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+  d4:	e014      	b.n	100 <I2cWriteBuffer+0x100>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:261
+    {
+        if( ( timeOut-- ) == 0 )
+  d6:	69fb      	ldr	r3, [r7, #28]
+  d8:	2b00      	cmp	r3, #0
+  da:	bf14      	ite	ne
+  dc:	2300      	movne	r3, #0
+  de:	2301      	moveq	r3, #1
+  e0:	b2db      	uxtb	r3, r3
+  e2:	69fa      	ldr	r2, [r7, #28]
+  e4:	f102 32ff 	add.w	r2, r2, #4294967295
+  e8:	61fa      	str	r2, [r7, #28]
+  ea:	2b00      	cmp	r3, #0
+  ec:	d008      	beq.n	100 <I2cWriteBuffer+0x100>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:263
+        {
+            I2cInit( );
+  ee:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:264
+            I2cFsmcClkEnable( true );
+  f2:	f04f 0001 	mov.w	r0, #1
+  f6:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:265
+            return( SX_TIMEOUT );
+  fa:	f04f 0305 	mov.w	r3, #5
+  fe:	e0a6      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:259
+    /* Send device's address for write */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+ 100:	4855      	ldr	r0, [pc, #340]	; (258 <I2cWriteBuffer+0x258>)
+ 102:	4958      	ldr	r1, [pc, #352]	; (264 <I2cWriteBuffer+0x264>)
+ 104:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 108:	4603      	mov	r3, r0
+ 10a:	2b00      	cmp	r3, #0
+ 10c:	d0e3      	beq.n	d6 <I2cWriteBuffer+0xd6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:269
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+
+    if( addrSize == I2C_ADDR_SIZE_16 )
+ 10e:	f897 3028 	ldrb.w	r3, [r7, #40]	; 0x28
+ 112:	2b01      	cmp	r3, #1
+ 114:	d128      	bne.n	168 <I2cWriteBuffer+0x168>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:272
+    {
+        /* Send the device's internal address MSB to write to */
+        I2C_SendData( I2C_INTERFACE, ( uint8_t )( ( addr & 0xFF00 ) >> 8 )  );
+ 116:	89bb      	ldrh	r3, [r7, #12]
+ 118:	ea4f 2313 	mov.w	r3, r3, lsr #8
+ 11c:	b29b      	uxth	r3, r3
+ 11e:	b2db      	uxtb	r3, r3
+ 120:	484d      	ldr	r0, [pc, #308]	; (258 <I2cWriteBuffer+0x258>)
+ 122:	4619      	mov	r1, r3
+ 124:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:275
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+ 128:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 12c:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:276
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 12e:	e014      	b.n	15a <I2cWriteBuffer+0x15a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:278
+        {
+            if( ( timeOut-- ) == 0 )
+ 130:	69fb      	ldr	r3, [r7, #28]
+ 132:	2b00      	cmp	r3, #0
+ 134:	bf14      	ite	ne
+ 136:	2300      	movne	r3, #0
+ 138:	2301      	moveq	r3, #1
+ 13a:	b2db      	uxtb	r3, r3
+ 13c:	69fa      	ldr	r2, [r7, #28]
+ 13e:	f102 32ff 	add.w	r2, r2, #4294967295
+ 142:	61fa      	str	r2, [r7, #28]
+ 144:	2b00      	cmp	r3, #0
+ 146:	d008      	beq.n	15a <I2cWriteBuffer+0x15a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:280
+            {
+                I2cInit( );
+ 148:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:281
+                I2cFsmcClkEnable( true );
+ 14c:	f04f 0001 	mov.w	r0, #1
+ 150:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:282
+                return( SX_TIMEOUT );
+ 154:	f04f 0305 	mov.w	r3, #5
+ 158:	e079      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:276
+        /* Send the device's internal address MSB to write to */
+        I2C_SendData( I2C_INTERFACE, ( uint8_t )( ( addr & 0xFF00 ) >> 8 )  );
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 15a:	483f      	ldr	r0, [pc, #252]	; (258 <I2cWriteBuffer+0x258>)
+ 15c:	4942      	ldr	r1, [pc, #264]	; (268 <I2cWriteBuffer+0x268>)
+ 15e:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 162:	4603      	mov	r3, r0
+ 164:	2b00      	cmp	r3, #0
+ 166:	d0e3      	beq.n	130 <I2cWriteBuffer+0x130>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:288
+            }
+        }
+    }
+
+    /* Send the device's internal address LSB to write to */
+    I2C_SendData( I2C_INTERFACE, ( uint8_t )( addr & 0x00FF ) );
+ 168:	89bb      	ldrh	r3, [r7, #12]
+ 16a:	b2db      	uxtb	r3, r3
+ 16c:	483a      	ldr	r0, [pc, #232]	; (258 <I2cWriteBuffer+0x258>)
+ 16e:	4619      	mov	r1, r3
+ 170:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:291
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+ 174:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 178:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:292
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 17a:	e014      	b.n	1a6 <I2cWriteBuffer+0x1a6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:294
+    {
+        if( ( timeOut-- ) == 0 )
+ 17c:	69fb      	ldr	r3, [r7, #28]
+ 17e:	2b00      	cmp	r3, #0
+ 180:	bf14      	ite	ne
+ 182:	2300      	movne	r3, #0
+ 184:	2301      	moveq	r3, #1
+ 186:	b2db      	uxtb	r3, r3
+ 188:	69fa      	ldr	r2, [r7, #28]
+ 18a:	f102 32ff 	add.w	r2, r2, #4294967295
+ 18e:	61fa      	str	r2, [r7, #28]
+ 190:	2b00      	cmp	r3, #0
+ 192:	d008      	beq.n	1a6 <I2cWriteBuffer+0x1a6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:296
+        {
+            I2cInit( );
+ 194:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:297
+            I2cFsmcClkEnable( true );
+ 198:	f04f 0001 	mov.w	r0, #1
+ 19c:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:298
+            return( SX_TIMEOUT );
+ 1a0:	f04f 0305 	mov.w	r3, #5
+ 1a4:	e053      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:292
+    /* Send the device's internal address LSB to write to */
+    I2C_SendData( I2C_INTERFACE, ( uint8_t )( addr & 0x00FF ) );
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 1a6:	482c      	ldr	r0, [pc, #176]	; (258 <I2cWriteBuffer+0x258>)
+ 1a8:	492f      	ldr	r1, [pc, #188]	; (268 <I2cWriteBuffer+0x268>)
+ 1aa:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 1ae:	4603      	mov	r3, r0
+ 1b0:	2b00      	cmp	r3, #0
+ 1b2:	d0e3      	beq.n	17c <I2cWriteBuffer+0x17c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:302
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+
+    while( size )
+ 1b4:	e035      	b.n	222 <I2cWriteBuffer+0x222>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:305
+    {
+        /* Send the byte to be written */
+        I2C_SendData( I2C_INTERFACE, * buffer );
+ 1b6:	68bb      	ldr	r3, [r7, #8]
+ 1b8:	781b      	ldrb	r3, [r3, #0]
+ 1ba:	4827      	ldr	r0, [pc, #156]	; (258 <I2cWriteBuffer+0x258>)
+ 1bc:	4619      	mov	r1, r3
+ 1be:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:308
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+ 1c2:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 1c6:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:309
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 1c8:	e014      	b.n	1f4 <I2cWriteBuffer+0x1f4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:311
+        {
+            if( ( timeOut-- ) == 0 )
+ 1ca:	69fb      	ldr	r3, [r7, #28]
+ 1cc:	2b00      	cmp	r3, #0
+ 1ce:	bf14      	ite	ne
+ 1d0:	2300      	movne	r3, #0
+ 1d2:	2301      	moveq	r3, #1
+ 1d4:	b2db      	uxtb	r3, r3
+ 1d6:	69fa      	ldr	r2, [r7, #28]
+ 1d8:	f102 32ff 	add.w	r2, r2, #4294967295
+ 1dc:	61fa      	str	r2, [r7, #28]
+ 1de:	2b00      	cmp	r3, #0
+ 1e0:	d008      	beq.n	1f4 <I2cWriteBuffer+0x1f4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:313
+            {
+                I2cInit( );
+ 1e2:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:314
+                I2cFsmcClkEnable( true );
+ 1e6:	f04f 0001 	mov.w	r0, #1
+ 1ea:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:315
+                return( SX_TIMEOUT );
+ 1ee:	f04f 0305 	mov.w	r3, #5
+ 1f2:	e02c      	b.n	24e <I2cWriteBuffer+0x24e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:309
+        /* Send the byte to be written */
+        I2C_SendData( I2C_INTERFACE, * buffer );
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 1f4:	4818      	ldr	r0, [pc, #96]	; (258 <I2cWriteBuffer+0x258>)
+ 1f6:	491c      	ldr	r1, [pc, #112]	; (268 <I2cWriteBuffer+0x268>)
+ 1f8:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 1fc:	4603      	mov	r3, r0
+ 1fe:	2b00      	cmp	r3, #0
+ 200:	d0e3      	beq.n	1ca <I2cWriteBuffer+0x1ca>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:319
+                I2cFsmcClkEnable( true );
+                return( SX_TIMEOUT );
+            }
+        }
+
+        if( size == 1 )
+ 202:	88fb      	ldrh	r3, [r7, #6]
+ 204:	2b01      	cmp	r3, #1
+ 206:	d104      	bne.n	212 <I2cWriteBuffer+0x212>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:321
+        { 
+            I2C_GenerateSTOP( I2C_INTERFACE, ENABLE ); 
+ 208:	4813      	ldr	r0, [pc, #76]	; (258 <I2cWriteBuffer+0x258>)
+ 20a:	f04f 0101 	mov.w	r1, #1
+ 20e:	f7ff fffe 	bl	0 <I2C_GenerateSTOP>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:324
+        } /* STOP */
+
+        buffer++;
+ 212:	68bb      	ldr	r3, [r7, #8]
+ 214:	f103 0301 	add.w	r3, r3, #1
+ 218:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:325
+        size--;
+ 21a:	88fb      	ldrh	r3, [r7, #6]
+ 21c:	f103 33ff 	add.w	r3, r3, #4294967295
+ 220:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:302
+            I2cFsmcClkEnable( true );
+            return( SX_TIMEOUT );
+        }
+    }
+
+    while( size )
+ 222:	88fb      	ldrh	r3, [r7, #6]
+ 224:	2b00      	cmp	r3, #0
+ 226:	d1c6      	bne.n	1b6 <I2cWriteBuffer+0x1b6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:329
+        buffer++;
+        size--;
+    }
+
+    //I2C_GenerateSTOP( I2C_INTERFACE, ENABLE ); 
+    for( i = 0 ; i < 500 ; i++ ){ ; }
+ 228:	f04f 0300 	mov.w	r3, #0
+ 22c:	61bb      	str	r3, [r7, #24]
+ 22e:	e003      	b.n	238 <I2cWriteBuffer+0x238>
+ 230:	69bb      	ldr	r3, [r7, #24]
+ 232:	f103 0301 	add.w	r3, r3, #1
+ 236:	61bb      	str	r3, [r7, #24]
+ 238:	69ba      	ldr	r2, [r7, #24]
+ 23a:	f240 13f3 	movw	r3, #499	; 0x1f3
+ 23e:	429a      	cmp	r2, r3
+ 240:	ddf6      	ble.n	230 <I2cWriteBuffer+0x230>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:331
+
+    I2cFsmcClkEnable( true );
+ 242:	f04f 0001 	mov.w	r0, #1
+ 246:	f7ff fffe 	bl	0 <I2cWriteBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:332
+    return( SX_OK );
+ 24a:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:333
+}
+ 24e:	4618      	mov	r0, r3
+ 250:	f107 0720 	add.w	r7, r7, #32
+ 254:	46bd      	mov	sp, r7
+ 256:	bd80      	pop	{r7, pc}
+ 258:	40005400 	.word	0x40005400
+ 25c:	10000040 	.word	0x10000040
+ 260:	00030001 	.word	0x00030001
+ 264:	00070082 	.word	0x00070082
+ 268:	00070084 	.word	0x00070084
+
+Disassembly of section .text.I2cReadBuffer:
+
+00000000 <I2cReadBuffer>:
+I2cReadBuffer():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:336
+
+uint8_t I2cReadBuffer( uint8_t deviceAddr, uint16_t addr, uint8_t *buffer, uint16_t size, tI2cAddrSize addrSize )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b088      	sub	sp, #32
+   4:	af00      	add	r7, sp, #0
+   6:	60ba      	str	r2, [r7, #8]
+   8:	4602      	mov	r2, r0
+   a:	73fa      	strb	r2, [r7, #15]
+   c:	460a      	mov	r2, r1
+   e:	81ba      	strh	r2, [r7, #12]
+  10:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:340
+    __IO int32_t i;
+    uint32_t timeOut;
+
+    I2cFsmcClkEnable( false );
+  12:	f04f 0000 	mov.w	r0, #0
+  16:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:343
+
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+  1a:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  1e:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:344
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  20:	e014      	b.n	4c <I2cReadBuffer+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:346
+    {
+        if( ( timeOut-- ) == 0 )
+  22:	69fb      	ldr	r3, [r7, #28]
+  24:	2b00      	cmp	r3, #0
+  26:	bf14      	ite	ne
+  28:	2300      	movne	r3, #0
+  2a:	2301      	moveq	r3, #1
+  2c:	b2db      	uxtb	r3, r3
+  2e:	69fa      	ldr	r2, [r7, #28]
+  30:	f102 32ff 	add.w	r2, r2, #4294967295
+  34:	61fa      	str	r2, [r7, #28]
+  36:	2b00      	cmp	r3, #0
+  38:	d008      	beq.n	4c <I2cReadBuffer+0x4c>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:348
+        {
+            I2cInit( );
+  3a:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:349
+            I2cFsmcClkEnable( true );
+  3e:	f04f 0001 	mov.w	r0, #1
+  42:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:350
+            return( SX_TIMEOUT );
+  46:	f04f 0305 	mov.w	r3, #5
+  4a:	e16b      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:344
+
+    I2cFsmcClkEnable( false );
+
+    /* Test on BUSY Flag */
+    timeOut = TIMEOUT_MAX;
+    while( I2C_GetFlagStatus( I2C_INTERFACE, I2C_FLAG_BUSY) ) 
+  4c:	4896      	ldr	r0, [pc, #600]	; (2a8 <I2cReadBuffer+0x2a8>)
+  4e:	f44f 3100 	mov.w	r1, #131072	; 0x20000
+  52:	f7ff fffe 	bl	0 <I2C_GetFlagStatus>
+  56:	4603      	mov	r3, r0
+  58:	2b00      	cmp	r3, #0
+  5a:	d1e2      	bne.n	22 <I2cReadBuffer+0x22>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:355
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+  5c:	4892      	ldr	r0, [pc, #584]	; (2a8 <I2cReadBuffer+0x2a8>)
+  5e:	f04f 0101 	mov.w	r1, #1
+  62:	f7ff fffe 	bl	0 <I2C_GenerateSTART>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:358
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+  66:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  6a:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:359
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  6c:	e021      	b.n	b2 <I2cReadBuffer+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:361
+    {
+        if( I2C_INTERFACE->SR1 & I2C_FLAG_RXNE )
+  6e:	4b8e      	ldr	r3, [pc, #568]	; (2a8 <I2cReadBuffer+0x2a8>)
+  70:	8a9b      	ldrh	r3, [r3, #20]
+  72:	b29b      	uxth	r3, r3
+  74:	461a      	mov	r2, r3
+  76:	4b8d      	ldr	r3, [pc, #564]	; (2ac <I2cReadBuffer+0x2ac>)
+  78:	ea02 0303 	and.w	r3, r2, r3
+  7c:	2b00      	cmp	r3, #0
+  7e:	d003      	beq.n	88 <I2cReadBuffer+0x88>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:364
+        {
+            volatile uint32_t drTemp;
+            drTemp = I2C_INTERFACE->DR;
+  80:	4b89      	ldr	r3, [pc, #548]	; (2a8 <I2cReadBuffer+0x2a8>)
+  82:	8a1b      	ldrh	r3, [r3, #16]
+  84:	b29b      	uxth	r3, r3
+  86:	617b      	str	r3, [r7, #20]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:366
+        }
+        if( ( timeOut-- ) == 0 )
+  88:	69fb      	ldr	r3, [r7, #28]
+  8a:	2b00      	cmp	r3, #0
+  8c:	bf14      	ite	ne
+  8e:	2300      	movne	r3, #0
+  90:	2301      	moveq	r3, #1
+  92:	b2db      	uxtb	r3, r3
+  94:	69fa      	ldr	r2, [r7, #28]
+  96:	f102 32ff 	add.w	r2, r2, #4294967295
+  9a:	61fa      	str	r2, [r7, #28]
+  9c:	2b00      	cmp	r3, #0
+  9e:	d008      	beq.n	b2 <I2cReadBuffer+0xb2>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:368
+        {
+            I2cInit( );
+  a0:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:369
+            I2cFsmcClkEnable( true );
+  a4:	f04f 0001 	mov.w	r0, #1
+  a8:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:370
+            return( SX_TIMEOUT );
+  ac:	f04f 0305 	mov.w	r3, #5
+  b0:	e138      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:359
+    /* Send START condition */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+  b2:	487d      	ldr	r0, [pc, #500]	; (2a8 <I2cReadBuffer+0x2a8>)
+  b4:	497e      	ldr	r1, [pc, #504]	; (2b0 <I2cReadBuffer+0x2b0>)
+  b6:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+  ba:	4603      	mov	r3, r0
+  bc:	2b00      	cmp	r3, #0
+  be:	d0d6      	beq.n	6e <I2cReadBuffer+0x6e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:375
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send device's address for write */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+  c0:	7bfb      	ldrb	r3, [r7, #15]
+  c2:	4879      	ldr	r0, [pc, #484]	; (2a8 <I2cReadBuffer+0x2a8>)
+  c4:	4619      	mov	r1, r3
+  c6:	f04f 0200 	mov.w	r2, #0
+  ca:	f7ff fffe 	bl	0 <I2C_Send7bitAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:379
+
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+  ce:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+  d2:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:380
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+  d4:	e014      	b.n	100 <I2cReadBuffer+0x100>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:382
+    {
+        if( ( timeOut-- ) == 0 )
+  d6:	69fb      	ldr	r3, [r7, #28]
+  d8:	2b00      	cmp	r3, #0
+  da:	bf14      	ite	ne
+  dc:	2300      	movne	r3, #0
+  de:	2301      	moveq	r3, #1
+  e0:	b2db      	uxtb	r3, r3
+  e2:	69fa      	ldr	r2, [r7, #28]
+  e4:	f102 32ff 	add.w	r2, r2, #4294967295
+  e8:	61fa      	str	r2, [r7, #28]
+  ea:	2b00      	cmp	r3, #0
+  ec:	d008      	beq.n	100 <I2cReadBuffer+0x100>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:384
+        {
+            I2cInit( );
+  ee:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:385
+            I2cFsmcClkEnable( true );
+  f2:	f04f 0001 	mov.w	r0, #1
+  f6:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:386
+            return( SX_TIMEOUT );
+  fa:	f04f 0305 	mov.w	r3, #5
+  fe:	e111      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:380
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Transmitter );
+
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED ) )
+ 100:	4869      	ldr	r0, [pc, #420]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 102:	496c      	ldr	r1, [pc, #432]	; (2b4 <I2cReadBuffer+0x2b4>)
+ 104:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 108:	4603      	mov	r3, r0
+ 10a:	2b00      	cmp	r3, #0
+ 10c:	d0e3      	beq.n	d6 <I2cReadBuffer+0xd6>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:391
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Clear EV6 by setting again the PE bit */
+    I2C_Cmd( I2C_INTERFACE, ENABLE );
+ 10e:	4866      	ldr	r0, [pc, #408]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 110:	f04f 0101 	mov.w	r1, #1
+ 114:	f7ff fffe 	bl	0 <I2C_Cmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:393
+
+    if( addrSize == I2C_ADDR_SIZE_16 )
+ 118:	f897 3028 	ldrb.w	r3, [r7, #40]	; 0x28
+ 11c:	2b01      	cmp	r3, #1
+ 11e:	d128      	bne.n	172 <I2cReadBuffer+0x172>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:396
+    {
+        /* Send the device's internal address MSB to write to */
+        I2C_SendData( I2C_INTERFACE, ( uint8_t )( ( addr & 0xFF00 ) >> 8 )  );
+ 120:	89bb      	ldrh	r3, [r7, #12]
+ 122:	ea4f 2313 	mov.w	r3, r3, lsr #8
+ 126:	b29b      	uxth	r3, r3
+ 128:	b2db      	uxtb	r3, r3
+ 12a:	485f      	ldr	r0, [pc, #380]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 12c:	4619      	mov	r1, r3
+ 12e:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:399
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+ 132:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 136:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:400
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 138:	e014      	b.n	164 <I2cReadBuffer+0x164>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:402
+        {
+            if( ( timeOut-- ) == 0 )
+ 13a:	69fb      	ldr	r3, [r7, #28]
+ 13c:	2b00      	cmp	r3, #0
+ 13e:	bf14      	ite	ne
+ 140:	2300      	movne	r3, #0
+ 142:	2301      	moveq	r3, #1
+ 144:	b2db      	uxtb	r3, r3
+ 146:	69fa      	ldr	r2, [r7, #28]
+ 148:	f102 32ff 	add.w	r2, r2, #4294967295
+ 14c:	61fa      	str	r2, [r7, #28]
+ 14e:	2b00      	cmp	r3, #0
+ 150:	d008      	beq.n	164 <I2cReadBuffer+0x164>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:404
+            {
+                I2cInit( );
+ 152:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:405
+                I2cFsmcClkEnable( true );
+ 156:	f04f 0001 	mov.w	r0, #1
+ 15a:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:406
+                return( SX_TIMEOUT );
+ 15e:	f04f 0305 	mov.w	r3, #5
+ 162:	e0df      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:400
+        /* Send the device's internal address MSB to write to */
+        I2C_SendData( I2C_INTERFACE, ( uint8_t )( ( addr & 0xFF00 ) >> 8 )  );
+
+        /* Test on EV8 and clear it */
+        timeOut = TIMEOUT_MAX;
+        while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 164:	4850      	ldr	r0, [pc, #320]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 166:	4954      	ldr	r1, [pc, #336]	; (2b8 <I2cReadBuffer+0x2b8>)
+ 168:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 16c:	4603      	mov	r3, r0
+ 16e:	2b00      	cmp	r3, #0
+ 170:	d0e3      	beq.n	13a <I2cReadBuffer+0x13a>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:412
+            }
+        }
+    }
+
+    /* Send the device's internal address LSB to write to */
+    I2C_SendData( I2C_INTERFACE, ( uint8_t )( addr & 0x00FF ) );
+ 172:	89bb      	ldrh	r3, [r7, #12]
+ 174:	b2db      	uxtb	r3, r3
+ 176:	484c      	ldr	r0, [pc, #304]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 178:	4619      	mov	r1, r3
+ 17a:	f7ff fffe 	bl	0 <I2C_SendData>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:415
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+ 17e:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 182:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:416
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 184:	e014      	b.n	1b0 <I2cReadBuffer+0x1b0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:418
+    {
+        if( ( timeOut-- ) == 0 )
+ 186:	69fb      	ldr	r3, [r7, #28]
+ 188:	2b00      	cmp	r3, #0
+ 18a:	bf14      	ite	ne
+ 18c:	2300      	movne	r3, #0
+ 18e:	2301      	moveq	r3, #1
+ 190:	b2db      	uxtb	r3, r3
+ 192:	69fa      	ldr	r2, [r7, #28]
+ 194:	f102 32ff 	add.w	r2, r2, #4294967295
+ 198:	61fa      	str	r2, [r7, #28]
+ 19a:	2b00      	cmp	r3, #0
+ 19c:	d008      	beq.n	1b0 <I2cReadBuffer+0x1b0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:420
+        {
+            I2cInit( );
+ 19e:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:421
+            I2cFsmcClkEnable( true );
+ 1a2:	f04f 0001 	mov.w	r0, #1
+ 1a6:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:422
+            return( SX_TIMEOUT );
+ 1aa:	f04f 0305 	mov.w	r3, #5
+ 1ae:	e0b9      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:416
+    /* Send the device's internal address LSB to write to */
+    I2C_SendData( I2C_INTERFACE, ( uint8_t )( addr & 0x00FF ) );
+
+    /* Test on EV8 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_TRANSMITTED ) )
+ 1b0:	483d      	ldr	r0, [pc, #244]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 1b2:	4941      	ldr	r1, [pc, #260]	; (2b8 <I2cReadBuffer+0x2b8>)
+ 1b4:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 1b8:	4603      	mov	r3, r0
+ 1ba:	2b00      	cmp	r3, #0
+ 1bc:	d0e3      	beq.n	186 <I2cReadBuffer+0x186>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:427
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send START condition a second time */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+ 1be:	483a      	ldr	r0, [pc, #232]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 1c0:	f04f 0101 	mov.w	r1, #1
+ 1c4:	f7ff fffe 	bl	0 <I2C_GenerateSTART>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:430
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+ 1c8:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 1cc:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:431
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+ 1ce:	e014      	b.n	1fa <I2cReadBuffer+0x1fa>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:433
+    {
+        if( ( timeOut-- ) == 0 )
+ 1d0:	69fb      	ldr	r3, [r7, #28]
+ 1d2:	2b00      	cmp	r3, #0
+ 1d4:	bf14      	ite	ne
+ 1d6:	2300      	movne	r3, #0
+ 1d8:	2301      	moveq	r3, #1
+ 1da:	b2db      	uxtb	r3, r3
+ 1dc:	69fa      	ldr	r2, [r7, #28]
+ 1de:	f102 32ff 	add.w	r2, r2, #4294967295
+ 1e2:	61fa      	str	r2, [r7, #28]
+ 1e4:	2b00      	cmp	r3, #0
+ 1e6:	d008      	beq.n	1fa <I2cReadBuffer+0x1fa>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:435
+        {
+            I2cInit( );
+ 1e8:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:436
+            I2cFsmcClkEnable( true );
+ 1ec:	f04f 0001 	mov.w	r0, #1
+ 1f0:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:437
+            return( SX_TIMEOUT );
+ 1f4:	f04f 0305 	mov.w	r3, #5
+ 1f8:	e094      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:431
+    /* Send START condition a second time */
+    I2C_GenerateSTART( I2C_INTERFACE, ENABLE );
+
+    /* Test on EV5 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_MODE_SELECT ) )
+ 1fa:	482b      	ldr	r0, [pc, #172]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 1fc:	492c      	ldr	r1, [pc, #176]	; (2b0 <I2cReadBuffer+0x2b0>)
+ 1fe:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 202:	4603      	mov	r3, r0
+ 204:	2b00      	cmp	r3, #0
+ 206:	d0e3      	beq.n	1d0 <I2cReadBuffer+0x1d0>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:442
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* Send device's address for read */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Receiver );
+ 208:	7bfb      	ldrb	r3, [r7, #15]
+ 20a:	4827      	ldr	r0, [pc, #156]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 20c:	4619      	mov	r1, r3
+ 20e:	f04f 0201 	mov.w	r2, #1
+ 212:	f7ff fffe 	bl	0 <I2C_Send7bitAddress>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:445
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+ 216:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 21a:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:446
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ) )
+ 21c:	e014      	b.n	248 <I2cReadBuffer+0x248>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:448
+    {
+        if( ( timeOut-- ) == 0 )
+ 21e:	69fb      	ldr	r3, [r7, #28]
+ 220:	2b00      	cmp	r3, #0
+ 222:	bf14      	ite	ne
+ 224:	2300      	movne	r3, #0
+ 226:	2301      	moveq	r3, #1
+ 228:	b2db      	uxtb	r3, r3
+ 22a:	69fa      	ldr	r2, [r7, #28]
+ 22c:	f102 32ff 	add.w	r2, r2, #4294967295
+ 230:	61fa      	str	r2, [r7, #28]
+ 232:	2b00      	cmp	r3, #0
+ 234:	d008      	beq.n	248 <I2cReadBuffer+0x248>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:450
+        {
+            I2cInit( );
+ 236:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:451
+            I2cFsmcClkEnable( true );
+ 23a:	f04f 0001 	mov.w	r0, #1
+ 23e:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:452
+            return( SX_TIMEOUT );
+ 242:	f04f 0305 	mov.w	r3, #5
+ 246:	e06d      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:446
+    /* Send device's address for read */
+    I2C_Send7bitAddress( I2C_INTERFACE, deviceAddr, I2C_Direction_Receiver );
+
+    /* Test on EV6 and clear it */
+    timeOut = TIMEOUT_MAX;
+    while( !I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED ) )
+ 248:	4817      	ldr	r0, [pc, #92]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 24a:	491c      	ldr	r1, [pc, #112]	; (2bc <I2cReadBuffer+0x2bc>)
+ 24c:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 250:	4603      	mov	r3, r0
+ 252:	2b00      	cmp	r3, #0
+ 254:	d0e3      	beq.n	21e <I2cReadBuffer+0x21e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:457
+            return( SX_TIMEOUT );
+        }
+    }
+
+    /* While there is data to be read */
+    timeOut = TIMEOUT_MAX;
+ 256:	f44f 5340 	mov.w	r3, #12288	; 0x3000
+ 25a:	61fb      	str	r3, [r7, #28]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:458
+    while( size )
+ 25c:	e047      	b.n	2ee <I2cReadBuffer+0x2ee>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:460
+    {
+        if( size == 1 )
+ 25e:	88fb      	ldrh	r3, [r7, #6]
+ 260:	2b01      	cmp	r3, #1
+ 262:	d109      	bne.n	278 <I2cReadBuffer+0x278>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:463
+        {
+            /* Disable Acknowledgement */
+            I2C_AcknowledgeConfig( I2C_INTERFACE, DISABLE );
+ 264:	4810      	ldr	r0, [pc, #64]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 266:	f04f 0100 	mov.w	r1, #0
+ 26a:	f7ff fffe 	bl	0 <I2C_AcknowledgeConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:466
+
+            /* Send STOP Condition */
+            I2C_GenerateSTOP( I2C_INTERFACE, ENABLE );
+ 26e:	480e      	ldr	r0, [pc, #56]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 270:	f04f 0101 	mov.w	r1, #1
+ 274:	f7ff fffe 	bl	0 <I2C_GenerateSTOP>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:470
+        }
+
+        /* Test on EV7 and clear it */
+        if( I2C_CheckEvent( I2C_INTERFACE, I2C_EVENT_MASTER_BYTE_RECEIVED ) )
+ 278:	480b      	ldr	r0, [pc, #44]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 27a:	4911      	ldr	r1, [pc, #68]	; (2c0 <I2cReadBuffer+0x2c0>)
+ 27c:	f7ff fffe 	bl	0 <I2C_CheckEvent>
+ 280:	4603      	mov	r3, r0
+ 282:	2b00      	cmp	r3, #0
+ 284:	d01e      	beq.n	2c4 <I2cReadBuffer+0x2c4>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:473
+        {
+            /* Read a byte from the device */
+            *buffer = I2C_ReceiveData( I2C_INTERFACE );
+ 286:	4808      	ldr	r0, [pc, #32]	; (2a8 <I2cReadBuffer+0x2a8>)
+ 288:	f7ff fffe 	bl	0 <I2C_ReceiveData>
+ 28c:	4603      	mov	r3, r0
+ 28e:	461a      	mov	r2, r3
+ 290:	68bb      	ldr	r3, [r7, #8]
+ 292:	701a      	strb	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:476
+
+            /* Point to the next location where the byte read will be saved */
+            buffer++;
+ 294:	68bb      	ldr	r3, [r7, #8]
+ 296:	f103 0301 	add.w	r3, r3, #1
+ 29a:	60bb      	str	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:479
+
+            /* Decrement the read bytes counter */
+            size--;
+ 29c:	88fb      	ldrh	r3, [r7, #6]
+ 29e:	f103 33ff 	add.w	r3, r3, #4294967295
+ 2a2:	80fb      	strh	r3, [r7, #6]
+ 2a4:	e023      	b.n	2ee <I2cReadBuffer+0x2ee>
+ 2a6:	bf00      	nop
+ 2a8:	40005400 	.word	0x40005400
+ 2ac:	10000040 	.word	0x10000040
+ 2b0:	00030001 	.word	0x00030001
+ 2b4:	00070082 	.word	0x00070082
+ 2b8:	00070084 	.word	0x00070084
+ 2bc:	00030002 	.word	0x00030002
+ 2c0:	00030040 	.word	0x00030040
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:483
+        }
+        else
+        {
+            if( ( timeOut-- ) == 0 )
+ 2c4:	69fb      	ldr	r3, [r7, #28]
+ 2c6:	2b00      	cmp	r3, #0
+ 2c8:	bf14      	ite	ne
+ 2ca:	2300      	movne	r3, #0
+ 2cc:	2301      	moveq	r3, #1
+ 2ce:	b2db      	uxtb	r3, r3
+ 2d0:	69fa      	ldr	r2, [r7, #28]
+ 2d2:	f102 32ff 	add.w	r2, r2, #4294967295
+ 2d6:	61fa      	str	r2, [r7, #28]
+ 2d8:	2b00      	cmp	r3, #0
+ 2da:	d008      	beq.n	2ee <I2cReadBuffer+0x2ee>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:485
+            {
+                I2cInit( );
+ 2dc:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:486
+                I2cFsmcClkEnable( true );
+ 2e0:	f04f 0001 	mov.w	r0, #1
+ 2e4:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:487
+                return( SX_TIMEOUT );
+ 2e8:	f04f 0305 	mov.w	r3, #5
+ 2ec:	e01a      	b.n	324 <I2cReadBuffer+0x324>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:458
+        }
+    }
+
+    /* While there is data to be read */
+    timeOut = TIMEOUT_MAX;
+    while( size )
+ 2ee:	88fb      	ldrh	r3, [r7, #6]
+ 2f0:	2b00      	cmp	r3, #0
+ 2f2:	d1b4      	bne.n	25e <I2cReadBuffer+0x25e>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:493
+            }
+        }
+    }
+
+    /* Enable Acknowledgement to be ready for another reception */
+    I2C_AcknowledgeConfig( I2C_INTERFACE, ENABLE );
+ 2f4:	480e      	ldr	r0, [pc, #56]	; (330 <I2cReadBuffer+0x330>)
+ 2f6:	f04f 0101 	mov.w	r1, #1
+ 2fa:	f7ff fffe 	bl	0 <I2C_AcknowledgeConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:495
+
+    for( i = 0 ; i < 500 ; i++ ){ ; }
+ 2fe:	f04f 0300 	mov.w	r3, #0
+ 302:	61bb      	str	r3, [r7, #24]
+ 304:	e003      	b.n	30e <I2cReadBuffer+0x30e>
+ 306:	69bb      	ldr	r3, [r7, #24]
+ 308:	f103 0301 	add.w	r3, r3, #1
+ 30c:	61bb      	str	r3, [r7, #24]
+ 30e:	69ba      	ldr	r2, [r7, #24]
+ 310:	f240 13f3 	movw	r3, #499	; 0x1f3
+ 314:	429a      	cmp	r2, r3
+ 316:	ddf6      	ble.n	306 <I2cReadBuffer+0x306>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:497
+
+    I2cFsmcClkEnable( true );
+ 318:	f04f 0001 	mov.w	r0, #1
+ 31c:	f7ff fffe 	bl	0 <I2cReadBuffer>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:498
+    return( SX_OK );
+ 320:	f04f 0300 	mov.w	r3, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:500
+
+}
+ 324:	4618      	mov	r0, r3
+ 326:	f107 0720 	add.w	r7, r7, #32
+ 32a:	46bd      	mov	sp, r7
+ 32c:	bd80      	pop	{r7, pc}
+ 32e:	bf00      	nop
+ 330:	40005400 	.word	0x40005400
+
+Disassembly of section .text.I2cGpioConfig:
+
+00000000 <I2cGpioConfig>:
+I2cGpioConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:508
+  * @brief  Initializes the GPIO pins used by the I2C interface.
+  * @param  None
+  * @retval None
+  */
+static void I2cGpioConfig( void )
+{
+   0:	b082b580 	.word	0xb082b580
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:512
+    GPIO_InitTypeDef GPIO_InitStructure;
+
+    /* Enable I2C_INTERFACE and I2C_GPIO_PORT & Alternate Function clocks */
+    RCC_APB1PeriphClockCmd( I2C_CLK, ENABLE );
+   6:	f44f 1000 	mov.w	r0, #2097152	; 0x200000
+   a:	f04f 0101 	mov.w	r1, #1
+   e:	f7ff fffe 	bl	0 <RCC_APB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:516
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+
+    RCC_AHB1PeriphClockCmd( I2C_SCL_GPIO_CLK | I2C_SDA_GPIO_CLK, ENABLE );
+  12:	f04f 0002 	mov.w	r0, #2
+  16:	f04f 0101 	mov.w	r1, #1
+  1a:	f7ff fffe 	bl	0 <RCC_AHB1PeriphClockCmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:519
+
+    /* Configure I2C pins: SCL, SDA */
+    GPIO_InitStructure.GPIO_Pin = I2C_SCL_PIN | I2C_SDA_PIN;
+  1e:	f44f 7340 	mov.w	r3, #768	; 0x300
+  22:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:520
+    GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  24:	f04f 0302 	mov.w	r3, #2
+  28:	713b      	strb	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:521
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  2a:	f04f 0302 	mov.w	r3, #2
+  2e:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:522
+    GPIO_InitStructure.GPIO_OType = GPIO_OType_OD;
+  30:	f04f 0301 	mov.w	r3, #1
+  34:	71bb      	strb	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:523
+    GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+  36:	f04f 0300 	mov.w	r3, #0
+  3a:	71fb      	strb	r3, [r7, #7]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:524
+    GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  3c:	f04f 0302 	mov.w	r3, #2
+  40:	717b      	strb	r3, [r7, #5]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:525
+    GPIO_Init( I2C_SCL_GPIO_PORT, &GPIO_InitStructure );
+  42:	463b      	mov	r3, r7
+  44:	480d      	ldr	r0, [pc, #52]	; (7c <I2cGpioConfig+0x7c>)
+  46:	4619      	mov	r1, r3
+  48:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:526
+    GPIO_Init( I2C_SDA_GPIO_PORT, &GPIO_InitStructure );
+  4c:	463b      	mov	r3, r7
+  4e:	480b      	ldr	r0, [pc, #44]	; (7c <I2cGpioConfig+0x7c>)
+  50:	4619      	mov	r1, r3
+  52:	f7ff fffe 	bl	0 <GPIO_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:529
+
+    /* Connect Pxx to I2C_SCL, I2C_SDA */
+    GPIO_PinAFConfig( I2C_SCL_GPIO_PORT, I2C_SCL_SOURCE, I2C_SCL_AF );
+  56:	4809      	ldr	r0, [pc, #36]	; (7c <I2cGpioConfig+0x7c>)
+  58:	f04f 0108 	mov.w	r1, #8
+  5c:	f04f 0204 	mov.w	r2, #4
+  60:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:530
+    GPIO_PinAFConfig( I2C_SDA_GPIO_PORT, I2C_SDA_SOURCE, I2C_SDA_AF );  
+  64:	4805      	ldr	r0, [pc, #20]	; (7c <I2cGpioConfig+0x7c>)
+  66:	f04f 0109 	mov.w	r1, #9
+  6a:	f04f 0204 	mov.w	r2, #4
+  6e:	f7ff fffe 	bl	0 <GPIO_PinAFConfig>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:553
+    /* I2C_INTERFACE SCL and SDA pins configuration */
+    GPIO_InitStructure.GPIO_Pin = I2C_SDA_PIN;
+    GPIO_Init( I2C_SDA_GPIO_PORT, &GPIO_InitStructure );
+
+#endif
+}
+  72:	f107 0708 	add.w	r7, r7, #8
+  76:	46bd      	mov	sp, r7
+  78:	bd80      	pop	{r7, pc}
+  7a:	bf00      	nop
+  7c:	40020400 	.word	0x40020400
+
+Disassembly of section .text.I2cConfig:
+
+00000000 <I2cConfig>:
+I2cConfig():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:561
+  * @brief  Configure the I2C Peripheral.
+  * @param  None
+  * @retval None
+  */
+static void I2cConfig( void )
+{
+   0:	b084b580 	.word	0xb084b580
+   4:	af00      	add	r7, sp, #0
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:565
+    I2C_InitTypeDef I2C_InitStructure;
+
+    /* I2C_INTERFACE configuration */
+    I2C_InitStructure.I2C_Mode = I2C_Mode_I2C;
+   6:	f04f 0300 	mov.w	r3, #0
+   a:	80bb      	strh	r3, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:566
+    I2C_InitStructure.I2C_DutyCycle = I2C_DutyCycle_2;
+   c:	f64b 73ff 	movw	r3, #49151	; 0xbfff
+  10:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:567
+    I2C_InitStructure.I2C_OwnAddress1 = 0x00;
+  12:	f04f 0300 	mov.w	r3, #0
+  16:	813b      	strh	r3, [r7, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:568
+    I2C_InitStructure.I2C_Ack = I2C_Ack_Enable;
+  18:	f44f 6380 	mov.w	r3, #1024	; 0x400
+  1c:	817b      	strh	r3, [r7, #10]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:569
+    I2C_InitStructure.I2C_AcknowledgedAddress = I2C_AcknowledgedAddress_7bit;
+  1e:	f44f 4380 	mov.w	r3, #16384	; 0x4000
+  22:	81bb      	strh	r3, [r7, #12]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:570
+    I2C_InitStructure.I2C_ClockSpeed = I2C_SPEED;
+  24:	4b07      	ldr	r3, [pc, #28]	; (44 <I2cConfig+0x44>)
+  26:	603b      	str	r3, [r7, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:571
+    I2C_Init( I2C_INTERFACE, &I2C_InitStructure );
+  28:	463b      	mov	r3, r7
+  2a:	4807      	ldr	r0, [pc, #28]	; (48 <I2cConfig+0x48>)
+  2c:	4619      	mov	r1, r3
+  2e:	f7ff fffe 	bl	0 <I2C_Init>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:576
+
+#if defined( STM32F4XX ) || defined( STM32F2XX ) || defined( STM32F429_439xx )
+
+    /* I2C Peripheral Enable */
+    I2C_Cmd( I2C_INTERFACE, ENABLE );
+  32:	4805      	ldr	r0, [pc, #20]	; (48 <I2cConfig+0x48>)
+  34:	f04f 0101 	mov.w	r1, #1
+  38:	f7ff fffe 	bl	0 <I2C_Cmd>
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/i2c.c:580
+
+#endif
+
+}
+  3c:	f107 0710 	add.w	r7, r7, #16
+  40:	46bd      	mov	sp, r7
+  42:	bd80      	pop	{r7, pc}
+  44:	00061a80 	.word	0x00061a80
+  48:	40005400 	.word	0x40005400

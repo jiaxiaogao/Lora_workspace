@@ -1,0 +1,268 @@
+
+C:\Users\gcristian\Desktop\F429\Drivers\obj\fifo.o:     file format elf32-littlearm
+C:\Users\gcristian\Desktop\F429\Drivers\obj\fifo.o
+
+
+Disassembly of section .text.FifoNext:
+
+00000000 <FifoNext>:
+FifoNext():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:5
+
+#include "fifo.h"
+
+static uint16_t FifoNext( tFifo *fifo, uint16_t index )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:6
+	return ( index + 1 ) % fifo->Size;
+   c:	887b      	ldrh	r3, [r7, #2]
+   e:	f103 0301 	add.w	r3, r3, #1
+  12:	687a      	ldr	r2, [r7, #4]
+  14:	8912      	ldrh	r2, [r2, #8]
+  16:	fb93 f1f2 	sdiv	r1, r3, r2
+  1a:	fb02 f201 	mul.w	r2, r2, r1
+  1e:	1a9b      	subs	r3, r3, r2
+  20:	b29b      	uxth	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:7
+}
+  22:	4618      	mov	r0, r3
+  24:	f107 070c 	add.w	r7, r7, #12
+  28:	46bd      	mov	sp, r7
+  2a:	bc80      	pop	{r7}
+  2c:	4770      	bx	lr
+  2e:	bf00      	nop
+
+Disassembly of section .text.FifoInit:
+
+00000000 <FifoInit>:
+FifoInit():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:10
+
+void FifoInit( tFifo *fifo, uint16_t *buffer, uint16_t size )
+{
+   0:	b480      	push	{r7}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	60f8      	str	r0, [r7, #12]
+   8:	60b9      	str	r1, [r7, #8]
+   a:	4613      	mov	r3, r2
+   c:	80fb      	strh	r3, [r7, #6]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:11
+	fifo->Begin = 0;
+   e:	68fb      	ldr	r3, [r7, #12]
+  10:	f04f 0200 	mov.w	r2, #0
+  14:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:12
+	fifo->End = 0;
+  16:	68fb      	ldr	r3, [r7, #12]
+  18:	f04f 0200 	mov.w	r2, #0
+  1c:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:13
+	fifo->Data = buffer;
+  1e:	68fb      	ldr	r3, [r7, #12]
+  20:	68ba      	ldr	r2, [r7, #8]
+  22:	605a      	str	r2, [r3, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:14
+	fifo->Size = size;
+  24:	68fb      	ldr	r3, [r7, #12]
+  26:	88fa      	ldrh	r2, [r7, #6]
+  28:	811a      	strh	r2, [r3, #8]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:15
+}
+  2a:	f107 0714 	add.w	r7, r7, #20
+  2e:	46bd      	mov	sp, r7
+  30:	bc80      	pop	{r7}
+  32:	4770      	bx	lr
+
+Disassembly of section .text.FifoPush:
+
+00000000 <FifoPush>:
+FifoPush():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:18
+
+void FifoPush( tFifo *fifo, uint16_t data )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+   8:	460b      	mov	r3, r1
+   a:	807b      	strh	r3, [r7, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:19
+	fifo->End = FifoNext( fifo, fifo->End );
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	885b      	ldrh	r3, [r3, #2]
+  10:	6878      	ldr	r0, [r7, #4]
+  12:	4619      	mov	r1, r3
+  14:	f7ff fffe 	bl	0 <FifoPush>
+  18:	4603      	mov	r3, r0
+  1a:	461a      	mov	r2, r3
+  1c:	687b      	ldr	r3, [r7, #4]
+  1e:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:20
+	fifo->Data[fifo->End] = data;
+  20:	687b      	ldr	r3, [r7, #4]
+  22:	685a      	ldr	r2, [r3, #4]
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	885b      	ldrh	r3, [r3, #2]
+  28:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  2c:	18d3      	adds	r3, r2, r3
+  2e:	887a      	ldrh	r2, [r7, #2]
+  30:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:21
+}
+  32:	f107 0708 	add.w	r7, r7, #8
+  36:	46bd      	mov	sp, r7
+  38:	bd80      	pop	{r7, pc}
+  3a:	bf00      	nop
+
+Disassembly of section .text.FifoPop:
+
+00000000 <FifoPop>:
+FifoPop():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:24
+
+uint16_t FifoPop( tFifo *fifo )
+{
+   0:	b590      	push	{r4, r7, lr}
+   2:	b085      	sub	sp, #20
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:25
+	uint16_t data = fifo->Data[FifoNext( fifo, fifo->Begin )];
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	685c      	ldr	r4, [r3, #4]
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	881b      	ldrh	r3, [r3, #0]
+  10:	6878      	ldr	r0, [r7, #4]
+  12:	4619      	mov	r1, r3
+  14:	f7ff fffe 	bl	0 <FifoPop>
+  18:	4603      	mov	r3, r0
+  1a:	ea4f 0343 	mov.w	r3, r3, lsl #1
+  1e:	18e3      	adds	r3, r4, r3
+  20:	881b      	ldrh	r3, [r3, #0]
+  22:	81fb      	strh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:27
+
+	fifo->Begin = FifoNext( fifo, fifo->Begin );
+  24:	687b      	ldr	r3, [r7, #4]
+  26:	881b      	ldrh	r3, [r3, #0]
+  28:	6878      	ldr	r0, [r7, #4]
+  2a:	4619      	mov	r1, r3
+  2c:	f7ff fffe 	bl	0 <FifoPop>
+  30:	4603      	mov	r3, r0
+  32:	461a      	mov	r2, r3
+  34:	687b      	ldr	r3, [r7, #4]
+  36:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:28
+	return data;
+  38:	89fb      	ldrh	r3, [r7, #14]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:29
+}
+  3a:	4618      	mov	r0, r3
+  3c:	f107 0714 	add.w	r7, r7, #20
+  40:	46bd      	mov	sp, r7
+  42:	bd90      	pop	{r4, r7, pc}
+
+Disassembly of section .text.FifoFlush:
+
+00000000 <FifoFlush>:
+FifoFlush():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:32
+
+void FifoFlush( tFifo *fifo )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:33
+	fifo->Begin = 0;
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	f04f 0200 	mov.w	r2, #0
+   e:	801a      	strh	r2, [r3, #0]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:34
+	fifo->End = 0;
+  10:	687b      	ldr	r3, [r7, #4]
+  12:	f04f 0200 	mov.w	r2, #0
+  16:	805a      	strh	r2, [r3, #2]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:35
+}
+  18:	f107 070c 	add.w	r7, r7, #12
+  1c:	46bd      	mov	sp, r7
+  1e:	bc80      	pop	{r7}
+  20:	4770      	bx	lr
+  22:	bf00      	nop
+
+Disassembly of section .text.IsFifoEmpty:
+
+00000000 <IsFifoEmpty>:
+IsFifoEmpty():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:38
+
+bool IsFifoEmpty( tFifo *fifo )
+{
+   0:	b480      	push	{r7}
+   2:	b083      	sub	sp, #12
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:39
+	return ( fifo->Begin == fifo->End );
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	881a      	ldrh	r2, [r3, #0]
+   c:	687b      	ldr	r3, [r7, #4]
+   e:	885b      	ldrh	r3, [r3, #2]
+  10:	429a      	cmp	r2, r3
+  12:	bf14      	ite	ne
+  14:	2300      	movne	r3, #0
+  16:	2301      	moveq	r3, #1
+  18:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:40
+}
+  1a:	4618      	mov	r0, r3
+  1c:	f107 070c 	add.w	r7, r7, #12
+  20:	46bd      	mov	sp, r7
+  22:	bc80      	pop	{r7}
+  24:	4770      	bx	lr
+  26:	bf00      	nop
+
+Disassembly of section .text.IsFifoFull:
+
+00000000 <IsFifoFull>:
+IsFifoFull():
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:43
+
+bool IsFifoFull( tFifo *fifo )
+{
+   0:	b580      	push	{r7, lr}
+   2:	b082      	sub	sp, #8
+   4:	af00      	add	r7, sp, #0
+   6:	6078      	str	r0, [r7, #4]
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:44
+	return ( FifoNext( fifo, fifo->End ) == fifo->Begin );
+   8:	687b      	ldr	r3, [r7, #4]
+   a:	885b      	ldrh	r3, [r3, #2]
+   c:	6878      	ldr	r0, [r7, #4]
+   e:	4619      	mov	r1, r3
+  10:	f7ff fffe 	bl	0 <IsFifoFull>
+  14:	4603      	mov	r3, r0
+  16:	461a      	mov	r2, r3
+  18:	687b      	ldr	r3, [r7, #4]
+  1a:	881b      	ldrh	r3, [r3, #0]
+  1c:	429a      	cmp	r2, r3
+  1e:	bf14      	ite	ne
+  20:	2300      	movne	r3, #0
+  22:	2301      	moveq	r3, #1
+  24:	b2db      	uxtb	r3, r3
+C:\Users\gcristian\Desktop\F429\Drivers\src\platform\sx12xxEiger/fifo.c:45
+}
+  26:	4618      	mov	r0, r3
+  28:	f107 0708 	add.w	r7, r7, #8
+  2c:	46bd      	mov	sp, r7
+  2e:	bd80      	pop	{r7, pc}
